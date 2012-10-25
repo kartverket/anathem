@@ -3,7 +3,7 @@ anathem
 
 A simple template processor to build modular OpenLayers clients, using mako templates.
 
-./anathem.py theme
+    ./anathem.py theme
 
 runs the processor on the configuration file "theme.yaml" in the themes subdirectory. The theme determines how to assemble the templates in the templates subdirectory.
 
@@ -15,7 +15,7 @@ Templates follow the mako include syntax. In particular:
     ${param}
 
 includes a parameter from the configuration. 
-Templates may also contain programming logic in python syntax - everything within ```${``` and ```}``` and lines preceded with a % are executed by a python interpreter. See makotemplates.org for more information, and the templates/ directory for examples.
+Templates may also contain programming logic in python syntax - everything within ```${``` and ```}``` and lines preceded with a % are executed by a python interpreter. See http://makotemplates.org for more information, and the templates/ directory for examples.
 
 == Configuration ==
 
@@ -32,23 +32,29 @@ Each parameter may be of one of the following types:
 
 * value (string or number) - this is directly replaced into the template
 
+```
     title : Norgeskart
+```
 
 * dictionary - A single subtemplate, marked through curly brackets or 
   indentation. This must again contain at least the "template" parameter
 
+```
     script:
       template: scripts/default 
       parameter: value
+```      
 
 * list - A list of subtemplates. These will be processed, concatenated and 
   inserted at the placeholder
 
+```
     layers:  
       - template: layer1
         parameter: value1
       - template: layer2
         parameter: value2
+```
 
 === Default values ===
 
@@ -61,6 +67,6 @@ In some cases, a template may want to provide a value directly to another templa
     template 1:
       <% vars['labelScaleLimit'] = 500000 %>
       <%include file="template2.html" />
-
+      
     template 2:
       minScaleDenominator: ${vars['labelScaleLimit']}
