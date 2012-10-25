@@ -11,13 +11,13 @@
 
   <meta name="viewport" content="width=device-width">
 
-  <script src="/js/libs/modernizr-2.5.3.min.js"></script>
-  <script src="/js/openlayers-tfs-light.js"></script>
+  <script src="/js/modernizr.min.js"></script>
+  <script src="/js/openlayers.min.js"></script>
   <!-- todo: move a part of these scripts to a post-loading in plugins.js, where they are not needed immediately. -->
-  <script src="/js/proj4js-combined.js"></script>
+  <script src="/js/proj4js.min.js"></script>
   <script src="/js/jquery.js"></script>
 
-  <script src="/js/easyXDM.debug.js"></script> <!-- our maps send status messages via an easyXDM API -->
+  <script src="/js/easyXDM.min.js"></script> <!-- our maps send status messages via an easyXDM API -->
 
 </head>
 <body style="height:100%; margin:0; padding:0" onLoad='init()'>
@@ -30,9 +30,11 @@
 
   </footer>
 
-  ${mapscript}  
+  <script>
+${mapscript}  
+  </script>
 
-  <script src="/js/plugins.js"></script>
+  <script src="/js/plugins.min.js"></script>
 
 </body>
 </html>

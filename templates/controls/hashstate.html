@@ -1,0 +1,35 @@
+// store the initial layer visibility configuration
+      initLayers = [];
+      for (i in map.layers) {
+        var layer = map.layers[i];
+        if (layer.visibility) {
+          initLayers.push(layer.name);
+        }
+      }
+
+// adjust layer visibility and pan/zoom based on hash, if available
+      var state = window.location.hash;
+      if (!!state) {
+        parms = state.slice(1).split("/");
+        zoom = parms[0];
+        mapx = parms[1];
+        mapy = parms[2];
+        for (var index=3; index<parms.length; index++) {
+          var extra=parms[index];
+          if (extra[0]=='+') {
+            for (var i=0; i<map.layers.length; i++) {
+              var layer = map.layers[i];
+              if (layer.name==extra.slice(1)) layer.setVisibility(true);
+            } 
+          } else 
+          if (extra[0]=='-') {
+            for (var i=0; i<map.layers.length; i++) {
+              var layer = map.layers[i];
+              if (layer.name==extra.slice(1)) layer.setVisibility(false);
+            } 
+          }
+        }
+      }
+
+      map.setCenter(new OpenLayers.LonLat(mapx, mapy),zoom);
+

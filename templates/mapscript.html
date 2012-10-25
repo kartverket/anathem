@@ -1,4 +1,3 @@
-<script type="text/javascript">
    var gkopen="http://opencache.statkart.no/gatekeeper/gk/gk.open";
    OpenLayers.Util.onImageLoadErrorColor = 'transparent';
 
@@ -8,12 +7,12 @@
    Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
 
    var xdmsocket = new easyXDM.Socket({});
+   var initLayers;
 
    function init(){
 // Create map canvas
 
       var map;        
-      var initLayers;
 
       var updateHistory = function(evt){
         if (!!map) {
@@ -21,14 +20,21 @@
           var zoom   = map.getZoom();
           if (!!center && !!zoom) {
             uid = zoom+"/"+center.lon+"/"+center.lat;
-            if (map.layers != initLayers) { 
-              /* todo: detect any changes to the original layer configuration 
-                       and add a modifier to the location.hash
-                 +layer = layer visible (or base layer selected)
-                 -layer = layer invisible
-              */
+            if (!!initLayers && !!map.layers) { 
+              for (i in map.layers) {
+                var layer = map.layers[i];
+                if (layer.visibility) {
+                  if ($.inArray(layer.name, initLayers)==-1) {
+                    uid += "/+"+layer.name
+                  }
+                } else {
+                  if ($.inArray(layer.name, initLayers)>-1) {
+                    uid += "/-"+layer.name
+                  }
+                }
+              }
+              window.location.hash = uid;
             }
-            window.location.hash = uid;
           }
         }
       };
@@ -48,10 +54,7 @@
            "changebaselayer": updateHistory
          }
       } );
-      var layer_sw = new OpenLayers.Control.LayerSwitcher();
-      map.addControl(layer_sw);
-      layer_sw.maximizeControl();
-      
+
 // Base layers
       ${baselayers}
 // Placement and zoom of the map
@@ -60,8 +63,4 @@
       ${overlays}
 // Add controls at the end, to keep focus
       ${controls}
-
-// store the initial layer configuration
-      initLayers = map.layers;
-   }
-</script>
+    }
