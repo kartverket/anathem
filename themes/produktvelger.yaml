@@ -1,0 +1,18 @@
+# Theme configuration for a map coverage viewer (sk)
+
+template : base
+title    : Norgeskart
+mapscript: 
+  template  : mapscript
+  baselayers:   
+    - template: layers/europa
+  overlays  : 
+    - template: layers/topo2graa
+      visible : 1
+    - template: layers/dekning_n50_json
+      visible : 1
+  center    : 
+    template: center/besseggen
+  controls  :
+    template: controls/default
+

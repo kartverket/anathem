@@ -78,7 +78,8 @@
         });
       };
       var pn50_selectBlad = function(feature) {
-        alert(feature.fid);
+        // alert(feature.fid);
+        xdmsocket.postMessage(JSON.stringify({"event":"onSelect", "element":"kartblad", "type":"n50", "id":feature.fid}));
       }
 
       var highlightDekningCtrl = new OpenLayers.Control.SelectFeature(pn50layer, {
