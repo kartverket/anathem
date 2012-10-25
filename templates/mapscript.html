@@ -12,13 +12,41 @@
    function init(){
 // Create map canvas
 
-      var map = new OpenLayers.Map( 'map', {
+      var map;        
+      var initLayers;
+
+      var updateHistory = function(evt){
+        if (!!map) {
+          var center = map.getCenter();
+          var zoom   = map.getZoom();
+          if (!!center && !!zoom) {
+            uid = zoom+"/"+center.lon+"/"+center.lat;
+            if (map.layers != initLayers) { 
+              /* todo: detect any changes to the original layer configuration 
+                       and add a modifier to the location.hash
+                 +layer = layer visible (or base layer selected)
+                 -layer = layer invisible
+              */
+            }
+            window.location.hash = uid;
+          }
+        }
+      };
+
+      map = new OpenLayers.Map( 'map', {
       	 //controls: [new OpenLayers.Control.PanZoomBar()],
       	 projection: mapProj,
       	 maxExtent:  mapBounds,
       	 units: "m",
-      	 maxResolution: 21664.0, 		// tilsvarer zoom level 3 (hele er 21664.0)
-      	 numZoomLevels: 18 			// egentlig 18, men maxResolution tilsvarer zoom level 3 (0-3 skrudd av)
+      	 maxResolution: 21664.0,
+      	 numZoomLevels: 18,
+
+         eventListeners: {
+           "moveend": updateHistory,
+           "zoomend": updateHistory,
+           "changelayer": updateHistory,
+           "changebaselayer": updateHistory
+         }
       } );
       var layer_sw = new OpenLayers.Control.LayerSwitcher();
       map.addControl(layer_sw);
@@ -32,5 +60,8 @@
       ${overlays}
 // Add controls at the end, to keep focus
       ${controls}
+
+// store the initial layer configuration
+      initLayers = map.layers;
    }
 </script>
