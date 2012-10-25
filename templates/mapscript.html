@@ -1,0 +1,40 @@
+<script type="text/javascript">
+   var gkopen="http://opencache.statkart.no/gatekeeper/gk/gk.open";
+   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
+
+   var mapProj = new OpenLayers.Projection('EPSG:32633');
+   var mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); 
+
+   Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+
+   var xdmsocket = new easyXDM.Socket({});
+
+   function init(){
+// Create map canvas
+
+      var map = new OpenLayers.Map( 'map', {
+      	 //controls: [new OpenLayers.Control.PanZoomBar()],
+      	 projection: mapProj,
+      	 maxExtent:  mapBounds,
+      	 units: "m",
+      	 maxResolution: 21664.0, 		// tilsvarer zoom level 3 (hele er 21664.0)
+      	 numZoomLevels: 18 			// egentlig 18, men maxResolution tilsvarer zoom level 3 (0-3 skrudd av)
+      } );
+      var layer_sw = new OpenLayers.Control.LayerSwitcher();
+      map.addControl(layer_sw);
+      layer_sw.maximizeControl();
+      
+// Base layers
+      ${baselayers}
+// Placement and zoom of the map
+      ${center}
+// Overlays
+      ${overlays}
+// Add controls at the end, to keep focus
+      ${controls}
+      map.addControl(new OpenLayers.Control.MousePosition());	  
+      map.addControl(new OpenLayers.Control.Navigation());	  
+      map.addControl(new OpenLayers.Control.ScaleLine());
+      map.addControl(new OpenLayers.Control.KeyboardDefaults());
+   }
+</script>

@@ -1,0 +1,5 @@
+      var europa = new OpenLayers.Layer.WMS(
+      "Europa (enkelt)", gkopen,
+      {layers: 'europa', format: 'image/jpeg'},{transitionEffect: 'resize', opacity: 0.5});
+
+      map.addLayers([europa]);

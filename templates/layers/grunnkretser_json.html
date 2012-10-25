@@ -1,0 +1,67 @@
+      var kretStyle = new OpenLayers.StyleMap({
+        'default': {
+          strokeWidth: 1,
+          strokeColor  : "#B487FE",
+          fillOpacity: 0},
+        'temporary': {
+          strokeWidth: 1,
+          fillColor  : "#DFCCFF",
+          strokeColor  : "#DFCCFF",
+          fillOpacity: 0.2}
+      });
+     
+
+//kommunegrenser - vector layer
+      var strTFS = new OpenLayers.Strategy.TFS({resFactor: 1, ratio:1, mapBounds:mapBounds, format: new OpenLayers.Format.GeoJSON()});
+      var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_kretser",last:false,
+ 						 format: new OpenLayers.Format.GeoJSON()  });
+      var kretLayer = new OpenLayers.Layer.Vector("Grunnkretser (ABAS)",{
+ 			        strategies: [strTFS],
+				protocol:prtTFS,
+				projection: mapProj,
+                                styleMap: kretStyle,
+				visibility: ${visible}
+		});
+
+      map.addLayers([kretLayer]);
+
+      var kret_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = kretLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          kretLayer.drawFeature(feature);
+        });
+      };
+      var kret_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = kretLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="default";
+          kretLayer.drawFeature(feature);
+        });
+      };
+      var kret_info = function(feature) {
+        alert(feature.attributes.n);
+      }
+
+
+
+      var highlightAbasCtrl = new OpenLayers.Control.SelectFeature(kretLayer, {
+                hover: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: kret_highlightAllById,
+                    featureunhighlighted: kret_unhighlightAllById
+                }
+            });
+      var selectAbasCtrl = new OpenLayers.Control.SelectFeature(kretLayer, {
+         clickFeature: kret_info 
+      });
+
+
+      map.addControl(highlightAbasCtrl);
+      highlightAbasCtrl.activate();
+      map.addControl(selectAbasCtrl);
+      selectAbasCtrl.activate();

@@ -1,0 +1,67 @@
+      var fylkStyle = new OpenLayers.StyleMap({
+        'default': {
+          strokeWidth: 3,
+          strokeColor  : "#B487FE",
+          fillOpacity: 0},
+        'temporary': {
+          strokeWidth: 6,
+          fillColor  : "#DFCCFF",
+          strokeColor  : "#DFCCFF",
+          fillOpacity: 0.2}
+      });
+     
+
+//kommunegrenser - vector layer
+      var strTFS = new OpenLayers.Strategy.TFS({resFactor: 1, ratio:1, mapBounds:mapBounds, format: new OpenLayers.Format.GeoJSON()});
+      var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_fylker",last:false,
+ 						 format: new OpenLayers.Format.GeoJSON()  });
+      var fylkLayer = new OpenLayers.Layer.Vector("Fylker (ABAS)",{
+ 			        strategies: [strTFS],
+				protocol:prtTFS,
+				projection: mapProj,
+                                styleMap: fylkStyle,
+				visibility: ${visible}
+		});
+
+      map.addLayers([fylkLayer]);
+
+      var fylk_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = fylkLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          fylkLayer.drawFeature(feature);
+        });
+      };
+      var fylk_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = fylkLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="default";
+          fylkLayer.drawFeature(feature);
+        });
+      };
+      var fylk_info = function(feature) {
+        alert(feature.attributes.n);
+      }
+
+
+
+      var highlightAbasCtrl = new OpenLayers.Control.SelectFeature(fylkLayer, {
+                hover: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: fylk_highlightAllById,
+                    featureunhighlighted: fylk_unhighlightAllById
+                }
+            });
+      var selectAbasCtrl = new OpenLayers.Control.SelectFeature(fylkLayer, {
+         clickFeature: fylk_info 
+      });
+
+
+      map.addControl(highlightAbasCtrl);
+      highlightAbasCtrl.activate();
+      map.addControl(selectAbasCtrl);
+      selectAbasCtrl.activate();

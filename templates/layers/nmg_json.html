@@ -1,0 +1,67 @@
+      var nmgrStyle = new OpenLayers.StyleMap({
+        'default': {
+          strokeWidth: 1,
+          strokeColor  : "#488",
+          fillOpacity: 0},
+        'temporary': {
+          strokeWidth: 3,
+          fillColor  : "#8aa",
+          strokeColor  : "#8aa",
+          fillOpacity: 0.2}
+      });
+     
+
+//kommunegrenser - vector layer
+      var strTFS = new OpenLayers.Strategy.TFS({resFactor: 1, ratio:1, mapBounds:mapBounds, format: new OpenLayers.Format.GeoJSON()});
+      var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_nmg",last:false,
+ 						 format: new OpenLayers.Format.GeoJSON()  });
+      var nmgrLayer = new OpenLayers.Layer.Vector("Norges maritime grenser",{
+ 			        strategies: [strTFS],
+				protocol:prtTFS,
+				projection: mapProj,
+                                styleMap: nmgrStyle,
+				visibility: ${visible}
+		});
+
+      map.addLayers([nmgrLayer]);
+
+      var nmgr_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = nmgrLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          nmgrLayer.drawFeature(feature);
+        });
+      };
+      var nmgr_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = nmgrLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="default";
+          nmgrLayer.drawFeature(feature);
+        });
+      };
+      var nmgr_info = function(feature) {
+        alert(feature.fid);
+      }
+
+
+
+      var highlightAbasCtrl = new OpenLayers.Control.SelectFeature(nmgrLayer, {
+                hover: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: nmgr_highlightAllById,
+                    featureunhighlighted: nmgr_unhighlightAllById
+                }
+            });
+      var selectAbasCtrl = new OpenLayers.Control.SelectFeature(nmgrLayer, {
+         clickFeature: nmgr_info 
+      });
+
+
+      map.addControl(highlightAbasCtrl);
+      highlightAbasCtrl.activate();
+      map.addControl(selectAbasCtrl);
+      selectAbasCtrl.activate();

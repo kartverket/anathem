@@ -1,0 +1,60 @@
+      <% vars['labelScaleLimit'] = 100000 %>
+      <%include file="/styles/dekning_historisk.html" /> 
+
+//dekningsoversikt - vector layer
+      var hgrevlayer = new OpenLayers.Layer.Vector("Historiske Grevskabsm&aring;linger",
+                                {styleMap: dekningHStyle, visibility: ${visible} });
+
+      var handler = function(request) {
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+          'internalProjection': mapProj,
+          'externalProjection': new OpenLayers.Projection("EPSG:32633")
+        });
+        var features = geojson_format.read(request.responseText);
+        hgrevlayer.addFeatures(features);
+      }
+
+      var request = OpenLayers.Request.GET({
+        url: "/json/dekning_hist_grev.json",
+        callback: handler
+      });
+
+      map.addLayers([hgrevlayer]);
+
+      var hgrev_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = hgrevlayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          hgrevlayer.drawFeature(feature);
+        });
+      };
+      var hgrev_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = hgrevlayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="default";
+          hgrevlayer.drawFeature(feature);
+        });
+      };
+      var hgrev_selectBlad = function(feature) {
+        alert(feature.attributes.Kartnavn);
+      }
+
+      var hgrevHighlightDekningCtrl = new OpenLayers.Control.SelectFeature(hgrevlayer, {
+                hover: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: hgrev_highlightAllById,
+                    featureunhighlighted: hgrev_unhighlightAllById
+                }
+            });
+      var hgrevSelectDekningCtrl = new OpenLayers.Control.SelectFeature(hgrevlayer, {
+         clickFeature: hgrev_selectBlad          
+      });
+
+      map.addControl(hgrevHighlightDekningCtrl);
+      hgrevHighlightDekningCtrl.activate();
+      map.addControl(hgrevSelectDekningCtrl);
+      hgrevSelectDekningCtrl.activate();
