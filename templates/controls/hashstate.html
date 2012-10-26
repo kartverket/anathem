@@ -27,6 +27,48 @@
               var layer = map.layers[i];
               if (layer.name==extra.slice(1)) layer.setVisibility(false);
             } 
+          } else 
+          if (extra[0]=='!') {
+            var select = extra.slice(1).split(".");
+            var layers = map.getLayersByName(select[0]);
+            if (layers.length == 1) {
+              var layer = layers[0];
+         
+              /* set a new renderer rule to highlight elements with the given name */
+              layer.styleMap.styles.default.addRules([
+                new OpenLayers.Rule({
+                  filter: new OpenLayers.Filter.FeatureId({
+                    fids: [select[1]]
+                  }),
+                  symbolizer: {
+                    strokeWidth: 3,
+                    strokeColor : "orange",
+                    graphicZIndex: 100
+                  }
+                }),
+                new OpenLayers.Rule({
+                  elseFilter: true,
+                  symbolizer: {} //defaults 
+                })
+              ]); 
+              layer.styleMap.styles.temporary.addRules([
+                new OpenLayers.Rule({
+                  filter: new OpenLayers.Filter.FeatureId({
+                    fids: [select[1]]
+                  }),
+                  symbolizer: {
+                    strokeWidth: 3,
+                    strokeColor: "yellow",
+                    fillColor  : "orange",
+                    graphicZIndex: 100
+                  }
+                }),
+                new OpenLayers.Rule({
+                  elseFilter: true,
+                  symbolizer: {} //defaults 
+                })
+              ]); 
+            }
           }
         }
         map.setCenter(new OpenLayers.LonLat(mapx, mapy),zoom);

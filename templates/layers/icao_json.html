@@ -18,27 +18,27 @@
             new OpenLayers.Rule({
               maxScaleDenominator: 1000000,
               symbolizer: {
-                label : "${'${CEILING}\\n${NAME}'}",
+                label : "${'${CEILING}\\n${NAME}'}"
               }
             }),
             new OpenLayers.Rule({
               minScaleDenominator: 1000000,
               maxScaleDenominator: 5000000,
               symbolizer: {
-                label : "${"${CEILING}"}",
+                label : "${"${CEILING}"}"
               }
             }),
             new OpenLayers.Rule({
               minScaleDenominator: 5000000,
               symbolizer: {
-                label : "",
+                label : ""
               }
             }),
             new OpenLayers.Rule({
               filter: new OpenLayers.Filter.Comparison({
                 type: OpenLayers.Filter.Comparison.LIKE,
                 property: "NAME",
-                value: "CTR",
+                value: "CTR"
               }),
               symbolizer: {
                 strokeWidth: 2,
@@ -51,7 +51,7 @@
               filter: new OpenLayers.Filter.Comparison({
                 type: OpenLayers.Filter.Comparison.LIKE,
                 property: "NAME",
-                value: "CTA",
+                value: "CTA"
               }),
               symbolizer: {
                 strokeWidth: 3,
@@ -64,7 +64,7 @@
               filter: new OpenLayers.Filter.Comparison({
                 type: OpenLayers.Filter.Comparison.LIKE,
                 property: "NAME",
-                value: "TMA",
+                value: "TMA"
               }),
               symbolizer: {
                 strokeWidth: 2,
@@ -77,7 +77,7 @@
               filter: new OpenLayers.Filter.Comparison({
                 type: OpenLayers.Filter.Comparison.LIKE,
                 property: "NAME",
-                value: "TIZ",
+                value: "TIZ"
               }),
               symbolizer: {
                 strokeWidth: 1,
@@ -90,7 +90,7 @@
               filter: new OpenLayers.Filter.Comparison({
                 type: OpenLayers.Filter.Comparison.LIKE,
                 property: "NAME",
-                value: "TIA",
+                value: "TIA"
               }),
               symbolizer: {
                 strokeWidth: 1,

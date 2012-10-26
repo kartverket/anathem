@@ -39,19 +39,8 @@ mapscript:
     - template: layers/europa
   overlays  : 
     - template: layers/topo2
-    - template: layers/topo2graa
-    - template: layers/sjo
     - template: layers/fylker_json
-    - template: layers/kommuner_json
-    - template: layers/grunnkretser_json
-    - template: layers/dekning_n50_json
-    - template: layers/dekning_hist_amt_json
-    - template: layers/dekning_hist_general_json
-    - template: layers/dekning_hist_grev_json
-    - template: layers/dekning_hist_rekt_json
-    - template: layers/topper_2000m_json
-    - template: layers/nmg_json
-    - template: layers/icao_json
+      visible : 1
   center    : 
     template: center/besseggen
   controls  :
