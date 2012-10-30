@@ -16,6 +16,7 @@
       var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_kommuner",last:false,
  						 format: new OpenLayers.Format.GeoJSON()  });
       var abasLayer = new OpenLayers.Layer.Vector("Kommuner (ABAS)",{
+                                shortid: "kommune",
  			        strategies: [strTFS],
 				protocol:prtTFS,
 				projection: mapProj,

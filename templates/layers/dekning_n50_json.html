@@ -39,7 +39,7 @@
 
 //dekningsoversikt - vector layer
       var pn50layer = new OpenLayers.Layer.Vector("Dekningsoversikt Papirkart",
-                                {styleMap: dekningStyle, visibility: ${visible} });
+                                {shortid: "dekning.papir", styleMap: dekningStyle, visibility: ${visible} });
 
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({

@@ -3,7 +3,7 @@
 
 //dekningsoversikt - vector layer
       var hrektlayer = new OpenLayers.Layer.Vector("Historiske Rektangelm&aring;linger",
-                                {styleMap: dekningHStyle, visibility: ${visible} });
+                                {shortid: "hist.rektangel", styleMap: dekningHStyle, visibility: ${visible} });
 
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({

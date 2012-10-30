@@ -2,12 +2,14 @@
         'default': {
           strokeWidth: 3,
           strokeColor  : "#B487FE",
-          fillOpacity: 0},
+          fillOpacity: 0,
+          graphicZIndex: 0},
         'temporary': {
           strokeWidth: 6,
           fillColor  : "#DFCCFF",
           strokeColor  : "#DFCCFF",
-          fillOpacity: 0.2}
+          fillOpacity: 0.2,
+          graphicZIndex: 1}
       });
      
 
@@ -16,10 +18,12 @@
       var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_fylker",last:false,
  						 format: new OpenLayers.Format.GeoJSON()  });
       var fylkLayer = new OpenLayers.Layer.Vector("Fylker (ABAS)",{
+                                shortid: "fylke",
  			        strategies: [strTFS],
 				protocol:prtTFS,
 				projection: mapProj,
                                 styleMap: fylkStyle,
+                                rendererOptions: {zIndexing: true},
 				visibility: ${visible}
 		});
 

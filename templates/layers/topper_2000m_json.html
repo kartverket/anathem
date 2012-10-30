@@ -2,17 +2,21 @@
         'default': {
           strokeWidth: 1,
           strokeColor  : "#488",
+          graphicZIndex: 0,
           fillOpacity: 0},
         'temporary': {
           strokeWidth: 3,
           fillColor  : "#488",
           strokeColor  : "#488",
+          graphicZIndex: 1,
           fillOpacity: 0.2}
       });
 
 //dekningsoversikt - vector layer
       var topplayer = new OpenLayers.Layer.Vector("Fjelltopper >2000m",
-                                {visibility: ${visible} });
+                                {visibility: ${visible},
+                                 shortid: "topper"
+                                });
 
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({

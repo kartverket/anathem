@@ -2,11 +2,13 @@
         'default': {
           strokeWidth: 1,
           strokeColor  : "#B487FE",
+          graphicZIndex: 0,
           fillOpacity: 0},
         'temporary': {
           strokeWidth: 1,
           fillColor  : "#DFCCFF",
           strokeColor  : "#DFCCFF",
+          graphicZIndex: 1,
           fillOpacity: 0.2}
       });
      
@@ -16,6 +18,7 @@
       var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_kretser",last:false,
  						 format: new OpenLayers.Format.GeoJSON()  });
       var kretLayer = new OpenLayers.Layer.Vector("Grunnkretser (ABAS)",{
+                                shortid: "grunnkrets",
  			        strategies: [strTFS],
 				protocol:prtTFS,
 				projection: mapProj,

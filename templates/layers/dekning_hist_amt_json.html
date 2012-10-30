@@ -3,7 +3,7 @@
 
 //dekningsoversikt - vector layer
       var hamtlayer = new OpenLayers.Layer.Vector("Historiske Amtskart",
-                                {styleMap: dekningHStyle, visibility: ${visible} });
+                                {shortid: "hist.amt", styleMap: dekningHStyle, visibility: ${visible} });
 
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({

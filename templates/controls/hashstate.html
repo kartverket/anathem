@@ -3,7 +3,7 @@
       for (i in map.layers) {
         var layer = map.layers[i];
         if (layer.visibility) {
-          initLayers.push(layer.name);
+          initLayers.push(layer.shortid);
         }
       }
 
@@ -14,24 +14,31 @@
         zoom = parms[0];
         mapx = parms[1];
         mapy = parms[2];
+        if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
+          var WSG84 = new Proj4js.Proj('EPSG:4326');   
+          var UTM33 = new Proj4js.Proj('EPSG:32633');   
+          var xy = Proj4js.transform(WSG84, UTM33, new Proj4js.Point(mapy, mapx));
+          mapx = xy.x;
+          mapy = xy.y;
+        }
         for (var index=3; index<parms.length; index++) {
           var extra=parms[index];
           if (extra[0]=='+') {
             for (var i=0; i<map.layers.length; i++) {
               var layer = map.layers[i];
-              if (layer.name==extra.slice(1)) layer.setVisibility(true);
+              if (layer.shortid==extra.slice(1)) layer.setVisibility(true);
             } 
           } else 
           if (extra[0]=='-') {
             for (var i=0; i<map.layers.length; i++) {
               var layer = map.layers[i];
-              if (layer.name==extra.slice(1)) layer.setVisibility(false);
+              if (layer.shortid==extra.slice(1)) layer.setVisibility(false);
             } 
           } else 
           if (extra[0]=='!') {
-            var select = extra.slice(1).split(".");
-            var layers = map.getLayersByName(select[0]);
-            if (layers.length == 1) {
+            var select = extra.slice(1).split("!");
+            var layers = map.getBy("layers", "shortid", select[0]);
+            if (layers.length==1) {
               var layer = layers[0];
          
               /* set a new renderer rule to highlight elements with the given name */
@@ -43,7 +50,9 @@
                   symbolizer: {
                     strokeWidth: 3,
                     strokeColor : "orange",
-                    graphicZIndex: 100
+                    graphicZIndex: 2,
+                    fillColor : "orange",
+                    fillOpacity: 0.1
                   }
                 }),
                 new OpenLayers.Rule({
@@ -60,6 +69,7 @@
                     strokeWidth: 3,
                     strokeColor: "yellow",
                     fillColor  : "orange",
+                    fillOpacity: 0.2,
                     graphicZIndex: 100
                   }
                 }),

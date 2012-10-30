@@ -3,6 +3,7 @@
           strokeWidth: 1,
           strokeColor  : "#484",
           fillOpacity: 0, 
+          graphicZIndex: 0,
 
           label : "${'${CEILING}\\n${NAME}'}",
           fontColor: "#8a8",
@@ -105,12 +106,13 @@
           strokeWidth: 3,
           strokeColor  : "#ada",
           fontColor: "#ada",
+          graphicZIndex: 1,
           fillOpacity: 0.1}
       });
      
 
       var icaolayer = new OpenLayers.Layer.Vector("ICAO luftrom",
-                                {styleMap: icaoStyle, visibility: ${visible} });
+                                {shortid: "luftrom", styleMap: icaoStyle, visibility: ${visible} });
 
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({

@@ -2,11 +2,13 @@
         'default': {
           strokeWidth: 1,
           strokeColor  : "#488",
+          graphicZIndex: 0,
           fillOpacity: 0},
         'temporary': {
           strokeWidth: 3,
           fillColor  : "#8aa",
           strokeColor  : "#8aa",
+          graphicZIndex: 1,
           fillOpacity: 0.2}
       });
      
@@ -16,6 +18,7 @@
       var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_nmg",last:false,
  						 format: new OpenLayers.Format.GeoJSON()  });
       var nmgrLayer = new OpenLayers.Layer.Vector("Norges maritime grenser",{
+                                shortid: "grenser.maritime",
  			        strategies: [strTFS],
 				protocol:prtTFS,
 				projection: mapProj,

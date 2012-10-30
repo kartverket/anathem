@@ -3,7 +3,7 @@
 
 //dekningsoversikt - vector layer
       var hgenlayer = new OpenLayers.Layer.Vector("Historiske Generalstabskart",
-                                {styleMap: dekningHStyle, visibility: ${visible} });
+                                {shortid: "hist.general", styleMap: dekningHStyle, visibility: ${visible} });
 
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({
