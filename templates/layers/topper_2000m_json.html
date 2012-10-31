@@ -21,7 +21,7 @@
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({
           'internalProjection': mapProj,
-          'externalProjection': new OpenLayers.Projection("EPSG:32632")
+          'externalProjection': UTM32 
         });
         var features = geojson_format.read(request.responseText);
         topplayer.addFeatures(features);

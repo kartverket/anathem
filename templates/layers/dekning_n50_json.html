@@ -44,7 +44,7 @@
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({
           'internalProjection': mapProj,
-          'externalProjection': new OpenLayers.Projection("EPSG:32633")
+          'externalProjection': UTM33 
         });
         var features = geojson_format.read(request.responseText);
         for (key in features) {
@@ -54,12 +54,12 @@
         pn50layer.addFeatures(features);
       }
 
+      map.addLayer(pn50layer);
+
       var request = OpenLayers.Request.GET({
         url: "/json/dekning_n50.json",
         callback: handler
       });
-
-      map.addLayer(pn50layer);
 
       var pn50_highlightAllById = function(element) {
         // highlight all elements with the same element.feature.fid;

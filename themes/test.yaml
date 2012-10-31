@@ -50,6 +50,7 @@ mapscript:
     - template: layers/dekning_hist_grev_json
     - template: layers/dekning_hist_rekt_json
     - template: layers/topper_2000m_json
+    - template: layers/topper_cluster_wmst
     - template: layers/nmg_json
     - template: layers/icao_json
   center    : 

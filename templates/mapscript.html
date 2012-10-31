@@ -1,7 +1,11 @@
    var gkopen="http://opencache.statkart.no/gatekeeper/gk/gk.open";
    OpenLayers.Util.onImageLoadErrorColor = 'transparent';
 
-   var mapProj = new OpenLayers.Projection('EPSG:32633');
+   var UTM33 = new OpenLayers.Projection('EPSG:32633');
+   var UTM32 = new OpenLayers.Projection('EPSG:32632');
+   var UTM35 = new OpenLayers.Projection('EPSG:32635');
+   var WSG84 = new OpenLayers.Projection('EPSG:4326');
+   var mapProj = UTM33;
    var mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); 
 
    Proj4js.defs["EPSG:4326"]="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
@@ -22,7 +26,7 @@
           var center = map.getCenter();
           var zoom   = map.getZoom();
           if (!!center && !!zoom) {
-            uid = zoom+"/"+Math.round(center.lon)+"/"+Math.round(center.lat); /* 1m precision should be enough for everyone -- Einstein*/
+            uid = zoom+"/"+Math.round(center.lon)+"/"+Math.round(center.lat); /* 1m precision ought to be enough for everyone --BG */
             if (!!initLayers && !!map.layers) { 
               for (i in map.layers) {
                 var layer = map.layers[i];

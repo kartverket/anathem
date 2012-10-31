@@ -15,9 +15,9 @@
         mapx = parms[1];
         mapy = parms[2];
         if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
-          var WSG84 = new Proj4js.Proj('EPSG:4326');   
-          var UTM33 = new Proj4js.Proj('EPSG:32633');   
-          var xy = Proj4js.transform(WSG84, UTM33, new Proj4js.Point(mapy, mapx));
+          var pWSG84 = new Proj4js.Proj('EPSG:4326');   
+          var pUTM33 = new Proj4js.Proj('EPSG:32633');   
+          var xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
           mapx = xy.x;
           mapy = xy.y;
         }

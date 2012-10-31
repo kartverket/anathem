@@ -8,7 +8,7 @@
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({
           'internalProjection': mapProj,
-          'externalProjection': new OpenLayers.Projection("EPSG:32633")
+          'externalProjection': UTM33 
         });
         var features = geojson_format.read(request.responseText);
         hamtlayer.addFeatures(features);
