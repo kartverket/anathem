@@ -1,0 +1,15 @@
+      var topp_clust_wmst = new OpenLayers.Layer.WMS(
+      "Fjelltopper (klynger)", "http://skrivte42/cgi-bin/wms-t-test",
+        {layers: 'N50Hoydepunkt_cluster', 
+         nhoyde:"2000", 
+         nnhoyde:"2500",
+         transparent: true, 
+         format: 'image/png'},
+        {shortid: "topperc", 
+         isBaseLayer: false, 
+         visibility: ${visible}, 
+         transitionEffect: 'resize',
+         singleTile: true
+        });
+
+      map.addLayers([topp_clust_wmst]);
