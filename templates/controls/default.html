@@ -1,6 +1,7 @@
       var layer_sw = new OpenLayers.Control.LayerSwitcher();
       map.addControl(layer_sw);
-      layer_sw.maximizeControl();
+      //todo: if displayed on a larger screen:
+        layer_sw.maximizeControl();
 
       map.addControl(new OpenLayers.Control.MousePosition());
       map.addControl(new OpenLayers.Control.Navigation());

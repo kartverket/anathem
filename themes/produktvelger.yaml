@@ -7,7 +7,7 @@ mapscript:
   baselayers:   
     - template: layers/europa
   overlays  : 
-    - template: layers/topo2graa
+    - template: layers/topo2
       visible : 1
     - template: layers/dekning_n50_json
       visible : 1
