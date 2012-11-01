@@ -1,15 +1,5 @@
-      var abasStyle = new OpenLayers.StyleMap({
-        'default': {
-          strokeWidth: 2,
-          strokeColor  : "#B487FE",
-          fillOpacity: 0},
-        'temporary': {
-          strokeWidth: 4,
-          fillColor  : "#DFCCFF",
-          strokeColor  : "#DFCCFF",
-          fillOpacity: 0.2}
-      });
-     
+      <% vars['labelScaleLimit'] = 500000 %>
+      <%include file="/styles/abas.html" />
 
 //kommunegrenser - vector layer
       var strTFS = new OpenLayers.Strategy.TFS({resFactor: 1, ratio:1, mapBounds:mapBounds, format: new OpenLayers.Format.GeoJSON()});
@@ -44,8 +34,7 @@
       };
       var abas_kommuneinfo = function(feature) {
         alert(feature.attributes.n);
-        xdmsocket.postMessage(JSON.stringify({"event":"onSelect", "element":"kommune", "id":feature.fid, "name":feature.attributes.n}));
-        //xdmsocket.postMessage(feature.attributes.n);
+        postEvent({"event":"onSelect", "element":"kommune", "id":feature.fid, "name":feature.attributes.n});
       }
 
 
