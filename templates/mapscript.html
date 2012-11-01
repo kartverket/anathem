@@ -16,6 +16,12 @@
    var xdmsocket = new easyXDM.Socket({});
    var initLayers;
 
+   function postEvent(dico) {
+     if (!!xdmsocket) {
+       xdmsocket.postMessage(JSON.stringify(dico));
+     }
+   }
+
    function init(){
 // Create map canvas
 
@@ -42,6 +48,7 @@
               }
               window.location.hash = uid;
             }
+            postEvent({"event":"onMoveMap", "x":center.lon, "y":center.lat, "z":zoom});
           }
         }
       };
@@ -70,4 +77,6 @@
       ${overlays}
 // Add controls at the end, to keep focus
       ${controls}
+
+      postEvent({"event":"onInit", "apiVersion":"0"});
     }
