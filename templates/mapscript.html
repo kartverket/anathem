@@ -22,7 +22,18 @@
      }
    }
 
+
    function init(){
+// extract URL parameters into dictionary
+     var prmstr = window.location.search.substr(1);
+     var prmarr = prmstr.split ("&");
+     var params = {};
+
+     for ( var i = 0; i < prmarr.length; i++) {
+       var tmparr = prmarr[i].split("=");
+       params[tmparr[0]] = tmparr[1];
+     }
+
 // Create map canvas
 
       var map;        
@@ -38,13 +49,29 @@
                 var layer = map.layers[i];
                 if (layer.visibility) {
                   if ($.inArray(layer.shortid, initLayers)==-1) {
-                    uid += "/+"+layer.shortid
+                    uid += "/+"+layer.shortid;
                   }
                 } else {
                   if ($.inArray(layer.shortid, initLayers)>-1) {
-                    uid += "/-"+layer.shortid
+                    uid += "/-"+layer.shortid;
                   }
                 }
+              }
+              var optchars="";
+              if (!!layer_sw && map.controls.indexOf(layer_sw)==-1) {
+                optchars += 'l';
+              } else
+              if (!!layer_sw && !layer_sw.layersDiv.style.display) {
+                optchars += 'L';
+              }
+              if (!!legend && map.controls.indexOf(legend)==1) {
+                optchars += 'h';
+              } else
+              if (!!legend && !legend.wrapperDiv.style.display) {
+                optchars += 'H';
+              }
+              if (optchars.length > 0) {
+                uid += "/w"+optchars;
               }
               window.location.hash = uid;
             }
