@@ -35,6 +35,22 @@
               if (layer.shortid==extra.slice(1)) layer.setVisibility(false);
             } 
           } else 
+          if (extra.charAt(0)=='w') {
+            for (var i=1;i<extra.length; i++) {
+              if (extra.charAt(i)=='L') {
+                layer_sw.maximizeControl();
+              }
+              if (extra.charAt(i)=='l') {
+                map.removeControl(layer_sw);
+              }
+              if (extra.charAt(i)=='H') {
+                legend.maximizeControl();
+              }
+              if (extra.charAt(i)=='h') {
+                map.removeControl(legend);
+              }
+            }
+          } else 
           if (extra.charAt(0)=='!') {
             var select = extra.slice(1).split("!");
             var layers = map.getBy("layers", "shortid", select[0]);
