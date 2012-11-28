@@ -1,9 +1,10 @@
       var layer_sw = new OpenLayers.Control.LayerSwitcher();
       map.addControl(layer_sw);
       //todo: if displayed on a larger screen:
-        layer_sw.maximizeControl();
+      //  layer_sw.maximizeControl();
 
-      map.addControl(new OpenLayers.Control.MousePosition());
+      legend = new OpenLayers.Control.Legend();
+      map.addControl(legend);
       map.addControl(new OpenLayers.Control.Navigation());
       map.addControl(new OpenLayers.Control.ScaleLine());
       map.addControl(new OpenLayers.Control.KeyboardDefaults());
