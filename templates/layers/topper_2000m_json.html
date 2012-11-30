@@ -21,7 +21,7 @@
       var handler = function(request) {
         var geojson_format = new OpenLayers.Format.GeoJSON({
           'internalProjection': mapProj,
-          'externalProjection': UTM32 
+          'externalProjection': proj['32632'] 
         });
         var features = geojson_format.read(request.responseText);
         topplayer.addFeatures(features);
