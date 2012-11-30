@@ -39,15 +39,27 @@
             for (var i=1;i<extra.length; i++) {
               if (extra.charAt(i)=='L') {
                 layer_sw.maximizeControl();
-              }
+              } else
               if (extra.charAt(i)=='l') {
                 map.removeControl(layer_sw);
-              }
+              } else
               if (extra.charAt(i)=='H') {
                 legend.maximizeControl();
-              }
+              } else
               if (extra.charAt(i)=='h') {
                 map.removeControl(legend);
+              } else
+              if (extra.charAt(i)=='z') {
+                map.removeControl(zoomCtrl);
+              } else
+              if (extra.charAt(i)=='n') {
+                nav.deactivate();
+                knav.deactivate();
+              } else
+              if (extra.charAt(i)=='M') {
+                var markers = new OpenLayers.Layer.Markers("Mark&oslash;rer",{shortid:"poi"});
+                markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(mapx, mapy)));
+                map.addLayer(markers);
               }
             }
           } else 
