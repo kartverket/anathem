@@ -39,12 +39,18 @@ mapscript:
     - template: layers/europa
   overlays  : 
     - template: layers/topo2
+    - template: layers/wmts_param
+      url: http://159.162.35.113:8080/geowebcache/service/wmts
+      name: Topografisk rasterkart
+      layer: toporaster2
+      id: raster 
     - template: layers/topo2graa
     - template: layers/sjo
     - template: layers/fylker_json
     - template: layers/kommuner_json
     - template: layers/grunnkretser_json
     - template: layers/dekning_n50_json
+    - template: layers/dekning_sjo_hoved
     - template: layers/dekning_hist_amt_json
     - template: layers/dekning_hist_general_json
     - template: layers/dekning_hist_grev_json
