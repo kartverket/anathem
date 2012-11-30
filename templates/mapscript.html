@@ -1,17 +1,24 @@
    var gkopen="http://opencache.statkart.no/gatekeeper/gk/gk.open";
    OpenLayers.Util.onImageLoadErrorColor = 'transparent';
 
-   var UTM33 = new OpenLayers.Projection('EPSG:32633');
-   var UTM32 = new OpenLayers.Projection('EPSG:32632');
-   var UTM35 = new OpenLayers.Projection('EPSG:32635');
-   var WSG84 = new OpenLayers.Projection('EPSG:4326');
-   var mapProj = UTM33;
+   var proj = {  //pregenerated projection objects
+     "32633": new OpenLayers.Projection('EPSG:32633'),
+     "32632": new OpenLayers.Projection('EPSG:32632'),
+     "32635": new OpenLayers.Projection('EPSG:32635'),
+     "4326" : new OpenLayers.Projection('EPSG:4326'),
+     "3034" : new OpenLayers.Projection('EPSG:3034'),
+     "3575" : new OpenLayers.Projection('EPSG:3575')
+   };
+
+   var mapProj = proj["32633"];
    var mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); 
 
-   Proj4js.defs["EPSG:4326"]="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+   Proj4js.defs["EPSG:4326"] ="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
    Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
    Proj4js.defs["EPSG:32633"]="+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
    Proj4js.defs["EPSG:32635"]="+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+   Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+   Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
 
    var xdmsocket = new easyXDM.Socket({});
    var initLayers;
@@ -34,7 +41,12 @@
        params[tmparr[0]] = tmparr[1];
      }
 
+
 // Create map canvas
+
+      if (!!params.proj) {
+        mapProj = proj[params.proj]; 
+      }
 
       var map;        
 
@@ -58,17 +70,26 @@
                 }
               }
               var optchars="";
-              if (!!layer_sw && map.controls.indexOf(layer_sw)==-1) {
-                optchars += 'l';
-              } else
-              if (!!layer_sw && !layer_sw.layersDiv.style.display) {
-                optchars += 'L';
+              if (typeof layer_sw != 'undefined') {
+                if (map.controls.indexOf(layer_sw)==-1) {
+                  optchars += 'l';
+                } else
+                if (!layer_sw.layersDiv.style.display) {
+                  optchars += 'L';
+                }
               }
-              if (!!legend && map.controls.indexOf(legend)==1) {
-                optchars += 'h';
-              } else
-              if (!!legend && !legend.wrapperDiv.style.display) {
-                optchars += 'H';
+              if (typeof legend != 'undefined') {
+                if (map.controls.indexOf(legend)==1) {
+                  optchars += 'h';
+                } else
+                if (!legend.wrapperDiv.style.display) {
+                  optchars += 'H';
+                }
+              }
+              if (typeof nav != 'undefined') {
+                if (map.controls.indexOf(nav)==-1) {
+                  optchars += 'n';
+                }
               }
               if (optchars.length > 0) {
                 uid += "/w"+optchars;
@@ -81,7 +102,7 @@
       };
 
       map = new OpenLayers.Map( 'map', {
-      	 //controls: [new OpenLayers.Control.PanZoomBar()],
+      	 controls: [], //defined later
       	 projection: mapProj,
       	 maxExtent:  mapBounds,
       	 units: "m",
