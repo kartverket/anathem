@@ -1,0 +1,6 @@
+      var layer_sw = new OpenLayers.Control.LayerSwitcher();
+      map.addControl(layer_sw);
+% if layerselector_visible: 
+        layer_sw.maximizeControl();
+% endif
+      layer_sw.events.register("buttonclick", updateHistory);
