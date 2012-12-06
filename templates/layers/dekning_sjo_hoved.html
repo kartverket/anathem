@@ -1,0 +1,101 @@
+      var dekningStyle = new OpenLayers.StyleMap({
+        'default': new OpenLayers.Style({
+          strokeWidth: 1,
+          strokeColor  : "#484",
+          fillOpacity: 0, 
+
+          label : "${"${nr}"}",
+          fontColor: "#8a8",
+          fontSize: "12px",
+          fontFamily: "Courier New, monospace",
+          fontWeight: "bold",
+          labelAlign: "cm",
+          labelOutlineColor: "white",
+          labelOutlineWidth: 5
+
+      }, {
+          rules: [
+            new OpenLayers.Rule({
+              maxScaleDenominator: 5000000,
+              symbolizer: {
+                label: "${"${nr}"}"
+              }
+            }),
+            new OpenLayers.Rule({
+              minScaleDenominator: 5000000,
+              symbolizer: {
+                label: ""
+              }
+            })
+          ]
+      }),
+        'temporary': {
+          strokeWidth: 3,
+          strokeColor  : "#ada",
+          fontColor: "#ada",
+          fillOpacity: 0.1}
+      });
+     
+
+//dekningsoversikt - vector layer
+      var sjohlayer = new OpenLayers.Layer.Vector("Dekningsoversikt Sj&oslash; Hovedkart",
+                                {shortid: "dekning.sjo", styleMap: dekningStyle, visibility: ${visible} });
+
+      var handler = function(request) {
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+          'internalProjection': mapProj,
+          'externalProjection': proj['4326'] 
+        });
+        var features = geojson_format.read(request.responseText);
+        for (key in features) {
+          var feature=features[key];
+          feature.attributes['nr'] = feature.fid;
+        }
+        sjohlayer.addFeatures(features);
+      }
+
+      map.addLayer(sjohlayer);
+
+      var request = OpenLayers.Request.GET({
+        url: "/json/hovedserie_sjo.json",
+        callback: handler
+      });
+
+      var sjoh_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = sjohlayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          sjohlayer.drawFeature(feature);
+        });
+      };
+      var sjoh_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = sjohlayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="default";
+          sjohlayer.drawFeature(feature);
+        });
+      };
+      var sjoh_selectBlad = function(feature) {
+        alert(feature.fid);
+        postEvent({"event":"onSelect", "element":"kartblad", "type":"n50", "id":feature.fid});
+      }
+
+      var highlightDekningCtrl = new OpenLayers.Control.SelectFeature(sjohlayer, {
+                hover: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: sjoh_highlightAllById,
+                    featureunhighlighted: sjoh_unhighlightAllById
+                }
+            });
+      var selectDekningCtrl = new OpenLayers.Control.SelectFeature(sjohlayer, {
+         clickFeature: sjoh_selectBlad          
+      });
+
+      map.addControl(highlightDekningCtrl);
+      highlightDekningCtrl.activate();
+      map.addControl(selectDekningCtrl);
+      selectDekningCtrl.activate();

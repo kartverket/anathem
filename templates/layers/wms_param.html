@@ -1,0 +1,13 @@
+      var wms = new OpenLayers.Layer.WMS(
+        "${name}", "${url}",
+        {layers: "${layers}", 
+         transparent: true, 
+         format: 'image/png'},
+        {shortid: "${id}", 
+         isBaseLayer: false, 
+         visibility: ${visible}, 
+         transitionEffect: 'resize',
+         singleTile: true
+        });
+
+      map.addLayers([wms]);

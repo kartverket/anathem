@@ -1,0 +1,59 @@
+      <% vars['labelScaleLimit'] = 500000 %>
+      <%include file="/styles/abas.html" />
+
+//kommunegrenser - vector layer
+      var strTFS = new OpenLayers.Strategy.TFS({resFactor: 1, ratio:1, mapBounds:mapBounds, format: new OpenLayers.Format.GeoJSON()});
+      var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_kommuner",last:false,
+ 						 format: new OpenLayers.Format.GeoJSON()  });
+      var abasLayer = new OpenLayers.Layer.Vector("Kommuner (ABAS)",{
+                                shortid: "kommune",
+ 			        strategies: [strTFS],
+				protocol:prtTFS,
+				projection: mapProj,
+                                styleMap: abasStyle,
+				visibility: ${visible}
+		});
+
+      map.addLayers([abasLayer]);
+
+      var abas_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = abasLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          abasLayer.drawFeature(feature);
+        });
+      };
+      var abas_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = abasLayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="default";
+          abasLayer.drawFeature(feature);
+        });
+      };
+      var abas_kommuneinfo = function(feature) {
+        alert(feature.attributes.n);
+        postEvent({"event":"onSelect", "element":"kommune", "id":feature.fid, "name":feature.attributes.n});
+      }
+
+
+
+      var highlightAbasCtrl = new OpenLayers.Control.SelectFeature(abasLayer, {
+                hover: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: abas_highlightAllById,
+                    featureunhighlighted: abas_unhighlightAllById
+                }
+            });
+      var selectAbasCtrl = new OpenLayers.Control.SelectFeature(abasLayer, {
+         clickFeature: abas_kommuneinfo 
+      });
+
+
+      map.addControl(highlightAbasCtrl);
+      highlightAbasCtrl.activate();
+      map.addControl(selectAbasCtrl);
+      selectAbasCtrl.activate();

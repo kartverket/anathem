@@ -1,0 +1,40 @@
+ var dekningHStyle = new OpenLayers.StyleMap({
+        'default': new OpenLayers.Style({
+          strokeWidth: 1,
+          strokeColor  : "#884",
+          fillOpacity: 0,
+          graphicZIndex: 0,
+
+          label : "${"${Kartnavn}"}",
+          fontColor: "#aa8",
+          fontSize: "12px",
+          fontFamily: "Courier New, monospace",
+          fontWeight: "bold",
+          labelAlign: "cm",
+          labelOutlineColor: "white",
+          labelOutlineWidth: 5
+
+      }, {
+          rules: [
+            new OpenLayers.Rule({
+              maxScaleDenominator: ${vars['labelScaleLimit']},
+              symbolizer: {
+                label: "${"${Kartnavn}"}"
+              }
+            }),
+            new OpenLayers.Rule({
+              minScaleDenominator: ${vars['labelScaleLimit']},
+              symbolizer: {
+                label: ""
+              }
+            })
+          ]
+      }),
+        'temporary': {
+          strokeWidth: 3,
+          strokeColor  : "#dda",
+          fontColor: "#440",
+          graphicZIndex: 1,
+          fillOpacity: 0.2}
+      });
+

@@ -1,0 +1,22 @@
+       var matrixIds = new Array(18);
+       for (var i=0; i<=18; ++i) {
+         matrixIds[i] = new Object();
+         matrixIds[i].identifier = mapProj + ":" + i;
+       } 
+	  
+       var wmts = new OpenLayers.Layer.WMTS({
+         name: "Europa",
+         url: gkopen_wmts,
+         layer: "europa",
+         matrixSet: mapProj,
+         matrixIds: matrixIds,
+         format: "image/png",
+         requestEncoding: "kvp",
+         style: "default",
+         shortid: "europa", 
+         visibility: ${visible}, 
+         transitionEffect: 'resize',
+         opacity: 0.5
+       });   
+
+    map.addLayers([wmts]);

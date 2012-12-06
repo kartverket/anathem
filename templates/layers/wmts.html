@@ -1,0 +1,21 @@
+       var matrixIds = new Array(18);
+       for (var i=0; i<=18; ++i) {
+         matrixIds[i] = new Object();
+         matrixIds[i].identifier = mapProj + ":" + i;
+       } 
+	  
+       var wmts = new OpenLayers.Layer.WMTS({
+         name: decodeURIComponent(params.name),
+         url: params.url,
+         layer: params.layer,
+         matrixSet: mapProj,
+         matrixIds: matrixIds,
+         format: "image/png",
+         requestEncoding: "kvp",
+         style: "default",
+         shortid: params.id, 
+         visibility: ${visible}, 
+         transitionEffect: 'resize',
+       });   
+
+    map.addLayers([wmts]);

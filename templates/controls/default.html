@@ -1,0 +1,10 @@
+      var layer_sw = new OpenLayers.Control.LayerSwitcher();
+      map.addControl(layer_sw);
+      var legend = new OpenLayers.Control.Legend();
+      map.addControl(legend);
+      var nav = new OpenLayers.Control.Navigation();
+      map.addControl(nav);
+      map.addControl(new OpenLayers.Control.ScaleLine());
+      var knav = new OpenLayers.Control.KeyboardDefaults();
+      map.addControl(knav);
+

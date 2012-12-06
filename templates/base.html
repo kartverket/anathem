@@ -1,0 +1,41 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en" style="height:100%"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en" style="height:100%"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en" style="height:100%"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" style="height:100%"> <!--<![endif]-->
+<head>
+  <!-- by kartverket / Thomas Hirsch 2012 - public domain -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>${title}</title>
+  <meta name="description" content="">
+
+  <meta name="viewport" content="width=device-width">
+
+  <!--<script src="/js/modernizr.min.js"></script>-->
+  <script src="/js/proj4js.min.js"></script>
+  <script src="/js/openlayers.min.js"></script>
+  <script src="/js/easyXDM.debug.js"></script> <!-- our maps send status messages via an easyXDM API -->
+  <!-- todo: move a part of these scripts to a post-loading in plugins.js, where they are not needed immediately. -->
+
+
+</head>
+<body style="height:100%; margin:0; padding:0" onLoad="init();">
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <header>
+
+  </header>
+  <div id="map" role="main" style="height:100%"></div>
+  <footer>
+
+  </footer>
+
+  <script>
+${mapscript}  
+  </script>
+
+  <script src="/js/jquery.js"></script>
+  <script src="/js/plugins.min.js"></script>
+
+</body>
+</html>
