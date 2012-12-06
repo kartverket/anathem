@@ -1,0 +1,38 @@
+# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
+
+template : base
+title    : Norgeskart
+mapscript: 
+  template  : mapscript
+  baselayers:   
+    - template: layers/europa
+  overlays  : 
+    - template: layers/wmts_param
+      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts 
+      name: Land (topo2) 
+      layer: topo2
+      id: land 
+    - template: layers/wmts_param
+      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
+      name: Land, gr&aring; (topo2)
+      layer: topo2graatone
+      id: graa 
+    - template: layers/wmts_param
+      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
+      name: Land, raster
+      layer: toporaster2
+      id: raster 
+    - template: layers/wmts_param
+      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
+      name: Sj&oslash; 
+      layer: sjo_hovedkart2
+      id: sjo 
+  center    : 
+    template: center/besseggen
+  controls  :
+    - template: controls/layerselector
+      layerselector_visible: true
+    - template: controls/navigation
+    - template: controls/zoom
+    - template: controls/hashstate
+
