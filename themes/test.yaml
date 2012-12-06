@@ -40,7 +40,7 @@ mapscript:
   overlays  : 
     - template: layers/topo2
     - template: layers/wmts_param
-      url: http://159.162.35.113:8080/geowebcache/service/wmts
+      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
       name: Topografisk rasterkart
       layer: toporaster2
       id: raster 
