@@ -1,10 +1,11 @@
       var dekningStyle = new OpenLayers.StyleMap({
         'default': new OpenLayers.Style({
-          strokeWidth: 1,
-          strokeColor  : "#484",
-          fillOpacity: 0, 
+          strokeWidth: 2,
+          strokeColor  :"#484",
+          fillOpacity: 0.1, 
+          strokeOpacity: 1,
 
-          label : "${"${nr}"}",
+          label : "${"${n}"}",
           fontColor: "#8a8",
           fontSize: "12px",
           fontFamily: "Courier New, monospace",
@@ -12,17 +13,16 @@
           labelAlign: "cm",
           labelOutlineColor: "white",
           labelOutlineWidth: 5
-
       }, {
           rules: [
             new OpenLayers.Rule({
-              maxScaleDenominator: 5000000,
+              maxScaleDenominator: 500000,
               symbolizer: {
-                label: "${"${nr}"}"
+                label: "${"${n}"}"
               }
             }),
             new OpenLayers.Rule({
-              minScaleDenominator: 5000000,
+              minScaleDenominator: 500000,
               symbolizer: {
                 label: ""
               }
@@ -30,10 +30,20 @@
           ]
       }),
         'temporary': {
-          strokeWidth: 3,
+          strokeWidth: 6,
           strokeColor  : "#ada",
           fontColor: "#ada",
           fillOpacity: 0.1}
+        ,
+        'toobig': {
+          strokeWidth: 0,
+          fillOpacity: 0}
+        ,
+        'toosmall': {
+          strokeWidth: 1,
+          strokeColor  : "#8a8",
+          fillColor: "#8a8",
+          fillOpacity: 0.5}
       });
      
 
@@ -47,10 +57,7 @@
           'externalProjection': proj['4326'] 
         });
         var features = geojson_format.read(request.responseText);
-        for (key in features) {
-          var feature=features[key];
-          feature.attributes['nr'] = feature.fid;
-        }
+        features = features.sort(function(a,b){return b.geometry.getArea()-a.geometry.getArea()}); // sort by area
         sjohlayer.addFeatures(features);
       }
 
@@ -65,33 +72,67 @@
         // highlight all elements with the same element.feature.fid;
         var ident = sjohlayer.getFeaturesByFid (element.feature.fid) ;
         $.each(ident, function(i, feature) {
-          feature.renderIntent="temporary";
-          sjohlayer.drawFeature(feature);
+          var bladscale = feature.attributes.s;
+          var mapscale  = map.getScale();
+          if (bladscale > mapscale / 100.0) {
+           if (bladscale < mapscale) {
+            feature.renderIntent="temporary";
+            sjohlayer.drawFeature(feature);
+           }
+          }
         });
       };
       var sjoh_unhighlightAllById = function(element) {
         // un-highlight all elements with the same element.feature.fid;
         var ident = sjohlayer.getFeaturesByFid (element.feature.fid) ;
         $.each(ident, function(i, feature) {
+          var bladscale = feature.attributes.s;
+          var mapscale  = map.getScale();
           feature.renderIntent="default";
+          if (bladscale > mapscale) {
+            feature.renderIntent="toobig";
+          }
+          if (bladscale < mapscale / 100.0) {
+            feature.renderIntent="toosmall";
+          }
+          sjohlayer.draFeature(feature);
+        });
+      };
+      var sjoh_highlightAllByScale = function() {
+        $.each(sjohlayer.features, function(i, feature) {
+          var bladscale = feature.attributes.s;
+          var mapscale  = map.getScale();
+          feature.renderIntent="default";
+          if (bladscale > mapscale ) {
+            feature.renderIntent="toobig";
+          }
+          if (bladscale < mapscale / 100.0) {
+            feature.renderIntent="toosmall";
+          }
           sjohlayer.drawFeature(feature);
         });
       };
+
+      map.events.register("zoomend", this, sjoh_highlightAllByScale);
+      sjoh_highlightAllByScale();
+
       var sjoh_selectBlad = function(feature) {
-        alert(feature.fid);
-        postEvent({"event":"onSelect", "element":"kartblad", "type":"n50", "id":feature.fid});
+        alert(feature.fid+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
+        postEvent({"event":"onSelect", "element":"kartblad", "type":"sjo", "id":feature.fid});
       }
 
       var highlightDekningCtrl = new OpenLayers.Control.SelectFeature(sjohlayer, {
                 hover: true,
+                multiple: true,
                 highlightOnly: true,
                 renderIntent: "temporary",
                 eventListeners: {
                     beforefeaturehighlighted: sjoh_highlightAllById,
                     featureunhighlighted: sjoh_unhighlightAllById
                 }
-            });
+      });
       var selectDekningCtrl = new OpenLayers.Control.SelectFeature(sjohlayer, {
+         multiple: true,
          clickFeature: sjoh_selectBlad          
       });
 

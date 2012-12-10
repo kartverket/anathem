@@ -1,6 +1,7 @@
    var gkopen="http://opencache.statkart.no/gatekeeper/gk/gk.open";
    var gkopen_wmts="http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
    OpenLayers.Util.onImageLoadErrorColor = 'transparent';
+   OpenLayers.Lang.setCode('nb');
 
    var proj = {  //pregenerated projection objects
      "32633": new OpenLayers.Projection('EPSG:32633'),
@@ -80,7 +81,7 @@
                 }
               }
               if (typeof legend != 'undefined') {
-                if (map.controls.indexOf(legend)==1) {
+                if (map.controls.indexOf(legend)==-1) {
                   optchars += 'h';
                 } else
                 if (!legend.wrapperDiv.style.display) {
@@ -88,8 +89,13 @@
                 }
               }
               if (typeof nav != 'undefined') {
-                if (map.controls.indexOf(nav)==-1) {
+                if (!nav.active) {
                   optchars += 'n';
+                }
+              }
+              if (typeof zoomCtrl != 'undefined') {
+                if (map.controls.indexOf(zoomCtrl)==-1) {
+                  optchars += 'z';
                 }
               }
               if (optchars.length > 0) {
