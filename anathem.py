@@ -1,3 +1,4 @@
+#!/usr/bin/env python26
 """ 
 anathem - a simple template processing script around mako and yaml. 
 Use YAML configuration files to combine mako templates.
