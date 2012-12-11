@@ -50,7 +50,14 @@
         features = features.sort(function(a,b){return b.geometry.getArea()-a.geometry.getArea()}); // sort by area
         for (key in features) {
           var feature=features[key];
-          feature.attributes['nr'] = feature.fid;
+          if (feature.fid.length < 4) {
+            feature.attributes['nr'] = feature.fid;
+            feature.attributes['vignett'] = '';
+          } else {
+            feature.attributes['nr'] = '';
+            feature.attributes['vignett'] = feature.fid;
+            feature.fid = feature.fid.slice(0,3);
+          }
         }
         sjohlayer.addFeatures(features);
       }
@@ -82,7 +89,7 @@
       };
 
       var sjoh_selectBlad = function(feature) {
-        alert(feature.fid+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
+        alert(feature.fid+"\n"+feature.attributes.vignett+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
         postEvent({"event":"onSelect", "element":"kartblad", "type":"sjo", "id":feature.fid});
       }
 
