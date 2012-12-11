@@ -8,7 +8,7 @@ A simple template processor to build modular OpenLayers clients, using mako temp
 runs the processor on the configuration file "theme.yaml" in the themes subdirectory. The theme determines how to assemble the templates in the templates subdirectory.
 
 
-== Templates ==
+# Templates 
 
 Templates follow the mako include syntax. In particular:
 
@@ -17,11 +17,11 @@ Templates follow the mako include syntax. In particular:
 includes a parameter from the configuration. 
 Templates may also contain programming logic in python syntax - everything within ```${``` and ```}``` and lines preceded with a % are executed by a python interpreter. See http://makotemplates.org for more information, and the templates/ directory for examples.
 
-== Configuration ==
+# Configuration 
 
 There are several ways to provide parameters to each template. 
 
-=== Themes ===
+## Themes 
 
 A theme file is written in YAML syntax. It should contain at least one dictionary type with a "template" key. The most simple theme file is therefore:
 
@@ -56,11 +56,11 @@ Each parameter may be of one of the following types:
         parameter: value2
 ```
 
-=== Default values ===
+## Default values 
 
 The file ```./defaults``` may contain a dictionary of default values, that are provided to every template.
 
-=== Values provided in the template code ===
+## Values provided in the template code 
 
 In some cases, a template may want to provide a value directly to another template. Currently, this is done by writing it into a dictionary named ```vars```, which can then be read from the other template. We are looking for a more flexible way to do this.
 
