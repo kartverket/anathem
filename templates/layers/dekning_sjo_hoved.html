@@ -5,7 +5,7 @@
           fillOpacity: 0.1, 
           strokeOpacity: 1,
 
-          label : "${"${n}"}",
+          label : "${"${nr}"}",
           fontColor: "#8a8",
           fontSize: "12px",
           fontFamily: "Courier New, monospace",
@@ -16,13 +16,13 @@
       }, {
           rules: [
             new OpenLayers.Rule({
-              maxScaleDenominator: 500000,
+              maxScaleDenominator: 2500000,
               symbolizer: {
-                label: "${"${n}"}"
+                label: "${"${nr}"}"
               }
             }),
             new OpenLayers.Rule({
-              minScaleDenominator: 500000,
+              minScaleDenominator: 2500000,
               symbolizer: {
                 label: ""
               }
@@ -34,16 +34,6 @@
           strokeColor  : "#ada",
           fontColor: "#ada",
           fillOpacity: 0.1}
-        ,
-        'toobig': {
-          strokeWidth: 0,
-          fillOpacity: 0}
-        ,
-        'toosmall': {
-          strokeWidth: 1,
-          strokeColor  : "#8a8",
-          fillColor: "#8a8",
-          fillOpacity: 0.5}
       });
      
 
@@ -58,6 +48,10 @@
         });
         var features = geojson_format.read(request.responseText);
         features = features.sort(function(a,b){return b.geometry.getArea()-a.geometry.getArea()}); // sort by area
+        for (key in features) {
+          var feature=features[key];
+          feature.attributes['nr'] = feature.fid;
+        }
         sjohlayer.addFeatures(features);
       }
 
@@ -72,14 +66,8 @@
         // highlight all elements with the same element.feature.fid;
         var ident = sjohlayer.getFeaturesByFid (element.feature.fid) ;
         $.each(ident, function(i, feature) {
-          var bladscale = feature.attributes.s;
-          var mapscale  = map.getScale();
-          if (bladscale > mapscale / 100.0) {
-           if (bladscale < mapscale) {
-            feature.renderIntent="temporary";
-            sjohlayer.drawFeature(feature);
-           }
-          }
+          feature.renderIntent="temporary";
+          sjohlayer.drawFeature(feature);
         });
       };
       var sjoh_unhighlightAllById = function(element) {
@@ -89,32 +77,9 @@
           var bladscale = feature.attributes.s;
           var mapscale  = map.getScale();
           feature.renderIntent="default";
-          if (bladscale > mapscale) {
-            feature.renderIntent="toobig";
-          }
-          if (bladscale < mapscale / 100.0) {
-            feature.renderIntent="toosmall";
-          }
-          sjohlayer.draFeature(feature);
-        });
-      };
-      var sjoh_highlightAllByScale = function() {
-        $.each(sjohlayer.features, function(i, feature) {
-          var bladscale = feature.attributes.s;
-          var mapscale  = map.getScale();
-          feature.renderIntent="default";
-          if (bladscale > mapscale ) {
-            feature.renderIntent="toobig";
-          }
-          if (bladscale < mapscale / 100.0) {
-            feature.renderIntent="toosmall";
-          }
           sjohlayer.drawFeature(feature);
         });
       };
-
-      map.events.register("zoomend", this, sjoh_highlightAllByScale);
-      sjoh_highlightAllByScale();
 
       var sjoh_selectBlad = function(feature) {
         alert(feature.fid+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
