@@ -1,197 +1,114 @@
-var dekningStyle,
-    sjohlayer,
-    handler,
-    request,
-    sjoh_highlightAllById,
-    sjoh_unhighlightAllById,
-    sjoh_highlightAllByScale,
-    sjoh_selectBlad,
-    highlightDekningCtrl,
-    selectDekningCtrl;
-    
-dekningStyle = new OpenLayers.StyleMap({
-  'default': new OpenLayers.Style(
-    {
-      strokeWidth: 2,
-      strokeColor  :"#484",
-      fillOpacity: 0.1, 
-      strokeOpacity: 1,
-      label : "${"${n}"}",
-      fontColor: "#8a8",
-      fontSize: "12px",
-      fontFamily: "Courier New, monospace",
-      fontWeight: "bold",
-      labelAlign: "cm",
-      labelOutlineColor: "white",
-      labelOutlineWidth: 5
-    },
-    {
-      rules: [
-        new OpenLayers.Rule({
-          maxScaleDenominator: 500000,
-          symbolizer: {
-            label: "${"${n}"}"
-          }
-        }),
-        new OpenLayers.Rule({
-          minScaleDenominator: 500000,
-          symbolizer: {
-            label: ""
-          }
-        })
-      ]
-    }
-  ),
-  'temporary': {
-    strokeWidth: 6,
-    strokeColor  : "#ada",
-    fontColor: "#ada",
-    fillOpacity: 0.1
-  },
-  'toobig': {
-    strokeWidth: 0,
-    fillOpacity: 0
-  },
-  'toosmall': {
-    strokeWidth: 1,
-    strokeColor  : "#8a8",
-    fillColor: "#8a8",
-    fillOpacity: 0.5
-  }
-});
+      var dekningStyle = new OpenLayers.StyleMap({
+        'default': new OpenLayers.Style({
+          strokeWidth: 2,
+          strokeColor  :"#484",
+          fillOpacity: 0.1, 
+          strokeOpacity: 1,
+
+          label : "${"${nr}"}",
+          fontColor: "#8a8",
+          fontSize: "12px",
+          fontFamily: "Courier New, monospace",
+          fontWeight: "bold",
+          labelAlign: "cm",
+          labelOutlineColor: "white",
+          labelOutlineWidth: 5
+      }, {
+          rules: [
+            new OpenLayers.Rule({
+              maxScaleDenominator: 2500000,
+              symbolizer: {
+                label: "${"${nr}"}"
+              }
+            }),
+            new OpenLayers.Rule({
+              minScaleDenominator: 2500000,
+              symbolizer: {
+                label: ""
+              }
+            })
+          ]
+      }),
+        'temporary': {
+          strokeWidth: 6,
+          strokeColor  : "#ada",
+          fontColor: "#ada",
+          fillOpacity: 0.1}
+      });
+     
 
 //dekningsoversikt - vector layer
-sjohlayer = new OpenLayers.Layer.Vector(
-  "Dekningsoversikt Sj&oslash; Hovedkart",
-  {
-    shortid: "dekning.sjo", 
-    styleMap: dekningStyle, 
-    visibility: ${visible}
-  }
-);
+      var sjohlayer = new OpenLayers.Layer.Vector("Dekningsoversikt Sj&oslash; Hovedkart",
+                                {shortid: "dekning.sjo", styleMap: dekningStyle, visibility: ${visible} });
 
-handler = function (request) {
-  var geojson_format,
-      features;
-
-  geojson_format = new OpenLayers.Format.GeoJSON({
-    'internalProjection': mapProj,
-    'externalProjection': proj['4326'] 
-  });
-
-  features = geojson_format.read(request.responseText);
-  features = features.sort(function (a,b) {return b.geometry.getArea() - a.geometry.getArea()}); // sort by area
-  sjohlayer.addFeatures(features);
-};
-
-map.addLayer(sjohlayer);
-
-request = OpenLayers.Request.GET({
-  url: "/json/hovedserie_sjo.json",
-  callback: handler
-});
-
-sjoh_highlightAllById = function (element) {
-  // highlight all elements with the same element.feature.fid
-
-  var ident = sjohlayer.getFeaturesByFid(element.feature.fid);
-
-  $.each(ident, function (i, feature) {
-    var bladscale,
-        mapscale;
-
-    bladscale = feature.attributes.s;
-    mapscale  = map.getScale();
-
-    if (bladscale > mapscale / 100.0) {
-      if (bladscale < mapscale) {
-        feature.renderIntent = "temporary";
-        sjohlayer.drawFeature(feature);
+      var handler = function(request) {
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+          'internalProjection': mapProj,
+          'externalProjection': proj['4326'] 
+        });
+        var features = geojson_format.read(request.responseText);
+        features = features.sort(function(a,b){return b.geometry.getArea()-a.geometry.getArea()}); // sort by area
+        for (key in features) {
+          var feature=features[key];
+          if (feature.fid.length < 4) {
+            feature.attributes['nr'] = feature.fid;
+            feature.attributes['vignett'] = '';
+          } else {
+            feature.attributes['nr'] = '';
+            feature.attributes['vignett'] = feature.fid;
+            feature.fid = feature.fid.slice(0,3);
+          }
+        }
+        sjohlayer.addFeatures(features);
       }
-    }
-  });
-};
 
-sjoh_unhighlightAllById = function (element) {
-  // un-highlight all elements with the same element.feature.fid
+      map.addLayer(sjohlayer);
 
-  var ident = sjohlayer.getFeaturesByFid(element.feature.fid);
-  $.each(ident, function (i, feature) {
-    var bladscale,
-        mapscale;
+      var request = OpenLayers.Request.GET({
+        url: "/json/hovedserie_sjo.json",
+        callback: handler
+      });
 
-    bladscale = feature.attributes.s;
-    mapscale  = map.getScale();
+      var sjoh_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = sjohlayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          sjohlayer.drawFeature(feature);
+        });
+      };
+      var sjoh_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = sjohlayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          var bladscale = feature.attributes.s;
+          var mapscale  = map.getScale();
+          feature.renderIntent="default";
+          sjohlayer.drawFeature(feature);
+        });
+      };
 
-    feature.renderIntent = "default";
-    if (bladscale > mapscale) {
-      feature.renderIntent = "toobig";
-    }
-    if (bladscale < mapscale / 100.0) {
-      feature.renderIntent = "toosmall";
-    }
-    sjohlayer.draFeature(feature);
-  });
-};
+      var sjoh_selectBlad = function(feature) {
+        alert(feature.fid+"\n"+feature.attributes.vignett+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
+        postEvent({"event":"onSelect", "element":"kartblad", "type":"sjo", "id":feature.fid});
+      }
 
-sjoh_highlightAllByScale = function () {
-  $.each(sjohlayer.features, function (i, feature) {
-    var bladscale,
-        mapscale;
+      var highlightDekningCtrl = new OpenLayers.Control.SelectFeature(sjohlayer, {
+                hover: true,
+                multiple: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: sjoh_highlightAllById,
+                    featureunhighlighted: sjoh_unhighlightAllById
+                }
+      });
+      var selectDekningCtrl = new OpenLayers.Control.SelectFeature(sjohlayer, {
+         multiple: true,
+         clickFeature: sjoh_selectBlad          
+      });
 
-    bladscale = feature.attributes.s;
-    mapscale  = map.getScale();
-
-    feature.renderIntent = "default";
-
-    if (bladscale > mapscale ) {
-      feature.renderIntent = "toobig";
-    }
-    if (bladscale < mapscale / 100.0) {
-      feature.renderIntent = "toosmall";
-    }
-
-    sjohlayer.drawFeature(feature);
-  });
-};
-
-map.events.register("zoomend", this, sjoh_highlightAllByScale);
-
-sjoh_highlightAllByScale();
-
-sjoh_selectBlad = function (feature) {
-  alert(feature.fid+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
-  postEvent({
-    "event": "onSelect", 
-    "element": "kartblad", 
-    "type": "sjo", 
-    "id": feature.fid
-  });
-};
-
-highlightDekningCtrl = new OpenLayers.Control.SelectFeature(
-  sjohlayer, 
-  {
-    hover: true,
-    multiple: true,
-    highlightOnly: true,
-    renderIntent: "temporary",
-    eventListeners: {
-      beforefeaturehighlighted: sjoh_highlightAllById,
-      featureunhighlighted: sjoh_unhighlightAllById
-    }
-  }
-);
-
-selectDekningCtrl = new OpenLayers.Control.SelectFeature(
-  sjohlayer, 
-  {
-  multiple: true,
-  clickFeature: sjoh_selectBlad
-  }
-);
-
-map.addControl(highlightDekningCtrl);
-highlightDekningCtrl.activate();
-map.addControl(selectDekningCtrl);
-selectDekningCtrl.activate();
+      map.addControl(highlightDekningCtrl);
+      highlightDekningCtrl.activate();
+      map.addControl(selectDekningCtrl);
+      selectDekningCtrl.activate();
