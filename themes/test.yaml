@@ -62,6 +62,9 @@ mapscript:
   center    : 
     template: center/besseggen
   controls  :
-    - template: controls/default
+    - template: controls/navigation
+    - template: controls/zoom
+    - template: controls/layerselector
+    - template: controls/legend
     - template: controls/hashstate
 
