@@ -1,240 +1,299 @@
-      var nmgrStyle = new OpenLayers.StyleMap({
-        'default': new OpenLayers.Style(
-          {
+var nmgrStyle,
+    nmglStyle,
+    strTFS,
+    st2TFS,
+    prtTFS,
+    pr2TFS,
+    nmgrLayer,
+    nmglLayer,
+    nmgr_highlightAllById,
+    nmgr_unhighlightAllById,
+    nmgr_info,
+    highlightAbasCtrl,
+    selectAbasCtrl;
+
+nmgrStyle = new OpenLayers.StyleMap({
+  'default': new OpenLayers.Style(
+    {
+      strokeWidth: 0,
+      strokeColor  : "#488",
+      fillColor  : "#488",
+      graphicZIndex: 0,
+      fillOpacity: 0.0
+    }, 
+    {
+      rules: [
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Fiske"
+          }),
+          symbolizer: { 
+            fillOpacity: 1, 
+            fillColor : "#48f"
+          } 
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Ekskl"
+          }),
+          symbolizer: { 
+            fillOpacity: 1,
+            fillColor : "#48f"
+          } 
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "DetS"
+          }),
+          symbolizer: { 
+            fillOpacity: 1,
+            fillColor : "#888"
+          } 
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Territorial"
+          }),
+          symbolizer: { 
+            fillOpacity: 1,
+            fillColor : "#fda"
+          } 
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "InternasjonaltFarvann"
+          }),
+          symbolizer: { 
+            fillOpacity: 1,
+            fillColor : "#8f8"
+          } 
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Landareal"
+          }),
+          symbolizer: { 
+            fillOpacity: 1,
+            fillColor : "#fda"
+          } 
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Tilst"
+          }),
+          symbolizer: { 
+            fillOpacity: 1,
+            fillColor : "#48f"
+          } 
+        })
+      ]
+    }
+  ),
+  'temporary': {
+    fillColor  : "#fa4",
+    graphicZIndex: 1,
+    fillOpacity: 1
+  }
+});
+
+nmglStyle = new OpenLayers.StyleMap({
+  'default': new OpenLayers.Style( 
+    {
+      strokeWidth: 3,
+      strokeColor  : "#488",
+      fillColor  : "#488",
+      graphicZIndex: 0,
+      fillOpacity: 0
+    }, 
+    {
+      rules: [
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Riksgrense"
+          }),
+          symbolizer: {
+            strokeWidth: 2,
+            strokeColor : "#B487FE"
+          }
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "GrenseSj"
+          }),
+          symbolizer: {
+            strokeWidth: 2,
+            strokeColor : "#48f"
+          }
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Territorialgrense"
+          }),
+          symbolizer: {
+            strokeWidth: 2,
+            strokeColor : "#48f"
+          }
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Grunnlinje"
+          }),
+          symbolizer: {
+            strokeWidth: 1,
+            strokeColor : "#48f"
+          }
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: "Kystkontur"
+          }),
+          symbolizer: {
             strokeWidth: 0,
-            strokeColor  : "#488",
-            fillColor  : "#488",
-            graphicZIndex: 0,
-            fillOpacity: 0.0
-          }, {
-          rules: [
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Fiske"
-              }),
-              symbolizer: { 
-                fillOpacity: 1, 
-                fillColor : "#48f"
-              } 
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Ekskl"
-              }),
-              symbolizer: { 
-                fillOpacity: 1,
-                fillColor : "#48f"
-              } 
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "DetS"
-              }),
-              symbolizer: { 
-                fillOpacity: 1,
-                fillColor : "#888"
-              } 
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Territorial"
-              }),
-              symbolizer: { 
-                fillOpacity: 1,
-                fillColor : "#fda"
-              } 
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "InternasjonaltFarvann"
-              }),
-              symbolizer: { 
-                fillOpacity: 1,
-                fillColor : "#8f8"
-              } 
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Landareal"
-              }),
-              symbolizer: { 
-                fillOpacity: 1,
-                fillColor : "#fda"
-              } 
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Tilst"
-              }),
-              symbolizer: { 
-                fillOpacity: 1,
-                fillColor : "#48f"
-              } 
-            })
-          ]}
-        ),
-        'temporary': {
-          fillColor  : "#fa4",
-          graphicZIndex: 1,
-          fillOpacity: 1
-        }
-      });
-      var nmglStyle = new OpenLayers.StyleMap({
-        'default': new OpenLayers.Style( 
-          {
-            strokeWidth: 3,
-            strokeColor  : "#488",
-            fillColor  : "#488",
-            graphicZIndex: 0,
-            fillOpacity: 0
-          }, {
-          rules: [
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Riksgrense"
-              }),
-              symbolizer: {
-                strokeWidth: 2,
-                strokeColor : "#B487FE"
-              }
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "GrenseSj"
-              }),
-              symbolizer: {
-                strokeWidth: 2,
-                strokeColor : "#48f"
-              }
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Territorialgrense"
-              }),
-              symbolizer: {
-                strokeWidth: 2,
-                strokeColor : "#48f"
-              }
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Grunnlinje"
-              }),
-              symbolizer: {
-                strokeWidth: 1,
-                strokeColor : "#48f"
-              }
-            }),
-            new OpenLayers.Rule({
-              filter: new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.LIKE,
-                property: "o",
-                value: "Kystkontur"
-              }),
-              symbolizer: {
-                strokeWidth: 0,
-                strokeColor : "#000"
-              }
-            })
-            
-          ]}),
-        'temporary': {
-          strokeWidth: 4,
-          graphicZIndex: 1
-        }
-      });
-     
+            strokeColor : "#000"
+          }
+        })
+      ]
+    }
+  ),
+  'temporary': {
+    strokeWidth: 4,
+    graphicZIndex: 1
+  }
+});
+
 
 //kommunegrenser - vector layer
-      var strTFS = new OpenLayers.Strategy.TFS({resFactor: 1, ratio:1, mapBounds:mapBounds, format: new OpenLayers.Format.GeoJSON()});
-      var st2TFS = new OpenLayers.Strategy.TFS({resFactor: 1, ratio:1, mapBounds:mapBounds, format: new OpenLayers.Format.GeoJSON()});
-      var prtTFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_nmg",last:false,
- 						 format: new OpenLayers.Format.GeoJSON()  });
-      var pr2TFS = new OpenLayers.Protocol.TFS({ url: "/stache/kd_nmg_line",last:false,
- 						 format: new OpenLayers.Format.GeoJSON()  }); 
-      var nmgrLayer = new OpenLayers.Layer.Vector("Norges maritime grenser",{
-                                shortid: "grenser.maritime",
- 			        strategies: [strTFS],
-				protocol:prtTFS,
-				projection: mapProj,
-                                styleMap: nmgrStyle,
-				visibility: ${visible}
-		});
-      nmgrLayer.setOpacity(0.4);
-      var nmglLayer = new OpenLayers.Layer.Vector("Maritime grenser (linje)",{
-                                shortid: "grenser.maritime.line",
- 			        strategies: [st2TFS],
-				protocol:pr2TFS,
-				projection: mapProj,
-                                styleMap: nmglStyle,
-                                displayInLayerSwitcher: false,
-				visibility: ${visible}
-		});
-      map.events.on({"changelayer": function() { 
-        nmglLayer.setVisibility(nmgrLayer.getVisibility()) }
-      });
+strTFS = new OpenLayers.Strategy.TFS({
+  resFactor: 1, 
+  ratio: 1, 
+  mapBounds: mapBounds,
+  format: new OpenLayers.Format.GeoJSON()
+});
 
-      map.addLayers([nmgrLayer,nmglLayer]);
+st2TFS = new OpenLayers.Strategy.TFS({
+  resFactor: 1, 
+  ratio: 1, 
+  mapBounds: mapBounds, 
+  format: new OpenLayers.Format.GeoJSON()
+});
 
-      var nmgr_highlightAllById = function(element) {
-        // highlight all elements with the same element.feature.fid;
-        var ident = nmgrLayer.getFeaturesByFid (element.feature.fid) ;
-        $.each(ident, function(i, feature) {
-          feature.renderIntent="temporary";
-          nmgrLayer.drawFeature(feature);
-        });
-      };
-      var nmgr_unhighlightAllById = function(element) {
-        // un-highlight all elements with the same element.feature.fid;
-        var ident = nmgrLayer.getFeaturesByFid (element.feature.fid) ;
-        $.each(ident, function(i, feature) {
-          feature.renderIntent="default";
-          nmgrLayer.drawFeature(feature);
-        });
-      };
-      var nmgr_info = function(feature) {
-        alert(feature.attributes['n'] + "\n" + feature.attributes['o']);
-      }
+prtTFS = new OpenLayers.Protocol.TFS({ 
+  url: "/stache/kd_nmg",
+  last: false,
+  format: new OpenLayers.Format.GeoJSON()
+});
 
+pr2TFS = new OpenLayers.Protocol.TFS({
+  url: "/stache/kd_nmg_line",
+  last: false,
+  format: new OpenLayers.Format.GeoJSON()
+}); 
 
+nmgrLayer = new OpenLayers.Layer.Vector(
+  "Norges maritime grenser",
+  {
+    shortid: "grenser.maritime",
+    strategies: [strTFS],
+    protocol:prtTFS,
+    projection: mapProj,
+    styleMap: nmgrStyle,
+    visibility: ${visible}
+  }
+);
 
-      var highlightAbasCtrl = new OpenLayers.Control.SelectFeature(nmgrLayer, {
-                hover: true,
-                highlightOnly: true,
-                renderIntent: "temporary",
-                eventListeners: {
-                    beforefeaturehighlighted: nmgr_highlightAllById,
-                    featureunhighlighted: nmgr_unhighlightAllById
-                }
-            });
-      var selectAbasCtrl = new OpenLayers.Control.SelectFeature(nmgrLayer, {
-         clickFeature: nmgr_info 
-      });
+nmgrLayer.setOpacity(0.4);
 
+nmglLayer = new OpenLayers.Layer.Vector(
+  "Maritime grenser (linje)",
+  {
+    shortid: "grenser.maritime.line",
+    strategies: [st2TFS],
+    protocol:pr2TFS,
+    projection: mapProj,
+    styleMap: nmglStyle,
+    displayInLayerSwitcher: false,
+    visibility: ${visible}
+  }
+);
 
-      map.addControl(highlightAbasCtrl);
-      highlightAbasCtrl.activate();
-      map.addControl(selectAbasCtrl);
-      selectAbasCtrl.activate();
+map.events.on({
+  "changelayer": function () { 
+    nmglLayer.setVisibility(nmgrLayer.getVisibility()) 
+  }
+});
+
+map.addLayers([nmgrLayer,nmglLayer]);
+
+nmgr_highlightAllById = function (element) {
+  // highlight all elements with the same element.feature.fid
+  var ident = nmgrLayer.getFeaturesByFid(element.feature.fid);
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent = "temporary";
+    nmgrLayer.drawFeature(feature);
+  });
+};
+
+nmgr_unhighlightAllById = function (element) {
+  // un-highlight all elements with the same element.feature.fid
+
+  var ident = nmgrLayer.getFeaturesByFid(element.feature.fid);
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent="default";
+    nmgrLayer.drawFeature(feature);
+  });
+};
+
+nmgr_info = function (feature) {
+  alert(feature.attributes['n'] + "\n" + feature.attributes['o']);
+};
+
+highlightAbasCtrl = new OpenLayers.Control.SelectFeature(
+  nmgrLayer, 
+  {
+    hover: true,
+    highlightOnly: true,
+    renderIntent: "temporary",
+    eventListeners: {
+      beforefeaturehighlighted: nmgr_highlightAllById,
+      featureunhighlighted: nmgr_unhighlightAllById
+    }
+  }
+);
+
+selectAbasCtrl = new OpenLayers.Control.SelectFeature(
+  nmgrLayer, 
+  {
+    clickFeature: nmgr_info 
+  }
+);
+
+map.addControl(highlightAbasCtrl);
+highlightAbasCtrl.activate();
+map.addControl(selectAbasCtrl);
+selectAbasCtrl.activate();

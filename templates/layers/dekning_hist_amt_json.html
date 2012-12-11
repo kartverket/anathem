@@ -1,60 +1,92 @@
-      <% vars['labelScaleLimit'] = 2000000 %>
-      <%include file="/styles/dekning_historisk.html" />
+<% vars['labelScaleLimit'] = 2000000 %>
+<%include file="/styles/dekning_historisk.html" />
 
-//dekningsoversikt - vector layer
-      var hamtlayer = new OpenLayers.Layer.Vector("Historiske Amtskart",
-                                {shortid: "hist.amt", styleMap: dekningHStyle, visibility: ${visible} });
+var hamtlayer,
+    handler,
+    request,
+    hamt_highlightAllById,
+    hamt_unhighlightAllById,
+    hamt_selectBlad,
+    hamtHighlightDekningCtrl,
+    hamtSelectDekningCtrl;
 
-      var handler = function(request) {
-        var geojson_format = new OpenLayers.Format.GeoJSON({
-          'internalProjection': mapProj,
-          'externalProjection': proj['32633'] 
-        });
-        var features = geojson_format.read(request.responseText);
-        hamtlayer.addFeatures(features);
-      }
+// dekningsoversikt - vector layer
+hamtlayer = new OpenLayers.Layer.Vector(
+  "Historiske Amtskart",
+  {
+    shortid: "hist.amt", 
+    styleMap: dekningHStyle, 
+    visibility: ${visible} 
+  }
+);
 
-      var request = OpenLayers.Request.GET({
-        url: "/json/dekning_hist_amt.json",
-        callback: handler
-      });
+handler = function (request) {
+  var geojson_format,
+      features;
 
-      map.addLayers([hamtlayer]);
+  geojson_format = new OpenLayers.Format.GeoJSON({
+    'internalProjection': mapProj,
+    'externalProjection': proj['32633'] 
+  });
+  features = geojson_format.read(request.responseText);
 
-      var hamt_highlightAllById = function(element) {
-        // highlight all elements with the same element.feature.fid;
-        var ident = hamtlayer.getFeaturesByFid (element.feature.fid) ;
-        $.each(ident, function(i, feature) {
-          feature.renderIntent="temporary";
-          hamtlayer.drawFeature(feature);
-        });
-      };
-      var hamt_unhighlightAllById = function(element) {
-        // un-highlight all elements with the same element.feature.fid;
-        var ident = hamtlayer.getFeaturesByFid (element.feature.fid) ;
-        $.each(ident, function(i, feature) {
-          feature.renderIntent="default";
-          hamtlayer.drawFeature(feature);
-        });
-      };
-      var hamt_selectBlad = function(feature) {
-        alert(feature.attributes.Kartnavn);
-      }
+  hamtlayer.addFeatures(features);
+};
 
-      var hamtHighlightDekningCtrl = new OpenLayers.Control.SelectFeature(hamtlayer, {
-                hover: true,
-                highlightOnly: true,
-                renderIntent: "temporary",
-                eventListeners: {
-                    beforefeaturehighlighted: hamt_highlightAllById,
-                    featureunhighlighted: hamt_unhighlightAllById
-                }
-            });
-      var hamtSelectDekningCtrl = new OpenLayers.Control.SelectFeature(hamtlayer, {
-         clickFeature: hamt_selectBlad          
-      });
+request = OpenLayers.Request.GET({
+  url: "/json/dekning_hist_amt.json",
+  callback: handler
+});
 
-      map.addControl(hamtHighlightDekningCtrl);
-      hamtHighlightDekningCtrl.activate();
-      map.addControl(hamtSelectDekningCtrl);
-      hamtSelectDekningCtrl.activate();
+map.addLayers([hamtlayer]);
+
+hamt_highlightAllById = function (element) {
+  // highlight all elements with the same element.feature.fid
+
+  var ident = hamtlayer.getFeaturesByFid (element.feature.fid);
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent = "temporary";
+    hamtlayer.drawFeature(feature);
+  });
+};
+
+hamt_unhighlightAllById = function (element) {
+  // un-highlight all elements with the same element.feature.fid;
+
+  var ident = hamtlayer.getFeaturesByFid (element.feature.fid) ;
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent = "default";
+    hamtlayer.drawFeature(feature);
+  });
+};
+
+hamt_selectBlad = function (feature) {
+  alert(feature.attributes.Kartnavn);
+};
+
+hamtHighlightDekningCtrl = new OpenLayers.Control.SelectFeature(
+  hamtlayer, 
+  {
+    hover: true,
+    highlightOnly: true,
+    renderIntent: "temporary",
+    eventListeners: {
+      beforefeaturehighlighted: hamt_highlightAllById,
+      featureunhighlighted: hamt_unhighlightAllById
+    }
+  }
+);
+
+hamtSelectDekningCtrl = new OpenLayers.Control.SelectFeature(
+  hamtlayer, 
+  {
+    clickFeature: hamt_selectBlad          
+  }
+);
+
+map.addControl(hamtHighlightDekningCtrl);
+hamtHighlightDekningCtrl.activate();
+map.addControl(hamtSelectDekningCtrl);
+hamtSelectDekningCtrl.activate();

@@ -1,60 +1,91 @@
-      <% vars['labelScaleLimit'] = 500000 %>
-      <%include file="/styles/dekning_historisk.html" />
+<% vars['labelScaleLimit'] = 500000 %>
+<%include file="/styles/dekning_historisk.html" />
 
-//dekningsoversikt - vector layer
-      var hrektlayer = new OpenLayers.Layer.Vector("Historiske Rektangelm&aring;linger",
-                                {shortid: "hist.rektangel", styleMap: dekningHStyle, visibility: ${visible} });
+var hrektlayer,
+    handler,
+    request,
+    hrekt_highlightAllById,
+    hrekt_unhighlightAllById,
+    hrekt_selectBlad,
+    hrektHighlightDekningCtrl,
+    hrektSelectDekningCtrl;
 
-      var handler = function(request) {
-        var geojson_format = new OpenLayers.Format.GeoJSON({
-          'internalProjection': mapProj,
-          'externalProjection': proj['32633'] 
-        });
-        var features = geojson_format.read(request.responseText);
-        hrektlayer.addFeatures(features);
-      }
+// dekningsoversikt - vector layer
+hrektlayer = new OpenLayers.Layer.Vector(
+  "Historiske Rektangelm&aring;linger",
+  {
+    shortid: "hist.rektangel",
+    styleMap: dekningHStyle, 
+    visibility: ${visible} 
+  }
+);
 
-      var request = OpenLayers.Request.GET({
-        url: "/json/dekning_hist_rekt.json",
-        callback: handler
-      });
+handler = function (request) {
+  var geojson_format,
+      features;
 
-      map.addLayers([hrektlayer]);
+  geojson_format = new OpenLayers.Format.GeoJSON({
+    'internalProjection': mapProj,
+    'externalProjection': proj['32633'] 
+  });
+  features = geojson_format.read(request.responseText);
 
-      var hrekt_highlightAllById = function(element) {
-        // highlight all elements with the same element.feature.fid;
-        var ident = hrektlayer.getFeaturesByFid (element.feature.fid) ;
-        $.each(ident, function(i, feature) {
-          feature.renderIntent="temporary";
-          hrektlayer.drawFeature(feature);
-        });
-      };
-      var hrekt_unhighlightAllById = function(element) {
-        // un-highlight all elements with the same element.feature.fid;
-        var ident = hrektlayer.getFeaturesByFid (element.feature.fid) ;
-        $.each(ident, function(i, feature) {
-          feature.renderIntent="default";
-          hrektlayer.drawFeature(feature);
-        });
-      };
-      var hrekt_selectBlad = function(feature) {
-        alert(feature.attributes.Kartnavn);
-      }
+  hrektlayer.addFeatures(features);
+};
 
-      var hrektHighlightDekningCtrl = new OpenLayers.Control.SelectFeature(hrektlayer, {
-                hover: true,
-                highlightOnly: true,
-                renderIntent: "temporary",
-                eventListeners: {
-                    beforefeaturehighlighted: hrekt_highlightAllById,
-                    featureunhighlighted: hrekt_unhighlightAllById
-                }
-            });
-      var hrektSelectDekningCtrl = new OpenLayers.Control.SelectFeature(hrektlayer, {
-         clickFeature: hrekt_selectBlad          
-      });
+request = OpenLayers.Request.GET({
+  url: "/json/dekning_hist_rekt.json",
+  callback: handler
+});
 
-      map.addControl(hrektHighlightDekningCtrl);
-      hrektHighlightDekningCtrl.activate();
-      map.addControl(hrektSelectDekningCtrl);
-      hrektSelectDekningCtrl.activate();
+map.addLayers([hrektlayer]);
+
+hrekt_highlightAllById = function (element) {
+  // highlight all elements with the same element.feature.fid;
+  var ident = hrektlayer.getFeaturesByFid (element.feature.fid) ;
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent = "temporary";
+    hrektlayer.drawFeature(feature);
+  });
+};
+
+hrekt_unhighlightAllById = function (element) {
+  // un-highlight all elements with the same element.feature.fid;
+
+  var ident = hrektlayer.getFeaturesByFid (element.feature.fid) ;
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent = "default";
+    hrektlayer.drawFeature(feature);
+  });
+};
+
+hrekt_selectBlad = function (feature) {
+  alert(feature.attributes.Kartnavn);
+};
+
+hrektHighlightDekningCtrl = new OpenLayers.Control.SelectFeature(
+  hrektlayer, 
+  {
+    hover: true,
+    highlightOnly: true,
+    renderIntent: "temporary",
+    eventListeners: {
+      beforefeaturehighlighted: hrekt_highlightAllById,
+      featureunhighlighted: hrekt_unhighlightAllById
+    }
+  }
+);
+
+hrektSelectDekningCtrl = new OpenLayers.Control.SelectFeature(
+  hrektlayer, 
+  {
+    clickFeature: hrekt_selectBlad
+  }
+);
+
+map.addControl(hrektHighlightDekningCtrl);
+hrektHighlightDekningCtrl.activate();
+map.addControl(hrektSelectDekningCtrl);
+hrektSelectDekningCtrl.activate();
