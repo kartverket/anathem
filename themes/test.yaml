@@ -51,6 +51,9 @@ mapscript:
     - template: layers/grunnkretser_json
     - template: layers/dekning_n50_json
     - template: layers/dekning_sjo_hoved
+    - template: layers/dekning_sjo_havne
+    - template: layers/dekning_sjo_overseiling
+    - template: layers/dekning_sjo_kystkart
     - template: layers/dekning_hist_amt_json
     - template: layers/dekning_hist_general_json
     - template: layers/dekning_hist_grev_json

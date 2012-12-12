@@ -1,0 +1,114 @@
+      var dekningStyle = new OpenLayers.StyleMap({
+        'default': new OpenLayers.Style({
+          strokeWidth: 2,
+          strokeColor  :"#844",
+          fillOpacity: 0.1, 
+          strokeOpacity: 1,
+
+          label : "${"${nr}"}",
+          fontColor: "#a88",
+          fontSize: "12px",
+          fontFamily: "Courier New, monospace",
+          fontWeight: "bold",
+          labelAlign: "cm",
+          labelOutlineColor: "white",
+          labelOutlineWidth: 5
+      }, {
+          rules: [
+            new OpenLayers.Rule({
+              maxScaleDenominator: 2500000,
+              symbolizer: {
+                label: "${"${nr}"}"
+              }
+            }),
+            new OpenLayers.Rule({
+              minScaleDenominator: 2500000,
+              symbolizer: {
+                label: ""
+              }
+            })
+          ]
+      }),
+        'temporary': {
+          strokeWidth: 6,
+          strokeColor  : "#daa",
+          fontColor: "#daa",
+          fillOpacity: 0.1}
+      });
+     
+
+//dekningsoversikt - vector layer
+      var havnelayer = new OpenLayers.Layer.Vector("Dekningsoversikt Sj&oslash; Havnekart",
+                                {shortid: "dekning.sjo.hv", styleMap: dekningStyle, visibility: ${visible} });
+
+      var handler = function(request) {
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+          'internalProjection': mapProj,
+          'externalProjection': proj['4326'] 
+        });
+        var features = geojson_format.read(request.responseText);
+        features = features.sort(function(a,b){return b.geometry.getArea()-a.geometry.getArea()}); // sort by area
+        for (key in features) {
+          var feature=features[key];
+          if (feature.fid.length < 4) {
+            feature.attributes['nr'] = feature.fid;
+            feature.attributes['vignett'] = '';
+          } else {
+            feature.attributes['nr'] = '';
+            feature.attributes['vignett'] = feature.fid;
+            feature.fid = feature.fid.slice(0,3);
+          }
+        }
+        havnelayer.addFeatures(features);
+      }
+
+      map.addLayer(havnelayer);
+
+      var request = OpenLayers.Request.GET({
+        url: "/json/havnekart.json",
+        callback: handler
+      });
+
+      var havne_highlightAllById = function(element) {
+        // highlight all elements with the same element.feature.fid;
+        var ident = havnelayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          feature.renderIntent="temporary";
+          havnelayer.drawFeature(feature);
+        });
+      };
+      var havne_unhighlightAllById = function(element) {
+        // un-highlight all elements with the same element.feature.fid;
+        var ident = havnelayer.getFeaturesByFid (element.feature.fid) ;
+        $.each(ident, function(i, feature) {
+          var bladscale = feature.attributes.s;
+          var mapscale  = map.getScale();
+          feature.renderIntent="default";
+          havnelayer.drawFeature(feature);
+        });
+      };
+
+      var havne_selectBlad = function(feature) {
+        alert(feature.fid+"\n"+feature.attributes.vignett+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
+        postEvent({"event":"onSelect", "element":"kartblad", "type":"havnekart", "id":feature.fid});
+      }
+
+      var highlightDekningCtrl = new OpenLayers.Control.SelectFeature(havnelayer, {
+                hover: true,
+                multiple: true,
+                highlightOnly: true,
+                renderIntent: "temporary",
+                eventListeners: {
+                    beforefeaturehighlighted: havne_highlightAllById,
+                    featureunhighlighted: havne_unhighlightAllById
+                }
+      });
+      var selectDekningCtrl = new OpenLayers.Control.SelectFeature(havnelayer, {
+         multiple: true,
+         clickFeature: havne_selectBlad          
+      });
+
+      map.addControl(highlightDekningCtrl);
+      highlightDekningCtrl.activate();
+      map.addControl(selectDekningCtrl);
+      selectDekningCtrl.activate();
