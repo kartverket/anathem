@@ -9,11 +9,18 @@ mapscript:
   overlays  : 
     - template: layers/topo2
       visible : 1
+    - template: layers/sjo
     - template: layers/dekning_n50_json
       visible : 1
+    - template: layers/dekning_sjo_hoved
+    - template: layers/dekning_sjo_havne
+    - template: layers/dekning_sjo_kystkart
+    - template: layers/dekning_sjo_overseiling
   center    : 
     template: center/besseggen
   controls  :
-    - template: controls/nolayerselector
+    - template: controls/zoom
+    - template: controls/navigation
+    - template: controls/layerselector
     - template: controls/hashstate
 
