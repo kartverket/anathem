@@ -1,8 +1,5 @@
 var dekningStyle,
     pn50layer,
-    handler,
-    request,
-    pn50_highlightAllById,
     pn50_unhighlightAllById,
     pn50_selectBlad,
     highlightDekningCtrl,
@@ -58,7 +55,7 @@ pn50layer = new OpenLayers.Layer.Vector(
   }
 );
 
-handler = function (request) {
+function handler(request) {
   var geojson_format,
       features,
       feature, key;
@@ -80,30 +77,20 @@ handler = function (request) {
 
 map.addLayer(pn50layer);
 
-request = OpenLayers.Request.GET({
+OpenLayers.Request.GET({
   url: "http://beta.norgeskart.no/json/dekning/land/n50.json",
   callback: handler
 });
 
-pn50_highlightAllById = function (element) {
-  // highlight all elements with the same element.feature.fid
-
-  var ident = pn50layer.getFeaturesByFid(element.feature.fid);
-  $.each(ident, function (i, feature) {
-    feature.renderIntent = "temporary";
-    pn50layer.drawFeature(feature);
-  });
-};
-
-pn50_unhighlightAllById = function(element) {
-  // un-highlight all elements with the same element.feature.fid
-
-  var ident = pn50layer.getFeaturesByFid(element.feature.fid) ;
-
-  $.each(ident, function (i, feature) {
-    feature.renderIntent="default";
-    pn50layer.drawFeature(feature);
-  });
+function markAllById(layer, intent) {
+  return function(element) {
+    // highlight all elements with the same element.feature.fid
+    var ident = layer.getFeaturesByFid(element.feature.fid);
+    $.each(ident, function (i, feature) {
+      feature.renderIntent = intent;
+      layer.drawFeature(feature);
+    });
+  }
 };
 
 pn50_selectBlad = function(feature) {
@@ -123,8 +110,8 @@ highlightDekningCtrl = new OpenLayers.Control.SelectFeature(
     highlightOnly: true,
     renderIntent: "temporary",
     eventListeners: {
-      beforefeaturehighlighted: pn50_highlightAllById,
-      featureunhighlighted: pn50_unhighlightAllById
+      beforefeaturehighlighted: markAllById(pn50layer, "temporary"),
+      featureunhighlighted: markAllById(pn50layer, "default")
     }
   }
 );
