@@ -1,0 +1,43 @@
+%if not 'vectorControls' in vars:  
+
+function markAllById(layer, intent) {
+  return function(element) {
+    // highlight all elements with the same element.feature.fid
+    var ident = layer.getFeaturesByFid(element.feature.fid);
+    $.each(ident, function (i, feature) {
+      feature.renderIntent = intent;
+      layer.drawFeature(feature);
+    });
+  }
+};
+
+function addVectorControls(map, layer, click) {
+  hoverCtrl = new OpenLayers.Control.SelectFeature(
+    layer,
+    {
+      hover: true,
+      highlightOnly: true,
+      renderIntent: "temporary",
+      eventListeners: {
+        beforefeaturehighlighted: markAllById(layer, "temporary"),
+        featureunhighlighted: markAllById(layer, "default")
+      }
+    }
+  );
+  map.addControl(hoverCtrl);
+  hoverCtrl.activate();
+
+  selectCtrl = new OpenLayers.Control.SelectFeature(
+    layer,
+    {
+      clickFeature: click
+    }
+  );
+
+  map.addControl(selectCtrl);
+  selectCtrl.activate();
+}
+
+
+<% vars['vectorControls']=True %>
+%endif

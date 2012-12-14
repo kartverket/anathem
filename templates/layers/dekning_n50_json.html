@@ -1,9 +1,8 @@
+<%include file="/functions/vector.html" />
+
 var dekningStyle,
     pn50layer,
-    pn50_unhighlightAllById,
-    pn50_selectBlad,
-    highlightDekningCtrl,
-    selectDekningCtrl;
+    pn50_selectBlad;
 
 dekningStyle = new OpenLayers.StyleMap({
   'default': new OpenLayers.Style(
@@ -82,17 +81,6 @@ OpenLayers.Request.GET({
   callback: handler
 });
 
-function markAllById(layer, intent) {
-  return function(element) {
-    // highlight all elements with the same element.feature.fid
-    var ident = layer.getFeaturesByFid(element.feature.fid);
-    $.each(ident, function (i, feature) {
-      feature.renderIntent = intent;
-      layer.drawFeature(feature);
-    });
-  }
-};
-
 pn50_selectBlad = function(feature) {
   alert(feature.fid);
   postEvent({
@@ -103,27 +91,4 @@ pn50_selectBlad = function(feature) {
   });
 };
 
-highlightDekningCtrl = new OpenLayers.Control.SelectFeature(
-  pn50layer, 
-  {
-    hover: true,
-    highlightOnly: true,
-    renderIntent: "temporary",
-    eventListeners: {
-      beforefeaturehighlighted: markAllById(pn50layer, "temporary"),
-      featureunhighlighted: markAllById(pn50layer, "default")
-    }
-  }
-);
-
-selectDekningCtrl = new OpenLayers.Control.SelectFeature(
-  pn50layer, 
-  {
-    clickFeature: pn50_selectBlad          
-  }
-);
-
-map.addControl(highlightDekningCtrl);
-highlightDekningCtrl.activate();
-map.addControl(selectDekningCtrl);
-selectDekningCtrl.activate();
+addVectorControls(map, pn50layer, pn50_selectBlad);
