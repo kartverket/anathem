@@ -40,7 +40,7 @@ dekningStyle = new OpenLayers.StyleMap({
             value: "2013"
           }),
           symbolizer: {  
-            strokeColor  : "#844",
+            strokeColor : "#844",
             fontColor: "#a88",
           }
         })
@@ -55,6 +55,12 @@ dekningStyle = new OpenLayers.StyleMap({
   },{
       rules: [
         new OpenLayers.Rule({
+         symbolizer: {
+           strokeColor  : "#ada",
+           fontColor: "#ada"
+         }
+        }),
+        new OpenLayers.Rule({
           filter: new OpenLayers.Filter.Comparison({
             type: OpenLayers.Filter.Comparison.LIKE,
             property: "u",
@@ -62,9 +68,9 @@ dekningStyle = new OpenLayers.StyleMap({
           }),
           symbolizer: {
             strokeColor  : "#daa",
-            fontColor: "#daa",
+            fontColor: "#daa"
           }
-        })
+        }) 
       ]
   })
 });
