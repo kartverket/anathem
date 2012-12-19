@@ -10,14 +10,6 @@ mapscript:
     - template: layers/topo2
       visible : 1
     - template: layers/sjo
-<<<<<<< HEAD
-    - template: layers/dekning_n50_json
-      visible : 1
-    - template: layers/dekning_sjo_hoved
-    - template: layers/dekning_sjo_havne
-    - template: layers/dekning_sjo_kystkart
-    - template: layers/dekning_sjo_overseiling
-=======
     - template: layers/dekning/land/m711/papir
     - template: layers/dekning/land/n50/papir
     - template: layers/dekning/land/n50/plast
@@ -26,7 +18,6 @@ mapscript:
     - template: layers/dekning/sjo/havnekart
     - template: layers/dekning/sjo/kystkart
     - template: layers/dekning/sjo/overseilingskart
->>>>>>> labs
   center    : 
     template: center/besseggen
   controls  :
