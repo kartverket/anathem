@@ -1,0 +1,103 @@
+<%include file="/functions/vector.html" />
+
+var dekningStyle,
+    m711layer,
+    m711_selectBlad;
+
+dekningStyle = new OpenLayers.StyleMap({
+  'default': new OpenLayers.Style(
+    {
+      strokeWidth: 2,
+      strokeColor  : "#484",
+      fillOpacity: 0.1, 
+      label : "${"${kartnr}"}",
+      fontColor: "#8a8",
+      fontSize: "12px",
+      fontFamily: "Courier New, monospace",
+      fontWeight: "bold",
+      labelAlign: "cm",
+      labelOutlineColor: "white",
+      labelOutlineWidth: 5
+    },
+    {
+      rules: [
+        new OpenLayers.Rule({
+          maxScaleDenominator: 1000000,
+          symbolizer: {
+            label: "${"${kartnr}"}"
+          }
+        }),
+        new OpenLayers.Rule({
+          minScaleDenominator: 1000000,
+          symbolizer: {
+            label: ""
+          }
+        }),
+        new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "u",
+            value: "2013"
+          }),
+          symbolizer: {
+            strokeColor  : "#844",
+            fontColor: "#a88",
+          }
+        })
+      ]
+    }
+  ),
+  'temporary': {
+      strokeWidth: 3,
+      strokeColor  : "#ada",
+      fontColor: "#ada",
+      fillOpacity: 0.1
+  }
+});
+
+//dekningsoversikt - vector layer
+m711layer = new OpenLayers.Layer.Vector(
+  "Dekningsoversikt M711",
+  {
+    shortid: "dekning.m711", 
+    styleMap: dekningStyle, 
+    visibility: ${visible} 
+  }
+);
+
+map.addLayer(m711layer);
+
+OpenLayers.Request.GET({
+  url: "http://beta.norgeskart.no/json/dekning/land/m711/m711.json",
+  callback: function(request) {
+    var geojson_format,
+      features,
+      feature, key;
+
+    geojson_format = new OpenLayers.Format.GeoJSON({
+      'internalProjection': mapProj,
+      'externalProjection': proj['32633']
+    });
+
+    features = geojson_format.read(request.responseText);
+
+    for (key in features) {
+      feature = features[key];
+      feature.fid = feature.attributes['kartnr'];
+    }
+
+    m711layer.addFeatures(features);
+  }
+});
+
+m711_selectBlad = function(feature) {
+  alert(feature.fid);
+  postEvent({
+    "event": "onSelect", 
+    "element": "kartblad", 
+    "type": "m711", 
+    "id": feature.fid
+  });
+};
+
+NK.functions.vector.addVectorControls(map, m711layer, m711_selectBlad);
