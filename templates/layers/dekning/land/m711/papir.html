@@ -68,7 +68,7 @@ m711layer = new OpenLayers.Layer.Vector(
 map.addLayer(m711layer);
 
 OpenLayers.Request.GET({
-  url: "/json/m711.json",
+  url: "http://beta.norgeskart.no/json/dekning/land/m711/m711.json",
   callback: function(request) {
     var geojson_format,
       features,
