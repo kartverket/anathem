@@ -11,7 +11,7 @@ import sys
 import re
 
 # matches mako parameters in a template: ${...}, but not containing brackets
-re_param = re.compile('\$\{([^\(]*?)\}')
+re_param = re.compile('\$\{([^\(\{]*?)\}')
 
 # single parameter: a yaml configuration filename in the themes/ folder
 nil, tema, = sys.argv

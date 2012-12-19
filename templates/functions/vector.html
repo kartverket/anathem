@@ -1,0 +1,46 @@
+%if not 'vectorControls' in vars:  
+
+NK.functions = NK.functions || {};
+NK.functions.vector = NK.functions.vector || { 
+
+  markAllById: function(layer, intent) {
+    return function(element) {
+      // highlight all elements with the same element.feature.fid
+      var ident = layer.getFeaturesByFid(element.feature.fid);
+      $.each(ident, function (i, feature) {
+        feature.renderIntent = intent;
+        layer.drawFeature(feature);
+      });
+    }
+  },
+
+  addVectorControls: function(map, layer, click) {
+    hoverCtrl = new OpenLayers.Control.SelectFeature(
+      layer,
+      {
+        hover: true,
+        highlightOnly: true,
+        renderIntent: "temporary",
+        eventListeners: {
+          beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
+          featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
+        }
+      }
+    );
+    map.addControl(hoverCtrl);
+    hoverCtrl.activate();
+    
+    selectCtrl = new OpenLayers.Control.SelectFeature(
+      layer,
+      {
+        clickFeature: click
+      }
+    );
+
+    map.addControl(selectCtrl);
+    selectCtrl.activate();
+  }
+}
+
+<% vars['vectorControls']=True %>
+%endif
