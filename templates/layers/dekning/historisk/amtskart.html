@@ -1,0 +1,41 @@
+<%include file="/functions/vector.html" />
+<% vars['labelScaleLimit'] = 2000000 %>
+<%include file="/styles/dekning/historisk.html" />
+
+var hamtlayer,
+    hamtHighlightDekningCtrl,
+    hamtSelectDekningCtrl;
+
+// dekningsoversikt - vector layer
+hamtlayer = new OpenLayers.Layer.Vector(
+  "Historiske Amtskart",
+  {
+    shortid: "hist.amt", 
+    styleMap: dekningHStyle, 
+    visibility: ${visible} 
+  }
+);
+
+request = OpenLayers.Request.GET({
+  url: "/json/dekning_hist_amt.json",
+  callback: function (request) {
+    var geojson_format,
+        features;
+
+    geojson_format = new OpenLayers.Format.GeoJSON({
+      'internalProjection': mapProj,
+      'externalProjection': proj['32633'] 
+    });
+    features = geojson_format.read(request.responseText);
+
+    hamtlayer.addFeatures(features);
+  }
+});
+
+map.addLayers([hamtlayer]);
+
+hamt_selectBlad = function (feature) {
+  alert(feature.attributes.Kartnavn);
+};
+
+NK.functions.vector.addVectorControls(map, hamtlayer, hamt_selectBlad);
