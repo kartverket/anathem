@@ -10,6 +10,7 @@ mapscript:
     - template: layers/topo2
       visible : 1
     - template: layers/sjo
+    - template: layers/dekning/land/m711/papir
     - template: layers/dekning/land/n50/papir
     - template: layers/dekning/land/n50/plast
       visible : 1
