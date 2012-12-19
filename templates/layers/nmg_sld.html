@@ -1,0 +1,140 @@
+var format = new OpenLayers.Format.SLD();
+
+strTFS = new OpenLayers.Strategy.TFS({
+  resFactor: 1, 
+  ratio: 1, 
+  mapBounds: mapBounds,
+  format: new OpenLayers.Format.GeoJSON()
+});
+
+st2TFS = new OpenLayers.Strategy.TFS({
+  resFactor: 1, 
+  ratio: 1, 
+  mapBounds: mapBounds, 
+  format: new OpenLayers.Format.GeoJSON()
+});
+
+prtTFS = new OpenLayers.Protocol.TFS({ 
+  url: "/stache/kd_nmg",
+  last: false,
+  format: new OpenLayers.Format.GeoJSON()
+});
+
+pr2TFS = new OpenLayers.Protocol.TFS({
+  url: "/stache/kd_nmg_line",
+  last: false,
+  format: new OpenLayers.Format.GeoJSON()
+}); 
+
+nmgrLayer = new OpenLayers.Layer.Vector(
+  "Norges maritime grenser",
+  {
+    shortid: "grenser.maritime",
+    strategies: [strTFS],
+    protocol:prtTFS,
+    projection: mapProj,
+    visibility: ${visible}
+  }
+);
+
+nmgrLayer.setOpacity(0.4);
+
+nmglLayer = new OpenLayers.Layer.Vector(
+  "Maritime grenser (linje)",
+  {
+    shortid: "grenser.maritime.line",
+    strategies: [st2TFS],
+    protocol:pr2TFS,
+    projection: mapProj,
+    displayInLayerSwitcher: false,
+    visibility: ${visible}
+  }
+);
+
+map.events.on({
+  "changelayer": function () { 
+    nmglLayer.setVisibility(nmgrLayer.getVisibility()) 
+  }
+});
+
+map.addLayers([nmgrLayer,nmglLayer]);
+
+function setLayerStyles() {
+  styleMap = new OpenLayers.StyleMap({'default':new OpenLayers.Style()});
+
+  for (var featureName in sld.namedLayers) {
+    var styles = sld.namedLayers[featureName].userStyles, style;
+    style = styles[0];
+    styleMap.styles["default"].rules.push( 
+      new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "o",
+            value: featureName
+          }),
+          symbolizer: style.defaultStyle
+      })
+    );
+  }
+
+  nmgrLayer.styleMap = styleMap;
+  nmglLayer.styleMap = styleMap;
+}
+
+OpenLayers.Request.GET({
+  url: "http://wms.geonorge.no/sld/NMG.xml",
+  success: function (req) {
+    sld = format.read(req.responseXML || req.responseText);
+    setLayerStyles();
+  } 
+});
+
+nmgr_highlightAllById = function (element) {
+  // highlight all elements with the same element.feature.fid
+  var ident = nmgrLayer.getFeaturesByFid(element.feature.fid);
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent = "temporary";
+    nmgrLayer.drawFeature(feature);
+  });
+};
+
+nmgr_unhighlightAllById = function (element) {
+  // un-highlight all elements with the same element.feature.fid
+
+  var ident = nmgrLayer.getFeaturesByFid(element.feature.fid);
+
+  $.each(ident, function (i, feature) {
+    feature.renderIntent="default";
+    nmgrLayer.drawFeature(feature);
+  });
+};
+
+nmgr_info = function (feature) {
+  alert(feature.attributes['n'] + "\n" + feature.attributes['o']);
+};
+
+highlightAbasCtrl = new OpenLayers.Control.SelectFeature(
+  nmgrLayer, 
+  {
+    hover: true,
+    highlightOnly: true,
+    renderIntent: "temporary",
+    eventListeners: {
+      beforefeaturehighlighted: nmgr_highlightAllById,
+      featureunhighlighted: nmgr_unhighlightAllById
+    }
+  }
+);
+
+selectAbasCtrl = new OpenLayers.Control.SelectFeature(
+  nmgrLayer, 
+  {
+    clickFeature: nmgr_info 
+  }
+);
+
+map.addControl(highlightAbasCtrl);
+highlightAbasCtrl.activate();
+map.addControl(selectAbasCtrl);
+selectAbasCtrl.activate();
