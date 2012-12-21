@@ -1,3 +1,5 @@
+<%include file="/functions/vector.html" />
+
 var format = new OpenLayers.Format.SLD();
 
 strTFS = new OpenLayers.Strategy.TFS({
@@ -37,7 +39,7 @@ nmgrLayer = new OpenLayers.Layer.Vector(
   }
 );
 
-nmgrLayer.setOpacity(0.4);
+nmgrLayer.setOpacity(0.8);
 
 nmglLayer = new OpenLayers.Layer.Vector(
   "Maritime grenser (linje)",
@@ -59,20 +61,47 @@ map.events.on({
 
 map.addLayers([nmgrLayer,nmglLayer]);
 
+var featureTranslate = {
+  'Sjoterritorium':'territorium', //rose
+  'Tilstotende_sone':'Indre farvann', //blarose
+  'Norges_okonomiske_sone':'konomiske sone', //darkblaa
+  'Fiskevernsonen_ved_Svalbard':'sonen ved Svalbard', //midblaa
+  'Fiskerisonen_ved_Jan_Mayen':'sonen ved Jan Mayen', //midblaa
+  'Internasjonalt_farvann':'Smutt', //groenn
+
+  'avgrensningslinje_for_sokkel':'avgrensningslinje', //groenn, dash
+  'Sokkelgrense':'Yttergrense', //groenn, cont
+  '200_nautiske_mil':'nautiske mil', //blaa, cont
+  'Avtalt_avgrensningslinje':'---', //blaa, cont
+  'Yttergrense_for_tilstotend_sone':'---', //blaa, tynn
+  'Territorialgrense':'Territorialgrense', //blaa, tykk
+  'Grunnlinje':'Grunnlinje' //blaa, tynn
+}
+
 function setLayerStyles() {
   styleMap = new OpenLayers.StyleMap({'default':new OpenLayers.Style()});
 
   for (var featureName in sld.namedLayers) {
     var styles = sld.namedLayers[featureName].userStyles, style;
     style = styles[0];
-    styleMap.styles["default"].rules.push( 
+    /*styleMap.styles["default"].rules.push( 
       new OpenLayers.Rule({
           filter: new OpenLayers.Filter.Comparison({
             type: OpenLayers.Filter.Comparison.LIKE,
             property: "o",
-            value: featureName
+            value: featureTranslate[featureName]
           }),
-          symbolizer: style.defaultStyle
+          symbolizer: style.rules[0].symbolizer
+      })
+    );*/
+    styleMap.styles["default"].rules.push( 
+      new OpenLayers.Rule({
+          filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LIKE,
+            property: "n",
+            value: featureTranslate[featureName]
+          }),
+          symbolizer: style.rules[0].symbolizer
       })
     );
   }
@@ -89,52 +118,10 @@ OpenLayers.Request.GET({
   } 
 });
 
-nmgr_highlightAllById = function (element) {
-  // highlight all elements with the same element.feature.fid
-  var ident = nmgrLayer.getFeaturesByFid(element.feature.fid);
-
-  $.each(ident, function (i, feature) {
-    feature.renderIntent = "temporary";
-    nmgrLayer.drawFeature(feature);
-  });
-};
-
-nmgr_unhighlightAllById = function (element) {
-  // un-highlight all elements with the same element.feature.fid
-
-  var ident = nmgrLayer.getFeaturesByFid(element.feature.fid);
-
-  $.each(ident, function (i, feature) {
-    feature.renderIntent="default";
-    nmgrLayer.drawFeature(feature);
-  });
-};
-
 nmgr_info = function (feature) {
   alert(feature.attributes['n'] + "\n" + feature.attributes['o']);
 };
 
-highlightAbasCtrl = new OpenLayers.Control.SelectFeature(
-  nmgrLayer, 
-  {
-    hover: true,
-    highlightOnly: true,
-    renderIntent: "temporary",
-    eventListeners: {
-      beforefeaturehighlighted: nmgr_highlightAllById,
-      featureunhighlighted: nmgr_unhighlightAllById
-    }
-  }
-);
+NK.functions.vector.addVectorControls(map, nmgrLayer, nmgr_info);
+//NK.functions.vector.addVectorControls(map, nmglLayer, nmgr_info);
 
-selectAbasCtrl = new OpenLayers.Control.SelectFeature(
-  nmgrLayer, 
-  {
-    clickFeature: nmgr_info 
-  }
-);
-
-map.addControl(highlightAbasCtrl);
-highlightAbasCtrl.activate();
-map.addControl(selectAbasCtrl);
-selectAbasCtrl.activate();
