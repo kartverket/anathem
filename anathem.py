@@ -26,50 +26,57 @@ def recurse_render(data):
   one key for every parameter the template includes
   """
 
-  # load template indicated by the template key
-  template_name = data["template"]
-  template = Template(filename=("templates/%s.html" % template_name), lookup=lookup)
-  # for every other key in the configuration:
-  # if it is a dict, render a subtemplate
-  # if it is a list, render an array of subtemplates
-  for key,value in data.items():
-    try: 
-      if type(value)==type(dict()):
-        data[key] = recurse_render(value)
-      if type(value)==type(list()):
-        data[key] = "\n".join([recurse_render(x) for x in value])
-    except IOError, er:
-      print "Template specified in configuration %s was not found:" % template_name
-      print er
-      sys.exit(1)
-  # then render the main template
-  # or catch any exceptions, and be a bit smart helping the user to find the mistake
-  allkeys = defaults.copy()
-  allkeys.update(data)
-  allkeys['vars']=defaults
-  try:
-    return template.render(**allkeys)
-  except NameError, er:
-    print "\nMissing parameter while parsing template '%s'." % template_name
+  if "include" in data:
+    # load another configuration file indicated by the include key
+    include_name = data["include"]
+    include = yaml.load(open("themes/%s.yaml" % include_name, "r"))
+    return recurse_render(include)
+
+  elif "template" in data:
+    # load template indicated by the template key
+    template_name = data["template"]
+    template = Template(filename=("templates/%s.html" % template_name), lookup=lookup)
+    # for every other key in the configuration:
+    # if it is a dict, render a subtemplate
+    # if it is a list, render an array of subtemplates
+    for key,value in data.items():
+      try: 
+        if type(value)==type(dict()):
+          data[key] = recurse_render(value)
+        if type(value)==type(list()):
+          data[key] = "\n".join([recurse_render(x) for x in value])
+      except IOError, er:
+        print "Template specified in configuration %s was not found:" % template_name
+        print er
+        sys.exit(1)
+    # then render the main template
+    # or catch any exceptions, and be a bit smart helping the user to find the mistake
+    allkeys = defaults.copy()
+    allkeys.update(data)
+    allkeys['vars']=defaults
+    try:
+      return template.render(**allkeys)
+    except NameError, er:
+      print "\nMissing parameter while parsing template '%s'." % template_name
        
-    try: 
-      code   = open("templates/%s.html" % template_name, "r").read()
-      params = re_param.findall(code)
-      print "The template supports *and* requires the following parameters:"
-      print "Provide it with an empty string if it is not to be included.\n"
-      for param in params:
-        print "%s %s" % (param in allkeys and "OK:     " or "MISSING:",param)
-      print ""
-    except:
-      print "DEBUG: could not parse template code to identify required parameters."
+      try: 
+        code   = open("templates/%s.html" % template_name, "r").read()
+        params = re_param.findall(code)
+        print "The template supports *and* requires the following parameters:"
+        print "Provide it with an empty string if it is not to be included.\n"
+        for param in params:
+          print "%s %s" % (param in allkeys and "OK:     " or "MISSING:",param)
+        print ""
+      except:
+        print "DEBUG: could not parse template code to identify required parameters."
 
-    #print exceptions.text_error_template().render()
-    sys.exit(1)
-  except TypeError, er:
-    print "DEBUG: Template method was not callable."
-    print exceptions.text_error_template().render()
-    sys.exit(1)
-
+      #print exceptions.text_error_template().render()
+      sys.exit(1)
+    except TypeError, er:
+      print "DEBUG: Template method was not callable."
+      print exceptions.text_error_template().render()
+      sys.exit(1)
+  
 print recurse_render(config)
 
 
