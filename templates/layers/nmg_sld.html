@@ -62,48 +62,46 @@ map.events.on({
 map.addLayers([nmgrLayer,nmglLayer]);
 
 var featureTranslate = {
-  'Sjoterritorium':'territorium', //rose
-  'Tilstotende_sone':'Indre farvann', //blarose
-  'Norges_okonomiske_sone':'konomiske sone', //darkblaa
-  'Fiskevernsonen_ved_Svalbard':'sonen ved Svalbard', //midblaa
-  'Fiskerisonen_ved_Jan_Mayen':'sonen ved Jan Mayen', //midblaa
-  'Internasjonalt_farvann':'Smutt', //groenn
+  'DSO':['DSO'], //graae
+  'Landareal':['med','Spitsbergen','Edge','Nordaust','Kvit','Kong Karl','Hopen','Bj&oslash;rn','Jan Mayen','Prins Karl','Svalbard'], //oransje
+  'Sjoterritorium':['territorium'], //rose
+  'Tilstotende_sone':['Indre farvann'], //lysbla
+  'Norges_okonomiske_sone':['konomiske sone','tende sone'], //darkblaa
+  'Fiskevernsonen_ved_Svalbard':['sonen ved Svalbard'], //midblaa
+  'Fiskerisonen_ved_Jan_Mayen':['sonen ved Jan Mayen'], //midblaa
+  'Internasjonalt_farvann':['Smutt'], //groenn
 
-  'avgrensningslinje_for_sokkel':'avgrensningslinje', //groenn, dash
-  'Sokkelgrense':'Yttergrense', //groenn, cont
-  '200_nautiske_mil':'nautiske mil', //blaa, cont
-  'Avtalt_avgrensningslinje':'---', //blaa, cont
-  'Yttergrense_for_tilstotend_sone':'---', //blaa, tynn
-  'Territorialgrense':'Territorialgrense', //blaa, tykk
-  'Grunnlinje':'Grunnlinje' //blaa, tynn
+  'avgrensningslinje_for_sokkel':['avgrensningslinje'], //groenn, dash
+  'Sokkelgrense':['Yttergrense'], //groenn, cont
+  '200_nautiske_mil':['nautiske mil'], //blaa, cont
+  'Avtalt_avgrensningslinje':[], //blaa, cont
+  'Yttergrense_for_tilstotend_sone':[], //blaa, tynn
+  'Territorialgrense':['Territorialgrense'], //blaa, tykk
+  'Grunnlinje':['Grunnlinje'] //blaa, tynn
 }
 
 function setLayerStyles() {
-  styleMap = new OpenLayers.StyleMap({'default':new OpenLayers.Style()});
+  styleMap = new OpenLayers.StyleMap({'default':new OpenLayers.Style(),'temporary':new OpenLayers.Style({
+    fillColor  : "#fe8",
+    graphicZIndex: 1,
+    fillOpacity: 1 
+  })});
 
   for (var featureName in sld.namedLayers) {
     var styles = sld.namedLayers[featureName].userStyles, style;
     style = styles[0];
-    /*styleMap.styles["default"].rules.push( 
-      new OpenLayers.Rule({
-          filter: new OpenLayers.Filter.Comparison({
-            type: OpenLayers.Filter.Comparison.LIKE,
-            property: "o",
-            value: featureTranslate[featureName]
-          }),
-          symbolizer: style.rules[0].symbolizer
-      })
-    );*/
-    styleMap.styles["default"].rules.push( 
-      new OpenLayers.Rule({
-          filter: new OpenLayers.Filter.Comparison({
-            type: OpenLayers.Filter.Comparison.LIKE,
-            property: "n",
-            value: featureTranslate[featureName]
-          }),
-          symbolizer: style.rules[0].symbolizer
-      })
-    );
+    for (var i in featureTranslate[featureName]) {
+      styleMap.styles["default"].rules.push( 
+        new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.Comparison({
+              type: OpenLayers.Filter.Comparison.LIKE,
+              property: "n",
+              value: featureTranslate[featureName][i]
+            }),
+            symbolizer: style.rules[0].symbolizer
+        })
+      );
+    }
   }
 
   nmgrLayer.styleMap = styleMap;
@@ -111,7 +109,7 @@ function setLayerStyles() {
 }
 
 OpenLayers.Request.GET({
-  url: "http://wms.geonorge.no/sld/NMG.xml",
+  url: "http://labs.kartverket.no/sld/NMG.xml",
   success: function (req) {
     sld = format.read(req.responseXML || req.responseText);
     setLayerStyles();
