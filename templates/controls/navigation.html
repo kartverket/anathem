@@ -1,5 +1,9 @@
-      var nav = new OpenLayers.Control.Navigation();
-      map.addControl(nav);
-      map.addControl(new OpenLayers.Control.ScaleLine());
-      var knav = new OpenLayers.Control.KeyboardDefaults();
-      map.addControl(knav);
+(function (context) {
+	var options = {};
+	if (typeof divControllerContainer != 'undefined') {
+		options.div = divControllerContainer;
+	}
+	addControlToContext(new OpenLayers.Control.Navigation(options), context);
+	addControlToContext(new OpenLayers.Control.ScaleLine(options), context);
+	addControlToContext(new OpenLayers.Control.KeyboardDefaults(options), context);
+}(controlContext));

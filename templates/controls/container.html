@@ -1,0 +1,10 @@
+(function (context) {
+	var divControllerContainer = document.createElement("div");
+	if (document.body != null) { 
+		document.body.appendChild(divControllerContainer); 
+	}
+	% if id is not UNDEFINED:
+		divControllerContainer.id = "${id}";
+	% endif
+	${controls}
+}(controlContext));

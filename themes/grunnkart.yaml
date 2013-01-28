@@ -30,9 +30,18 @@ mapscript:
   center    : 
     template: center/besseggen
   controls  :
-    - template: controls/layerselector
-      layerselector_visible: true
-    - template: controls/navigation
+    - template: controls/container
+      id: main-toolbar
+      controls:
+      - template: controls/navigation
+    - template: controls/default        
     - template: controls/zoom
     - template: controls/hashstate
+    - template: controls/layerselector
+      layerselector_visible: true
+    - template: controls/container
+      id: search-bar
+      controls:
+        - template: controls/panel
+          controls:
 

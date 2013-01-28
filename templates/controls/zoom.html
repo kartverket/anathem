@@ -1,5 +1,3 @@
-      var zoomCtrl = new OpenLayers.Control.Zoom();
-      map.addControl(zoomCtrl);
-
-
-
+(function (context) {
+	addControlToContext(new OpenLayers.Control.Zoom(), context);
+}(controlContext));

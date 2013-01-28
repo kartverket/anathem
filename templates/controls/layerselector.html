@@ -1,6 +1,16 @@
-      var layer_sw = new OpenLayers.Control.LayerSwitcher();
-      map.addControl(layer_sw);
-% if layerselector_visible: 
-        layer_sw.maximizeControl();
-% endif
-      layer_sw.events.register("buttonclick", updateHistory);
+(function (context) {
+	var options = {};
+	if (typeof divControllerContainer != 'undefined') {
+		options.div = divControllerContainer;
+	}
+
+	var control = new OpenLayers.Control.LayerSwitcher(options);
+	addControlToContext(control, context);
+	
+	% if layerselector_visible: 
+		control.maximizeControl();
+	% endif
+
+	control.events.register("buttonclick", updateHistory);
+
+}(controlContext));

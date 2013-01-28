@@ -1,3 +1,7 @@
-      var legend = new OpenLayers.Control.Legend();
-      map.addControl(legend);
-
+(function (context) {
+	var options = {};
+	if (typeof divControllerContainer != 'undefined') {
+		options.div = divControllerContainer;
+	}
+	addControlToContext(new OpenLayers.Control.Legend(options), context);
+}(controlContext));
