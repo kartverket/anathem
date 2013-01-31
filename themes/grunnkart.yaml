@@ -9,17 +9,17 @@ mapscript:
   overlays  : 
     - template: layers/wmts_param
       url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts 
-      name: Land (topo2) 
+      name: Farger 
       layer: topo2
       id: land 
     - template: layers/wmts_param
       url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
-      name: Land, gr&aring; (topo2)
+      name: Gr&aring;toner
       layer: topo2graatone
       id: graa 
     - template: layers/wmts_param
       url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
-      name: Land, raster
+      name: Terreng&shy;modell
       layer: toporaster2
       id: raster 
     - template: layers/wmts_param
@@ -30,18 +30,25 @@ mapscript:
   center    : 
     template: center/besseggen
   controls  :
+    - template: controls/navigation
+    - template: controls/zoom
+    - template: controls/hashstate
     - template: controls/container
       id: main-toolbar
       controls:
-      - template: controls/navigation
-    - template: controls/default        
-    - template: controls/zoom
-    - template: controls/hashstate
-    - template: controls/layerselector
-      layerselector_visible: true
+      - template: controls/rasterlayerselector
+        layerselector_visible: true
+      - template: test/plus-icon  
+      - template: test/plus-icon  
+      - template: test/plus-icon  
     - template: controls/container
-      id: search-bar
+      id: search-toolbar
+    - template: controls/container
+      id: share-toolbar
       controls:
-        - template: controls/panel
-          controls:
+      - template: test/plus-icon
+    - template: controls/container
+      id: secondary-toolbar
+    - template: controls/container
+      id: top-decoration-bar
 

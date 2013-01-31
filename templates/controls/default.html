@@ -1,11 +1,7 @@
-(function (context) {
-	var options = {};
-	if (typeof divControllerContainer != 'undefined') {
-		options.div = divControllerContainer;
-	}
-	addControlToContext(new OpenLayers.Control.LayerSwitcher(options), context);
-	addControlToContext(new OpenLayers.Control.Legend(options), context);
-	addControlToContext(new OpenLayers.Control.Navigation(options), context); 
-	addControlToContext(new OpenLayers.Control.ScaleLine(options), context);
-	addControlToContext(new OpenLayers.Control.KeyboardDefaults(options), context);
-}(controlContext));
+<%inherit file="/controls/controlcontext.html" />	
+
+addControlToContext(new OpenLayers.Control.LayerSwitcher(options), context);
+addControlToContext(new OpenLayers.Control.Legend(options), context);
+addControlToContext(new OpenLayers.Control.Navigation(options), context); 
+addControlToContext(new OpenLayers.Control.ScaleLine(options), context);
+addControlToContext(new OpenLayers.Control.KeyboardDefaults(options), context);

@@ -1,17 +1,13 @@
-(function (context) {
-	var options = {};
-	if (typeof divControllerContainer != 'undefined') {
-		options.div = divControllerContainer;
-	}
-	% if title:
-		options.title = "${title}";
-	% endif
+<%inherit file="/controls/controlcontext.html" />
 
-	var control = new OpenLayers.Control.Panel(options);
-	addControlToContext(control, context);
+% if title:
+options.title = "${title}";
+% endif
 
-	var controlContext = control;
-	% if controls:
-		${controls}
-	% endif
-}(controlContext));
+var control = new OpenLayers.Control.Panel(options);
+addControlToContext(control, context);
+
+var controlContext = control;
+% if controls:
+${controls}
+% endif

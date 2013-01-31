@@ -1,7 +1,3 @@
-(function (context) {
-	var options = {};
-	if (typeof divControllerContainer != 'undefined') {
-		options.div = divControllerContainer;
-	}
-	addControlToContext(new OpenLayers.Control.Legend(options), context);
-}(controlContext));
+<%inherit file="/controls/controlcontext.html" />
+
+addControlToContext(new OpenLayers.Control.Legend(options), context);

@@ -1,10 +1,16 @@
 (function (context) {
+	// set parentContainer if divControllerContainer is set
+	var parentContainer = divControllerContainer || document.body;
 	var divControllerContainer = document.createElement("div");
-	if (document.body != null) { 
-		document.body.appendChild(divControllerContainer); 
-	}
-	% if id is not UNDEFINED:
-		divControllerContainer.id = "${id}";
+
+	% if id:
+	divControllerContainer.id = "${id}";
 	% endif
+
+	divControllerContainer.className = "toolbar";
+	parentContainer.appendChild(divControllerContainer); 
+
+	% if controls:
 	${controls}
+	% endif
 }(controlContext));

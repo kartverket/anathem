@@ -1,10 +1,6 @@
 <%inherit file="/controls/controlcontext.html" />
 
-var control = new OpenLayers.Control.LayerSwitcher(options);
+var control = new OpenLayers.Control.RasterOverlayLayerSwitcher(options);
 addControlToContext(control, context);
-
-% if layerselector_visible: 
-control.maximizeControl();
-% endif
 
 control.events.register("buttonclick", updateHistory);
