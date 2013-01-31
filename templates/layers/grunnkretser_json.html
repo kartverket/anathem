@@ -27,14 +27,14 @@ kretStyle = new OpenLayers.StyleMap({
 //kommunegrenser - vector layer
 strTFS = new OpenLayers.Strategy.TFS({
   resFactor: 1, 
-  ratio:1, 
+  ratio: 1, 
   mapBounds: mapBounds, 
   format: new OpenLayers.Format.GeoJSON()
 });
 
 prtTFS = new OpenLayers.Protocol.TFS({
   url: "/stache/kd_kretser",
-  last:false,
+  last: false,
   format: new OpenLayers.Format.GeoJSON()
 });
 
@@ -52,7 +52,7 @@ kretLayer = new OpenLayers.Layer.Vector(
 
 map.addLayers([kretLayer]);
 
-kret_highlightAllById = function(element) {
+kret_highlightAllById = function (element) {
   // highlight all elements with the same element.feature.fid
 
   var ident = kretLayer.getFeaturesByFid(element.feature.fid);
@@ -62,10 +62,10 @@ kret_highlightAllById = function(element) {
   });
 };
 
-kret_unhighlightAllById = function(element) {
+kret_unhighlightAllById = function (element) {
   // un-highlight all elements with the same element.feature.fid
 
-  var ident = kretLayer.getFeaturesByFid (element.feature.fid) ;
+  var ident = kretLayer.getFeaturesByFid (element.feature.fid);
   $.each(ident, function(i, feature) {
     feature.renderIntent="default";
     kretLayer.drawFeature(feature);

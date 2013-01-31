@@ -1,6 +1,6 @@
 <%inherit file="/controls/controlcontext.html" />
 
 var control = new OpenLayers.Control.RasterOverlayLayerSwitcher(options);
-addControlToContext(control, context);
+NK.functions.addControlToContext(control, context);
 
 control.events.register("buttonclick", updateHistory);

@@ -1,7 +1,7 @@
 <%inherit file="/controls/controlcontext.html" />
 
 var control = new OpenLayers.Control.LayerSwitcher(options);
-addControlToContext(control, context);
+NK.functions.addControlToContext(control, context);
 
 % if layerselector_visible: 
 control.maximizeControl();

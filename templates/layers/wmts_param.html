@@ -1,26 +1,29 @@
-var matrixIds,
-    wmts;
+(function (M, MP) {
+  var matrixIds,
+      wmts,
+      i;
 
-matrixIds = new Array(18);
+  matrixIds = [];
 
-for (var i=0; i<=18; ++i) {
-  matrixIds[i] = new Object();
-  matrixIds[i].identifier = mapProj + ":" + i;
-} 
+  for (i = 0; i <= 18; ++i) {
+    matrixIds[i] = {};
+    matrixIds[i].identifier = MP + ":" + i;
+  } 
 
-wmts = new OpenLayers.Layer.WMTS({
-  name: "${name}",
-  url: "${url}",
-  layer: "${layer}",
-  matrixSet: mapProj,
-  matrixIds: matrixIds,
-  format: "image/png",
-  requestEncoding: "kvp",
-  style: "default",
-  shortid: "${id}", 
-  isBaseLayer: false, 
-  visibility: ${visible}, 
-  transitionEffect: 'resize'
-});   
+  wmts = new OpenLayers.Layer.WMTS({
+    name: "${name}",
+    url: "${url}",
+    layer: "${layer}",
+    matrixSet: MP,
+    matrixIds: matrixIds,
+    format: "image/png",
+    requestEncoding: "kvp",
+    style: "default",
+    shortid: "${id}", 
+    isBaseLayer: false, 
+    visibility: ${visible}, 
+    transitionEffect: 'resize'
+  });   
 
-map.addLayers([wmts]);
+  M.addLayers([wmts]);
+}(map, mapProj));

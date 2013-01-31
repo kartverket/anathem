@@ -11,16 +11,16 @@ var fylkStyle,
 fylkStyle = new OpenLayers.StyleMap({
   'default': {
     strokeWidth: 3,
-    strokeColor  : "#B487FE",
-    fillOpacity: 0,
-    graphicZIndex: 0
+    strokeColor: "#B487FE",
+    graphicZIndex: 0,
+    fillOpacity: 0
   },
   'temporary': {
     strokeWidth: 6,
-    fillColor  : "#DFCCFF",
-    strokeColor  : "#DFCCFF",
-    fillOpacity: 0.2,
-    graphicZIndex: 1
+    fillColor: "#DFCCFF",
+    strokeColor: "#DFCCFF",
+    graphicZIndex: 1,
+    fillOpacity: 0.2
   }
 });
 
@@ -34,7 +34,7 @@ strTFS = new OpenLayers.Strategy.TFS({
 
 prtTFS = new OpenLayers.Protocol.TFS({
   url: "/stache/kd_fylker",
-  last:false,
+  last: false,
   format: new OpenLayers.Format.GeoJSON()
 });
 
@@ -46,8 +46,8 @@ fylkLayer = new OpenLayers.Layer.Vector(
     protocol: prtTFS,
     projection: mapProj,
     styleMap: fylkStyle,
-    rendererOptions: {zIndexing: true},
-    visibility: ${visible}
+    visibility: ${visible},
+    rendererOptions: {zIndexing: true}
   }
 );
 
@@ -66,7 +66,7 @@ fylk_highlightAllById = function (element) {
 fylk_unhighlightAllById = function (element) {
   // un-highlight all elements with the same element.feature.fid;
 
-  var ident = fylkLayer.getFeaturesByFid(element.feature.fid);
+  var ident = fylkLayer.getFeaturesByFid (element.feature.fid);
   $.each(ident, function(i, feature) {
     feature.renderIntent="default";
     fylkLayer.drawFeature(feature);
@@ -96,7 +96,6 @@ selectAbasCtrl = new OpenLayers.Control.SelectFeature(
     clickFeature: fylk_info 
   }
 );
-
 
 map.addControl(highlightAbasCtrl);
 highlightAbasCtrl.activate();
