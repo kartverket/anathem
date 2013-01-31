@@ -7,48 +7,20 @@ mapscript:
   baselayers:   
     - template: layers/europa
   overlays  : 
-    - template: layers/wmts_param
-      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts 
-      name: Farger 
-      layer: topo2
-      id: land 
-    - template: layers/wmts_param
-      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
-      name: Gr&aring;toner
-      layer: topo2graatone
-      id: graa 
-    - template: layers/wmts_param
-      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
-      name: Terreng&shy;modell
-      layer: toporaster2
-      id: raster 
-    - template: layers/wmts_param
-      url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
-      name: Sj&oslash; 
-      layer: sjo_hovedkart2
-      id: sjo 
+    - include: layers/topo2
+    - include: layers/topo2graatone
+    - include: layers/toporaster2
+    - include: layers/sjo_hovedkart2
   center    : 
     template: center/besseggen
   controls  :
     - template: controls/navigation
     - template: controls/zoom
     - template: controls/hashstate
-    - template: controls/container
-      id: main-toolbar
-      controls:
-      - template: controls/rasterlayerselector
-        layerselector_visible: true
-      - template: test/plus-icon  
-      - template: test/plus-icon  
-      - template: test/plus-icon  
-    - template: controls/container
-      id: search-toolbar
-    - template: controls/container
-      id: share-toolbar
-      controls:
-      - template: test/plus-icon
+    - include: toolbars/basic
+    - include: toolbars/search
+    - include: toolbars/share
     - template: controls/container
       id: secondary-toolbar
     - template: controls/container
       id: top-decoration-bar
-

@@ -1,0 +1,5 @@
+template: layers/wmts_param
+url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
+name: Terreng&shy;modell
+layer: toporaster2
+id: raster

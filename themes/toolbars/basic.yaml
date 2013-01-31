@@ -1,0 +1,4 @@
+template: controls/container
+id: basic-toolbar
+controls:
+- template: controls/rasterlayerselector
