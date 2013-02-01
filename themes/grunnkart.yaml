@@ -11,6 +11,13 @@ mapscript:
     - include: layers/topo2graatone
     - include: layers/toporaster2
     - include: layers/sjo_hovedkart2
+    - include: layers/dekning_n50_plast
+    - include: layers/dekning_n50_papir
+    - include: layers/dekning_sjo_hovedkart
+    - include: layers/dekning_havnekart
+    - include: layers/dekning_kystkart
+    - include: layers/dekning_overseilingskart
+
   center    : 
     template: center/besseggen
   controls  :

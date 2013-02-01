@@ -1,0 +1,7 @@
+template: layers/dekning/sjo/kystkart
+name: Deknings&shy;oversikt Sj&oslash; Kyst&shy;kart
+id: dekning.sjo.ky
+url: /norgeskart/js/kystkart.json
+#url: http://beta.norgeskart.no/json/dekning/sjo/kystkart.json
+mapTypeId: kystkart
+layerGroup: dekning
