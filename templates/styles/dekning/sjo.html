@@ -1,7 +1,4 @@
-%if not 'styles.dekning.sjo' in vars:  
-NK.styles = NK.styles || {};
-NK.styles.dekning = NK.styles.dekning || {};
-NK.styles.dekning.sjo = new OpenLayers.StyleMap({
+styleMap = new OpenLayers.StyleMap({
   'default': new OpenLayers.Style(
     {
       strokeWidth: 2,
@@ -42,6 +39,3 @@ NK.styles.dekning.sjo = new OpenLayers.StyleMap({
     fillOpacity: 0.1
   }
 });
-
-<% vars['styles.dekning.sjo']=True %>
-%endif
