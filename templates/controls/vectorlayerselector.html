@@ -1,0 +1,10 @@
+<%inherit file="/controls/controlcontext.html" />
+
+%if group:
+options.layerGroup = "${group}";
+%endif
+
+var control = new OpenLayers.Control.VectorLayerSwitcher(options);
+NK.functions.addControlToContext(control, context);
+
+control.events.register("buttonclick", updateHistory);
