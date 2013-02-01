@@ -1,0 +1,80 @@
+%if not 'styles.dekning.land' in vars:  
+NK.styles = NK.styles || {};
+NK.styles.dekning = NK.styles.dekning || {};
+NK.styles.dekning.land = new OpenLayers.StyleMap(
+	{
+	  'default': new OpenLayers.Style(
+	    {
+	      strokeWidth: 2,
+	      strokeColor  : "#484",
+	      fillOpacity: 0.1, 
+	      label : "${"${nr}"}",
+	      fontColor: "#8a8",
+	      fontSize: "12px",
+	      fontFamily: "Courier New, monospace",
+	      fontWeight: "bold",
+	      labelAlign: "cm",
+	      labelOutlineColor: "white",
+	      labelOutlineWidth: 5
+	    },
+	    {
+	      rules: [
+	        new OpenLayers.Rule({
+	          maxScaleDenominator: 5000000,
+	          symbolizer: {
+	            label: "${"${nr}"}"
+	          }
+	        }),
+	        new OpenLayers.Rule({
+	          minScaleDenominator: 5000000,
+	          symbolizer: {
+	            label: ""
+	          }
+	        }),
+	        new OpenLayers.Rule({
+	          filter: new OpenLayers.Filter.Comparison({
+	            type: OpenLayers.Filter.Comparison.LIKE,
+	            property: "u",
+	            value: "2013"
+	          }),
+	          symbolizer: {
+	            strokeColor  : "#844",
+	            fontColor: "#a88"
+	          }
+	        })
+	      ]
+	    }
+	  ),
+	  'temporary': new OpenLayers.Style(
+			{
+		      strokeWidth: 3,
+		      strokeColor  : "#ada",
+		      fontColor: "#ada",
+		      fillOpacity: 0.1
+			},
+			{
+				rules: [
+			        new OpenLayers.Rule({
+			        	symbolizer: {
+					        strokeColor  : "#ada",
+					        fontColor: "#ada"
+				        }
+				    }),
+			        new OpenLayers.Rule({
+						filter: new OpenLayers.Filter.Comparison({
+							type: OpenLayers.Filter.Comparison.LIKE,
+							property: "u",
+							value: "2013"
+						}),
+						symbolizer: {
+							strokeColor  : "#daa",
+							fontColor: "#daa"
+						}
+			    })
+				]
+			}
+	  )
+	}
+);
+<% vars['styles.dekning.land']=True %>
+%endif

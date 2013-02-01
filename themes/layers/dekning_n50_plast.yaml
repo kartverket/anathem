@@ -1,0 +1,6 @@
+template: layers/dekning/land/n50
+name: Deknings&shy;oversikt Plast&shy;kart
+id: dekning.plast
+layerGroup: dekning
+url: /norgeskart/js/plast.json
+#      url: http://beta.norgeskart.no/json/dekning/land/n50/plast.json

@@ -1,74 +1,28 @@
 <%include file="/functions/vector.html" />
+<%include file="/styles/dekning/land.html" />
 
 var dekningStyle,
     pn50layer,
     pn50_selectBlad;
 
-dekningStyle = new OpenLayers.StyleMap({
-  'default': new OpenLayers.Style(
-    {
-      strokeWidth: 2,
-      strokeColor  : "#484",
-      fillOpacity: 0.1, 
-      label : "${"${nr}"}",
-      fontColor: "#8a8",
-      fontSize: "12px",
-      fontFamily: "Courier New, monospace",
-      fontWeight: "bold",
-      labelAlign: "cm",
-      labelOutlineColor: "white",
-      labelOutlineWidth: 5
-    },
-    {
-      rules: [
-        new OpenLayers.Rule({
-          maxScaleDenominator: 5000000,
-          symbolizer: {
-            label: "${"${nr}"}"
-          }
-        }),
-        new OpenLayers.Rule({
-          minScaleDenominator: 5000000,
-          symbolizer: {
-            label: ""
-          }
-        }),
-        new OpenLayers.Rule({
-          filter: new OpenLayers.Filter.Comparison({
-            type: OpenLayers.Filter.Comparison.LIKE,
-            property: "u",
-            value: "2013"
-          }),
-          symbolizer: {
-            strokeColor  : "#844",
-            fontColor: "#a88",
-          }
-        })
-      ]
-    }
-  ),
-  'temporary': {
-      strokeWidth: 3,
-      strokeColor  : "#ada",
-      fontColor: "#ada",
-      fillOpacity: 0.1
-  }
-});
-
 //dekningsoversikt - vector layer
 pn50layer = new OpenLayers.Layer.Vector(
-  "Dekningsoversikt Papirkart",
+  "Deknings&shy;oversikt Papir&shy;kart",
   {
     shortid: "dekning.papir", 
-    styleMap: dekningStyle, 
-    visibility: ${visible} 
+    styleMap: NK.styles.dekning.land, 
+    visibility: ${visible},
+    layerGroup: "dekning"
   }
 );
 
-function handler(request) {
+map.addLayer(pn50layer);
+
+var handler = function (request) {
   var geojson_format,
       features,
-      feature, key;
+      feature, 
+      key;
 
   geojson_format = new OpenLayers.Format.GeoJSON({
     'internalProjection': mapProj,
@@ -85,10 +39,9 @@ function handler(request) {
   pn50layer.addFeatures(features);
 };
 
-map.addLayer(pn50layer);
-
 OpenLayers.Request.GET({
-  url: "http://beta.norgeskart.no/json/dekning/land/n50/papir.json",
+//  url: "http://beta.norgeskart.no/json/dekning/land/n50/papir.json",
+  url: "/norgeskart/js/papir.json",
   callback: handler
 });
 
