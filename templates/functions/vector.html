@@ -14,23 +14,25 @@ NK.functions.vector = NK.functions.vector || {
     }
   },
 
-  addVectorControls: function(map, layer, click) {
-    hoverCtrl = new OpenLayers.Control.SelectFeature(
+  addVectorControls: function(map, layer, click, grouped) {
+    var hoverCtrl = new OpenLayers.Control.SelectFeature(
       layer,
       {
         hover: true,
         highlightOnly: true,
-        renderIntent: "temporary",
-        eventListeners: {
-          beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
-          featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
-        }
+        renderIntent: "temporary"
       }
     );
+    if (!!grouped) {
+      hoverCtrl.eventListeneers = {
+          beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
+          featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
+      };
+    }
     map.addControl(hoverCtrl);
     hoverCtrl.activate();
     
-    selectCtrl = new OpenLayers.Control.SelectFeature(
+    var selectCtrl = new OpenLayers.Control.SelectFeature(
       layer,
       {
         clickFeature: click

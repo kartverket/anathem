@@ -2,12 +2,53 @@
 
 var aislayer,
     ais_selectBlad,
+    ais_clusterStyle,
     request;
+
+ais_clusterStyle = new OpenLayers.StyleMap({
+  'default': new OpenLayers.Style({
+    pointRadius: "${"${size}"}",
+    strokeWidth: 1,
+    strokeColor  : "#884",
+    fillOpacity: 0,
+
+    label: "${"${count}"}",
+    fontColor: "#aa8",
+    fontSize: "12px",
+    fontFamily: "Courier New, monospace",
+    fontWeight: "bold",
+    labelAlign: "cm",
+    labelYOffset: -3,
+    labelOutlineColor: "white",
+    labelOutlineWidth: 3 
+  },{
+    context: {
+      count: function(feature) {
+        return feature.cluster ? feature.cluster.length : "1";
+      },
+      size: function(feature) {
+        if (feature.cluster.length < 5) {return 5;}
+        if (feature.cluster.length > 25) {return 25;}
+        return feature.cluster.length;
+      }
+    }
+  }),
+  'temporary': {
+    strokeWidth: 3,
+    strokeColor: '#dda',
+    fontColor: '#440'
+  }
+});
 
 aislayer = new OpenLayers.Layer.Vector(
   "AIS (marin ferdsel)",
   {
     shortid: "ais", 
+    styleMap: ais_clusterStyle,
+    strategies: [
+      new OpenLayers.Strategy.Cluster()
+    ],
+    protocol: new OpenLayers.Protocol.HTTP(),
     visibility: ${visible} 
   }
 );
@@ -31,12 +72,17 @@ request = OpenLayers.Request.GET({
 map.addLayers([aislayer]);
 
 ais_selectBlad = function (feature) {
-  alert("MMSI:\t"+feature.fid + "\n" +
+  if (feature.cluster.length == 1) {
+    feature = feature.cluster[0]
+    alert("MMSI:\t"+feature.fid + "\n" +
         "Name:\t"+feature.attributes['ship name'] + "\n" +
         "Cargo:\t"+feature.attributes['cargo'] + "\n" +
         "Crew:\t"+feature.attributes['persons onboard'] + "\n" +
         "Country:\t"+feature.attributes['country'] + "\n" 
-  );
+    );
+  } else {
+    alert(feature.cluster.length + " fart&oslash;y registrert rundt denne posisjonen.");
+  } 
 };
 
-NK.functions.vector.addVectorControls(map, aislayer, ais_selectBlad);
+NK.functions.vector.addVectorControls(map, aislayer, ais_selectBlad, false);
