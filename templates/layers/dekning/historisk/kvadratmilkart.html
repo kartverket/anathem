@@ -2,22 +2,21 @@
 <% vars['labelScaleLimit'] = 2000000 %>
 <%include file="/styles/dekning/historisk.html" />
 
-var hamtlayer,
-    hamtHighlightDekningCtrl,
-    hamtSelectDekningCtrl;
+var hkvalayer,
+    hkvaHighlightDekningCtrl,
+    hkvaSelectDekningCtrl;
 
-// dekningsoversikt - vector layer
-hamtlayer = new OpenLayers.Layer.Vector(
-  "Historiske Amtskart",
+hkvalayer = new OpenLayers.Layer.Vector(
+  "Historiske Kvadratmilkart",
   {
-    shortid: "hist.amt", 
+    shortid: "hist.kva", 
     styleMap: dekningHStyle, 
     visibility: ${visible} 
   }
 );
 
 request = OpenLayers.Request.GET({
-  url: "/json/dekning/historisk/amtskart.json",
+  url: "/json/dekning/historisk/kvadratmilkart.json",
   callback: function (request) {
     var geojson_format,
         features;
@@ -28,14 +27,14 @@ request = OpenLayers.Request.GET({
     });
     features = geojson_format.read(request.responseText);
 
-    hamtlayer.addFeatures(features);
+    hkvalayer.addFeatures(features);
   }
 });
 
-map.addLayers([hamtlayer]);
+map.addLayers([hkvalayer]);
 
-hamt_selectBlad = function (feature) {
+hkva_selectBlad = function (feature) {
   alert(feature.attributes.Kartnavn);
 };
 
-NK.functions.vector.addVectorControls(map, hamtlayer, hamt_selectBlad);
+NK.functions.vector.addVectorControls(map, hkvalayer, hkva_selectBlad);

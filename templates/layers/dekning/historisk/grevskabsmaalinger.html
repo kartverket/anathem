@@ -1,23 +1,22 @@
 <%include file="/functions/vector.html" />
-<% vars['labelScaleLimit'] = 2000000 %>
+<% vars['labelScaleLimit'] = 100000 %>
 <%include file="/styles/dekning/historisk.html" />
 
-var hamtlayer,
-    hamtHighlightDekningCtrl,
-    hamtSelectDekningCtrl;
+var hgrelayer,
+    hgreHighlightDekningCtrl,
+    hgreSelectDekningCtrl;
 
-// dekningsoversikt - vector layer
-hamtlayer = new OpenLayers.Layer.Vector(
-  "Historiske Amtskart",
+hgrelayer = new OpenLayers.Layer.Vector(
+  "Historiske Grevskabsm&aring;linger",
   {
-    shortid: "hist.amt", 
+    shortid: "hist.gre", 
     styleMap: dekningHStyle, 
     visibility: ${visible} 
   }
 );
 
 request = OpenLayers.Request.GET({
-  url: "/json/dekning/historisk/amtskart.json",
+  url: "/json/dekning/historisk/grevskabsmaalinger.json",
   callback: function (request) {
     var geojson_format,
         features;
@@ -28,14 +27,14 @@ request = OpenLayers.Request.GET({
     });
     features = geojson_format.read(request.responseText);
 
-    hamtlayer.addFeatures(features);
+    hgrelayer.addFeatures(features);
   }
 });
 
-map.addLayers([hamtlayer]);
+map.addLayers([hgrelayer]);
 
-hamt_selectBlad = function (feature) {
+hgre_selectBlad = function (feature) {
   alert(feature.attributes.Kartnavn);
 };
 
-NK.functions.vector.addVectorControls(map, hamtlayer, hamt_selectBlad);
+NK.functions.vector.addVectorControls(map, hgrelayer, hgre_selectBlad);
