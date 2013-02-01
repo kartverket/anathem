@@ -1,0 +1,42 @@
+<%include file="/functions/vector.html" />
+
+var aislayer,
+    ais_selectBlad,
+    request;
+
+aislayer = new OpenLayers.Layer.Vector(
+  "AIS (marin ferdsel)",
+  {
+    shortid: "ais", 
+    visibility: ${visible} 
+  }
+);
+
+request = OpenLayers.Request.GET({
+  url: "/json/ais.json",
+  callback: function (request) {
+    var geojson_format,
+        features;
+
+    geojson_format = new OpenLayers.Format.GeoJSON({
+      'internalProjection': mapProj,
+      'externalProjection': proj['4326'] 
+    });
+    features = geojson_format.read(request.responseText);
+
+    aislayer.addFeatures(features);
+  }
+});
+
+map.addLayers([aislayer]);
+
+ais_selectBlad = function (feature) {
+  alert("MMSI:\t"+feature.fid + "\n" +
+        "Name:\t"+feature.attributes['ship name'] + "\n" +
+        "Cargo:\t"+feature.attributes['cargo'] + "\n" +
+        "Crew:\t"+feature.attributes['persons onboard'] + "\n" +
+        "Country:\t"+feature.attributes['country'] + "\n" 
+  );
+};
+
+NK.functions.vector.addVectorControls(map, aislayer, ais_selectBlad);
