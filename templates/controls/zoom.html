@@ -1,5 +1,3 @@
-      var zoomCtrl = new OpenLayers.Control.Zoom();
-      map.addControl(zoomCtrl);
+<%inherit file="/controls/controlcontext.html" />
 
-
-
+NK.functions.addControlToContext(new OpenLayers.Control.Zoom(), context);

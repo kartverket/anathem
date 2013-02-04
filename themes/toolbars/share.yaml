@@ -1,0 +1,4 @@
+template: controls/container
+id: share-toolbar
+controls:
+- template: test/plus-icon

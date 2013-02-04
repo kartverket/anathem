@@ -1,0 +1,40 @@
+<%include file="/functions/vector.html" />
+<% vars['labelScaleLimit'] = 2000000 %>
+<%include file="/styles/dekning/historisk.html" />
+
+var hkvalayer,
+    hkvaHighlightDekningCtrl,
+    hkvaSelectDekningCtrl;
+
+hkvalayer = new OpenLayers.Layer.Vector(
+  "Historiske Kvadratmilkart",
+  {
+    shortid: "hist.kva", 
+    styleMap: dekningHStyle, 
+    visibility: ${visible} 
+  }
+);
+
+request = OpenLayers.Request.GET({
+  url: "/json/dekning/historisk/kvadratmilkart.json",
+  callback: function (request) {
+    var geojson_format,
+        features;
+
+    geojson_format = new OpenLayers.Format.GeoJSON({
+      'internalProjection': mapProj,
+      'externalProjection': proj['32633'] 
+    });
+    features = geojson_format.read(request.responseText);
+
+    hkvalayer.addFeatures(features);
+  }
+});
+
+map.addLayers([hkvalayer]);
+
+hkva_selectBlad = function (feature) {
+  alert(feature.attributes.Kartnavn);
+};
+
+NK.functions.vector.addVectorControls(map, hkvalayer, hkva_selectBlad);

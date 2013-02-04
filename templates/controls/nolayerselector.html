@@ -1,5 +1,6 @@
-      map.addControl(new OpenLayers.Control.MousePosition());
-      map.addControl(new OpenLayers.Control.Navigation());
-      map.addControl(new OpenLayers.Control.ScaleLine());
-      map.addControl(new OpenLayers.Control.KeyboardDefaults());
+<%inherit file="/controls/controlcontext.html" />
 
+NK.functions.addControlToContext(new OpenLayers.Control.MousePosition(options), context);	
+NK.functions.addControlToContext(new OpenLayers.Control.Navigation(options), context);	
+NK.functions.addControlToContext(new OpenLayers.Control.ScaleLine(options), context);	
+NK.functions.addControlToContext(new OpenLayers.Control.KeyboardDefaults(options), context);

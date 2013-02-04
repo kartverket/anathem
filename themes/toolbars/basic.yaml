@@ -1,0 +1,6 @@
+template: controls/container
+id: basic-toolbar
+controls:
+- template: controls/rasterlayerselector
+- template: controls/vectorlayerselector
+  group: dekning

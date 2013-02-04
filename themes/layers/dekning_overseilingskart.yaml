@@ -1,0 +1,7 @@
+template: layers/dekning/sjo/overseilingskart
+name: Deknings&shy;oversikt Sj&oslash; Over&shy;seilings&shy;rt
+id: dekning.sjo.ov
+#url: /norgeskart/js/overseilingskart.json
+url: /json/dekning/sjo/overseilingskart.json
+mapTypeId: overkart
+layerGroup: dekning

@@ -1,0 +1,10 @@
+(function (context) {
+	var options = {};
+	if (typeof divControllerContainer != 'undefined') {
+		var panel = document.createElement('div');
+		panel.className = 'panel';
+
+		panel.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" version="1.1" preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 64" class="plus icon"><path fill-rule="evenodd" d="m 14,27.5 13.5,0 0,-13.5 9,0 0,13.5 13.5,0 0,9 -13.5,0 0,13.5 -9,0 0,-13.5 -13.5,0 z M 63,32 C 63,49.120827 49.120827,63 32,63 14.879173,63 1,49.120827 1,32 1,14.879173 14.879173,1 32,1 49.120827,1 63,14.879173 63,32 z" /></svg>';
+		divControllerContainer.appendChild(panel);
+	}
+}(controlContext));

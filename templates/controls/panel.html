@@ -1,0 +1,13 @@
+<%inherit file="/controls/controlcontext.html" />
+
+% if title:
+options.title = "${title}";
+% endif
+
+var control = new OpenLayers.Control.Panel(options);
+NK.functions.addControlToContext(control, context);
+
+var controlContext = control;
+% if controls:
+${controls}
+% endif

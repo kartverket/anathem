@@ -1,7 +1,7 @@
 #!/bin/bash
 # build every configuration file in the themes/ folder
 
-for i in $(ls themes); do 
+for i in $(cd themes && ls *.yaml); do 
   export name=$(echo $i|sed -e 's/\..*//g');
   echo "building $name..."
   #mkdir -p ../$name

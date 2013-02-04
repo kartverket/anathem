@@ -1,0 +1,41 @@
+styleMap = new OpenLayers.StyleMap({
+  'default': new OpenLayers.Style(
+    {
+      strokeWidth: 2,
+      strokeColor  :"#844",
+      fillOpacity: 0.1, 
+      strokeOpacity: 1,
+
+      label : "${"${nr}"}",
+      fontColor: "#a88",
+      fontSize: "12px",
+      fontFamily: "Courier New, monospace",
+      fontWeight: "bold",
+      labelAlign: "cm",
+      labelOutlineColor: "white",
+      labelOutlineWidth: 5
+    }, 
+    {
+      rules: [
+        new OpenLayers.Rule({
+          maxScaleDenominator: 2500000,
+          symbolizer: {
+            label: "${"${nr}"}"
+          }
+        }),
+        new OpenLayers.Rule({
+          minScaleDenominator: 2500000,
+          symbolizer: {
+            label: ""
+          }
+        })       
+      ]
+    }
+  ),
+  'temporary': {
+    strokeWidth: 6,
+    strokeColor  : "#daa",
+    fontColor: "#daa",
+    fillOpacity: 0.1
+  }
+});
