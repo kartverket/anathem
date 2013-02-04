@@ -2,5 +2,4 @@ template: layers/dekning/land/n50
 name: Deknings&shy;oversikt Papir&shy;kart
 id: dekning.papir
 layerGroup: dekning
-url: /norgeskart/js/papir.json
-#      url: http://beta.norgeskart.no/json/dekning/land/n50/plast.json
+url: /json/dekning/land/n50/plast.json
