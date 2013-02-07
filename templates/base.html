@@ -85,7 +85,10 @@ $main-toolbar-background: rgba(0,0,0,.7);
         background-position: left top;
         display: inline-block;
       }
-      
+      .toolbar button {
+        background-color: transparent;
+        border: none;
+      }
       #basic-toolbar .panel + .panel,
       #secondary-toolbar .panel + .panel {
         /* v-divider.png base64-encoded */
@@ -156,6 +159,13 @@ $main-toolbar-background: rgba(0,0,0,.7);
         top: 3px;
       }
       #basic-toolbar .raserLayerList li {
+        width: 68px;
+      }
+      #basic-toolbar .olButton {
+        min-height: 40px;
+      }
+      .fullscreen-button {
+        min-height: 40px;
         width: 68px;
       }
     </style>
