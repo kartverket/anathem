@@ -1,10 +1,9 @@
 <%include file="/functions/addControlToContext.html" />
 
-(function (context) {
+(function (context, container) {
 	var options = {};
-	if (typeof divControllerContainer != 'undefined') {
-		options.div = divControllerContainer;
+	if (container) {
+		options.div = container;
 	}
 	${self.body()}
-
-}(controlContext));
+}(controlContext, container));
