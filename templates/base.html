@@ -131,7 +131,7 @@ $main-toolbar-background: rgba(0,0,0,.7);
       }
       .rasterLayerList li {
         position: relative;
-        padding: 0 3px 24px 3px;
+        padding: 0 3px 0 3px;
       }
       .rasterLayerList input {
         position: absolute;
@@ -162,7 +162,11 @@ $main-toolbar-background: rgba(0,0,0,.7);
         width: 68px;
       }
       #basic-toolbar .olButton {
-        min-height: 40px;
+        margin: 10px 0 0 0;
+        /*min-height: 40px;*/
+      }
+      #basic-toolbar .raserLayerList li:first-child .olButton {
+        margin-top: 0;
       }
       .fullscreen-button {
         min-height: 40px;
