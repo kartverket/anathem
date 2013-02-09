@@ -21,3 +21,7 @@ controls:
   - template: controls/rasterlayerselector
   - template: controls/vectorlayerselector
     group: dekning
+- template: controls/container
+  id: getURL-panel
+  controls:
+  - template: controls/getURL

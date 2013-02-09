@@ -173,6 +173,87 @@ $main-toolbar-background: rgba(0,0,0,.7);
         top: 10px;
         display: block;
       }
+
+      /******************************************
+      === Toolbar nkButton ===
+      ******************************************/
+      .toolbar .nkButton {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+
+      .widget {
+        position: absolute;
+        top : 0;
+        left: 0;
+        display: none;
+      }
+      
+      .arrow {
+        display: block;
+        border-width: 8px;
+        border-style: solid;
+        border-color: transparent #333333 transparent transparent;
+        position: relative;
+      }
+
+      .arrow > .arrow { 
+        border-right-color: #606161;  
+        position: absolute;
+        top: -8px;
+        left: -7px;
+      }
+
+      /******************************************
+      === get URL panel ===
+      ******************************************/      
+      #getURL-panel {
+        text-align: center;
+        position: relative;
+      }
+
+      #getURL-panel .nkButton {
+        border: 1px solid #999999;
+      }
+      
+      #getURL-panel .widget {
+        left: 100%;
+        top: 50%;
+        border: 0 none;
+      }
+
+      #getURL-panel .widget > .wrapper {
+        position: relative;
+        top: -50%;
+        left: 10px;
+        white-space: nowrap;
+        margin-top: -20px;  
+        font-size: 13px;
+      } 
+
+      #getURL-panel .widget > .wrapper > .arrow {
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        margin: -10px 0 0 0;
+      }
+
+      #getURL-panel .widget .cnt {
+        padding: 10px 15px 10px 15px;
+        border: 1px solid #333333;
+        background-color: #606161;
+        color: #FFFFFF;
+      }
+
+      #getURL-panel.active .widget {
+        display: block;
+      }
+
+      #getURL-panel.active .nkButton {
+        opacity: 0.4; 
+        filter: alpha(opacity=40);
+      }
     </style>
     
     <!-- temporary search ctrl styles-->
