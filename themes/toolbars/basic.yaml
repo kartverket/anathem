@@ -7,14 +7,13 @@ controls:
   - template: controls/fullscreen
 - template: controls/container
   id: zoom-panel
+  controls:
+# - templat: controls/zoom
+# - template: controls/zoomtoselection
 - template: controls/container
   id: pan-panel
-#- template: controls/panelcontainer
-#- template: controls/zoom
-#- template: controls/zoomtoselection
-#- template: controls/panelcontainer
+  controls:
 #- template: controls/pan
-#- template: controls/panelcontainer
 - template: controls/container
   id: layerselector-panel
   controls:
