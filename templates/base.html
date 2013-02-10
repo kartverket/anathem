@@ -206,6 +206,38 @@ $main-toolbar-background: rgba(0,0,0,.7);
         right: 100%;
       }
 
+      .layersDiv.displayHorizontal .widget {
+         width: 812px;
+         margin-top: 0;
+      }
+
+      .layersDiv.displayHorizontal .widget > .arrow {
+         top: 13px;
+      }
+
+      .layersDiv.displayHorizontal .widget .rasterLayerList li {
+        float: left;
+        clear: none;
+        width: 125px;
+        margin: 0 2px 0 2px;
+      }
+
+      #basic-toolbar .layersDiv.displayHorizontal .widget .olButton {
+        margin: 0;
+      }
+
+      .layersDiv.displayHorizontal .widget .rasterLayerList input {
+        display: none;
+      }
+       
+      .layersDiv.displayHorizontal .rasterLayerList input:checked + label:after {
+        border-color: transparent transparent rgba(80, 80, 80, 0.9) transparent;
+        right: 50%;
+        top: -20px;
+        margin-right: -8px;
+      }
+
+      /* on show */
       .layersDiv.show .widget {
         /*display: block;*/
         filter: alpha(opacity=100);
