@@ -265,6 +265,19 @@ $main-toolbar-background: rgba(0,0,0,.7);
       /**********************************
       === Full screen ===
       **********************************/
+      .fullscreen-button .icon.windowed {
+        display: none;
+      }
+      .fullscreen-button .icon.fullscreen {
+        display: inline;
+      }      
+      .fullscreen-button.fullscreen-active .icon.windowed {
+        display: inline;
+      }
+      .fullscreen-button.fullscreen-active .icon.fullscreen {
+        display: none;
+      }
+
       .olControlScaleLine {
         -webkit-transform: translate(75px, 0);
         -ms-transform: translate(75px, 0);
