@@ -344,6 +344,34 @@ $main-toolbar-background: rgba(0,0,0,.7);
         opacity: 0.4; 
         filter: alpha(opacity=40);
       }
+
+      /******************************************
+      === get Zoom panel ===
+      ******************************************/      
+      #zoom-panel .wrapper{
+        height: 120px;  
+        position: relative;
+      }
+
+      #zoom-panel .wrapper .olControlZoomOut,
+      #zoom-panel .wrapper .olControlZoomIn {
+        position: absolute;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: 0 0 0 -10px;
+        text-align: center;
+        background: #FFFFFF none repeat 0 0;
+        text-indent: -500px;
+      }
+
+      #zoom-panel .wrapper .olControlZoomIn {
+        top: 0;
+      }
+
+      #zoom-panel .wrapper .olControlZoomOut {
+        bottom: 0;
+      }      
     </style>
     
     <!-- temporary search ctrl styles-->
