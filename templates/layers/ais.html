@@ -18,16 +18,61 @@ ais_clusterStyle = new OpenLayers.StyleMap({
     fontFamily: "Courier New, monospace",
     fontWeight: "bold",
     labelAlign: "cm",
-    labelYOffset: -3,
     labelOutlineColor: "white",
     labelOutlineWidth: 3 
   },{
+    rules  : [
+      new OpenLayers.Rule({
+        evaluate: function(feature) {
+          return (feature.cluster.length == 1) && (feature.cluster[0].attributes["Nav Status"] == "under way, using engine");
+        },
+        symbolizer: {
+          fillOpacity: 0.8,
+          fillColor: "#484",
+          strokeColor: "#8b8",
+          fontColor: "#8b8"
+        }
+      }),
+      new OpenLayers.Rule({
+        evaluate: function(feature) {
+          return (feature.cluster.length > 1);
+        },
+        symbolizer: {
+          fillOpacity: 0.8,
+          fillColor: "#cc8",
+          strokeColor: "#cca"
+        }
+      }),
+      new OpenLayers.Rule({
+        evaluate: function(feature) {
+          return (feature.cluster.length == 1) && (feature.cluster[0].attributes["Nav Status"] == "engaged in fishing");
+        },
+        symbolizer: {
+          fillOpacity: 0.8,
+          fillColor: "#864",
+          strokeColor: "#ba8",
+          strokeWidth: 2,
+          fontColor: "#ba8"
+        }
+      }),
+      new OpenLayers.Rule({
+        evaluate: function(feature) {
+          return (feature.cluster.length == 1) && (feature.cluster[0].attributes["Nav Status"] == "at anchor");
+        },
+        symbolizer: {
+          fillOpacity: 0.8,
+          fillColor: "#844",
+          strokeColor: "#a88",
+          fontColor: "#a88"
+        }
+      })
+    ], // other status messages: "", "undefined"
     context: {
       count: function(feature) {
         return feature.cluster ? feature.cluster.length : "1";
       },
       size: function(feature) {
-        if (feature.cluster.length < 5) {return 5;}
+        if (feature.cluster.length < 8) {return 8;}
         if (feature.cluster.length > 25) {return 25;}
         return feature.cluster.length;
       }
@@ -78,7 +123,8 @@ ais_selectBlad = function (feature) {
         "Name:\t"+feature.attributes['ship name'] + "\n" +
         "Cargo:\t"+feature.attributes['cargo'] + "\n" +
         "Crew:\t"+feature.attributes['persons onboard'] + "\n" +
-        "Country:\t"+feature.attributes['country'] + "\n" 
+        "Country:\t"+feature.attributes['country'] + "\n" + 
+        "Status:\t"+feature.attributes['Nav Status'] + "\n" 
     );
   } else {
     alert(feature.cluster.length + " fart&oslash;y registrert rundt denne posisjonen.");
