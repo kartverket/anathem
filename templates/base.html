@@ -175,6 +175,7 @@ $main-toolbar-background: rgba(0,0,0,.7);
         box-shadow: 2px 0 3px rgba(0,0,0,.5) inset;
       }
 
+      #getURL-panel.active:after,
       .layersDiv.active .vectorWidgetToggleBtn:after, 
       .layersDiv.show .vectorWidgetToggleBtn:after, 
       .rasterLayerList input:checked + label:after {
@@ -188,6 +189,12 @@ $main-toolbar-background: rgba(0,0,0,.7);
         right: -20px;
         top: 3px;
       }
+
+      #getURL-panel.active:after {
+        top: 50%;
+        margin-top: -13px;
+      }
+
       #basic-toolbar .raserLayerList li {
         width: 68px;
       }
