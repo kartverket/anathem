@@ -458,30 +458,52 @@ $main-toolbar-background: rgba(0,0,0,.7);
       /******************************************
       === get Zoom panel ===
       ******************************************/      
-      #zoom-panel .wrapper{
-        height: 120px;  
+      #zoom-panel .sliderWrapper,
+      #zoom-panel {
         position: relative;
       }
 
-      #zoom-panel .wrapper .olControlZoomOut,
-      #zoom-panel .wrapper .olControlZoomIn {
+      #zoom-panel .sliderWrapper {
+        margin: 23px 4px 23px -4px;
+        /*background: red none repeat 0 0; */
+      }
+
+      #zoom-panel .slider {
+        margin: -4px 0 0 -1px;  
+        border: 1px solid #999999;
+        background: #FFFFFF none repeat 0 0;      
+      }
+
+      #zoom-panel .slider > img {
+        visibility: hidden;
+      }
+
+      #zoom-panel .track {
+        margin: 0 0 0 30px;
+        background: #FFFFFF none repeat 0 0;        
+      }
+ 
+      #zoom-panel .olControlZoomIn.olButton,
+      #zoom-panel .olControlZoomOut.olButton {
         position: absolute;
         left: 50%;
         width: 20px;
         height: 20px;
-        margin: 0 0 0 -10px;
+        margin: 0 0 0 -13px;
         text-align: center;
         background: #FFFFFF none repeat 0 0;
         text-indent: -500px;
+        border: 1px solid #999999;
+        z-index: 20;
+      }
+      
+      #zoom-panel .olControlZoomIn.olButton {
+        top: 20px;
       }
 
-      #zoom-panel .wrapper .olControlZoomIn {
-        top: 0;
-      }
-
-      #zoom-panel .wrapper .olControlZoomOut {
-        bottom: 0;
-      }      
+      #zoom-panel .olControlZoomOut.olButton {
+        bottom: 12px;
+      }       
     </style>
     
     <!-- temporary search ctrl styles-->
