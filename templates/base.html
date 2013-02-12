@@ -21,7 +21,13 @@ $main-toolbar-background: rgba(0,0,0,.7);
         height: 100%;
         margin: 0; 
         padding: 0;
-        overflow: hidden; 
+
+        /**
+         * Overflow as hidden will hide the meny options,
+         * when the window's size is small.
+         * E.q (Plast- / papirkart) in toolbar.
+         */
+        /*overflow: hidden;*/
       }
       * {
         box-sizing: border-box;
