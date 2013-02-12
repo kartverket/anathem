@@ -160,16 +160,23 @@ $main-toolbar-background: rgba(0,0,0,.7);
         left: -100%;
       }
      
+      .layersDiv .vectorWidgetToggleBtn,
       .rasterLayerList label {
         color: #fff;
         padding: 7px 3px;
         display: block;
         border-radius: 3px;
       }
+
+      .layersDiv.active .vectorWidgetToggleBtn,
+      .layersDiv.show .vectorWidgetToggleBtn,
       .rasterLayerList input:checked + label {
         background-color: rgba(0,0,0,.3);
         box-shadow: 2px 0 3px rgba(0,0,0,.5) inset;
       }
+
+      .layersDiv.active .vectorWidgetToggleBtn:after, 
+      .layersDiv.show .vectorWidgetToggleBtn:after, 
       .rasterLayerList input:checked + label:after {
         content: '';
         display: block;
@@ -207,16 +214,14 @@ $main-toolbar-background: rgba(0,0,0,.7);
       }
 
       .layersDiv .vectorWidgetToggleBtn {
-        color: #FFFFFF;
-        cursor: pointer;
-        padding: 5px 0 5px 0;
-        margin: 10px 0 0 6px;
+        margin: 10px 3px 0 3px;
       }
 
       .layersDiv .widget {
         margin: -10px 0 0 10px;
         background-color: rgba(80,80,80,.9);        
         width: 125px;
+        overflow: hidden;
       }
 
       .layersDiv .widget > .arrow {
@@ -258,14 +263,10 @@ $main-toolbar-background: rgba(0,0,0,.7);
 
       /* on show */
       .layersDiv.show .widget {
-        /*display: block;*/
         filter: alpha(opacity=100);
         opacity: 1;
-      }
-
-      .layersDiv.show .vectorWidgetToggleBtn {
-        opacity: 0.4; 
-        filter: alpha(opacity=40);
+        height: auto;
+        overflow: visible;
       }
 
       /**********************************
@@ -376,6 +377,7 @@ $main-toolbar-background: rgba(0,0,0,.7);
         position: absolute;
         top : 0;
         left: 0;
+        height: 0;
         /*display: none;*/
   
         filter: alpha(opacity=0);
@@ -454,6 +456,7 @@ $main-toolbar-background: rgba(0,0,0,.7);
         /*display: block;*/
         filter: alpha(opacity=100);
         opacity: 1;
+        height: auto;
       }
 
       #getURL-panel.active .nkButton {
