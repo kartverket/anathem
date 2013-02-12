@@ -8,6 +8,7 @@ controls:
 - template: controls/container
   id: zoom-panel
   controls:
+  - template: controls/zoombar
   - template: controls/zoom
 # - template: controls/zoomtoselection
 - template: controls/container
