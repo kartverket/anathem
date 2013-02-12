@@ -23,5 +23,9 @@ controls:
   id: layerselector-panel
   controls:
   - template: controls/rasterlayerselector
+    group: dekning
+- template: controls/container
+  id: layerselector-panel-vector
+  controls:
   - template: controls/vectorlayerselector
     group: dekning
