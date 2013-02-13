@@ -4,4 +4,4 @@ id: dekning.plast
 layerGroup: dekning
 #url: /norgeskart/js/plast.json
 url: /json/dekning/land/n50/plast.json
-preferred: topo2graatone
+preferredBackground: topo2graatone
