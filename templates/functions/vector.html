@@ -14,7 +14,7 @@ NK.functions.vector = NK.functions.vector || {
     }
   },
 
-  addVectorControls: function(map, layer, click) {
+  addVectorControls: function(map, layer, click, grouped) {
     var hoverCtrl, selectCtrl;
 
     hoverCtrl = new OpenLayers.Control.SelectFeature(
@@ -26,7 +26,7 @@ NK.functions.vector = NK.functions.vector || {
       }
     );
     if (!!grouped) {
-      hoverCtrl.eventListeneers = {
+      hoverCtrl.eventListeners = {
           beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
           featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
       };
