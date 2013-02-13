@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>${title}</title>
     <meta name="description" content="" />
-
     <meta name="viewport" content="width=device-width" />
 
     <link rel="stylesheet" type="text/css" href="css/lib/openlayers/theme/default/style.css" />
@@ -18,10 +17,25 @@ $main-toolbar-background: rgba(0,0,0,.7);
 
 -->
     <style>
+      body { 
+        height: 100%;
+        margin: 0; 
+        padding: 0;
+
+        /**
+         * Overflow as hidden will hide the meny options,
+         * when the window's size is small.
+         * E.q (Plast- / papirkart) in toolbar.
+         */
+        /*overflow: hidden;*/
+      }
       * {
         box-sizing: border-box;
+        padding: 0; 
+        margin: 0;
       }
       .toolbar {
+        background-color: #606161;
         background-color: rgba(80,80,80,.9);
         z-index: 2000;
       }
@@ -52,6 +66,10 @@ $main-toolbar-background: rgba(0,0,0,.7);
         left: 75px;
         height: 60px;
         background-image: -webkit-linear-gradient(#898989, #505050);
+        background-image: -moz-linear-gradient(#898989, #505050);
+        background-image: -ms-linear-gradient(#898989, #505050);
+        background-image: -o-linear-gradient(#898989, #505050);
+        background-image: linear-gradient(#898989, #505050);
         box-shadow: 2px 0 2px rgba(0,0,0,.25);
       }
       #search-toolbar .panel {
@@ -85,7 +103,10 @@ $main-toolbar-background: rgba(0,0,0,.7);
         background-position: left top;
         display: inline-block;
       }
-      
+      .toolbar button {
+        background-color: transparent;
+        border: none;
+      }
       #basic-toolbar .panel + .panel,
       #secondary-toolbar .panel + .panel {
         /* v-divider.png base64-encoded */
@@ -109,6 +130,10 @@ $main-toolbar-background: rgba(0,0,0,.7);
         width: 20px;
         height: 39px;
       }
+      #basic-toolbar .icon {
+        width: 30px;
+        height: 30px;
+      }
       #basic-toolbar .icon.plus {
         width: 69px;
         height: 20px;
@@ -128,22 +153,31 @@ $main-toolbar-background: rgba(0,0,0,.7);
       }
       .rasterLayerList li {
         position: relative;
-        padding: 0 3px 24px 3px;
+        padding: 0 3px 0 3px;
       }
       .rasterLayerList input {
         position: absolute;
         left: -100%;
       }
+     
+      .layersDiv .vectorWidgetToggleBtn,
       .rasterLayerList label {
         color: #fff;
         padding: 7px 3px;
         display: block;
         border-radius: 3px;
       }
+
+      .layersDiv.active .vectorWidgetToggleBtn,
+      .layersDiv.show .vectorWidgetToggleBtn,
       .rasterLayerList input:checked + label {
         background-color: rgba(0,0,0,.3);
         box-shadow: 2px 0 3px rgba(0,0,0,.5) inset;
       }
+
+      #getURL-panel.active:after,
+      .layersDiv.active .vectorWidgetToggleBtn:after, 
+      .layersDiv.show .vectorWidgetToggleBtn:after, 
       .rasterLayerList input:checked + label:after {
         content: '';
         display: block;
@@ -155,9 +189,371 @@ $main-toolbar-background: rgba(0,0,0,.7);
         right: -20px;
         top: 3px;
       }
+
+      #getURL-panel.active:after {
+        top: 50%;
+        margin-top: -13px;
+      }
+
       #basic-toolbar .raserLayerList li {
         width: 68px;
       }
+      #basic-toolbar .olButton {
+        margin: 10px 0 0 0;
+      }
+
+      #basic-toolbar .rasterLayerList li:first-child .olButton {
+        margin-top: 0;
+      }
+
+      .fullscreen-button {
+        min-height: 40px;
+        width: 68px;
+      }
+      #logo-panel img {
+        position: relative;
+        top: 10px;
+        display: block;
+      }
+
+      .layersDiv {
+        position: relative;
+      }
+
+      .layersDiv .vectorWidgetToggleBtn {
+        margin: 0 3px 0 3px;
+      }
+
+      .layersDiv .widget {
+        margin: -10px 0 0 10px;
+        background-color: rgba(80,80,80,.9);        
+        width: 125px;
+        overflow: hidden;
+      }
+
+      .layersDiv .widget > .arrow {
+        position: absolute;
+        top: 20px;
+        right: 100%;
+      }
+
+      .layersDiv.displayHorizontal .widget {
+         width: 812px;
+         margin-top: 0;
+      }
+
+      .layersDiv.displayHorizontal .widget > .arrow {
+         top: 12px;
+      }
+
+      .layersDiv.displayHorizontal .widget .rasterLayerList li {
+        float: left;
+        clear: none;
+        width: 125px;
+        margin: 0 2px 0 2px;
+      }
+
+      #basic-toolbar .layersDiv.displayHorizontal .widget .olButton {
+        margin: 0;
+      }
+
+      .layersDiv.displayHorizontal .widget .rasterLayerList input {
+        display: none;
+      }
+       
+      .layersDiv.displayHorizontal .rasterLayerList input:checked + label:after {
+        border-color: transparent transparent rgba(80, 80, 80, 0.9) transparent;
+        right: 50%;
+        top: -20px;
+        margin-right: -8px;
+      }
+
+      /* on show */
+      .layersDiv.show .widget {
+        filter: alpha(opacity=100);
+        opacity: 1;
+        height: auto;
+        overflow: visible;
+      }
+
+      /**********************************
+      === Full screen ===
+      **********************************/
+      .fullscreen-button .icon.windowed {
+        display: none;
+      }
+      .fullscreen-button .icon.fullscreen {
+        display: inline;
+      }      
+      .fullscreen-button.fullscreen-active .icon.windowed {
+        display: inline;
+      }
+      .fullscreen-button.fullscreen-active .icon.fullscreen {
+        display: none;
+      }
+
+      .olControlScaleLine {
+        -webkit-transform: translate(75px, 0);
+        -ms-transform: translate(75px, 0);
+        transform: translate(75px, 0);
+
+        -webkit-transition: -webkit-transform .5s ease-in-out;
+        transition: -ms-transform .5s ease-in-out;
+        transition: transform .5s ease-in-out;
+      }
+
+      .fullscreen .olControlScaleLine {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        transform: translate(0, 0);
+      }
+
+      .lt-ie9 .olControlScaleLine {
+        left: 75px;
+      }
+
+      .lt-ie9 .fullscreen .olControlScaleLine {
+        left: 0;
+      }
+
+      #basic-toolbar,
+      #search-toolbar,
+      #secondary-toolbar,
+      .fullscreen #basic-toolbar,
+      .fullscreen #search-toolbar,
+      .fullscreen #secondary-toolbar {
+        -webkit-transition: -webkit-transform .5s ease-in-out;
+        transition: -ms-transform .5s ease-in-out;
+        transition: transform .5s ease-in-out;
+      }
+
+      .fullscreen #basic-toolbar {
+        -webkit-transform: translate(-70px, 0);
+        -ms-transform: translate(-70px, 0);
+        transform: translate(-70px, 0);
+      }
+      .lt-ie9 .fullscreen #basic-toolbar {
+        left: -70px;
+      }
+
+      .fullscreen #secondary-toolbar {
+        -webkit-transform: translate(70px, 0);
+        -ms-transform: translate(70px, 0);
+        transform: translate(70px, 0);
+      }
+      .lt-ie9 .fullscreen #secondary-toolbar {
+        right: 70px;
+      }
+
+      .fullscreen #search-toolbar {
+        -webkit-transform: translate(0, -80px);
+        -ms-transform: translate(0, -80px);
+        transform: translate(0, -80px);
+      }
+      .lt-ie9 .fullscreen #search-toolbar {
+        top: -80px;
+      }
+
+
+      .fullscreen #fullscreen-panel {
+        -webkit-transition: -webkit-transform .5s ease-in-out;
+        transition: -ms-transform .5s ease-in-out;
+        transition: transform .5s ease-in-out;
+
+        -webkit-transform: translate(70px, 0);
+        -ms-transform: translate(70px, 0);
+        transform: translate(70px, 0);
+
+        background-color: rgba(80, 80, 80, .9);
+        box-shadow: 0 0 6px rgba(0,0,0,.7);
+      }
+      .lt-ie9 .fullscreen #basic-toolbar {
+        left: 70px;
+      }
+
+      /******************************************
+      === Toolbar nkButton ===
+      ******************************************/
+      .toolbar .nkButton {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+
+      .widget {
+        position: absolute;
+        top : 0;
+        left: 0;
+        height: 0;
+        /*display: none;*/
+  
+        filter: alpha(opacity=0);
+        opacity: 0;
+        -webkit-transition: opacity .5s ease-in-out;
+        -moz-transition: opactiy .5s ease-in-out;
+        -ms-transition: opacity .5s ease-in-out;
+        -o-transition: opacity .5s ease-in-out;
+        transition: opacity .5s ease-in-out;
+      }
+
+      .toolbar .widget {
+        left: 100%;
+        top: 0;
+      }
+      
+      .arrow {
+        display: block;
+        border-width: 8px;
+        border-style: solid;
+        border-color: transparent #333333 transparent transparent;
+        position: relative;
+      }
+
+      .arrow > .arrow { 
+        border-right-color: #606161;  
+        position: absolute;
+        top: -8px;
+        left: -7px;
+      }
+
+      /******************************************
+      === get URL panel ===
+      ******************************************/
+      #zoom-panel,
+      #pan-panel,    
+      #getURL-panel {
+        text-align: center;
+        position: relative;
+      }
+
+      #getURL-panel .nkButton {
+        border: 1px solid #999999;
+      }
+      
+      #getURL-panel .widget {
+        left: 100%;
+        top: 50%;
+        border: 0 none;
+      }
+
+      #getURL-panel .widget > .wrapper {
+        position: relative;
+        top: -50%;
+        left: 10px;
+        white-space: nowrap;
+        margin-top: -20px;  
+        font-size: 12px;
+      } 
+
+      #getURL-panel .widget > .wrapper > .arrow {
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        margin: -9px 0 0 0;
+      }
+
+      #getURL-panel .widget .cnt {
+        padding: 10px 15px 10px 15px;
+        border: 1px solid #333333;
+        background-color: #606161;
+        color: #FFFFFF;
+      }
+
+      #getURL-panel.active .widget {
+        /*display: block;*/
+        filter: alpha(opacity=100);
+        opacity: 1;
+        height: auto;
+      }
+
+      #getURL-panel.active .nkButton {
+        opacity: 0.4; 
+        filter: alpha(opacity=40);
+      }
+
+      /******************************************
+      === get Zoom panel ===
+      ******************************************/      
+      #zoom-panel .sliderWrapper,
+      #zoom-panel {
+        position: relative;
+      }
+
+      #zoom-panel .sliderWrapper {
+        margin: 23px 4px 23px -4px;
+        /*background: red none repeat 0 0; */
+      }
+
+      #zoom-panel .slider {
+        margin: -4px 0 0 -1px;  
+        border: 1px solid #999999;
+        background: #FFFFFF none repeat 0 0;      
+      }
+
+      #zoom-panel .slider > img {
+        visibility: hidden;
+      }
+
+      #zoom-panel .track {
+        margin: 0 0 0 30px;
+        background: #FFFFFF none repeat 0 0;        
+      }
+ 
+      #zoom-panel .olControlZoomIn.olButton,
+      #zoom-panel .olControlZoomOut.olButton {
+        position: absolute;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: 0 0 0 -13px;
+        text-align: center;
+        background: #FFFFFF none repeat 0 0;
+        text-indent: -500px;
+        border: 1px solid #999999;
+        z-index: 20;
+      }
+      
+      #zoom-panel .olControlZoomIn.olButton {
+        top: 20px;
+      }
+
+      #zoom-panel .olControlZoomOut.olButton {
+        bottom: 12px;
+      }       
+    </style>
+    
+    <!-- temporary search ctrl styles-->
+    <style>
+        div#searchResults{
+            display:none;    
+            background-color: #333;
+            width: 242px;
+            top: 63px;
+            left: 263px;
+            position: absolute;
+            color: #fff;
+        }
+        div#searchResults div.areas span,
+        div#searchResults div.addresses span,
+        div#searchResults div.objects span {
+            font-weight:bolder;    
+        }
+        div#searchResults div.list{
+            margin:6px;
+        }
+        div#searchResults ul li{
+            list-style-type: none;
+            margin-left:-30px;
+        }
+        div#searchResults a.close, div#searchResults a.close:hover, div#searchResults a.close:visited{
+            text-decoration: none;
+            color: #fff;
+            border:1px solid #fff;
+            padding:1px;
+            font-family: monospace;
+            font-size:10px;
+            float:right;
+        }
     </style>
     <script src="/js/modernizr.min.js"></script>
     <script src="/js/proj4js.min.js"></script>
@@ -165,12 +561,12 @@ $main-toolbar-background: rgba(0,0,0,.7);
     <script src="/js/easyXDM.debug.js"></script> <!-- our maps send status messages via an easyXDM API -->
     <!-- todo: move a part of these scripts to a post-loading in plugins.js, where they are not needed immediately. -->
   </head>
-  <body style="height:100%; margin:0; padding:0" onLoad="init();">
+  <body>
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <header>
 
     </header>
-    <div id="map" role="main" style="height:100%"></div>
+    <div id="map" role="main" style="width:100%; height:100%"></div>
     <footer>
     </footer>
     <script src="/js/jquery.js"></script>

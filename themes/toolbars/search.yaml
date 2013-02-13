@@ -1,2 +1,9 @@
 template: controls/container
 id: search-toolbar
+controls:
+- template: controls/container
+  id: logo-panel
+  controls:
+  - template: controls/logo
+- template: controls/container
+  id: search-panel

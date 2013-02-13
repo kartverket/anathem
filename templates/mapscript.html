@@ -104,7 +104,7 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
           optchars="";
 
           if (typeof layer_sw !== 'undefined') {
-            if (map.controls.indexOf(layer_sw) === -1) {
+            if ($.inArray(layer_sw,map.controls) === -1) {
               optchars += 'l';
             } else {
               if (!layer_sw.layersDiv.style.display) {
@@ -112,7 +112,7 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
               }
             }
             if (typeof legend !== 'undefined') {
-              if (map.controls.indexOf(legend) === -1) {
+              if ($.inArray(legend,map.controls) === -1) {
                 optchars += 'h';
               } else {
                 if (!legend.wrapperDiv.style.display) {
@@ -125,7 +125,7 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
                 }
               }
               if (typeof zoomCtrl !== 'undefined') {
-                if (map.controls.indexOf(zoomCtrl) === -1) {
+                if ($.inArray(zoomCtrl,map.controls) === -1) {
                   optchars += 'z';
                 }
               }
@@ -177,6 +177,7 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
 
   // Add controls at the end, to keep focus
   var controlContext = map;
+  var container = null;
 
   ${controls}
 
@@ -193,3 +194,14 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
     "apiVersion": "0"
   });
 };
+
+var addEvent = function(event, handler) {
+  var listen = window.addEventListener || window.attachEvent;
+  if (window.addEventListener) {
+    listen(event, handler, false);
+  } else {
+    listen("on" + event, handler);
+  }
+};
+
+addEvent('load', init);

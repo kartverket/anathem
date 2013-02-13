@@ -1,16 +1,22 @@
-(function (context) {
+(function (context, container) {
+	var parentContainer = document.body,
+		className = "toolbar";
+
 	// set parentContainer if divControllerContainer is set
-	var parentContainer = divControllerContainer || document.body;
-	var divControllerContainer = document.createElement("div");
+	if (container) {
+		parentContainer = container;
+		className = "panel";
+	}
+	var container = document.createElement("div");
 
 	% if id:
-	divControllerContainer.id = "${id}";
+	container.id = "${id}";
 	% endif
 
-	divControllerContainer.className = "toolbar";
-	parentContainer.appendChild(divControllerContainer); 
+	container.className = className;
+	parentContainer.appendChild(container); 
 
 	% if controls:
 	${controls}
 	% endif
-}(controlContext));
+}(controlContext, container));

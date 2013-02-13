@@ -22,7 +22,6 @@ mapscript:
     template: center/besseggen
   controls  :
     - template: controls/navigation
-    - template: controls/zoom
     - template: controls/hashstate
     - include: toolbars/basic
     - include: toolbars/search

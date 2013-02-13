@@ -1,6 +1,31 @@
 template: controls/container
 id: basic-toolbar
 controls:
-- template: controls/rasterlayerselector
-- template: controls/vectorlayerselector
-  group: dekning
+- template: controls/container
+  id: fullscreen-panel
+  controls:
+  - template: controls/fullscreen
+- template: controls/container
+  id: zoom-panel
+  controls:
+  - template: controls/zoombar
+  - template: controls/zoom
+# - template: controls/zoomtoselection
+- template: controls/container
+  id: pan-panel
+  controls:
+#- template: controls/pan
+- template: controls/container
+  id: getURL-panel
+  controls:
+  - template: controls/getURL
+- template: controls/container
+  id: layerselector-panel
+  controls:
+  - template: controls/rasterlayerselector
+    group: dekning
+- template: controls/container
+  id: layerselector-panel-vector
+  controls:
+  - template: controls/vectorlayerselector
+    group: dekning

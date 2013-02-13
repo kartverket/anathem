@@ -22,13 +22,15 @@ NK.functions.vector = NK.functions.vector || {
       {
         hover: true,
         highlightOnly: true,
-        renderIntent: "temporary",
-        eventListeners: {
-          beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
-          featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
-        }
+        renderIntent: "temporary"
       }
     );
+    if (!!grouped) {
+      hoverCtrl.eventListeneers = {
+          beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
+          featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
+      };
+    }
     map.addControl(hoverCtrl);
     hoverCtrl.activate();
     
