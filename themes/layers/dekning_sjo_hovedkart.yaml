@@ -5,3 +5,4 @@ id: dekning.sjo
 url: /json/dekning/sjo/hovedserie.json
 mapTypeId: sjo
 layerGroup: dekning
+preferred: sjo_hovedkart2

@@ -5,3 +5,4 @@ id: dekning.sjo.ov
 url: /json/dekning/sjo/overseilingskart.json
 mapTypeId: overkart
 layerGroup: dekning
+preferred: sjo_hovedkart2
