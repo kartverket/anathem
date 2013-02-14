@@ -7,3 +7,5 @@ controls:
   - template: controls/logo
 - template: controls/container
   id: search-panel
+  controls:
+  - template: controls/search
