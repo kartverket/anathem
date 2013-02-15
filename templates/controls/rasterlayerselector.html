@@ -3,4 +3,6 @@
 var control = new OpenLayers.Control.RasterOverlayLayerSwitcher(options);
 NK.functions.addControlToContext(control, context);
 
-control.events.register("buttonclick", updateHistory);
+if (NK.functions.updateHistory) {
+	control.events.register("buttonclick", NK.functions.updateHistory);
+}
