@@ -20,6 +20,8 @@ mapscript:
 
   center    : 
     template: center/besseggen
+  functions:
+    template: functions/updateURL
   controls  :
     - template: controls/navigation
     - template: controls/hashstate

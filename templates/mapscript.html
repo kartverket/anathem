@@ -1,6 +1,7 @@
 "use strict";
 
 var NK = NK || {};
+NK.mapEventListeners = {};
 
 var gkopen, 
     gkopen_wmts,
@@ -10,13 +11,14 @@ var gkopen,
     xdmsocket,
     initLayers,
     postEvent,
-    init,
     map;
 
 gkopen = "http://opencache.statkart.no/gatekeeper/gk/gk.open";
 gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
-init = function () {
+${functions}
+
+NK.init = function () {
 
 Proj4js.defs["EPSG:4326"] ="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
 Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
@@ -37,14 +39,12 @@ proj = {  //pregenerated projection objects
 mapProj = proj["32633"];
 mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); 
 
-
   var prmstr,
       prmarr,
       params,
       tmparr,
       i,
-      j,
-      updateHistory;
+      j;
 
   if (!OpenLayers || !Proj4js) {
     setTimeout(init, 100);
@@ -71,80 +71,6 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
     mapProj = proj[params.proj]; 
   }
 
-  updateHistory = function (evt) {
-    var center,
-        zoom,
-        i,
-        layer,
-        optchars,
-        uid;
-
-    if (!!map) {
-      center = map.getCenter();
-      zoom   = map.getZoom();
-
-      if (!!center && !!zoom) {
-        uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat); 
-        /* 1m precision ought to be enough for everyone --BG */
-
-        if (!!initLayers && !!map.layers) { 
-          for (i in map.layers) {
-            layer = map.layers[i];
-            if (layer.visibility) {
-              if ($.inArray(layer.shortid, initLayers) === -1) {
-                uid += "/+"+layer.shortid;
-              }
-            } else {
-              if ($.inArray(layer.shortid, initLayers) > -1) {
-                uid += "/-" + layer.shortid;
-              }
-            }
-          }
-
-          optchars="";
-
-          if (typeof layer_sw !== 'undefined') {
-            if ($.inArray(layer_sw,map.controls) === -1) {
-              optchars += 'l';
-            } else {
-              if (!layer_sw.layersDiv.style.display) {
-                optchars += 'L';
-              }
-            }
-            if (typeof legend !== 'undefined') {
-              if ($.inArray(legend,map.controls) === -1) {
-                optchars += 'h';
-              } else {
-                if (!legend.wrapperDiv.style.display) {
-                  optchars += 'H';
-                }
-              }
-              if (typeof nav !== 'undefined') {
-                if (!nav.active) {
-                  optchars += 'n';
-                }
-              }
-              if (typeof zoomCtrl !== 'undefined') {
-                if ($.inArray(zoomCtrl,map.controls) === -1) {
-                  optchars += 'z';
-                }
-              }
-              if (optchars.length > 0) {
-                uid += "/w" + optchars;
-              }
-              window.location.hash = uid;
-            }
-            postEvent({
-              "event": "onMoveMap",
-              "x": center.lon, 
-              "y": center.lat,
-              "z": zoom
-            });
-          }
-        }
-      }
-    }
-  };
 
   map = new OpenLayers.Map( 
     'map', 
@@ -156,14 +82,8 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
       units: "m",
       maxResolution: 21664.0,
       numZoomLevels: 18,
-//      theme: null,
       theme: '/theme/norgeskart/style.css',
-      eventListeners: {
-        "moveend": updateHistory,
-        "zoomend": updateHistory,
-        "changelayer": updateHistory,
-        "changebaselayer": updateHistory
-      }
+      eventListeners: NK.mapEventListeners
     }
   );
 
@@ -181,6 +101,14 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
   var container = null;
 
   ${controls}
+
+  // initialize URL update state
+  if (NK.functions.storeInitialLayerVisibility) {
+    NK.functions.storeInitialLayerVisibility();
+  }
+  if (NK.functions.setMapStateFromURL) {
+    NK.functions.setMapStateFromURL();
+  }
 
   xdmsocket = new easyXDM.Socket({});
 
@@ -205,4 +133,4 @@ var addEvent = function(event, handler) {
   }
 };
 
-addEvent('load', init);
+addEvent('load', NK.init);

@@ -1,0 +1,260 @@
+var NK = NK || {};
+NK.functions = NK.functions || {};
+
+NK.functions.updateHistory = function (evt) {
+  var center,
+      zoom,
+      i,
+      layer,
+      optchars,
+      uid;
+
+  if (!!map) {
+    center = map.getCenter();
+    zoom   = map.getZoom();
+
+    if (!!center && !!zoom) {
+      uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat); 
+      /* 1m precision ought to be enough for everyone --BG */
+
+      if (!!NK.initLayers && !!map.layers) { 
+        for (i in map.layers) {
+          layer = map.layers[i];
+          if (layer.visibility) {
+            if ($.inArray(layer.shortid, initLayers) === -1) {
+              uid += "/+"+layer.shortid;
+            }
+          } else {
+            if ($.inArray(layer.shortid, initLayers) > -1) {
+              uid += "/-" + layer.shortid;
+            }
+          }
+        }
+
+        optchars="";
+
+        if (typeof layer_sw !== 'undefined') {
+          if ($.inArray(layer_sw,map.controls) === -1) {
+            optchars += 'l';
+          } else {
+            if (!layer_sw.layersDiv.style.display) {
+              optchars += 'L';
+            }
+          }
+          if (typeof legend !== 'undefined') {
+            if ($.inArray(legend,map.controls) === -1) {
+              optchars += 'h';
+            } else {
+              if (!legend.wrapperDiv.style.display) {
+                optchars += 'H';
+              }
+            }
+            if (typeof nav !== 'undefined') {
+              if (!nav.active) {
+                optchars += 'n';
+              }
+            }
+            if (typeof zoomCtrl !== 'undefined') {
+              if ($.inArray(zoomCtrl,map.controls) === -1) {
+                optchars += 'z';
+              }
+            }
+            if (optchars.length > 0) {
+              uid += "/w" + optchars;
+            }
+          }
+
+          postEvent({
+            "event": "onMoveMap",
+            "x": center.lon, 
+            "y": center.lat,
+            "z": zoom
+          });
+        }
+        window.location.hash = uid;
+      }
+    }
+  }
+};
+
+NK.mapEventListeners = NK.mapEventListeners || {};
+NK.mapEventListeners["moveend"] = NK.functions.updateHistory;
+NK.mapEventListeners["zoomend"] = NK.functions.updateHistory;
+NK.mapEventListeners["changelayer"] = NK.functions.updateHistory;
+NK.mapEventListeners["changebaselayer"] = NK.functions.updateHistory;
+
+
+NK.functions.storeInitialLayerVisibility = function () {
+  // store the initial layer visibility configuration
+  var i, 
+      layer;
+
+  NK.initLayers = [];
+
+  for (i in map.layers) {
+    layer = map.layers[i];
+    if (layer.visibility) {
+      NK.initLayers.push(layer.shortid);
+    }
+  }
+};
+
+NK.functions.setMapStateFromURL = function () {
+  // adjust layer visibility and pan/zoom based on hash, if available
+
+  var parms,
+      zoom,
+      mapx,
+      mapy,
+      xy,
+      index,
+      extra,
+      setLayerVisibility,
+      showLayerNamed,
+      hideLayerNamed,
+      setControlVisibility,
+      highlight;
+
+
+  NK.state = window.location.hash;
+
+  if (!!NK.state) {
+    parms = NK.state.slice(1).split("/");
+    zoom = parms[0];
+    mapx = parms[1];
+    mapy = parms[2];
+    if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
+      var pWSG84 = new Proj4js.Proj('EPSG:4326');   
+      var pUTM33 = new Proj4js.Proj('EPSG:32633');   
+      var xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
+      mapx = xy.x;
+      mapy = xy.y;
+    }
+
+
+    setLayerVisibility = function (layerName, visibility) {
+      var i, 
+          j,
+          layer;
+
+      for (i = 0, j = map.layers.length; i < j; i += 1) {
+        layer = map.layers[i];
+        if (layer.shortid == layerName) {
+          layer.setVisibility(visibility);
+        }
+      }         
+    };
+
+    showLayerNamed = function (layerName) {
+      return setLayerVisibility(layerName, true);
+    };
+    
+    hideLayerNamed = function (layerName) {
+      return setLayerVisibility(layerName, false);
+    };
+
+    setControlVisibility = function (flags, mapx, mapy) {
+      var i, 
+          markers;
+
+      for (i = 1, j = flags.length; i < j; i += 1) {
+        switch (flags.charAt(i)) {
+          case 'L':
+            layer_sw.maximizeControl();
+            break;
+          case 'l':
+            map.removeControl(layer_sw);
+            break;
+          case 'H':
+            legend.maximizeControl();
+            break;
+          case 'h':
+            map.removeControl(legend);
+            break;
+          case 'z':
+            map.removeControl(zoomCtrl);
+          case 'n':
+            nav.deactivate();
+            knav.deactivate();
+            break;
+          case 'M':
+            markers = new OpenLayers.Layer.Markers("Mark&oslash;rer", {shortid: "poi"});
+            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(mapx, mapy)));
+            map.addLayer(markers);
+            break;
+        } 
+      }
+    };
+
+    highlight = function (highlightParam) {
+      var select, 
+          layers,
+          layer;
+
+      select = highlightParam.slice(1).split("!");
+      layers = map.getBy("layers", "shortid", select[0]);
+
+      if (layers.length === 1) {
+        layer = layers[0];
+
+        /* set a new renderer rule to highlight elements with the given name */
+        layer.styleMap.styles['default'].addRules([
+          new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.FeatureId({
+              fids: [select[1]]
+            }),
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor : "orange",
+              graphicZIndex: 2,
+              fillColor : "orange",
+              fillOpacity: 0.1
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+        ]);
+
+        layer.styleMap.styles['temporary'].addRules([
+          new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.FeatureId({
+              fids: [select[1]]
+            }),
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor: "yellow",
+              fillColor  : "orange",
+              fillOpacity: 0.2,
+              graphicZIndex: 100
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+        ]); 
+      }
+    };
+
+    for (index = 3; index < parms.length; index += 1) {
+      extra = parms[index];
+      switch (extra.charAt(0)) {
+        case '+':
+          showLayerNamed(extra.slice(1));
+          break;
+        case '-':
+          hideLayerNamed(extra.slice(1));
+          break;
+        case 'w':
+          setControlsVisibility(extra.slice(1), mapx, mapy);
+          break;
+        case '!':
+          highlight(extra);
+          break;
+      }
+    }
+    map.setCenter(new OpenLayers.LonLat(mapx, mapy),zoom);
+  }
+};
