@@ -20,25 +20,6 @@ ${functions}
 
 NK.init = function () {
 
-Proj4js.defs["EPSG:4326"] ="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
-Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-Proj4js.defs["EPSG:32633"]="+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-Proj4js.defs["EPSG:32635"]="+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
-
-proj = {  //pregenerated projection objects
-  "32633": new OpenLayers.Projection('EPSG:32633'),
-  "32632": new OpenLayers.Projection('EPSG:32632'),
-  "32635": new OpenLayers.Projection('EPSG:32635'),
-  "4326" : new OpenLayers.Projection('EPSG:4326'),
-  "3034" : new OpenLayers.Projection('EPSG:3034'),
-  "3575" : new OpenLayers.Projection('EPSG:3575')
-};
-
-mapProj = proj["32633"];
-mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); 
-
   var prmstr,
       prmarr,
       params,
@@ -50,6 +31,26 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
     setTimeout(NK.init, 100);
     return;
   }
+
+  Proj4js.defs["EPSG:4326"] ="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+  Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32633"]="+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32635"]="+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
+
+  proj = {  
+    //pregenerated projection objects
+    "32633": new OpenLayers.Projection('EPSG:32633'),
+    "32632": new OpenLayers.Projection('EPSG:32632'),
+    "32635": new OpenLayers.Projection('EPSG:32635'),
+    "4326" : new OpenLayers.Projection('EPSG:4326'),
+    "3034" : new OpenLayers.Projection('EPSG:3034'),
+    "3575" : new OpenLayers.Projection('EPSG:3575')
+  };
+
+  mapProj = proj["32633"];
+  mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); 
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
   OpenLayers.Lang.setCode('nb');
@@ -70,7 +71,6 @@ mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
   if (!!params.proj) {
     mapProj = proj[params.proj]; 
   }
-
 
   map = new OpenLayers.Map( 
     'map', 
