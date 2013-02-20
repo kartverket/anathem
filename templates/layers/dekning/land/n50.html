@@ -34,10 +34,11 @@
     features = geojson_format.read(request.responseText);
 
     for (key in features) {
-      feature = features[key];
-      feature.attributes['nr'] = feature.fid;
+      if (features.hasOwnProperty(key)) {
+        feature = features[key];
+        feature.attributes.nr = feature.fid;
+      }
     }
-
     layer.addFeatures(features);
   };
 

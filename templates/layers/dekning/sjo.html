@@ -34,23 +34,25 @@
       'externalProjection': P['4326'] 
     });
     features = geojson_format.read(request.responseText);
-    features = features.sort(function(a,b) {
+    features = features.sort(function (a,b) {
        // sort by area
-      return b.geometry.getArea() - a.geometry.getArea()
+      return b.geometry.getArea() - a.geometry.getArea();
     });
     for (key in features) {
-      feature=features[key];
-      if (feature.fid.length < 4) {
-        feature.attributes['nr'] = feature.fid;
-        feature.attributes['vignett'] = '';
-      } else {
-        feature.attributes['nr'] = '';
-        feature.attributes['vignett'] = feature.fid;
-        feature.fid = feature.fid.slice(0, 3);
+      if (features.hasOwnProperty(key)) {
+        feature = features[key];
+        if (feature.fid.length < 4) {
+          feature.attributes.nr = feature.fid;
+          feature.attributes.vignett = '';
+        } else {
+          feature.attributes.nr = '';
+          feature.attributes.vignett = feature.fid;
+          feature.fid = feature.fid.slice(0, 3);
+        }
       }
     }
     layer.addFeatures(features);
-  }
+  };
 
   M.addLayer(layer);
 

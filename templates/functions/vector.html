@@ -1,50 +1,51 @@
 %if not 'vectorControls' in vars:  
 
 NK.functions = NK.functions || {};
-NK.functions.vector = NK.functions.vector || { 
+NK.functions.vector = NK.functions.vector || {};
 
-  markAllById: function(layer, intent) {
-    return function(element) {
-      // highlight all elements with the same element.feature.fid
-      var ident = layer.getFeaturesByFid(element.feature.fid);
-      $.each(ident, function (i, feature) {
-        feature.renderIntent = intent;
-        layer.drawFeature(feature);
-      });
+NK.functions.vector.markAllById = function (layer, intent) {
+  return function(element) {
+    // highlight all elements with the same element.feature.fid
+    var ident = layer.getFeaturesByFid(element.feature.fid);
+    $.each(ident, function (i, feature) {
+      feature.renderIntent = intent;
+      layer.drawFeature(feature);
+    });
+  };
+};
+
+NK.functions.vector.addVectorControls = function (map, layer, click, grouped) {
+  var hoverCtrl, 
+      selectCtrl;
+
+  hoverCtrl = new OpenLayers.Control.SelectFeature(
+    layer,
+    {
+      hover: true,
+      highlightOnly: true,
+      renderIntent: "temporary"
     }
-  },
-
-  addVectorControls: function(map, layer, click, grouped) {
-    var hoverCtrl, selectCtrl;
-
-    hoverCtrl = new OpenLayers.Control.SelectFeature(
-      layer,
-      {
-        hover: true,
-        highlightOnly: true,
-        renderIntent: "temporary"
-      }
-    );
-    if (!!grouped) {
-      hoverCtrl.eventListeners = {
-          beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
-          featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
-      };
-    }
-    map.addControl(hoverCtrl);
-    hoverCtrl.activate();
-    
-    selectCtrl = new OpenLayers.Control.SelectFeature(
-      layer,
-      {
-        clickFeature: click
-      }
-    );
-
-    map.addControl(selectCtrl);
-    selectCtrl.activate();
+  );
+  if (!!grouped) {
+    hoverCtrl.eventListeners = {
+        beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
+        featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
+    };
   }
-}
+  map.addControl(hoverCtrl);
+  hoverCtrl.activate();
+  
+  selectCtrl = new OpenLayers.Control.SelectFeature(
+    layer,
+    {
+      clickFeature: click
+    }
+  );
+
+  map.addControl(selectCtrl);
+  selectCtrl.activate();
+};
+
 
 <% vars['vectorControls']=True %>
 %endif

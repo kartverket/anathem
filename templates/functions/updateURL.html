@@ -19,14 +19,16 @@ NK.functions.updateHistory = function (evt) {
 
       if (!!NK.initLayers && !!map.layers) { 
         for (i in map.layers) {
-          layer = map.layers[i];
-          if (layer.visibility) {
-            if ($.inArray(layer.shortid, initLayers) === -1) {
-              uid += "/+"+layer.shortid;
-            }
-          } else {
-            if ($.inArray(layer.shortid, initLayers) > -1) {
-              uid += "/-" + layer.shortid;
+          if (map.layers.hasOwnProperty(i)) {
+            layer = map.layers[i];
+            if (layer.visibility) {
+              if ($.inArray(layer.shortid, initLayers) === -1) {
+                uid += "/+"+layer.shortid;
+              }
+            } else {
+              if ($.inArray(layer.shortid, initLayers) > -1) {
+                uid += "/-" + layer.shortid;
+              }
             }
           }
         }
@@ -78,10 +80,10 @@ NK.functions.updateHistory = function (evt) {
 };
 
 NK.mapEventListeners = NK.mapEventListeners || {};
-NK.mapEventListeners["moveend"] = NK.functions.updateHistory;
-NK.mapEventListeners["zoomend"] = NK.functions.updateHistory;
-NK.mapEventListeners["changelayer"] = NK.functions.updateHistory;
-NK.mapEventListeners["changebaselayer"] = NK.functions.updateHistory;
+NK.mapEventListeners.moveend = NK.functions.updateHistory;
+NK.mapEventListeners.zoomend = NK.functions.updateHistory;
+NK.mapEventListeners.changelayer = NK.functions.updateHistory;
+NK.mapEventListeners.changebaselayer = NK.functions.updateHistory;
 
 
 NK.functions.storeInitialLayerVisibility = function () {
@@ -92,9 +94,11 @@ NK.functions.storeInitialLayerVisibility = function () {
   NK.initLayers = [];
 
   for (i in map.layers) {
-    layer = map.layers[i];
-    if (layer.visibility) {
-      NK.initLayers.push(layer.shortid);
+    if (map.layers.hasOwnProperty(i)) {
+      layer = map.layers[i];
+      if (layer.visibility) {
+        NK.initLayers.push(layer.shortid);
+      }
     }
   }
 };
@@ -139,7 +143,7 @@ NK.functions.setMapStateFromURL = function () {
 
       for (i = 0, j = map.layers.length; i < j; i += 1) {
         layer = map.layers[i];
-        if (layer.shortid == layerName) {
+        if (layer.shortid === layerName) {
           layer.setVisibility(visibility);
         }
       }         
@@ -155,6 +159,7 @@ NK.functions.setMapStateFromURL = function () {
 
     setControlVisibility = function (flags, mapx, mapy) {
       var i, 
+          j,
           markers;
 
       for (i = 1, j = flags.length; i < j; i += 1) {
@@ -217,7 +222,7 @@ NK.functions.setMapStateFromURL = function () {
           })
         ]);
 
-        layer.styleMap.styles['temporary'].addRules([
+        layer.styleMap.styles.temporary.addRules([
           new OpenLayers.Rule({
             filter: new OpenLayers.Filter.FeatureId({
               fids: [select[1]]

@@ -82,10 +82,11 @@ OpenLayers.Request.GET({
     features = geojson_format.read(request.responseText);
 
     for (key in features) {
-      feature = features[key];
-      feature.fid = feature.attributes['kartnr'];
+      if (features.hasOwnProperty(key)) {
+        feature = features[key];
+        feature.fid = feature.attributes.kartnr;
+      }
     }
-
     m711layer.addFeatures(features);
   }
 });
