@@ -1,3 +1,16 @@
 <%inherit file="/controls/controlcontext.html" />
+options.createControlMarkup = function(control) {
+	var button, 
+		span;
 
-NK.functions.addControlToContext(new OpenLayers.Control.Pan(), context);
+	button = document.createElement('button');
+
+	if (control.text) {
+		span = document.createElement('span');
+		span.innerHTML = control.text;
+		button.appendChild(span);
+	}
+	return button;
+};
+
+NK.functions.addControlToContext(new OpenLayers.Control.PanPanel(options), context);
