@@ -10,11 +10,11 @@ controls:
   controls:
   - template: controls/zoombar
   - template: controls/zoom
-#- template: controls/container
-#  id: click-and-drag-action-panel
-#  controls:
 #  - template: controls/zoomtoselection
-#  - template: controls/pan
+- template: controls/container
+  id: pan-panel
+  controls:
+    - template: controls/pan
 - template: controls/container
   id: getURL-panel
   controls:
