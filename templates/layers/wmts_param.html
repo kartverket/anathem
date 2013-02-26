@@ -27,7 +27,7 @@
     isBaseLayer: false, 
     visibility: ${visible}, 
     transitionEffect: 'resize'
-    % if not url:
+    % if usetoken:
     ,
     params: {
       gkt: NK.gkToken
@@ -36,7 +36,7 @@
   });
   if (wmts.params.GKT) {
     wmts.params.gkt = wmts.params.GKT;
-//    delete wmts.params.GKT; 
+    delete wmts.params.GKT; 
   }
 
   wmts.events.register("tileerror", wmts, function(arg) {

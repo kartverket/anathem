@@ -9,7 +9,7 @@ mapscript:
   overlays  : 
     - include: layers/topo2
     - include: layers/topo2graatone
-    - include: layers/toporaster2
+    - include: layers/flybilder
     - include: layers/sjo_hovedkart2
     - include: layers/dekning_n50_plast
     - include: layers/dekning_n50_papir

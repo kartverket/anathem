@@ -1,4 +1,5 @@
 template: layers/wmts_param
+usetoken: true
 name: Farger 
 layer: topo2
 id: land

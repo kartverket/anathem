@@ -2,6 +2,9 @@ var wms = new OpenLayers.Layer.WMS(
   "${name}",
   "${url}",
   {
+    % if usetoken:
+    gkt: NK.gkToken,
+    % endif    
     layers: "${layers}", 
     transparent: true, 
     format: 'image/png'
@@ -11,8 +14,11 @@ var wms = new OpenLayers.Layer.WMS(
     isBaseLayer: false, 
     visibility: ${visible}, 
     transitionEffect: 'resize',
-    singleTile: true
+    singleTile: false
   }
 );
-
+if (wms.params.GKT) {
+  wms.params.gkt = wms.params.GKT;
+  delete wms.params.GKT; 
+}
 map.addLayers([wms]);
