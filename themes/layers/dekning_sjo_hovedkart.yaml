@@ -1,7 +1,6 @@
 template: layers/dekning/sjo/hovedkart
 name: Deknings&shy;oversikt Sj&oslash; Hoved&shy;kart
 id: dekning.sjo
-#url: /norgeskart/js/hovedserie.json
 url: /json/dekning/sjo/hovedserie.json
 mapTypeId: sjo
 layerGroup: dekning
