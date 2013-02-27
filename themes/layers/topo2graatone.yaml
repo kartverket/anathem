@@ -1,5 +1,5 @@
 template: layers/wmts_param
-url: http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts
+usetoken: true
 name: Gr&aring;toner
 layer: topo2graatone
 id: graa 

@@ -2,5 +2,5 @@ template: layers/dekning/land/n50
 name: Deknings&shy;oversikt Papir&shy;kart
 id: dekning.papir
 layerGroup: dekning
-url: /json/dekning/land/n50/plast.json
+url: /json/dekning/land/n50/papir.json
 preferredBackground: topo2

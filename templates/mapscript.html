@@ -16,6 +16,41 @@ var gkopen,
 gkopen = "http://opencache.statkart.no/gatekeeper/gk/gk.open";
 gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
+NK.gkToken = "unInitialized";
+NK.tokenService = "http://beta.norgeskart.no/ws/gkt.py";
+
+NK.mapservers = {};
+NK.mapservers.wmts = [
+  "http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
+  "http://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts"
+];
+
+NK.functions = NK.functions || {};
+
+NK.functions.updateToken = function (request) {
+  var i, 
+      j, 
+      oldToken = NK.gkToken, 
+      updatedTokensCount = 0;
+
+  NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
+
+  for (i = 0, j = map.layers.length; i < j; i += 1) {
+    if (map.layers[i].params && map.layers[i].params.gkt) {
+      map.layers[i].params.gkt = NK.gkToken;
+      map.layers[i].redraw();
+      updatedTokensCount++;
+    }
+  }
+};
+
+NK.functions.getNewToken = function () {
+  if (NK.gkToken !== null) {
+    NK.gkToken = null;
+    OpenLayers.Request.GET({url: NK.tokenService, success: NK.functions.updateToken});
+  }
+};
+
 ${functions}
 
 NK.init = function () {
@@ -132,5 +167,11 @@ var addEvent = function(event, handler) {
     listen("on" + event, handler);
   }
 };
-
-addEvent('load', NK.init);
+var cb = function(request) {
+  NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
+  NK.init();
+};
+var initializeToken = function () {
+  OpenLayers.Request.GET({url: NK.tokenService, success: cb});
+};
+addEvent('load', initializeToken);

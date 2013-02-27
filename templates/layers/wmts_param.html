@@ -12,7 +12,11 @@
 
   wmts = new OpenLayers.Layer.WMTS({
     name: "${name}",
+    % if url:
     url: "${url}",
+    % else:
+    url: NK.mapservers.wmts,
+    % endif
     layer: "${layer}",
     matrixSet: MP,
     matrixIds: matrixIds,
@@ -23,7 +27,21 @@
     isBaseLayer: false, 
     visibility: ${visible}, 
     transitionEffect: 'resize'
-  });   
+    % if usetoken:
+    ,
+    params: {
+      gkt: NK.gkToken
+    }
+    % endif
+  });
+  if (wmts.params.GKT) {
+    wmts.params.gkt = wmts.params.GKT;
+    delete wmts.params.GKT; 
+  }
+
+  wmts.events.register("tileerror", wmts, function(arg) {
+    NK.functions.getNewToken();
+  });
 
   M.addLayers([wmts]);
 }(map, mapProj));
