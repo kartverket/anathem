@@ -44,6 +44,11 @@
     delete wmts.params.GKT; 
   }
 
+% if visible:
+  NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+  NK.defaultVisibleLayers.push('$id');
+% endif
+
   wmts.events.register("tileerror", wmts, function(arg) {
     NK.functions.getNewToken();
   });
