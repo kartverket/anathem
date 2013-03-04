@@ -1,5 +1,5 @@
 template: layers/dekning/land/n50
-name: Deknings&shy;oversikt Plast&shy;kart
+name: Plast&shy;kart (land)
 id: dekning.plast
 layerGroup: dekning
 url: /json/dekning/land/n50/plast.json
