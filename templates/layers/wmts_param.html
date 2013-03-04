@@ -25,7 +25,12 @@
     style: "default",
     shortid: "${id}", 
     isBaseLayer: false, 
-    visibility: ${visible}, 
+    visibility:
+% if visible:
+    1,
+% else:
+    0,
+% endif
     transitionEffect: 'resize'
     % if usetoken:
     ,
