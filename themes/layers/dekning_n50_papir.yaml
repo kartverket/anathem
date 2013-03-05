@@ -1,5 +1,5 @@
 template: layers/dekning/land/n50
-name: Deknings&shy;oversikt Papir&shy;kart
+name: Papir&shy;kart (land)
 id: dekning.papir
 layerGroup: dekning
 url: /json/dekning/land/n50/papir.json

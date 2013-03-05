@@ -21,13 +21,15 @@ NK.functions.updateHistory = function (evt) {
         for (i in map.layers) {
           if (map.layers.hasOwnProperty(i)) {
             layer = map.layers[i];
-            if (layer.visibility) {
-              if ($.inArray(layer.shortid, initLayers) === -1) {
-                uid += "/+"+layer.shortid;
-              }
-            } else {
-              if ($.inArray(layer.shortid, initLayers) > -1) {
-                uid += "/-" + layer.shortid;
+            if (!layer.isBaseLayer) {
+              if (layer.visibility) {
+                if ($.inArray(layer.shortid, NK.initLayers) === -1) {
+                  uid += "/+"+layer.shortid;
+                }
+              } else {
+                if ($.inArray(layer.shortid, NK.initLayers) > -1) {
+                  uid += "/-" + layer.shortid;
+                }
               }
             }
           }
@@ -97,7 +99,9 @@ NK.functions.storeInitialLayerVisibility = function () {
     if (map.layers.hasOwnProperty(i)) {
       layer = map.layers[i];
       if (layer.visibility) {
-        NK.initLayers.push(layer.shortid);
+        if (!NK.defaultVisibleLayers || !$.inArray(layer.shortid, NK.defaultVisibleLayers)) {
+          NK.initLayers.push(layer.shortid);
+        }
       }
     }
   }

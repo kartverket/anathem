@@ -25,7 +25,12 @@
     style: "default",
     shortid: "${id}", 
     isBaseLayer: false, 
-    visibility: ${visible}, 
+    visibility:
+% if visible:
+    1,
+% else:
+    0,
+% endif
     transitionEffect: 'resize'
     % if usetoken:
     ,
@@ -38,6 +43,11 @@
     wmts.params.gkt = wmts.params.GKT;
     delete wmts.params.GKT; 
   }
+
+% if visible:
+  NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+  NK.defaultVisibleLayers.push('$id');
+% endif
 
   wmts.events.register("tileerror", wmts, function(arg) {
     NK.functions.getNewToken();
