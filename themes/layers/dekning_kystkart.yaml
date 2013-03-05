@@ -4,4 +4,4 @@ id: dekning.sjo.ky
 url: /json/dekning/sjo/kystkart.json
 mapTypeId: kystkart
 layerGroup: dekning
-preferredBackground: sjo_hovedkart2
+preferredBackground: sjo

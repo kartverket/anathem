@@ -4,4 +4,4 @@ id: dekning.sjo.hv
 url: /json/dekning/sjo/havnekart.json
 mapTypeId: havnekart
 layerGroup: dekning
-preferredBackground: sjo_hovedkart2
+preferredBackground: sjo
