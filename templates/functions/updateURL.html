@@ -143,12 +143,19 @@ NK.functions.setMapStateFromURL = function () {
     setLayerVisibility = function (layerName, visibility) {
       var i, 
           j,
-          layer;
+          layer,
+          layerSwitcherPresent;
+
+      layerSwitcherPresent =  map.getControlsByClass('OpenLayers.Control.RasterOverlayLayerSwitcher').length > 0;
 
       for (i = 0, j = map.layers.length; i < j; i += 1) {
         layer = map.layers[i];
         if (layer.shortid === layerName) {
-          layer.setVisibility(visibility);
+          if (layerSwitcherPresent && visibility && layer.displayInLayerSwitcher && !layer.isBaseLayer && (layer.CLASS_NAME === "OpenLayers.Layer.WMTS" || layer.CLASS_NAME === "OpenLayers.Layer.WMS")) {
+              map.events.triggerEvent('rasterLayerChangeRequest', {'shortId': layerName});
+          } else {
+            layer.setVisibility(visibility);
+          }
         }
       }         
     };
