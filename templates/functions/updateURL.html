@@ -7,7 +7,9 @@ NK.functions.updateHistory = function (evt) {
       i,
       layer,
       optchars,
-      uid;
+      uid,
+      search,
+      searchInput;
 
   if (!!map) {
     center = map.getCenter();
@@ -78,6 +80,13 @@ NK.functions.updateHistory = function (evt) {
         window.location.hash = uid;
       }
     }
+    searchInput = document.getElementById('searchInput');
+    if (!!searchInput) {
+      search = searchInput.value;
+      if (!!search) {
+        window.location.search = 'sok=' + encodeURIComponent(search);
+      }
+    }
   }
 };
 
@@ -86,7 +95,7 @@ NK.mapEventListeners.moveend = NK.functions.updateHistory;
 NK.mapEventListeners.zoomend = NK.functions.updateHistory;
 NK.mapEventListeners.changelayer = NK.functions.updateHistory;
 NK.mapEventListeners.changebaselayer = NK.functions.updateHistory;
-
+NK.mapEventListeners.searchPerformed = NK.functions.updateHistory;
 
 NK.functions.storeInitialLayerVisibility = function () {
   // store the initial layer visibility configuration
@@ -121,8 +130,27 @@ NK.functions.setMapStateFromURL = function () {
       showLayerNamed,
       hideLayerNamed,
       setControlVisibility,
-      highlight;
+      highlight,
+      search,
+      searchArray,
+      searchInputField,
+      i, j, p;
 
+  search = window.location.search;
+
+  if (!!search) {
+    search = search.replace('?', '');
+    searchArray = search.split('&');
+    for (i = 0, j = searchArray.length; i < j; i += 1) {
+      p = searchArray[i].split('=');
+      if (p[0] === 'sok') {
+        p[1] = decodeURIComponent(p[1]);
+        searchInputField = document.getElementById('searchInput');
+        searchInputField.value = p[1];
+        map.events.triggerEvent('searchForPhrase', {'phrase': p[1]});
+      }
+    }
+  }
 
   NK.state = window.location.hash;
 
