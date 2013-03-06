@@ -22,6 +22,9 @@ wmts = new OpenLayers.Layer.WMTS({
   visibility: ${visible}, 
   transitionEffect: 'resize',
   opacity: 0.5
-});   
+});
+map.events.register('zoomend', wmts, function (evt) {
+  this.setVisibility(map.getZoom() <= 6);
+});
 
 map.addLayers([wmts]);
