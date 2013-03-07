@@ -77,14 +77,18 @@ NK.functions.updateHistory = function (evt) {
             "z": zoom
           });
         }
-        window.location.hash = uid;
+        
       }
     }
     searchInput = document.getElementById('searchInput');
     if (!!searchInput) {
       search = searchInput.value;
-      if (!!search) {
-        window.location.search = 'sok=' + encodeURIComponent(search);
+      if (history.pushState) {
+        if (!!search) {
+          history.pushState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+        } else {
+          history.pushState({'hash': uid}, document.title, '#' + uid);        
+        }
       }
     }
   }
@@ -95,7 +99,6 @@ NK.mapEventListeners.moveend = NK.functions.updateHistory;
 NK.mapEventListeners.zoomend = NK.functions.updateHistory;
 NK.mapEventListeners.changelayer = NK.functions.updateHistory;
 NK.mapEventListeners.changebaselayer = NK.functions.updateHistory;
-NK.mapEventListeners.searchPerformed = NK.functions.updateHistory;
 
 NK.functions.storeInitialLayerVisibility = function () {
   // store the initial layer visibility configuration
@@ -116,9 +119,12 @@ NK.functions.storeInitialLayerVisibility = function () {
   }
 };
 
-NK.functions.setMapStateFromURL = function () {
-  // adjust layer visibility and pan/zoom based on hash, if available
+NK.functions.setMapStateFromPopState = function (evt) {
+  NK.functions.setMapState({'search': evt.originalEvent.state.search, 'hash': evt.originalEvent.state.hash});
+};
+$(window).on('popstate', NK.functions.setMapStateFromPopState);
 
+NK.functions.setMapState = function (params) {
   var parms,
       zoom,
       mapx,
@@ -134,11 +140,13 @@ NK.functions.setMapStateFromURL = function () {
       search,
       searchArray,
       searchInputField,
-      i, j, p;
+      i, j, p,
+      hash;
 
-  search = window.location.search;
+  search = params.search;
+  hash = params.hash;
 
-  if (!!search) {
+  if (params.search) {
     search = search.replace('?', '');
     searchArray = search.split('&');
     for (i = 0, j = searchArray.length; i < j; i += 1) {
@@ -152,10 +160,8 @@ NK.functions.setMapStateFromURL = function () {
     }
   }
 
-  NK.state = window.location.hash;
-
-  if (!!NK.state) {
-    parms = NK.state.slice(1).split("/");
+  if (!!hash) {
+    parms = hash.slice(1).split("/");
     zoom = parms[0];
     mapx = parms[1];
     mapy = parms[2];
@@ -166,7 +172,6 @@ NK.functions.setMapStateFromURL = function () {
       mapx = xy.x;
       mapy = xy.y;
     }
-
 
     setLayerVisibility = function (layerName, visibility) {
       var i, 
@@ -299,6 +304,18 @@ NK.functions.setMapStateFromURL = function () {
           break;
       }
     }
-    map.setCenter(new OpenLayers.LonLat(mapx, mapy),zoom);
+    map.setCenter(new OpenLayers.LonLat(mapx, mapy), zoom);
   }
+};
+
+NK.functions.setMapStateFromURL = function () {
+  // adjust layer visibility and pan/zoom based on hash, if available
+
+  var hash,
+      search;
+
+  search = window.location.search;
+  hash = window.location.hash;
+
+  NK.functions.setMapState({'search': search, 'hash': hash});
 };
