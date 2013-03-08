@@ -48,15 +48,70 @@
   });
 
   selectHandler = function(feature) {
-    alert(feature.fid);
+/*
     postEvent({
       "event": "onSelect", 
       "element": "kartblad", 
       "type": "n50", 
       "id": feature.fid
     });
+*/
   };
 
-  NK.functions.vector.addVectorControls(M, layer, selectHandler);
+  var selectControl;
+  var onPopupClose = null;
+
+  function onPopupClose(evt) {
+      selectControl.unselect(NK.selectedCoverageMap);
+      delete NK.selectedCoverageMap;
+  }
+  function generatePopupMarkup (feature) {
+    var a  = feature.attributes;
+      var markup = '<article>';
+      markup += '<h1 class="h">' + a.n + '</h1>';
+      markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
+      markup += '<div class="municipalities">' + OpenLayers.Lang.translate('Municipalities') + ': <ul><li>' + a.k.split(',').join(',</li><li>') + '</li></ul></div>';
+      markup += '<p>' + OpenLayers.Lang.translate('Updated') + ': ' + a.u + '</p>';
+      markup += '<p>' + OpenLayers.Lang.translate('EAN-number') + ': ' + a.e + '</p>';
+      markup += '</article>';
+      return markup;
+  };
+
+  function onFeatureSelect (feature) {
+      NK = NK || {};
+      if (NK.selectedCoverageMap ) {
+          selectControl.unselect(NK.selectedCoverageMap);
+      }
+      NK.selectedCoverageMap = feature;
+
+      var popup = new OpenLayers.Popup.Anchored("nk-selected-coverage-map", 
+                               feature.geometry.getBounds().getCenterLonLat(),
+                               null,
+                               generatePopupMarkup(feature),
+                               null, true, onPopupClose);
+      popup.autoSize = true;
+      feature.popup = popup;
+      M.addPopup(popup);
+  }
+  function onFeatureUnselect (feature) {
+      if (feature.popup === NK.selectedCoverageMap) {
+          NK.selectedCoverageMap = null;
+      }
+      M.removePopup(feature.popup);
+      feature.popup.destroy();
+      feature.popup = null;
+
+  }
+
+  selectControl = new OpenLayers.Control.SelectFeature(layer, {
+      select: onFeatureSelect, 
+      unselect: onFeatureUnselect,
+      click: true,
+      autoActivate: true
+  });
+
+  M.addControl(selectControl);
+
+/*  NK.functions.vector.addVectorControls(M, layer, selectHandler); */
 
 }(map, mapProj, proj));

@@ -81,6 +81,21 @@
     });
   };
 
+  var highlightDekningCtrl = new OpenLayers.Control.SelectFeature(layer, {
+    hover: true,
+    multiple: true,
+    highlightOnly: true,
+    renderIntent: "temporary",
+    eventListeners: {
+        beforefeaturehighlighted: highlightAllById,
+        featureunhighlighted: unhighlightAllById
+    },
+    autoActivate: true
+  });
+  map.addControl(highlightDekningCtrl);
+  
+
+/*
   selectHandler = function(feature) {
     alert(feature.fid+"\n"+feature.attributes.vignett+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
     postEvent({
@@ -91,24 +106,81 @@
     });
   };
 
-  var highlightDekningCtrl = new OpenLayers.Control.SelectFeature(layer, {
-    hover: true,
-    multiple: true,
-    highlightOnly: true,
-    renderIntent: "temporary",
-    eventListeners: {
-        beforefeaturehighlighted: highlightAllById,
-        featureunhighlighted: unhighlightAllById
-    }
-  });
-
   var selectDekningCtrl = new OpenLayers.Control.SelectFeature(layer, {
      multiple: true,
-     clickFeature: selectHandler          
+     clickFeature: selectHandler,
+     autoActivate: true
+  });
+  map.addControl(selectDekningCtrl);
+*/
+
+
+  var selectControl;
+  var onPopupClose = null;
+
+  function onPopupClose(evt) {
+      selectControl.unselect(NK.selectedCoverageMap);
+      delete NK.selectedCoverageMap;
+  }
+  function projectionName(projectionNumber) {
+    switch (projectionNumber) {
+      case '8':
+        return 'Mercator';
+      case '16':
+        return 'Gauss Kr\u00FCger';
+        break;
+      default:
+      return '';  
+    }
+    return '';
+  }
+  function generatePopupMarkup (feature) {
+    var a  = feature.attributes;
+    console.log('konsoll logg');
+      var markup = '<article>';
+      markup += '<h1 class="h">' + a.n + '</h1>';
+      markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
+      markup += '<p>' + OpenLayers.Lang.translate('Latest print') + ': ' + a.u + '</p>';
+      markup += '<p>' + OpenLayers.Lang.translate('Datum') + ': ' + a.e + '</p>';
+      markup += '<p>' + OpenLayers.Lang.translate('Projection') + ': ' + projectionName(a.p) + '</p>';
+      markup += '<p>' + OpenLayers.Lang.translate('Scale') + ': 1:' + a.s + '</p>';
+      markup += '</article>';
+      return markup;
+  };
+
+  function onFeatureSelect (feature) {
+      NK = NK || {};
+      if (NK.selectedCoverageMap ) {
+          selectControl.unselect(NK.selectedCoverageMap);
+      }
+      NK.selectedCoverageMap = feature;
+
+      var popup = new OpenLayers.Popup.Anchored("nk-selected-coverage-map", 
+                               feature.geometry.getBounds().getCenterLonLat(),
+                               null,
+                               generatePopupMarkup(feature),
+                               null, true, onPopupClose);
+      popup.autoSize = true;
+      feature.popup = popup;
+      M.addPopup(popup);
+  }
+  function onFeatureUnselect (feature) {
+      if (feature.popup === NK.selectedCoverageMap) {
+          NK.selectedCoverageMap = null;
+      }
+      M.removePopup(feature.popup);
+      feature.popup.destroy();
+      feature.popup = null;
+
+  }
+
+  selectControl = new OpenLayers.Control.SelectFeature(layer, {
+      select: onFeatureSelect, 
+      unselect: onFeatureUnselect,
+      click: true,
+      autoActivate: true
   });
 
-  map.addControl(highlightDekningCtrl);
-  highlightDekningCtrl.activate();
-  map.addControl(selectDekningCtrl);
-  selectDekningCtrl.activate();
+  M.addControl(selectControl);
+
 }(map, mapProj, proj));
