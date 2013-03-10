@@ -141,7 +141,7 @@
       markup += '<h1 class="h">' + a.n + '</h1>';
       markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
       markup += '<p>' + OpenLayers.Lang.translate('Latest print') + ': ' + a.u + '</p>';
-      markup += '<p>' + OpenLayers.Lang.translate('Datum') + ': ' + a.e + '</p>';
+//      markup += '<p>' + OpenLayers.Lang.translate('Datum') + ': ' + a.e + '</p>';
       markup += '<p>' + OpenLayers.Lang.translate('Projection') + ': ' + projectionName(a.p) + '</p>';
       markup += '<p>' + OpenLayers.Lang.translate('Scale') + ': 1:' + a.s + '</p>';
       markup += '</article>';
@@ -182,5 +182,13 @@
   });
 
   M.addControl(selectControl);
+
+OpenLayers.Util.extend(OpenLayers.Lang.nb, {
+  'Map number': 'Kartblad',
+  'Latest print': 'Siste trykk',
+  'Datum': 'Datum',
+  'Projection': 'Projeksjon',
+  'Scale': 'M&aring;lestokk'
+});
 
 }(map, mapProj, proj));
