@@ -8,9 +8,9 @@ mapscript:
     - template: layers/europa
   overlays  : 
     - include: layers/topo2
-    - include: layers/topo2graatone
-    - include: layers/flybilder
     - include: layers/sjo_hovedkart2
+    - include: layers/flybilder
+    - include: layers/grunnkart
     - include: layers/dekning_n50_plast
 #    - include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
