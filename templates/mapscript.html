@@ -144,9 +144,10 @@ NK.init = function () {
   if (NK.functions.setMapStateFromURL) {
     NK.functions.setMapStateFromURL();
   }
-
+  
+/*
   xdmsocket = new easyXDM.Socket({});
-
+*/
   postEvent = function (dico) {
     if (!!xdmsocket) {
       xdmsocket.postMessage(JSON.stringify(dico));
