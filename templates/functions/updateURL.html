@@ -89,6 +89,8 @@ NK.functions.updateHistory = function (evt) {
         } else {
           history.pushState({'hash': uid}, document.title, '#' + uid);        
         }
+      } else {
+        window.location.hash = uid;
       }
     }
   }
