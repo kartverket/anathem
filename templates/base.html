@@ -38,5 +38,24 @@
     <script>
       ${mapscript}  
     </script>
+    <!--[if lt IE 9]>
+        <script>
+            $(window).on('resize', function(evt) {
+                var win = $(window);
+                var body = $('body');
+                var h = parseInt(win.innerHeight());
+                var w = parseInt(win.innerWidth());
+                if (h >= 850) { body.removeClass('sub850h'); }
+                if (h >= 750) { body.removeClass('sub750h'); }
+                if (h >= 650) { body.removeClass('sub650h'); }
+                if (h < 850) { body.addClass('sub850h'); }
+                if (h < 750) { body.addClass('sub750h'); }
+                if (h < 650) { body.addClass('sub650h'); }
+                if (w >= 550) { body.removeClass('sub550w'); }
+                if (w < 550) { body.addClass('sub550w'); }
+            });
+        </script>
+    <![endif]-->
+
   </body>
 </html>
