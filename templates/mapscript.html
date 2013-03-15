@@ -168,11 +168,15 @@ var addEvent = function(event, handler) {
     listen("on" + event, handler);
   }
 };
-var cb = function(request) {
+var cb = function(response, status, request) {
   NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
   NK.init();
 };
 var initializeToken = function () {
-  OpenLayers.Request.GET({url: NK.tokenService, success: cb});
+  $.ajax({
+    url: NK.tokenService, 
+    success: cb,
+    type: 'GET'
+  });
 };
 addEvent('load', initializeToken);
