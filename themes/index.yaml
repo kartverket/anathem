@@ -32,3 +32,5 @@ mapscript:
 #      id: secondary-toolbar
     - template: controls/container
       id: top-decoration-bar
+splashscreen:
+  - template: splashscreen/betainfo
