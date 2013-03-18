@@ -89,7 +89,7 @@ NK.init = function () {
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
   OpenLayers.Lang.setCode('nb');
-  OpenLayers.ImgPath = '/img/';
+  OpenLayers.ImgPath = 'img/';
 
   // extract URL parameters into dictionary
   prmstr = window.location.search.substr(1);
@@ -117,7 +117,7 @@ NK.init = function () {
       units: "m",
       maxResolution: 21664.0,
       numZoomLevels: 18,
-      theme: '/theme/norgeskart/style.css',
+      theme: 'theme/norgeskart/style.css',
       eventListeners: NK.mapEventListeners
     }
   );
