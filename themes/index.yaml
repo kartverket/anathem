@@ -11,7 +11,7 @@ mapscript:
     - include: layers/sjo_hovedkart2
     - include: layers/flybilder
     - include: layers/grunnkart
-    - include: layers/toporaster2
+#    - include: layers/toporaster2
     - include: layers/dekning_n50_plast
 #    - include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
