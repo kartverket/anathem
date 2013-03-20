@@ -24,6 +24,7 @@ NK.mapservers.wmts = [
   "http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
   "http://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts"
 ];
+NK.zoomLevels = 18;
 
 NK.functions = NK.functions || {};
 
@@ -85,7 +86,8 @@ NK.init = function () {
   };
 
   mapProj = proj["32633"];
-  mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); 
+  //mapBounds = new OpenLayers.Bounds(-1163602.0, 6136238.0, 1920810.0, 8316178.0); // 16 zoom levels?
+  mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0); // 18 zoom levels...
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
   OpenLayers.Lang.setCode('nb');
@@ -116,7 +118,7 @@ NK.init = function () {
       maxExtent:  mapBounds,
       units: "m",
       maxResolution: 21664.0,
-      numZoomLevels: 18,
+      numZoomLevels: NK.zoomLevels,
       theme: 'theme/norgeskart/style.css',
       eventListeners: NK.mapEventListeners
     }
@@ -130,6 +132,16 @@ NK.init = function () {
 
   // Overlays
   ${overlays}
+
+  var removePopups = function () {
+    var i, j, popup;
+    for (i = 0, j = map.popups.length; i < j; i += 1) {
+      popup = map.popups[i];
+      map.removePopup(popup);
+    }
+  };
+
+  map.events.register('changelayer', map, removePopups);
 
   // Add controls at the end, to keep focus
   var controlContext = map;
