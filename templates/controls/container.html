@@ -13,6 +13,14 @@
 	container.id = "${id}";
 	% endif
 
+	% if name:
+	var header = document.createElement("span");
+	header.className = "panel-name";
+	header.innerHTML = "${name}";
+	container.appendChild(header);
+	% endif
+
+
 	container.className = className;
 	parentContainer.appendChild(container); 
 
