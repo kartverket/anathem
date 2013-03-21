@@ -570,3 +570,15 @@ div.uploader.disabled span.action {
 div.uploader.disabled span.filename {
   border-color: #ddd;
   color: #aaa; }
+
+/****CUSTOM CODE (PEDER)****/
+#searchResults div.selector select { background-color: #fefefe }
+#searchResults div.selector span { float: right; }
+
+#searchResults div.selector,
+#searchResults div.selector select,
+#searchResults div.selector span {
+    -webkit-box-sizing: content-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;    /* Firefox, other Gecko */
+    box-sizing: content-box;
+}
