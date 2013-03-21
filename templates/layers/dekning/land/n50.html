@@ -76,6 +76,16 @@
       markup += '</article>';
       return markup;
   };
+  var onFeatureUnselect = function (feature) {
+      if (feature === NK.selectedCoverageMap) {
+          NK.selectedCoverageMap = null;
+      }
+      if (feature.popup) {
+        M.removePopup(feature.popup);
+        feature.popup.destroy();
+        feature.popup = null;
+      }
+  };
 
   function onFeatureSelect (feature) {
       NK = NK || {};
@@ -92,15 +102,6 @@
       popup.autoSize = true;
       feature.popup = popup;
       M.addPopup(popup);
-  }
-  function onFeatureUnselect (feature) {
-      if (feature.popup === NK.selectedCoverageMap) {
-          NK.selectedCoverageMap = null;
-      }
-      M.removePopup(feature.popup);
-      feature.popup.destroy();
-      feature.popup = null;
-
   }
 
   selectControl = new OpenLayers.Control.SelectFeature(layer, {

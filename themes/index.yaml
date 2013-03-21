@@ -11,6 +11,7 @@ mapscript:
     - include: layers/sjo_hovedkart2
     - include: layers/flybilder
     - include: layers/grunnkart
+#    - include: layers/toporaster2
     - include: layers/dekning_n50_plast
 #    - include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
@@ -28,8 +29,15 @@ mapscript:
     - include: toolbars/basic
     - include: toolbars/search
 #    - include: toolbars/share
-#    - template: controls/container
-#      id: secondary-toolbar
+    - template: controls/container
+      id: secondary-toolbar
+      controls:
+      - template: controls/container
+        name: Verkt&oslash;y
+        id: tools-panel
+        controls:
+        - template: controls/emergencyposter
+
     - template: controls/container
       id: top-decoration-bar
 splashscreen:

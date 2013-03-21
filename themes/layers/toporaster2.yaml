@@ -3,3 +3,4 @@ usetoken: true
 name: Terreng&shy;modell
 layer: toporaster2
 id: raster
+#hidefromlayerswitcher: true

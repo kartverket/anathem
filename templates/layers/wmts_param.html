@@ -24,7 +24,13 @@
     requestEncoding: "kvp",
     style: "default",
     shortid: "${id}", 
-    isBaseLayer: false, 
+    isBaseLayer: false,
+    displayInLayerSwitcher:
+% if hidefromlayerswitcher:
+    0,
+% else:
+    1,
+% endif
     visibility:
 % if visible:
     1,
