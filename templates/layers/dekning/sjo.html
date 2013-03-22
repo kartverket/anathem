@@ -134,15 +134,48 @@
     }
     return '';
   }
+  var datumNames = {
+    '2': 'WGS84'
+    // TODO: values for ED50 and NGO (see http://kartverket.no/en/Kart/Nautical-Charts/Nautical-Charts/) 
+  };
   function generatePopupMarkup (feature) {
     var a  = feature.attributes;
+    var mainMapFeature, i, j;
       var markup = '<article>';
-      markup += '<h1 class="h">' + a.n + '</h1>';
-      markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
-      markup += '<p>' + OpenLayers.Lang.translate('Latest print') + ': ' + a.u + '</p>';
-//      markup += '<p>' + OpenLayers.Lang.translate('Datum') + ': ' + a.e + '</p>';
-      markup += '<p>' + OpenLayers.Lang.translate('Projection') + ': ' + projectionName(a.p) + '</p>';
-      markup += '<p>' + OpenLayers.Lang.translate('Scale') + ': 1:' + a.s + '</p>';
+      if (a.n && a.n !== 'NULL') {
+        markup += '<h1 class="h">' + a.n + '</h1>';
+      } 
+      if (a.vignett) {
+        var mainMapNumber = a.vignett.slice(0, 3);
+        for (i = 0, j = feature.layer.features.length; i < j; i += 1) {
+          if (feature.layer.features[i].attributes.nr === mainMapNumber) {
+            mainMapFeature = feature.layer.features[i];
+          }
+        }
+        if (mainMapFeature) {
+          if (mainMapFeature.attributes.s !== a.s) {
+            markup += OpenLayers.Lang.translate('Special in map');
+          } else {
+            markup += OpenLayers.Lang.translate('Vignette in map');
+          }
+           markup += ' ' + mainMapFeature.attributes.nr + ': ' + mainMapFeature.attributes.n;
+        }
+      }
+      if (a.nr) {
+        markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
+      }
+      if (a.u) {
+        markup += '<p>' + OpenLayers.Lang.translate('Latest print') + ': ' + a.u + '</p>';
+      }
+      if (a.d && datumNames[a.d]) {
+        markup += '<p>' + OpenLayers.Lang.translate('Datum') + ': ' + datumNames[a.d] + '</p>';
+      }
+      if (a.p) {
+        markup += '<p>' + OpenLayers.Lang.translate('Projection') + ': ' + projectionName(a.p) + '</p>';
+      }
+      if (a.s) {
+        markup += '<p>' + OpenLayers.Lang.translate('Scale') + ': 1:' + a.s + '</p>';
+      }
       markup += '</article>';
       return markup;
   };
@@ -190,7 +223,9 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Latest print': 'Siste trykk',
   'Datum': 'Datum',
   'Projection': 'Projeksjon',
-  'Scale': 'M&aring;lestokk'
+  'Scale': 'M&aring;lestokk',
+  'Special in map': 'Spesiale i kartblad',
+  'Vignette in map': 'Vignett i kartblad'
 });
 
 }(map, mapProj, proj));

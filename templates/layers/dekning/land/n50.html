@@ -68,11 +68,21 @@
   function generatePopupMarkup (feature) {
     var a  = feature.attributes;
       var markup = '<article>';
-      markup += '<h1 class="h">' + a.n + '</h1>';
-      markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
-      markup += '<div class="municipalities">' + OpenLayers.Lang.translate('Municipalities') + ': <span>' + a.k.split(',').join(',</span><span>') + '</span></div>';
-      markup += '<p>' + OpenLayers.Lang.translate('Updated') + ': ' + a.u + '</p>';
-      markup += '<p>' + OpenLayers.Lang.translate('EAN-number') + ': ' + a.e + '</p>';
+      if (a.n && a.n !== 'NULL') {
+        markup += '<h1 class="h">' + a.n + '</h1>';
+      }
+      if (a.nr) {
+        markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
+      }
+      if (a.k) {
+        markup += '<div class="municipalities">' + OpenLayers.Lang.translate('Municipalities') + ': <span>' + a.k.split(',').join(',</span><span>') + '</span></div>';
+      }
+      if (a.u) {
+        markup += '<p>' + OpenLayers.Lang.translate('Updated') + ': ' + a.u + '</p>';
+      }
+      if (a.e) {
+        markup += '<p>' + OpenLayers.Lang.translate('EAN-number') + ': ' + a.e + '</p>';
+      }
       markup += '</article>';
       return markup;
   };
@@ -114,6 +124,20 @@
   });
 
   M.addControl(selectControl);
+
+OpenLayers.Util.extend(OpenLayers.Lang.nb, {
+  'Map number': 'Kartblad',
+  'Latest print': 'Siste trykk',
+  'Datum': 'Datum',
+  'Municipalities': 'Kommuner',
+  'EAN-number': 'EAN-nummer',
+  'Projection': 'Projeksjon',
+  'Scale': 'M&aring;lestokk',
+  'Updated': 'Sist oppdatert',
+  'Special in map': 'Spesiale i kartblad',
+  'Vignette in map': 'Vignett i kartblad'
+});
+
 
 /*  NK.functions.vector.addVectorControls(M, layer, selectHandler); */
 
