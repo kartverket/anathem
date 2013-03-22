@@ -70,7 +70,7 @@
       var markup = '<article>';
       markup += '<h1 class="h">' + a.n + '</h1>';
       markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
-      markup += '<div class="municipalities">' + OpenLayers.Lang.translate('Municipalities') + ': <ul><li>' + a.k.split(',').join(',</li><li>') + '</li></ul></div>';
+      markup += '<div class="municipalities">' + OpenLayers.Lang.translate('Municipalities') + ': <span>' + a.k.split(',').join(',</span><span>') + '</span></div>';
       markup += '<p>' + OpenLayers.Lang.translate('Updated') + ': ' + a.u + '</p>';
       markup += '<p>' + OpenLayers.Lang.translate('EAN-number') + ': ' + a.e + '</p>';
       markup += '</article>';
