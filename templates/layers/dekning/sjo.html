@@ -154,8 +154,10 @@
       }
       NK.selectedCoverageMap = feature;
 
-      var popup = new OpenLayers.Popup.Anchored("nk-selected-coverage-map", 
-                               feature.geometry.getBounds().getCenterLonLat(),
+      var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
+      M.setCenter(mousePosition);
+      var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
+                               mousePosition,
                                null,
                                generatePopupMarkup(feature),
                                null, true, onPopupClose);
@@ -163,6 +165,7 @@
       feature.popup = popup;
       M.addPopup(popup);
   }
+  
   function onFeatureUnselect (feature) {
       if (feature.popup === NK.selectedCoverageMap) {
           NK.selectedCoverageMap = null;

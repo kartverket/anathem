@@ -2,9 +2,9 @@ var matrixIds,
     wmts,
     i;
 
-matrixIds = new Array(18);
+matrixIds = new Array(NK.zoomLevels);
 
-for (i = 0; i <= 18; ++i) {
+for (i = 0; i <= NK.zoomLevels; ++i) {
   matrixIds[i] = {};
   matrixIds[i].identifier = mapProj + ":" + i;
 } 
