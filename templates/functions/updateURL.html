@@ -158,7 +158,9 @@ NK.functions.setMapState = function (params) {
       if (p[0] === 'sok') {
         p[1] = decodeURIComponent(p[1]);
         searchInputField = document.getElementById('searchInput');
-        searchInputField.value = p[1];
+        if (searchInputField) {
+          searchInputField.value = p[1];
+        }
         map.events.triggerEvent('searchForPhrase', {'phrase': p[1]});
       }
     }
