@@ -1,0 +1,17 @@
+%if not 'styles.omriss' in vars:  
+NK.styles = NK.styles || {};
+NK.styles.omriss = new OpenLayers.StyleMap(
+	{
+	  'default': new OpenLayers.Style(
+	    {
+	      strokeWidth: 0,
+	      strokeColor: "#606161",
+	      strokeOpacity: 0.5,
+	      fillOpacity: 1,
+	      fillColor: "white"
+	    }
+	  )
+	}
+);
+<% vars['styles.omriss']=True %>
+%endif

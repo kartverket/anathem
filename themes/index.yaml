@@ -18,6 +18,8 @@ mapscript:
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
+#    - include: layers/omriss_norge_1000m
+#    - include: layers/omriss_norge_500m
 
   center    : 
     template: center/besseggen
@@ -37,8 +39,14 @@ mapscript:
         id: tools-panel
         controls:
         - template: controls/emergencyposter
-
     - template: controls/container
-      id: top-decoration-bar
+      id: top-decoration-bar  
+    - template: controls/container
+      id: overview-container-panel
+      controls:
+      - template: controls/overview
+        name: omriss
+        id: omriss.norge.5000m
+        url: /json/norge/5000m.geojson
 splashscreen:
   - template: splashscreen/betainfo
