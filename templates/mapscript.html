@@ -108,20 +108,24 @@ NK.init = function () {
     mapProj = proj[params.proj]; 
   }
 
+  NK.mapOptions = {
+    projection: mapProj,
+    displayProjection: mapProj,
+    maxExtent:  mapBounds,
+    units: "m",
+    maxResolution: 21664.0,
+  //      minResolution: 0.165283203125,
+    numZoomLevels: NK.zoomLevels,
+    theme: 'theme/norgeskart/style.css',
+  };
+
   map = new OpenLayers.Map( 
     'map', 
-    {
+    OpenLayers.Util.extend(NK.mapOptions, {
       controls: [], //defined later
-      projection: mapProj,
-      displayProjection: mapProj,
-      maxExtent:  mapBounds,
-      units: "m",
-      maxResolution: 21664.0,
-//      minResolution: 0.165283203125,
       numZoomLevels: NK.zoomLevels,
-      theme: 'theme/norgeskart/style.css',
       eventListeners: NK.mapEventListeners
-    }
+    })
   );
 
   // Base layers

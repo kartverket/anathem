@@ -1,0 +1,67 @@
+<%inherit file="/controls/controlcontext.html" />
+
+<%include file="/functions/vector.html" />
+<%include file="/styles/omriss.html" />
+
+(function (M, MP, P) {
+  var layer,
+      requestHandler;
+
+  var norgeExtent = new OpenLayers.Bounds(-76856, 6453900, 1114892, 7939873);
+
+  layer = new OpenLayers.Layer.Vector(
+    "${name}",
+    {
+      shortid: "${id}", 
+      styleMap: NK.styles.omriss, 
+      visibility: true
+//      , maxExtent: norgeExtent
+//      , isBaseLayer: true
+    }
+  );
+
+  //M.addLayer(layer);
+
+  requestHandler = function (request) {
+    var geojson_format,
+        features;
+
+    geojson_format = new OpenLayers.Format.GeoJSON({
+      'internalProjection': MP,
+      'externalProjection': P['32633'] 
+    });
+
+
+    features = geojson_format.read(request.responseText);
+
+    layer.addFeatures(features);
+
+  	options.maximized = true;
+  	options.maximizeTitle = 'Show the overview map';
+  	options.minimizeTitle = 'Hide the overview map';
+    options.minRatio = 1000;
+    options.maxRatio = 1000;
+    options.size = {w: 80, h: 90};
+
+    options.mapOptions = OpenLayers.Util.extend(NK.mapOptions, {
+      numZoomLevels: NK.zoomLevels,
+      maxExtent: norgeExtent,
+      restrictedExtent: norgeExtent,
+      maxResolution: 20000.0,
+      controls: [],
+      baseLayer: layer
+    });
+  	options.autoPan = false;
+  	options.layers = [layer];
+
+  	NK.functions.addControlToContext(new OpenLayers.Control.OverviewMap(options), context);
+
+  };
+
+  OpenLayers.Request.GET({
+    url: "${url}",
+    callback: requestHandler
+  });
+
+}(map, mapProj, proj));
+

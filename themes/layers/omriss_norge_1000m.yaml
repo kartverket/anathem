@@ -1,0 +1,6 @@
+template: layers/dekning/land/n50
+name: Omriss 1000m
+id: omriss.1000m
+layerGroup: dekning
+url: /json/norge/1000m.geojson
+preferredBackground: land
