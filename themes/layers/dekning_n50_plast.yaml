@@ -1,6 +1,6 @@
 template: layers/dekning/land/n50
 name: Plast&shy;kart (land)
-id: dekning.plast
+id: dekning.land 
 layerGroup: dekning
 url: /json/dekning/land/n50/plast.json
 preferredBackground: land

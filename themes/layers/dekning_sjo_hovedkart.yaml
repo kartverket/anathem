@@ -1,5 +1,5 @@
 template: layers/dekning/sjo/hovedkart
-name: Hoved&shy;kart (sj&oslash;)
+name: Hoved&shy;kart sj&oslash;
 id: dekning.sjo
 url: /json/dekning/sjo/hovedserie.json
 mapTypeId: sjo
