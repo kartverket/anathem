@@ -1,4 +1,11 @@
 template: controls/container
 id: share-toolbar
 controls:
-- template: test/plus-icon
+- template: controls/container
+  id: getURL-panel
+  controls:
+  - template: controls/getURL
+- template: controls/container
+  id: help-panel  
+  controls:
+  - template: controls/help

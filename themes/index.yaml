@@ -30,7 +30,7 @@ mapscript:
     - template: controls/hashstate
     - include: toolbars/basic
     - include: toolbars/search
-#    - include: toolbars/share
+    - include: toolbars/share
     - template: controls/container
       id: secondary-toolbar
       controls:
