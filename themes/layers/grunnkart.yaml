@@ -2,4 +2,4 @@ template: layers/wmts_param
 usetoken: true
 name: enkel 
 layer: norges_grunnkart 
-id: grunn
+id: enkel 
