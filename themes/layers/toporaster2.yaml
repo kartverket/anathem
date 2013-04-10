@@ -2,5 +2,7 @@ template: layers/wmts_param
 usetoken: true
 name: Terreng&shy;modell
 layer: toporaster2
-id: raster
-#hidefromlayerswitcher: true
+layerGroup: modus
+id: toporaster
+visible: false
+hidefromlayerswitcher: true

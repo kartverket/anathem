@@ -3,4 +3,5 @@ usetoken: true
 url: http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nibcache
 name: Fly&shy;bilder 
 layers: NiB
+layerGroup: modus
 id: flybilder

@@ -22,7 +22,7 @@ controls:
   id: layerselector-panel
   controls:
   - template: controls/rasterlayerselector
-    group: dekning
+    group: modus
 - template: controls/container
   id: layerselector-panel-vector
   controls:
