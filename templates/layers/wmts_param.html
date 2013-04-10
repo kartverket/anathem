@@ -1,6 +1,7 @@
 (function (M, MP) {
   var matrixIds,
       wmts,
+      extendedWmts,
       i;
 
   matrixIds = [];
@@ -45,6 +46,11 @@
     }
     % endif
   });
+
+% if layerGroup:
+  wmts = OpenLayers.Util.extend(wmts, { layerGroup: '${layerGroup}' });
+% endif
+
   if (wmts.params.GKT) {
     wmts.params.gkt = wmts.params.GKT;
     delete wmts.params.GKT; 

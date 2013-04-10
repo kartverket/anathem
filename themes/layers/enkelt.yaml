@@ -2,4 +2,5 @@ template: layers/wms_param
 name: Enkelt
 url: http://opencache.statkart.no/gatekeeper/gk/gk.open
 layers: topo2enkel
+layerGroup: modus
 id: enkelt
