@@ -9,3 +9,7 @@ controls:
   id: help-panel  
   controls:
   - template: controls/help
+- template: controls/container
+  id: print-panel
+  controls:
+  - template: controls/print
