@@ -39,8 +39,10 @@ mapscript:
         id: tools-panel
         controls:
         - template: controls/emergencyposter
+        - template: controls/transformations
+          url: http://beta.norgeskart.no/ws/trans.py
     - template: controls/container
-      id: top-decoration-bar  
+      id: top-decoration-bar
     - template: controls/container
       id: overview-container-panel
       controls:
