@@ -14,7 +14,11 @@ var wms = new OpenLayers.Layer.WMS(
     isBaseLayer: false, 
     visibility: ${visible}, 
     transitionEffect: 'resize',
+% if singleTile:
+    singleTile: true
+% else:
     singleTile: false
+% endif
   }
 );
 
