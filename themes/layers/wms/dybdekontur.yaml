@@ -1,0 +1,8 @@
+template: layers/wms_param
+usetoken: true
+url: http://wms.geonorge.no/skwms1/wms.dybdedata
+name: Dybde&shy;kontur
+layers: Dybdekontur
+layerGroup: tjenester
+id: dybdekontur
+singleTile: true
