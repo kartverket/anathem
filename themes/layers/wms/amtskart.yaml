@@ -3,6 +3,6 @@ usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.historiskekart
 name: Amts&shy;kart
 layers: amt1
-layerGroup: tjenester.historiskekart
+layerGroup: tjenester.historiskekart.amt
 id: amtskart
 singleTile: true

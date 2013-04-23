@@ -3,6 +3,6 @@ usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.abas
 name: ABAS 
 layers: Kommunegrenser
-layerGroup: tjenester
+layerGroup: tjenester.abas
 id: kommunegrenser
 singleTile: true

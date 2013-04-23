@@ -3,6 +3,6 @@ usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.dybdedata
 name: Dybde&shy;data
 layers: Dybdedata_MS_WMS
-layerGroup: services
+layerGroup: tjenester.sjo.dybde
 id: dybdedata
 singleTile: true

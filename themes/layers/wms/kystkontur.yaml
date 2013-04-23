@@ -3,6 +3,6 @@ usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.dybdedata
 name: Kyst&shy;kontur
 layers: Kystkontur
-layerGroup: tjenester
+layerGroup: tjenester.sjo.dybde
 id: kystkontur
 singleTile: true
