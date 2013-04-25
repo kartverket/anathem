@@ -12,7 +12,6 @@ mapscript:
     - include: layers/flybilder
     - include: layers/grunnkart
     - include: layers/toporaster2
-    - include: layers/dekning_n50_plast
 
     - include: layers/wms/kommunegrenser
     - include: layers/wms/amtskart
@@ -25,6 +24,8 @@ mapscript:
     - include: layers/wms/kystkontur
     - include: layers/wms/sjogrenser
 
+    - include: layers/dekning_n50_plast
+    - include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
