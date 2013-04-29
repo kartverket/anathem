@@ -6,6 +6,10 @@ controls:
   controls:
   - template: controls/getURL
 - template: controls/container
+  id: embed-panel
+  controls:
+  - template: controls/embed
+- template: controls/container
   id: help-panel  
   controls:
   - template: controls/help
