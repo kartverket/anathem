@@ -1,0 +1,16 @@
+<%inherit file="/controls/controlcontext.html" />
+
+% if group:
+	options.group = '${group}';
+% endif
+% if svgIcon:
+	options.svgIcon = '${svgIcon}';
+% endif
+options.title = "${title}";
+
+% if groupheaders:
+	${groupheaders}
+% endif
+
+var control = new OpenLayers.Control.OverlayGroupPanel(options);
+NK.functions.addControlToContext(control, context);

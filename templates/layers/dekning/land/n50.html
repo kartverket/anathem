@@ -3,7 +3,12 @@
 
 (function (M, MP, P) {
   var layer,
+      selectControl,
+      onPopupClose = null,
+      onFeatureUnselect,
+      onFeatureSelect,
       selectHandler,
+      generatePopupMarkup,
       requestHandler;
 
   // dekningsoversikt - vector layer
@@ -58,14 +63,12 @@
 */
   };
 
-  var selectControl;
-  var onPopupClose = null;
-
-  function onPopupClose(evt) {
+  onPopupClose = function (evt) {
       selectControl.unselect(NK.selectedCoverageMap);
       delete NK.selectedCoverageMap;
-  }
-  function generatePopupMarkup (feature) {
+  };
+
+  generatePopupMarkup = function (feature) {
     var a  = feature.attributes;
       var markup = '<article>';
       if (a.n && a.n !== 'NULL') {
@@ -86,7 +89,8 @@
       markup += '</article>';
       return markup;
   };
-  var onFeatureUnselect = function (feature) {
+
+  onFeatureUnselect = function (feature) {
       if (feature === NK.selectedCoverageMap) {
           NK.selectedCoverageMap = null;
       }
@@ -97,7 +101,7 @@
       }
   };
 
-  function onFeatureSelect (feature) {
+  onFeatureSelect = function (feature) {
       NK = NK || {};
       if (NK.selectedCoverageMap ) {
           selectControl.unselect(NK.selectedCoverageMap);
@@ -114,10 +118,12 @@
       popup.autoSize = true;
       feature.popup = popup;
       M.addPopup(popup);
-  }
+  };
+
+  NK.functions.vector.addVectorHoverControls(M, layer);
 
   selectControl = new OpenLayers.Control.SelectFeature(layer, {
-      select: onFeatureSelect, 
+      select: onFeatureSelect,
       unselect: onFeatureUnselect,
       click: true,
       autoActivate: true
@@ -137,8 +143,5 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Special in map': 'Spesiale i kartblad',
   'Vignette in map': 'Vignett i kartblad'
 });
-
-
-/*  NK.functions.vector.addVectorControls(M, layer, selectHandler); */
 
 }(map, mapProj, proj));

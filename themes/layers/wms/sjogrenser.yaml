@@ -1,0 +1,8 @@
+template: layers/wms_param
+usetoken: true
+url: http://wms.geonorge.no/skwms1/wms.sjogrenser2
+name: Sj&oslash;&shy;grenser
+layers: Sjogrenser2_WMS
+layerGroup: tjenester.sjo
+id: sjogrenser
+singleTile: true

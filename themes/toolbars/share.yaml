@@ -1,4 +1,19 @@
 template: controls/container
 id: share-toolbar
 controls:
-- template: test/plus-icon
+- template: controls/container
+  id: getURL-panel
+  controls:
+  - template: controls/getURL
+#- template: controls/container
+#  id: embed-panel
+#  controls:
+#  - template: controls/embed
+- template: controls/container
+  id: help-panel  
+  controls:
+  - template: controls/help
+- template: controls/container
+  id: print-panel
+  controls:
+  - template: controls/print

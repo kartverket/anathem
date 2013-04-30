@@ -1,0 +1,8 @@
+template: layers/wms_param
+usetoken: true
+url: http://wms.geonorge.no/skwms1/wms.havbunnraster2
+name: Havbunn&shy;raster
+layers: Havbunnraster
+layerGroup: tjenester.sjo
+id: havbunnraster
+singleTile: true

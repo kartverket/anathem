@@ -11,7 +11,7 @@ for (i = 0; i <= NK.zoomLevels; ++i) {
 
 wmts = new OpenLayers.Layer.WMTS({
   name: "Europa",
-  url: gkopen_wmts,
+  url: NK.mapservers.wmts,
   layer: "europa",
   matrixSet: mapProj,
   matrixIds: matrixIds,
@@ -21,8 +21,21 @@ wmts = new OpenLayers.Layer.WMTS({
   shortid: "europa", 
   visibility: ${visible}, 
   transitionEffect: 'resize',
-  opacity: 0.5
+  opacity: 0.5,
+  params: {
+    gkt: NK.gkToken
+  }
 });
+
+if (wmts.params.GKT) {
+  wmts.params.gkt = wmts.params.GKT;
+  delete wmts.params.GKT; 
+}
+
+wmts.events.register("tileerror", wmts, function(arg) {
+  NK.functions.getNewToken();
+});
+
 map.events.register('zoomend', wmts, function (evt) {
   this.setVisibility(map.getZoom() <= 6);
 });

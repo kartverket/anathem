@@ -14,11 +14,8 @@ NK.functions.vector.markAllById = function (layer, intent) {
   };
 };
 
-NK.functions.vector.addVectorControls = function (map, layer, click, grouped) {
-  var hoverCtrl, 
-      selectCtrl;
-
-  hoverCtrl = new OpenLayers.Control.SelectFeature(
+NK.functions.vector.addVectorHoverControls = function (map, layer, grouped) {
+  var hoverCtrl = new OpenLayers.Control.SelectFeature(
     layer,
     {
       hover: true,
@@ -34,6 +31,12 @@ NK.functions.vector.addVectorControls = function (map, layer, click, grouped) {
   }
   map.addControl(hoverCtrl);
   hoverCtrl.activate();
+};
+
+NK.functions.vector.addVectorControls = function (map, layer, grouped) {
+  var selectCtrl;
+
+  NK.functions.vector.addVectorHoverControls(map, layer, click, grouped);
   
   selectCtrl = new OpenLayers.Control.SelectFeature(
     layer,

@@ -15,10 +15,6 @@ controls:
   controls:
     - template: controls/pan
 - template: controls/container
-  id: getURL-panel
-  controls:
-  - template: controls/getURL
-- template: controls/container
   id: layerselector-panel
   controls:
   - template: controls/rasterlayerselector
