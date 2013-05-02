@@ -52,7 +52,9 @@ NK.functions.getNewToken = function () {
   }
 };
 
-${functions}
+%if functions :
+  ${functions}
+% endif
 
 NK.init = function () {
 
@@ -150,9 +152,9 @@ NK.init = function () {
   // Add controls at the end, to keep focus
   var controlContext = map;
   var container = null;
-
+% if controls:
   ${controls}
-
+% endif
   // initialize URL update state
   if (NK.functions.storeInitialLayerVisibility) {
     NK.functions.storeInitialLayerVisibility();

@@ -1,0 +1,39 @@
+# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
+
+template : base
+title    : Norgeskart
+mapscript:
+  template  : mapscript
+  baselayers:   
+    - template: layers/europa
+  overlays  : 
+    - include: layers/topo2
+    - include: layers/sjo_hovedkart2
+    - include: layers/flybilder
+    - include: layers/grunnkart
+    - include: layers/toporaster2
+
+    - include: layers/wms/kommunegrenser
+    - include: layers/wms/amtskart
+    - include: layers/wms/dybdedata
+    - include: layers/wms/dybdelag
+    - include: layers/wms/havbunnraster
+    - include: layers/wms/dekning_sjomaaling
+    - include: layers/wms/dybdekontur
+    - include: layers/wms/dybdekurver_havomraader
+    - include: layers/wms/kystkontur
+    - include: layers/wms/sjogrenser
+
+    - include: layers/dekning_n50_plast
+    - include: layers/dekning_n50_papir
+    - include: layers/dekning_sjo_hovedkart
+    - include: layers/dekning_havnekart
+    - include: layers/dekning_kystkart
+    - include: layers/dekning_overseilingskart
+
+  center:
+    template: center/besseggen
+  functions :
+    template: functions/readURL
+  controls  :
+    - template: controls/navigation

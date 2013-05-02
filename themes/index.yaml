@@ -33,8 +33,9 @@ mapscript:
 
   center    : 
     template: center/besseggen
-  functions:
-    template: functions/updateURL
+  functions :
+    - template: functions/updateURL
+    - template: functions/readURL
   controls  :
     - template: controls/navigation
     - template: controls/hashstate
