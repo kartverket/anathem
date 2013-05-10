@@ -140,10 +140,14 @@ NK.init = function () {
   ${overlays}
 
   var removePopups = function () {
-    var i, j, popup;
-    for (i = 0, j = map.popups.length; i < j; i += 1) {
-      popup = map.popups[i];
-      map.removePopup(popup);
+    var i, j, popup, p;
+
+    for (p in map.popups) {
+      if (map.popups.hasOwnProperty(p)) {
+        popup = map.popups[p];
+
+        map.removePopup(popup);
+      }
     }
   };
 
