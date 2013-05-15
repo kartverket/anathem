@@ -26,6 +26,59 @@ NK.functions.setMapStateFromPopState = function (evt) {
 
 $(window).on('popstate', NK.functions.setMapStateFromPopState);
 
+NK.functions.addLabeledMarker = function (params, number) {
+  var layers, 
+      layer, 
+      x, 
+      y, 
+      label,
+      feature,
+      popup,
+      properties;
+
+  layers = map.getLayersBy('shortid', 'pekere');
+  if (layers.length > 0) {
+    layer = layers[0];
+  } else {
+    layer = new OpenLayers.Layer.Vector("Mark&oslash;rer", {shortid: 'pekere', styleMap: NK.styles.labeledMarker});
+    map.addLayer(layer);
+  }
+
+  x = parseInt(params[0]);
+  y = parseInt(params[1]);
+
+  label = decodeURIComponent(params[2]);
+  properties = {label: label};
+
+  if (number) {
+    properties.nr = number;
+  } else {
+    properties.nr = '';
+  }
+
+  feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(x, y), properties);
+
+  popup = new OpenLayers.Popup.FramedSideAnchored(
+    "nk-user-marker" + (number ? '-' + number : ''), 
+    feature.geometry.getBounds().getCenterLonLat(),
+    null,
+    '<span class="label-text">' + feature.data.label + '</span>', //generatePopupMarkup(feature),
+    null, 
+    false, 
+    null, //onPopupClose
+    {x: 4, y: -65},
+    'user-marker'
+  );
+
+  popup.autoSize = true;
+  popup.panMapIfOutOfView = false;
+  feature.popup = popup;
+  map.addPopup(popup);
+
+  layer.addFeatures([feature]);
+  return feature;
+};
+
 NK.functions.setMapState = function (params) {
   var parms,
       zoom,
@@ -42,7 +95,6 @@ NK.functions.setMapState = function (params) {
       search,
       searchArray,
       searchInputField,
-      addLabeledMarker,
       i, j, p,
       hash,
       labeledMarkerCount = 0;
@@ -193,58 +245,6 @@ NK.functions.setMapState = function (params) {
       }
     };
 
-    addLabeledMarker = function (params, number) {
-      var layers, 
-          layer, 
-          x, 
-          y, 
-          label,
-          feature,
-          popup,
-          properties;
-
-      layers = map.getLayersBy('shortid', 'pekere');
-      if (layers.length > 0) {
-        layer = layers[0];
-      } else {
-        layer = new OpenLayers.Layer.Vector("Mark&oslash;rer", {shortid: 'pekere', styleMap: NK.styles.labeledMarker});
-        map.addLayer(layer);
-      }
-
-      x = parseInt(params[0]);
-      y = parseInt(params[1]);
-
-      label = decodeURIComponent(params[2]);
-      properties = {label: label};
-
-      if (number) {
-        properties.nr = number;
-      } else {
-        properties.nr = '';
-      }
-
-      feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(x, y), properties);
-
-      popup = new OpenLayers.Popup.FramedSideAnchored(
-        "nk-user-marker" + (number ? '-' + number : ''), 
-        feature.geometry.getBounds().getCenterLonLat(),
-        null,
-        '<span class="label-text">' + feature.data.label + '</span>', //generatePopupMarkup(feature),
-        null, 
-        false, 
-        null, //onPopupClose
-        {x: 4, y: -65},
-        'user-marker'
-      );
-
-      popup.autoSize = true;
-      popup.panMapIfOutOfView = false;
-      feature.popup = popup;
-      map.addPopup(popup);
-
-      layer.addFeatures([feature]);
-    };
-
     for (index = 3; index < parms.length; index += 1) {
       extra = parms[index];
       switch (extra.charAt(0)) {
@@ -261,7 +261,7 @@ NK.functions.setMapState = function (params) {
           highlight(extra);
           break;
         case 'm':
-          addLabeledMarker(parms.slice(index + 1, index + 4), ++labeledMarkerCount);
+          NK.functions.addLabeledMarker(parms.slice(index + 1, index + 4), ++labeledMarkerCount);
           index += 3;
           break;
       }
