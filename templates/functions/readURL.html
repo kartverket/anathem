@@ -74,6 +74,7 @@ NK.functions.addLabeledMarker = function (params, number) {
   popup.panMapIfOutOfView = false;
   feature.popup = popup;
   map.addPopup(popup);
+  popup.show();
 
   layer.addFeatures([feature]);
   return feature;
