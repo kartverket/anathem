@@ -5,64 +5,40 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
 });
 NK.styles = NK.styles || {};
 NK.styles.embed = NK.styles.embed || {};
-NK.styles.embed.box = new OpenLayers.StyleMap(
+NK.styles.embed.box = new OpenLayers.StyleMap({
+	'default': new OpenLayers.Style({
+	  strokeWidth: 2,
+	  strokeColor  : "#616060",
+	  fillOpacity: 0, 
+	  label: OpenLayers.Lang.translate('Height') + "${": ${height}\\n"}" + OpenLayers.Lang.translate('Width') + "${": ${width}"}",
+	  fontColor: "#616060",
+	  fontSize: "12px",
+	  fontFamily: "Courier New, monospace",
+	  fontWeight: "bold",
+	  labelAlign: "lt",
+	  labelOutlineColor: "white",
+	  labelOutlineWidth: 5,
+	  labelXOffset: "${"${getXOffset}"}",
+	  labelYOffset: "${"${getYOffset}"}"
+	}, 
 	{
-	  'default': new OpenLayers.Style(
-	    {
-	      strokeWidth: 2,
-	      strokeColor  : "#484",
-	      fillOpacity: 0, 
-	      label: OpenLayers.Lang.translate('Height') + "${": ${height}\\n"}" + OpenLayers.Lang.translate('Width') + "${": ${width}"}",
-	      fontColor: "#8a8",
-	      fontSize: "12px",
-	      fontFamily: "Courier New, monospace",
-	      fontWeight: "bold",
-	      labelAlign: "cm",
-	      labelOutlineColor: "white",
-	      labelOutlineWidth: 5
-	    },
-	    {
-	      rules: []
-	    }
-	  ),
-	  'temporary': new OpenLayers.Style(
-			{
-		      strokeWidth: 3,
-		      strokeColor  : "#ada",
-		      fontColor: "#ada",
-		      fillOpacity: 0.1
+		context: {
+			getXOffset: function (feature) {
+				return parseInt(feature.attributes.width) / 2 + 7;
 			},
-			{
-				rules: [
-			        new OpenLayers.Rule({
-			        	symbolizer: {
-					        strokeColor  : "#ada",
-					        fontColor: "#ada"
-				        }
-				    }),
-			        new OpenLayers.Rule({
-						filter: new OpenLayers.Filter.Comparison({
-							type: OpenLayers.Filter.Comparison.LIKE,
-							property: "u",
-							value: "2013"
-						}),
-						symbolizer: {
-							strokeColor  : "#daa",
-							fontColor: "#daa"
-						}
-			    })
-				]
+			getYOffset: function (feature) {
+				return parseInt(feature.attributes.height) / 2 - 2;
 			}
-	  )
-	}
-);
+		}
+	})
+});
 
 NK.styles.embed.mask =  new OpenLayers.Style({
 	strokeWidth: 2,
-	strokeColor  : "#484",
+	strokeColor  : "#616060",
 	fillOpacity: 0, 
 	label: OpenLayers.Lang.translate('Height') + "${": ${height}\\n"}" + OpenLayers.Lang.translate('Width') + "${": ${width}"}",
-	fontColor: "#8a8",
+	fontColor: "#616060",
 	fontSize: "12px",
 	fontFamily: "Courier New, monospace",
 	fontWeight: "bold",
