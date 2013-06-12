@@ -227,7 +227,7 @@ NK.init = function () {
     maxResolution: 21664.0,
   //      minResolution: 0.165283203125,
     numZoomLevels: NK.zoomLevels,
-    theme: 'theme/norgeskart/style.css',
+    theme: 'theme/norgeskart/style.css'
   };
 
   map = new OpenLayers.Map( 
@@ -276,12 +276,9 @@ NK.init = function () {
     NK.functions.setMapStateFromURL();
   }
   
-/*
-  xdmsocket = new easyXDM.Socket({});
-*/
-  postEvent = function (dico) {
-    if (!!xdmsocket) {
-      xdmsocket.postMessage(JSON.stringify(dico));
+  postEvent = function (msg) {
+    if (!!NK.easyXDM.socket) {
+      NK.easyXDM.socket.postMessage(JSON.stringify(msg));
     }
   };
 
@@ -289,6 +286,7 @@ NK.init = function () {
     "event": "onInit",
     "apiVersion": "0"
   });
+
 };
 
 var addEvent = function(event, handler) {
