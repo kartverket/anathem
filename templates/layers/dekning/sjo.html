@@ -181,22 +181,70 @@
   };
 
   function onFeatureSelect (feature) {
-      NK = NK || {};
-      if (NK.selectedCoverageMap ) {
-          selectControl.unselect(NK.selectedCoverageMap);
-      }
-      NK.selectedCoverageMap = feature;
+    var i, 
+        j, 
+        mainMapNumber,
+        message,
+        vignettes = [],
+        specials = [],
+        a;
 
-      var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
-      M.setCenter(mousePosition);
-      var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
-                               mousePosition,
-                               null,
-                               generatePopupMarkup(feature),
-                               null, true, onPopupClose);
-      popup.autoSize = true;
-      feature.popup = popup;
-      M.addPopup(popup);
+      if (!!NK.easyXDM.socket) {
+        // there is an active easyXDM socket - send feature data
+        message = {
+          cmd: 'featureSelected', 
+          feature: feature.attributes,
+          layer: feature.layer.shortid
+        };
+
+        if (feature.attributes.vignett) {
+            mainMapNumber = feature.attributes.vignett.slice(0, 3);
+            for (i = 0, j = feature.layer.features.length; i < j; i += 1) {
+              if (feature.layer.features[i].attributes.nr === mainMapNumber) {
+                message.mainMapFeature = feature.layer.features[i].attributes;
+              }
+            }
+        } else {
+            for (i = 0, j = feature.layer.features.length; i < j; i += 1) {
+              a = feature.layer.features[i].attributes;
+              if (a.vignett && a.vignett.indexOf(feature.attributes.nr) === 0) {
+                // feature[i] is a special or vignette in the selected map
+                
+                if (feature.attributes.s === a.s) {
+                  vignettes.push(a);
+                } else {
+                  specials.push(a);
+                }
+              }
+            }
+            if (specials.length > 0) {
+              message.specials = specials;
+            }
+            if (vignettes.length > 0) {
+              message.vignettes = vignettes;
+            }
+        }
+
+        NK.easyXDM.socket.postMessage(JSON.stringify(message));
+      } else {
+
+        NK = NK || {};
+        if (NK.selectedCoverageMap ) {
+            selectControl.unselect(NK.selectedCoverageMap);
+        }
+        NK.selectedCoverageMap = feature;
+
+        var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
+        M.setCenter(mousePosition);
+        var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
+                                 mousePosition,
+                                 null,
+                                 generatePopupMarkup(feature),
+                                 null, true, onPopupClose);
+        popup.autoSize = true;
+        feature.popup = popup;
+        M.addPopup(popup);
+      }
   }
   
   function onFeatureUnselect (feature) {
