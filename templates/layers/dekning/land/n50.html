@@ -111,10 +111,10 @@
       if (!!NK.easyXDM.socket) {
         var message = {
           cmd: 'featureSelected', 
-          feature: feature.attributes
+          feature: feature.attributes,
+          layer: feature.layer.shortid
         };
-        NK.easyXDM.socket.postMessage('JSON.stringify(message)');
-        console.log('socket her! neio neio neio');
+        NK.easyXDM.socket.postMessage(JSON.stringify(message));
       } else {
         var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
         M.setCenter(mousePosition);

@@ -1,24 +1,35 @@
 # Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
 
-template : base
-title    : Norgeskart
-mapscript: 
+template   : base
+title      : Norgeskart
+includeXDM : true
+mapscript:
   template  : mapscript
   baselayers:   
     - template: layers/europa
-  overlays  : 
-    - include: layers/topo2
+  overlays  :
+    - template: layers/wmts_param
+      usetoken: true
+      name: Terreng&shy;modell
+      layer: toporaster2
+      layerGroup: modus
+      id: toporaster
+      visible: true
+      hidefromlayerswitcher: true
+
     - include: layers/sjo_hovedkart2
+
+
     - template: layers/dekning/land/n50
-      name: Plast&shy;kart (land)
+      name: Landkart 1:50000
       id: dekning.plast
       layerGroup: dekning
       url: /json/dekning/land/n50/plast.json
-      preferredBackground: land
+      preferredBackground: toporaster
       visible: 1
 
 #    - include: layers/dekning_n50_plast
-    - include: layers/dekning_n50_papir
+#    - include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
@@ -27,10 +38,6 @@ mapscript:
   center    : 
     template: center/besseggen
   functions :
-#    - template: functions/readURL
   controls  :
     - template: controls/navigation
-#    - template: controls/hashstate
-finalscripts:
-  - template: finalscripts/easyXDM
-    remoteURL: http://annet.domene.com/norgeskart/includeiframe.html
+

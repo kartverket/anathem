@@ -38,6 +38,11 @@
     <![endif]-->
     <script src="js/plugins.min.js"></script>
     <script src="js/uniform/jquery.uniform.js"></script>
+
+% if includeXDM:
+    <%include file="/easyXDM.html" />
+% endif
+
     <script>
       ${mapscript}
     </script>

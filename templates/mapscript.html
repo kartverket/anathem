@@ -276,16 +276,28 @@ NK.init = function () {
     NK.functions.setMapStateFromURL();
   }
   
-  postEvent = function (msg) {
-    if (!!NK.easyXDM.socket) {
-      NK.easyXDM.socket.postMessage(JSON.stringify(msg));
-    }
-  };
+  if (NK.functions.postMessage) {
+    (function () {
+      var vectorLayers,
+          layer,
+          vectorLayerData = [];
+          i, 
+          j;
 
-  postEvent({
-    "event": "onInit",
-    "apiVersion": "0"
-  });
+      vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
+
+      for (i = 0, j = vectorLayers.length; i < j; i += 1) {
+        layer = vectorLayers[i];
+        vectorLayerData.push({shortid: layer.shortid, name: layer.name});
+      }
+
+      NK.functions.postMessage({
+        "event": "mapInitialized",
+        "vectorLayers": vectorLayerData
+      });
+    }());
+
+  }
 
 };
 
