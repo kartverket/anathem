@@ -108,16 +108,25 @@
       }
       NK.selectedCoverageMap = feature;
 
-      var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
-      M.setCenter(mousePosition);
-      var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
-                               mousePosition,
-                               null,
-                               generatePopupMarkup(feature),
-                               null, true, onPopupClose);
-      popup.autoSize = true;
-      feature.popup = popup;
-      M.addPopup(popup);
+      if (!!NK.easyXDM.socket) {
+        var message = {
+          cmd: 'featureSelected', 
+          feature: feature.attributes
+        };
+        NK.easyXDM.socket.postMessage('JSON.stringify(message)');
+        console.log('socket her! neio neio neio');
+      } else {
+        var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
+        M.setCenter(mousePosition);
+        var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
+                                 mousePosition,
+                                 null,
+                                 generatePopupMarkup(feature),
+                                 null, true, onPopupClose);
+        popup.autoSize = true;
+        feature.popup = popup;
+        M.addPopup(popup);
+    }
   };
 
   NK.functions.vector.addVectorHoverControls(M, layer);

@@ -1,0 +1,54 @@
+%if not 'easyXDM' in vars:
+
+<script type="text/javascript" src="js/easyXDM.debug.js"></script>
+<script type="text/javascript">
+    easyXDM.DomHelper.requiresJSON("js/json2.js");
+</script>
+
+<% vars['easyXDM']=True %>
+%endif
+
+<script type="text/javascript">
+	NK.easyXDM = NK.easyXDM || {};
+
+	NK.easyXDM.socket = new easyXDM.Socket({
+
+		remote: "${remoteURL}",
+		onMessage: function (data, origin) {
+			if (origin === this.remote) {
+				var json = easyXDM.getJSONObject().parse(data);
+				var lonLat;
+				if (json) {
+					console.log('provider sier:');
+					console.log('JSON:');
+					console.log(json);
+					if (json.cmd === 'setCenter') {
+						lonLat = new OpenLayers.LonLat(245912, 6608784);
+						map.setCenter(lonLat, 5, true, true);
+
+						alert(json.x);
+						console.log(map);
+//						map.setCenter(new OpenLayers.LonLat(137592, 6637557), 7, true, true);
+//						map.setCenter({x: json.x, y: json.y}, json.zoom);
+
+						console.log('antall lag: ' + map.layers.length);
+						console.log('center: ' + map.getCenter());
+					} else if (json.cmd === 'setVisibleLayer') {
+						console.log('TODO: call setVisibleProductLayer(...)');
+					}
+				}
+				console.log('received message from ' + origin + ':');
+				console.log(data);
+			}
+		}
+
+	});
+
+NK.functions = NK.functions || {};
+NK.functions.postMessage = function (msg) {
+	if (!!NK.easyXDM.socket) {
+		NK.easyXDM.socket.postMessage(JSON.stringify(msg));
+	}
+};
+</script>
+
