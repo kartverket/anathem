@@ -11,6 +11,10 @@ controls:
   - template: controls/zoom
   - template: controls/zoomtoselection
 - template: controls/container
+  id: point-panel
+  controls:
+    - template: controls/pointmenu
+- template: controls/container
   id: magnifier-panel
   controls:
     - template: controls/magnifier
