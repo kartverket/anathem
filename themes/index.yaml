@@ -37,6 +37,7 @@ mapscript:
     - template: functions/updateURL
     - template: functions/readURL
   controls  :
+    - template: controls/geolocation
     - template: controls/navigation
     - template: controls/hashstate
     - include: toolbars/basic

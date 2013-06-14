@@ -121,15 +121,17 @@ NK.functions.setMapState = function (params) {
 
   if (!!hash) {
     parms = hash.slice(1).split("/");
-    zoom = parms[0];
-    mapx = parms[1];
-    mapy = parms[2];
-    if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
-      var pWSG84 = new Proj4js.Proj('EPSG:4326');   
-      var pUTM33 = new Proj4js.Proj('EPSG:32633');   
-      var xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
-      mapx = xy.x;
-      mapy = xy.y;
+    if (parms.length >= 3) {
+      zoom = parms[0];
+      mapx = parms[1];
+      mapy = parms[2];
+      if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
+        var pWSG84 = new Proj4js.Proj('EPSG:4326');   
+        var pUTM33 = new Proj4js.Proj('EPSG:32633');   
+        var xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
+        mapx = xy.x;
+        mapy = xy.y;
+      }
     }
 
     setLayerVisibility = function (layerName, visibility) {
@@ -267,8 +269,16 @@ NK.functions.setMapState = function (params) {
           break;
       }
     }
-    map.setCenter(new OpenLayers.LonLat(mapx, mapy), zoom);
+    if (mapx && mapy && zoom) {
+      map.setCenter(new OpenLayers.LonLat(mapx, mapy), zoom);
+    }
   }
+  var result = {
+    'x': mapx,
+    'y': mapy,
+    'zoom': zoom
+  };
+  return result;
 };
 
 NK.functions.setMapStateFromURL = function () {
@@ -280,5 +290,5 @@ NK.functions.setMapStateFromURL = function () {
   search = window.location.search;
   hash = window.location.hash;
 
-  NK.functions.setMapState({'search': search, 'hash': hash});
+  return NK.functions.setMapState({'search': search, 'hash': hash});
 };

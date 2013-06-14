@@ -130,7 +130,6 @@ NK.functions.pauseTokenUpdate = function () {
     NK.tokenError.messagePopup = popup;
 
     NK.tokenError.pauseTimer = setTimeout(function () {
-      console.log('trying again...');
       NK.tokenUpdatePaused = false;
       NK.functions.getNewToken();
     },  60 * parseInt(NK.tokenError.PAUSE_MINUTES) * 1000);
@@ -239,11 +238,11 @@ NK.init = function () {
     })
   );
 
+  // Default placement and zoom of the map
+  ${center}
+
   // Base layers
   ${baselayers}
-
-  // Placement and zoom of the map
-  ${center}
 
   // Overlays
   ${overlays}
@@ -268,14 +267,29 @@ NK.init = function () {
 % if controls:
   ${controls}
 % endif
+
+
   // initialize URL update state
   if (NK.functions.storeInitialLayerVisibility) {
     NK.functions.storeInitialLayerVisibility();
   }
+
+  var mapPosition = {x: null, y: null};
+
   if (NK.functions.setMapStateFromURL) {
-    NK.functions.setMapStateFromURL();
+    mapPosition = NK.functions.setMapStateFromURL();
   }
+  // decide which position to use
+  if (!(mapPosition.x && mapPosition.y)) {
+    map.setCenter(NK.defaultCenter, NK.defaultZoom);
+
+    if (NK.geolocator) {
+      NK.geolocator.activate();
+    } 
+  }
+
   
+
   if (NK.functions.postMessage) {
     (function () {
       var vectorLayers,
@@ -298,7 +312,6 @@ NK.init = function () {
     }());
 
   }
-
 };
 
 var addEvent = function(event, handler) {
@@ -309,10 +322,12 @@ var addEvent = function(event, handler) {
     listen("on" + event, handler);
   }
 };
+
 var cb = function(response, status, request) {
   NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
   NK.init();
 };
+
 var initializeToken = function () {
   $.ajax({
     url: NK.tokenService, 
