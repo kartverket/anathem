@@ -53,14 +53,6 @@
   });
 
   selectHandler = function(feature) {
-/*
-    postEvent({
-      "event": "onSelect", 
-      "element": "kartblad", 
-      "type": "n50", 
-      "id": feature.fid
-    });
-*/
   };
 
   onPopupClose = function (evt) {
@@ -140,6 +132,8 @@
 
   M.addControl(selectControl);
 
+
+%if not 'n50LangNB' in vars:  
 OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Map number': 'Kartblad',
   'Latest print': 'Siste trykk',
@@ -152,5 +146,7 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Special in map': 'Spesiale i kartblad',
   'Vignette in map': 'Vignett i kartblad'
 });
+<% vars['n50LangNB']=True %>
+%endif
 
 }(map, mapProj, proj));
