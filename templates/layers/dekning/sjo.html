@@ -189,7 +189,7 @@
         specials = [],
         a;
 
-      if (!!NK.easyXDM.socket) {
+      if (NK.easyXDM && NK.easyXDM.socket) {
         // there is an active easyXDM socket - send feature data
         message = {
           cmd: 'featureSelected', 

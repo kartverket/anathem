@@ -28,8 +28,6 @@ mapscript:
       preferredBackground: toporaster
       visible: 1
 
-#    - include: layers/dekning_n50_plast
-#    - include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
