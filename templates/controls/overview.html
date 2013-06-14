@@ -5,7 +5,8 @@
 
 (function (M, MP, P) {
   var layer,
-      requestHandler;
+      requestHandler,
+      control;
 
   var norgeExtent = new OpenLayers.Bounds(-76856, 6453900, 1114892, 7939873);
 
@@ -15,12 +16,8 @@
       shortid: "${id}", 
       styleMap: NK.styles.omriss, 
       visibility: true
-//      , maxExtent: norgeExtent
-//      , isBaseLayer: true
     }
   );
-
-  //M.addLayer(layer);
 
   requestHandler = function (request) {
     var geojson_format,
@@ -39,22 +36,53 @@
   	options.maximized = true;
   	options.maximizeTitle = 'Show the overview map';
   	options.minimizeTitle = 'Hide the overview map';
-    options.minRatio = 1000;
-    options.maxRatio = 1000;
+    options.minRatio = 16;
+    options.maxRatio = 64;
     options.size = {w: 80, h: 90};
 
     options.mapOptions = OpenLayers.Util.extend(NK.mapOptions, {
       numZoomLevels: NK.zoomLevels,
       maxExtent: norgeExtent,
       restrictedExtent: norgeExtent,
-      maxResolution: 20000.0,
+      maxResolution: 18000.0,
       controls: [],
       baseLayer: layer
     });
-  	options.autoPan = false;
+  	options.autoPan = true;
   	options.layers = [layer];
 
-  	NK.functions.addControlToContext(new OpenLayers.Control.OverviewMap(options), context);
+    control = new (OpenLayers.Class(OpenLayers.Control.OverviewMap, {
+      resize: function (width, height) {
+        var extent;
+
+        this.size.w = width;
+        this.size.h = height;
+        this.mapDiv.style.width = this.size.w + 'px';
+        this.mapDiv.style.height = this.size.h + 'px';
+
+        extent = this.ovmap.getExtent();
+        this.ovmap.updateSize();
+
+        this.ovmap.zoomToExtent(extent);
+
+        if (this.ovmap.getProjection() != this.map.getProjection()) {
+            var sourceUnits = this.map.getProjectionObject().getUnits() ||
+                this.map.units || this.map.baseLayer.units;
+            var targetUnits = this.ovmap.getProjectionObject().getUnits() ||
+                this.ovmap.units || this.ovmap.baseLayer.units;
+            this.resolutionFactor = sourceUnits && targetUnits ?
+                OpenLayers.INCHES_PER_UNIT[sourceUnits] /
+                OpenLayers.INCHES_PER_UNIT[targetUnits] : 1;
+        }
+        console.log('neio her');
+
+        this.updateRectToMap();
+        this.update();
+        
+      }
+    }))(options);
+
+  	NK.functions.addControlToContext(control, context);
 
   };
 
