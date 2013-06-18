@@ -138,6 +138,23 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
         this.updateRectToMap();
         this.update();
       },
+      createMap: function () {
+        OpenLayers.Control.OverviewMap.prototype.createMap.apply(this, arguments);
+        this.handlers.click.deactivate();
+        this.handlers.click.destroy();
+        this.handlers.click = new OpenLayers.Handler.Click(
+            this, {
+                "click": this.mapDivClick,
+                "dblclick": this.mapDivClick
+            },{
+                "single": true, "double": true,
+                "stopSingle": true, "stopDouble": true,
+                "pixelTolerance": 1,
+                map: this.ovmap
+            }
+        );
+        this.handlers.click.activate();
+      },
       addToggleElement: function () {
         var that = this;
         this.toggleSizeDiv = document.createElement('div');
