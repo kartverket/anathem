@@ -79,5 +79,6 @@ mapscript:
         name: omriss
         id: omriss.norge.5000m
         url: /json/norge/5000m.geojson
+        detailedLayer: enkel
 splashscreen:
   - template: splashscreen/betainfo
