@@ -241,6 +241,11 @@ NK.init = function () {
   // Default placement and zoom of the map
   ${center}
 
+  // load SLD styles
+% if styles:
+  ${styles}
+% endif
+
   // Base layers
   ${baselayers}
 
