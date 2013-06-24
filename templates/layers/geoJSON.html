@@ -1,0 +1,89 @@
+%if not 'formatGeoJSON' in vars:
+NK.format = NK.format || {};
+NK.format.geoJSON = NK.format.geoJSON || new OpenLayers.Format.GeoJSON();
+<% vars['formatGeoJSON']=True %>
+%endif
+
+
+%if not 'strategyTFS' in vars:
+NK.strategy = NK.strategy || {};
+NK.strategy.TFS = NK.strategy.TFS || new OpenLayers.Strategy.TFS({
+  resFactor: 1, 
+  ratio: 1, 
+  mapBounds: mapBounds,
+  format: NK.format.geoJSON
+});
+<% vars['strategyTFS']=True %>
+%endif
+
+%if not 'layerTypeGeoJSON' in vars:
+NK.addLayerType = NK.addLayerType || {};
+NK.addLayerType.geoJSON = (function (M, MP) {
+  var matrixIds,
+      i;
+
+	matrixIds = [];
+
+	for (i = 0; i <= NK.zoomLevels; ++i) {
+		matrixIds[i] = {};
+		matrixIds[i].identifier = MP + ":" + i;
+	} 
+
+	return function (name, id, url, options) {
+
+		var protocolParameters,
+			protocol,
+			layer;
+
+		protocolParameters = {
+			last: false,
+			format: NK.format.geoJSON,
+			url: url
+		};
+
+		protocol = new OpenLayers.Protocol.TFS(protocolParameters);
+
+		layer = new OpenLayers.Layer.Vector(
+			name,
+			{
+				shortid: id,
+				strategies: [NK.strategy.TFS],
+				protocol: protocol,
+				projection: MP,
+				displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
+				visibility: (options && options.visible) ? 1 : 0
+			}
+		);
+
+		if (options && options.layerGroup) {
+			layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+		}
+
+		if (options && options.visible) {
+			NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+			NK.defaultVisibleLayers.push(id);
+		}
+
+		M.addLayers([layer]);
+	};
+
+}(map, mapProj));
+<% vars['layerTypeGeoJSON']=True %>
+%endif
+
+
+(function() {
+	var options = {};
+
+%if layerGroup:
+	options.layerGroup = "${layerGroup}";	
+% endif
+
+%if hidefromlayerswitcher:
+	options.hideFromLayerSwitcher = "${hidefromlayerswitcher}";	
+% endif
+%if visible:
+	options.visible = "${visible}";	
+% endif
+	NK.addLayerType.geoJSON("${name}", "${id}", "${url}", options);	
+}());
