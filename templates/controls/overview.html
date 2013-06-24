@@ -14,7 +14,7 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
       detailedLayer;
 
   var norgeExtent = new OpenLayers.Bounds(-76856, 6453900, 1114892, 7939873);
-//  var norgeExtent = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
+  var maxExtent = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
 
   layer = new OpenLayers.Layer.Vector(
     "${name}",
@@ -40,7 +40,6 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
     layer.addFeatures(features);
 
 %if detailedLayer:
-//    options.detailedLayerId = '${detailedLayer}';
     for (i = 0, j = M.layers.length; i < j; i += 1) {
       if (M.layers[i].shortid && M.layers[i].shortid === '${detailedLayer}') {
         detailedLayer = M.layers[i].clone();
@@ -48,22 +47,22 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
       }
     }
 % endif
+
   	options.maximized = false;
   	options.maximizeTitle = OpenLayers.Lang.translate('Show big overview map');
   	options.minimizeTitle = OpenLayers.Lang.translate('Show small overview map');
-    options.minRatio = 16;
-    options.maxRatio = 64;
+    options.minRatio = 32;
+    options.maxRatio = 32;
     options.size = {w: 80, h: 90};
+    options.autoPan = true;
+    options.minRectSize = 5;
 
     options.mapOptions = OpenLayers.Util.extend(NK.mapOptions, {
       numZoomLevels: NK.zoomLevels,
-      maxExtent: norgeExtent,
       restrictedExtent: norgeExtent,
-      maxResolution: 18000.0,
       controls: [],
       baseLayer: layer
     });
-  	options.autoPan = true;
 
     if (detailedLayer) {
       options.layers = [layer, detailedLayer];
@@ -71,160 +70,7 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
       options.layers = [layer];
     }
 
-    control = new (OpenLayers.Class(OpenLayers.Control.OverviewMap, {
-      configuration: {
-        default: {
-          size: {
-            w: 80,
-            h: 90
-          }
-        },
-        maximized: {
-          size: {
-            w: 300,
-            h: 400
-          }
-        }
-      },
-      currentConfiguration: 'default',
-      draw: function () {
-        OpenLayers.Control.OverviewMap.prototype.draw.apply(this, arguments);
-        this.addToggleElement();
-        if (this.detailedLayer) {
-          this.ovmap.addLayer(this.detailedLayer);
-          this.ovmap.layers[1].setVisibility(true);
-        }
-      },
-      destroy: function () {
-        OpenLayers.Event.stopObservingElement(this.toggleSizeDiv);
-        this.div.removeChild(this.toggleSizeDiv);
-        this.toggleSizeDiv = null;
-        OpenLayers.Control.OverviewMap.prototype.destroy.apply(this, arguments);
-      },
-      setMap: function (map) {
-        var i, j;
-        OpenLayers.Control.OverviewMap.prototype.setMap.apply(this, arguments);
-        if (this.detailedLayerId) {
-          for (i = 0, j = this.map.layers.length; i < j; i += 1) {
-            if (this.map.layers[i].shortid && this.map.layers[i].shortid === this.detailedLayerId) {
-              this.detailedLayer = this.map.layers[i].clone();
-              break;
-            }
-          }
-        } 
-      },
-      resize: function (width, height) {
-        var extent;
-
-        this.size.w = width;
-        this.size.h = height;
-        this.mapDiv.style.width = this.size.w + 'px';
-        this.mapDiv.style.height = this.size.h + 'px';
-
-        extent = this.ovmap.getExtent();
-        this.ovmap.updateSize();
-
-        this.ovmap.zoomToExtent(extent);
-
-        if (this.ovmap.getProjection() != this.map.getProjection()) {
-            var sourceUnits = this.map.getProjectionObject().getUnits() ||
-                this.map.units || this.map.baseLayer.units;
-            var targetUnits = this.ovmap.getProjectionObject().getUnits() ||
-                this.ovmap.units || this.ovmap.baseLayer.units;
-            this.resolutionFactor = sourceUnits && targetUnits ?
-                OpenLayers.INCHES_PER_UNIT[sourceUnits] /
-                OpenLayers.INCHES_PER_UNIT[targetUnits] : 1;
-        }
-        this.updateRectToMap();
-        this.update();
-      },
-      createMap: function () {
-        OpenLayers.Control.OverviewMap.prototype.createMap.apply(this, arguments);
-        this.handlers.click.deactivate();
-        this.handlers.click.destroy();
-        this.handlers.click = new OpenLayers.Handler.Click(
-            this, {
-                "click": this.mapDivClick,
-                "dblclick": this.mapDivClick
-            },{
-                "single": true, "double": true,
-                "stopSingle": true, "stopDouble": true,
-                "pixelTolerance": 1,
-                map: this.ovmap
-            }
-        );
-        this.handlers.click.activate();
-      },
-      addToggleElement: function () {
-        var that = this;
-        this.toggleSizeDiv = document.createElement('div');
-
-        this.toggleSizeDiv.className = this.displayClass + 'ToggleSizeButton olButton';
-        if (this.maximizeTitle) {
-            this.toggleSizeDiv.title = this.maximizeTitle;
-        }
-
-        this.div.appendChild(this.toggleSizeDiv);
-        OpenLayers.Event.observe(this.toggleSizeDiv, 'click',
-            OpenLayers.Function.bind(that.toggleSize, that)
-        );
-      },
-      toggleSize: function (e) {
-        if (this.currentConfiguration === 'default') {
-          this.maximizeControl(e);
-          this.currentConfiguration = 'maximized';
-        } else {
-          this.minimizeControl(e);
-          this.currentConfiguration = 'default';
-        }
-      },
-      /**
-       * Method: maximizeControl
-       * Enlarge the control.
-       * add the minimize icon
-       *
-       * Parameters:
-       * e - {<OpenLayers.Event>}
-       */
-      maximizeControl: function(e) {
-          OpenLayers.Element.removeClass(this.div, 'default-size');
-          OpenLayers.Element.addClass(this.div, 'maximized-size');
-          if (this.ovmap.layers.length > 1) {
-            this.ovmap.setBaseLayer(this.ovmap.layers[1]);
-          }
-          this.resize(this.configuration.maximized.size.w, this.configuration.maximized.size.h);
-          if (this.maximizeTitle) {
-              this.toggleSizeDiv.title = this.maximizeTitle;
-          }
-          if (e != null) {
-              OpenLayers.Event.stop(e);                                            
-          }
-      },
-
-      /**
-       * Method: minimizeControl
-       * Shrink the size of the control
-       * add the maximize icon
-       * 
-       * Parameters:
-       * e - {<OpenLayers.Event>}
-       */
-      minimizeControl: function(e) {
-          OpenLayers.Element.removeClass(this.div, 'maximized-size');
-          OpenLayers.Element.addClass(this.div, 'default-size');
-          if (this.ovmap.layers.length > 1) {
-            this.ovmap.setBaseLayer(this.ovmap.layers[0]);
-          }
-          this.resize(this.configuration.default.size.w, this.configuration.default.size.h);
-          if (this.minimizeTitle) {
-              this.toggleSizeDiv.title = this.minimizeTitle;
-          }
-          if (e != null) {
-              OpenLayers.Event.stop(e);                                            
-          }
-      }
-    }))(options);
-
+    control = new OpenLayers.Control.OverviewMapExpandable(options);
   	NK.functions.addControlToContext(control, context);
 
   };
