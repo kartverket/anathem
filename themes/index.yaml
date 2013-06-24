@@ -23,6 +23,7 @@ mapscript:
     - include: layers/wms/dybdekurver_havomraader
     - include: layers/wms/kystkontur
     - include: layers/wms/sjogrenser
+    - include: layers/geoJSON/maritimegrenser
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_n50_papir
@@ -77,8 +78,8 @@ mapscript:
       controls:
       - template: controls/overview
         name: omriss
-        id: omriss.norge.5000m
-        url: /json/norge/5000m.geojson
+        id: omriss.norge.500m
+        url: /json/norge/500m.geojson
         detailedLayer: enkel
 splashscreen:
   - template: splashscreen/betainfo
