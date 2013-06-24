@@ -6,6 +6,11 @@ mapscript:
   template  : mapscript
   baselayers:   
     - template: layers/europa
+  styles    :
+    - template: styles/unlabeledMarker
+#    - template: styles/SLD
+#      name: maritimegrenser
+#      url: http://labs.kartverket.no/sld/NMG.xml
   overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
@@ -23,7 +28,7 @@ mapscript:
     - include: layers/wms/dybdekurver_havomraader
     - include: layers/wms/kystkontur
     - include: layers/wms/sjogrenser
-    - include: layers/geoJSON/maritimegrenser
+#    - include: layers/geoJSON/maritimegrenser
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_n50_papir
@@ -31,6 +36,13 @@ mapscript:
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
+#    - template: layers/geoJSONFile
+#      url: /js/dekning/03-oslo.geojson
+#      name: Clustertest
+#      id: clustertest
+#      epsgCode: 4326
+#      cluster: true
+#      styleName: unlabeledMarker
 
   center    : 
     template: center/besseggen
