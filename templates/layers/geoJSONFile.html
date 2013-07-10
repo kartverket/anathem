@@ -32,27 +32,6 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
       layerOptions.strategies.push(NK.strategies.cluster);
     }
 
-    // context to style the vectorlayer
-    var context = {
-        getColor: function(feature){
-            var color = '#aaaaaa';
-            if (feature.attributes && feature.attributes) {
-                color = '#ee0000';
-            } else if(feature.cluster) {
-                var onlyFour = true;
-                for (var i = 0; i < feature.cluster.length; i++) {
-                    if (onlyFour && feature.cluster[i].attributes) {
-                        onlyFour = false;
-                    }
-                }
-                if (onlyFour === true) {
-                    color = '#ee0000';
-                }
-            }
-            return color;
-        }
-    };
-    
     layer = new OpenLayers.Layer.Vector(
       name,
       layerOptions
@@ -73,16 +52,15 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
         'internalProjection': MP,
         'externalProjection': MP 
       };
-  
+
+      // set external projection, if provided  
       if (options.epsgCode && P[options.epsgCode]) {
         formatOptions.externalProjection = P[options.epsgCode];
       }
   
       geojsonFormat = new OpenLayers.Format.GeoJSON(formatOptions);
 
-
       features = geojsonFormat.read(request.responseText);
-
 
       layer.addFeatures(features);
 

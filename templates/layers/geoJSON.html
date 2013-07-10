@@ -33,7 +33,8 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 
 		var protocolParameters,
 			protocol,
-			layer;
+			layer,
+			layerOptions;
 
 		protocolParameters = {
 			last: false,
@@ -43,16 +44,26 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 
 		protocol = new OpenLayers.Protocol.TFS(protocolParameters);
 
+		layerOptions = {
+			shortid: id,
+			strategies: [NK.strategy.TFS],
+			protocol: protocol,
+			projection: MP,
+			displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
+			visibility: (options && options.visible) ? 1 : 0
+		};
+
+		if (options.styleName && NK.styles[options.styleName]) {
+			layerOptions.styleMap = NK.styles[options.styleName];
+		}
+
+		if (options.styleNameSLD && NK.styles.SLD[options.styleNameSLD]) {
+			layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD];
+		}
+
 		layer = new OpenLayers.Layer.Vector(
 			name,
-			{
-				shortid: id,
-				strategies: [NK.strategy.TFS],
-				protocol: protocol,
-				projection: MP,
-				displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
-				visibility: (options && options.visible) ? 1 : 0
-			}
+			layerOptions
 		);
 
 		if (options && options.layerGroup) {
@@ -85,5 +96,14 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 %if visible:
 	options.visible = "${visible}";	
 % endif
+
+% if styleName:
+  options.styleName = '${styleName}';
+% endif
+
+% if styleNameSLD:
+  options.styleNameSLD = '${styleNameSLD}';
+% endif
+
 	NK.addLayerType.geoJSON("${name}", "${id}", "${url}", options);	
 }());

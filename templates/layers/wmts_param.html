@@ -71,17 +71,21 @@ NK.addLayerType.WMTS = (function (M, MP) {
   % else:
     url = NK.mapservers.wmts;
   % endif
+
   % if hidefromlayerswitcher:
     options.displayInLayerSwitcher = false;
   % else:
     options.displayInLayerSwitcher = true;
   % endif
+
   % if visible:
     options.visibility = true;
   % endif
+
   % if layerGroup:
     options.layerGroup = "${layerGroup}";
   % endif
+
   % if usetoken:
     options.params = { 'gkt': NK.gkToken };
   % endif

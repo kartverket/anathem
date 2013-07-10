@@ -7,7 +7,17 @@ NK.strategies.cluster = NK.strategies.cluster || new OpenLayers.Strategy.Cluster
 %if not 'addClusteringRule' in vars:
 
 NK.styles = NK.styles || {};
-
+    
+/**
+ *	Method: addClusteringRule
+ *	Add clustering rule to a stylemap
+ *	
+ *	Parameters:
+ *	styleMap - {OpenLayers.StyleMap} The target stylemap
+ *  renderings - {Array} An optional array of target renderings (eg. ['default', 'temporary']). 
+ *		If no renderings are provided, the 'default' rendering is used by default.
+ *	
+ */
 NK.styles.addClusteringRule = function (styleMap, renderings) {
 	var i, j, rendering;
 
