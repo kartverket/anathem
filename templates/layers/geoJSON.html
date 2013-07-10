@@ -16,7 +16,12 @@ NK.strategy.TFS = NK.strategy.TFS || new OpenLayers.Strategy.TFS({
 <% vars['strategyTFS']=True %>
 %endif
 
+% if cluster:
+  <%include file="/strategies/cluster.html"/>
+%endif
+
 %if not 'layerTypeGeoJSON' in vars:
+
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.geoJSON = (function (M, MP) {
   var matrixIds,
@@ -53,18 +58,26 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 			visibility: (options && options.visible) ? 1 : 0
 		};
 
-		if (options.styleName && NK.styles[options.styleName]) {
+		if (options.styleName && NK.styles && NK.styles[options.styleName]) {
 			layerOptions.styleMap = NK.styles[options.styleName];
 		}
 
-		if (options.styleNameSLD && NK.styles.SLD[options.styleNameSLD]) {
+		if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
 			layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD];
 		}
+
+	    if (options.cluster && NK.strategies.cluster) {
+	      layerOptions.strategies.push(NK.strategies.cluster);
+	    }
 
 		layer = new OpenLayers.Layer.Vector(
 			name,
 			layerOptions
 		);
+
+	    if (options.cluster) {
+	      	NK.styles.addClusteringRule(layer.styleMap);
+	    }
 
 		if (options && options.layerGroup) {
 			layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
@@ -76,9 +89,14 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 		}
 
 		M.addLayers([layer]);
+
+	    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+	        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
+	    }
 	};
 
 }(map, mapProj));
+
 <% vars['layerTypeGeoJSON']=True %>
 %endif
 
@@ -90,20 +108,25 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 	options.layerGroup = "${layerGroup}";	
 % endif
 
-%if hidefromlayerswitcher:
-	options.hideFromLayerSwitcher = "${hidefromlayerswitcher}";	
-% endif
 %if visible:
 	options.visible = "${visible}";	
 % endif
 
+%if hidefromlayerswitcher:
+	options.hideFromLayerSwitcher = "${hidefromlayerswitcher}";	
+% endif
+
+% if cluster:
+	options.cluster = true;
+% endif
+
 % if styleName:
-  options.styleName = '${styleName}';
+	options.styleName = '${styleName}';
 % endif
 
 % if styleNameSLD:
-  options.styleNameSLD = '${styleNameSLD}';
+	options.styleNameSLD = '${styleNameSLD}';
 % endif
 
-	NK.addLayerType.geoJSON("${name}", "${id}", "${url}", options);	
+    NK.addLayerType.geoJSON("${name}", "${id}", "${url}", options);	
 }());

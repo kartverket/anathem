@@ -11,21 +11,41 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
     var layer,
         layerOptions,
         strategies = [],
-        requestHandler;
+        requestHandler,
+        formatOptions,
+        geoJSONFormat;
+
+    formatOptions = {
+      'internalProjection': MP,
+      'externalProjection': MP 
+    };
+
+    // set external projection, if provided  
+    if (options.epsgCode && P[options.epsgCode]) {
+      formatOptions.externalProjection = P[options.epsgCode];
+    }
+
+    geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
 
     layerOptions = {
       shortid: id, 
-      styleMap: NK.styles.omriss, 
-      visibility: true,
-      strategies: []
+      protocol: new OpenLayers.Protocol.HTTP({
+        'url': url,
+        'format': geoJSONFormat
+      }),
+      strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
+      styleMap: NK.styles.omriss,
+      projection: MP,
+      displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
+      visibility: (options && options.visible) ? 1 : 0
     };
 
     if (options.styleName && NK.styles && NK.styles[options.styleName]) {
       layerOptions.styleMap = NK.styles[options.styleName];
     }
 
-    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleName]) {
-      layerOptions.styleMap = NK.styles[options.styleName];
+    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+      layerOptions.styleMap = NK.styles.SLD[options.styleName];
     }
 
     if (options.cluster && NK.strategies.cluster) {
@@ -37,39 +57,24 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
       layerOptions
     );
 
+    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+      NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
+    }
+
     if (options.cluster) {
       NK.styles.addClusteringRule(layer.styleMap);
     }
 
+    if (options && options.layerGroup) {
+      layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+    }
+
+    if (options && options.visible) {
+      NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+      NK.defaultVisibleLayers.push(id);
+    }
+
     M.addLayer(layer);
-
-    requestHandler = function (request) {
-      var geojsonFormat,
-          features,
-          formatOptions;
-
-      formatOptions = {
-        'internalProjection': MP,
-        'externalProjection': MP 
-      };
-
-      // set external projection, if provided  
-      if (options.epsgCode && P[options.epsgCode]) {
-        formatOptions.externalProjection = P[options.epsgCode];
-      }
-  
-      geojsonFormat = new OpenLayers.Format.GeoJSON(formatOptions);
-
-      features = geojsonFormat.read(request.responseText);
-
-      layer.addFeatures(features);
-
-    };
-
-    OpenLayers.Request.GET({
-      'url': url,
-      'callback': requestHandler
-    });
   }
 }(map, mapProj, proj));
 
@@ -78,8 +83,17 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
 
 (function () {
   var options = {};
-%if epsgCode:
-  options.epsgCode = '${epsgCode}';
+
+% if layerGroup:
+  options.layerGroup = '${layerGroup}';
+% endif
+
+%if visible:
+  options.visible = "${visible}"; 
+% endif
+
+%if hidefromlayerswitcher:
+  options.hideFromLayerSwitcher = "${hidefromlayerswitcher}"; 
 % endif
 
 % if cluster:
@@ -92,6 +106,10 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
 
 % if styleNameSLD:
   options.styleNameSLD = '${styleNameSLD}';
+% endif
+
+%if epsgCode:
+  options.epsgCode = '${epsgCode}';
 % endif
 
   NK.addLayerType.geoJSONFile('${id}', '${name}', '${url}', options);
