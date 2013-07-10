@@ -1,8 +1,6 @@
 template: layers/geoJSON
-name: Norges maritime grenser
-layerGroup: geojsontest
+name: Maritime grenser
+layerGroup: testlag.utvikling
 id: nmgr
 url: http://beta.norgeskart.no/ws/kd_nmg.py?
-visible: true
-hidefromlayerswitcher: true
-styleName: maritimegrenser
+styleNameSLD: maritimegrenser

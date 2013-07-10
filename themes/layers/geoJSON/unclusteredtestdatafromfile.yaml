@@ -1,0 +1,7 @@
+template: layers/geoJSONFile
+url: /js/dekning/03-oslo.geojson
+name: Unummererte mark&oslash;rer
+id: unlabeledmarkers
+epsgCode: 4326
+styleName: unlabeledMarker
+layerGroup: testlag.utvikling
