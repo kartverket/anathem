@@ -1,13 +1,15 @@
-(function (context, container) {
+(function (context, containerParam) {
 	var parentContainer = document.body,
-		className = "toolbar";
+		className = "toolbar",
+		container;
 
 	// set parentContainer if divControllerContainer is set
-	if (container) {
-		parentContainer = container;
+	if (containerParam) {
+		parentContainer = containerParam;
 		className = "panel";
 	}
-	var container = document.createElement("div");
+	
+	container = document.createElement("div");
 
 	% if id:
 	container.id = "${id}";

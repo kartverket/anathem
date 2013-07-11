@@ -1,13 +1,12 @@
 %if not 'labeledMarkerStyle' in vars:
 
-var NK = NK || {};
 NK.styles = NK.styles || {};
 NK.styles.labeledMarker = new OpenLayers.StyleMap(
 	{
 		'default': new OpenLayers.Style(
 			{
 				fillOpacity: 1, 
-				label : "${"${nr}"}",
+				label : '${'${label}'}',
 				fontColor: "#fff",
 				fontSize: "12px",
 				pointRadius: 0,

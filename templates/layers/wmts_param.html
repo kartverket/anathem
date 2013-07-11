@@ -1,4 +1,5 @@
 %if not 'layerTypeWMTS' in vars:
+
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.WMTS = (function (M, MP) {
   var matrixIds = [],
@@ -26,12 +27,13 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'isBaseLayer': false,
       'transitionEffect': 'resize'
     };
+
     layerOptions.displayInLayerSwitcher = !!(options.displayInLayerSwitcher) ? 1 : 0;
     layerOptions.visibility = !!(options.visibility) ? 1 : 0;
+
     if (options.params) {
       layerOptions.params = options.params;
     }
-
 
     layer = new OpenLayers.Layer.WMTS(layerOptions);
 
@@ -56,7 +58,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
     });
 
     M.addLayers([layer]);
-  }
+  };
 }(map, mapProj));
 
 <% vars['layerTypeWMTS']=True %>

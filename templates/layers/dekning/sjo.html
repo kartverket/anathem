@@ -2,10 +2,9 @@
   var styleMap,
       layer,
       dataResponseHandler,
-      request,
-      selectHandler,
       highlightAllById,
-      unhighlightAllById;
+      unhighlightAllById,
+      selectControl;
 
   <%include file="/styles/dekning/sjo.html" />  
 
@@ -56,7 +55,7 @@
 
   M.addLayer(layer);
 
-  request = OpenLayers.Request.GET({
+  OpenLayers.Request.GET({
     url: "${url}",
     callback: dataResponseHandler
   });
@@ -70,12 +69,11 @@
     });
   };
 
+  // un-highlight all elements with the same element.feature.fid;
   unhighlightAllById = function(element) {
-    // un-highlight all elements with the same element.feature.fid;
     var ident = layer.getFeaturesByFid (element.feature.fid);
+
     $.each(ident, function(i, feature) {
-      var bladscale = feature.attributes.s;
-      var mapscale  = map.getScale();
       feature.renderIntent = "default";
       layer.drawFeature(feature);
     });
@@ -94,50 +92,27 @@
   });
   map.addControl(highlightDekningCtrl);
   
-
-/*
-  selectHandler = function(feature) {
-    alert(feature.fid+"\n"+feature.attributes.vignett+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
-    postEvent({
-      "event":"onSelect",
-      "element":"kartblad",
-      "type":"havnekart",
-      "id":feature.fid
-    });
-  };
-
-  var selectDekningCtrl = new OpenLayers.Control.SelectFeature(layer, {
-     multiple: true,
-     clickFeature: selectHandler,
-     autoActivate: true
-  });
-  map.addControl(selectDekningCtrl);
-*/
-
-
-  var selectControl;
-  var onPopupClose = null;
-
   function onPopupClose(evt) {
       selectControl.unselect(NK.selectedCoverageMap);
       delete NK.selectedCoverageMap;
   }
+
   function projectionName(projectionNumber) {
     switch (projectionNumber) {
       case '8':
         return 'Mercator';
       case '16':
         return 'Gauss Kr\u00FCger';
-        break;
       default:
-      return '';  
+        return '';  
     }
-    return '';
   }
+
   var datumNames = {
     '2': 'WGS84'
     // TODO: values for ED50 and NGO (see http://kartverket.no/en/Kart/Nautical-Charts/Nautical-Charts/) 
   };
+
   function generatePopupMarkup (feature) {
     var a  = feature.attributes;
     var mainMapFeature, i, j;
@@ -178,7 +153,7 @@
       }
       markup += '</article>';
       return markup;
-  };
+  }
 
   function onFeatureSelect (feature) {
     var i, 

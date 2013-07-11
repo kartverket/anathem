@@ -29,20 +29,24 @@ NK.functions.setLayerStylesSLD = function (sld, styleName) {
       featureName;
 
   for (featureName in sld.namedLayers) {
-    styles = sld.namedLayers[featureName].userStyles;
-    style = styles[0];
+    if (sld.namedLayers.hasOwnProperty(featureName)) {
+      styles = sld.namedLayers[featureName].userStyles;
+      style = styles[0];
 
-    for (t in NK.format.SLD.featureTranslate[featureName]) {
-      NK.styles.SLD[styleName].styleMap.styles["default"].rules.push( 
-        new OpenLayers.Rule({
-            filter: new OpenLayers.Filter.Comparison({
-              type: OpenLayers.Filter.Comparison.LIKE,
-              property: "n",
-              value: NK.format.SLD.featureTranslate[featureName][t] // could be NK.styles.SLD['${name}'].translations
-            }),
-            symbolizer: style.rules[0].symbolizer
-        })
-      );
+      for (t in NK.format.SLD.featureTranslate[featureName]) {
+        if (NK.format.SLD.featureTranslate[featureName].hasOwnProperty(t)) {
+          NK.styles.SLD[styleName].styleMap.styles["default"].rules.push( 
+            new OpenLayers.Rule({
+                filter: new OpenLayers.Filter.Comparison({
+                  type: OpenLayers.Filter.Comparison.LIKE,
+                  property: "n",
+                  value: NK.format.SLD.featureTranslate[featureName][t] // could be NK.styles.SLD['${name}'].translations
+                }),
+                symbolizer: style.rules[0].symbolizer
+            })
+          );
+        }
+      }
     }
   }
 

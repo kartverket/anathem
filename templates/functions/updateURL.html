@@ -6,7 +6,6 @@ NK.functions.updateHistory = function (evt) {
       zoom,
       i,
       layer,
-      optchars,
       uid,
       search,
       searchInput;
@@ -36,48 +35,6 @@ NK.functions.updateHistory = function (evt) {
             }
           }
         }
-
-        optchars="";
-
-        if (typeof layer_sw !== 'undefined') {
-          if ($.inArray(layer_sw,map.controls) === -1) {
-            optchars += 'l';
-          } else {
-            if (!layer_sw.layersDiv.style.display) {
-              optchars += 'L';
-            }
-          }
-          if (typeof legend !== 'undefined') {
-            if ($.inArray(legend,map.controls) === -1) {
-              optchars += 'h';
-            } else {
-              if (!legend.wrapperDiv.style.display) {
-                optchars += 'H';
-              }
-            }
-            if (typeof nav !== 'undefined') {
-              if (!nav.active) {
-                optchars += 'n';
-              }
-            }
-            if (typeof zoomCtrl !== 'undefined') {
-              if ($.inArray(zoomCtrl,map.controls) === -1) {
-                optchars += 'z';
-              }
-            }
-            if (optchars.length > 0) {
-              uid += "/w" + optchars;
-            }
-          }
-
-          postEvent({
-            "event": "onMoveMap",
-            "x": center.lon, 
-            "y": center.lat,
-            "z": zoom
-          });
-        }
-        
       }
     }
     searchInput = document.getElementById('searchInput');

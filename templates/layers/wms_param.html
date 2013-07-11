@@ -1,33 +1,35 @@
-var wms = new OpenLayers.Layer.WMS(
-  "${name}",
-  "${url}",
-  {
-    % if usetoken:
-    gkt: NK.gkToken,
-    % endif    
-    layers: "${layers}", 
-    transparent: true, 
-    format: 'image/png'
-  },
-  {
-    shortid: "${id}", 
-    isBaseLayer: false, 
-    visibility: ${visible}, 
-    transitionEffect: 'resize',
-% if singleTile:
-    singleTile: true
-% else:
-    singleTile: false
-% endif
+(function () {
+  var wms = new OpenLayers.Layer.WMS(
+    "${name}",
+    "${url}",
+    {
+      % if usetoken:
+      gkt: NK.gkToken,
+      % endif    
+      layers: "${layers}", 
+      transparent: true, 
+      format: 'image/png'
+    },
+    {
+      shortid: "${id}", 
+      isBaseLayer: false, 
+      visibility: ${visible}, 
+      transitionEffect: 'resize',
+  % if singleTile:
+      singleTile: true
+  % else:
+      singleTile: false
+  % endif
+    }
+  );
+
+  % if layerGroup:
+    wms = OpenLayers.Util.extend(wms, { layerGroup: '${layerGroup}' });
+  % endif
+
+  if (wms.params.GKT) {
+    wms.params.gkt = wms.params.GKT;
+    delete wms.params.GKT; 
   }
-);
-
-% if layerGroup:
-  wms = OpenLayers.Util.extend(wms, { layerGroup: '${layerGroup}' });
-% endif
-
-if (wms.params.GKT) {
-  wms.params.gkt = wms.params.GKT;
-  delete wms.params.GKT; 
-}
-map.addLayers([wms]);
+  map.addLayers([wms]);
+}());

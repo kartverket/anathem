@@ -44,8 +44,8 @@ NK.functions.addLabeledMarker = function (params, number) {
     map.addLayer(layer);
   }
 
-  x = parseInt(params[0]);
-  y = parseInt(params[1]);
+  x = parseInt(params[0], 10);
+  y = parseInt(params[1], 10);
 
   label = decodeURIComponent(params[2]);
   properties = {label: label};
@@ -91,14 +91,15 @@ NK.functions.setMapState = function (params) {
       setLayerVisibility,
       showLayerNamed,
       hideLayerNamed,
-      setControlVisibility,
       highlight,
       search,
       searchArray,
       searchInputField,
       i, j, p,
       hash,
-      labeledMarkerCount = 0;
+      labeledMarkerCount = 0,
+      pWSG84,
+      pUTM33;
 
   search = params.search;
   hash = params.hash;
@@ -125,10 +126,11 @@ NK.functions.setMapState = function (params) {
       zoom = parms[0];
       mapx = parms[1];
       mapy = parms[2];
+
       if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
-        var pWSG84 = new Proj4js.Proj('EPSG:4326');   
-        var pUTM33 = new Proj4js.Proj('EPSG:32633');   
-        var xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
+        pWSG84 = new Proj4js.Proj('EPSG:4326');   
+        pUTM33 = new Proj4js.Proj('EPSG:32633');   
+        xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
         mapx = xy.x;
         mapy = xy.y;
       }
@@ -160,40 +162,6 @@ NK.functions.setMapState = function (params) {
     
     hideLayerNamed = function (layerName) {
       return setLayerVisibility(layerName, false);
-    };
-
-    setControlVisibility = function (flags, mapx, mapy) {
-      var i, 
-          j,
-          markers;
-
-      for (i = 1, j = flags.length; i < j; i += 1) {
-        switch (flags.charAt(i)) {
-          case 'L':
-            layer_sw.maximizeControl();
-            break;
-          case 'l':
-            map.removeControl(layer_sw);
-            break;
-          case 'H':
-            legend.maximizeControl();
-            break;
-          case 'h':
-            map.removeControl(legend);
-            break;
-          case 'z':
-            map.removeControl(zoomCtrl);
-          case 'n':
-            nav.deactivate();
-            knav.deactivate();
-            break;
-          case 'M':
-            markers = new OpenLayers.Layer.Markers("Mark&oslash;rer", {shortid: "poi"});
-            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(mapx, mapy)));
-            map.addLayer(markers);
-            break;
-        } 
-      }
     };
 
     highlight = function (highlightParam) {
@@ -256,9 +224,6 @@ NK.functions.setMapState = function (params) {
           break;
         case '-':
           hideLayerNamed(extra.slice(1));
-          break;
-        case 'w':
-          setControlsVisibility(extra.slice(1), mapx, mapy);
           break;
         case '!':
           highlight(extra);

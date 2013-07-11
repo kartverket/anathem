@@ -10,6 +10,7 @@ mapscript:
 
   styles    :
     - template: styles/unlabeledMarker
+    - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/SLD
       name: maritimegrenser

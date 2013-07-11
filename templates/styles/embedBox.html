@@ -24,10 +24,10 @@ NK.styles.embed.box = new OpenLayers.StyleMap({
 	{
 		context: {
 			getXOffset: function (feature) {
-				return parseInt(feature.attributes.width) / 2 + 7;
+				return parseInt(feature.attributes.width, 10) / 2 + 7;
 			},
 			getYOffset: function (feature) {
-				return parseInt(feature.attributes.height) / 2 - 2;
+				return parseInt(feature.attributes.height, 10) / 2 - 2;
 			}
 		}
 	})

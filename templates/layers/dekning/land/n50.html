@@ -7,7 +7,6 @@
       onPopupClose = null,
       onFeatureUnselect,
       onFeatureSelect,
-      selectHandler,
       generatePopupMarkup,
       requestHandler;
 
@@ -51,9 +50,6 @@
     url: "${url}",
     callback: requestHandler
   });
-
-  selectHandler = function(feature) {
-  };
 
   onPopupClose = function (evt) {
       selectControl.unselect(NK.selectedCoverageMap);

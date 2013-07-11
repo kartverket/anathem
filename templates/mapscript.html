@@ -72,8 +72,6 @@ NK.functions.resetTokenError = function () {
 NK.functions.updateToken = function (request) {
   var i, 
       j, 
-      oldToken = NK.gkToken, 
-      updatedTokensCount = 0,
       reloadLimit;
 
   reloadLimit = new Date(Date.now() - NK.tokenError.RELOAD_LIMIT_SECONDS * 1000);
@@ -89,7 +87,6 @@ NK.functions.updateToken = function (request) {
         if (map.layers[i].params && map.layers[i].params.gkt) {
           map.layers[i].params.gkt = NK.gkToken;
           map.layers[i].redraw();
-          updatedTokensCount++;
         }
       }
     }
@@ -118,7 +115,7 @@ NK.functions.pauseTokenUpdate = function () {
     message = document.createElement('p');
     message.innerHTML = OpenLayers.Lang.translate('Reloading maps in ');
     timeRemaining = document.createElement('span');
-    timeRemaining.innerHTML = parseInt(NK.tokenError.PAUSE_MINUTES);
+    timeRemaining.innerHTML = parseInt(NK.tokenError.PAUSE_MINUTES, 10);
     NK.tokenError.pauseTimeRemainingElement = timeRemaining;
     NK.tokenError.pauseTimeRemainingText = document.createTextNode(OpenLayers.Lang.translate(NK.tokenError.PAUSE_MINUTES > 1 ? ' minutes.' : ' minute.'));
     message.appendChild(timeRemaining);
@@ -132,14 +129,14 @@ NK.functions.pauseTokenUpdate = function () {
     NK.tokenError.pauseTimer = setTimeout(function () {
       NK.tokenUpdatePaused = false;
       NK.functions.getNewToken();
-    },  60 * parseInt(NK.tokenError.PAUSE_MINUTES) * 1000);
+    },  60 * parseInt(NK.tokenError.PAUSE_MINUTES, 10) * 1000);
 
     NK.tokenError.pauseCountdownInterval = setInterval(function () {
       var content, timeLeft;
       if (NK.tokenError.pauseTimeRemainingElement) {
         content = NK.tokenError.pauseTimeRemainingElement.innerHTML;
-        timeLeft = (parseInt(content) - 1);
-        NK.tokenError.pauseTimeRemainingElement.innerHTML = timeLeft + '';
+        timeLeft = (parseInt(content, 10) - 1);
+        NK.tokenError.pauseTimeRemainingElement.innerHTML = timeLeft.toString();
         if (timeLeft === 1) {
           if (NK.tokenError.pauseTimeRemainingText.textContent) {
             NK.tokenError.pauseTimeRemainingText.textContent = OpenLayers.Lang.translate(' minute.');
@@ -253,7 +250,7 @@ NK.init = function () {
   ${overlays}
 
   var removePopups = function () {
-    var i, j, popup, p;
+    var popup, p;
 
     for (p in map.popups) {
       if (map.popups.hasOwnProperty(p)) {
@@ -269,6 +266,7 @@ NK.init = function () {
   // Add controls at the end, to keep focus
   var controlContext = map;
   var container = null;
+
 % if controls:
   ${controls}
 % endif
@@ -293,13 +291,11 @@ NK.init = function () {
     } 
   }
 
-  
-
   if (NK.functions.postMessage) {
     (function () {
       var vectorLayers,
           layer,
-          vectorLayerData = [];
+          vectorLayerData = [],
           i, 
           j;
 
@@ -318,6 +314,8 @@ NK.init = function () {
 
   }
 };
+// end init()
+
 
 var addEvent = function(event, handler) {
   var listen = window.addEventListener || window.attachEvent;
