@@ -4,3 +4,6 @@ layerGroup: testlag.utvikling
 id: nmgr
 url: http://beta.norgeskart.no/ws/kd_nmg.py?
 styleNameSLD: maritimegrenser
+popup:
+  template: popup/popup
+  headingAttribute: n

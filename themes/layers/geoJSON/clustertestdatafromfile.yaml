@@ -4,5 +4,16 @@ name: Grupperte mark&oslash;rer
 id: clustertest
 epsgCode: 4326
 cluster: true
-styleName: unlabeledMarker
+styleName: labeledMarker
 layerGroup: testlag.utvikling
+label: ssrid
+popup:
+  template: popup/popup
+  headingAttribute: ssrname
+  data:
+  - template: popup/data
+    attribute: ssrid
+    label: ID i SSR
+  - template: popup/data
+    attribute: ssrname
+    label: Navn i SSR

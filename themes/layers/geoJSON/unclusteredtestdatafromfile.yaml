@@ -5,3 +5,13 @@ id: unlabeledmarkers
 epsgCode: 4326
 styleName: unlabeledMarker
 layerGroup: testlag.utvikling
+popup:
+  template: popup/popup
+  headingAttribute: ssrname
+  data:
+  - template: popup/data
+    attribute: ssrid
+    label: ID i SSR
+  - template: popup/data
+    attribute: ssrname
+    label: Navn i SSR

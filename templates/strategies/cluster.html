@@ -1,6 +1,6 @@
 %if not 'clustering' in vars:
 NK.strategies = NK.strategies || {};
-NK.strategies.cluster = NK.strategies.cluster || new OpenLayers.Strategy.Cluster({threshold: 3, distance: 48});
+NK.strategies.cluster = NK.strategies.cluster || new OpenLayers.Strategy.Cluster({threshold: 2, distance: 48});
 <% vars['clustering']=True %>
 %endif
 

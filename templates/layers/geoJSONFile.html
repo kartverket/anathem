@@ -3,6 +3,10 @@
   <%include file="/strategies/cluster.html"/>
 %endif
 
+% if popup:
+  <%include file="/functions/popup.html"/>
+% endif
+
 %if not 'layerTypeGeoJSONfile' in vars:
 NK.addLayerType = NK.addLayerType || {};
 
@@ -10,8 +14,6 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
   return function (id, name, url, options) {
     var layer,
         layerOptions,
-        strategies = [],
-        requestHandler,
         formatOptions,
         geoJSONFormat;
 
@@ -48,6 +50,25 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
       layerOptions.styleMap = NK.styles.SLD[options.styleName];
     }
 
+    if (options.label) {
+      var tempSM = layerOptions.styleMap;
+      layerOptions.styleMap = new OpenLayers.StyleMap(
+        {
+          'default': tempSM.styles['default'].clone(),
+          'select': tempSM.styles.select, 
+          'temporary': tempSM.styles.temporary,
+          'delete': tempSM.styles['delete']
+        }
+      );
+      layerOptions.styleMap.styles['default'].context = {
+        'getLabel': function (feature) {
+          return feature.attributes[options.label];
+        }
+      };
+
+      layerOptions.styleMap.styles['default'].defaultStyle.label = '${'${getLabel}'}';
+    }
+
     if (options.cluster && NK.strategies.cluster) {
       layerOptions.strategies.push(NK.strategies.cluster);
     }
@@ -74,8 +95,12 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
       NK.defaultVisibleLayers.push(id);
     }
 
+    if (options && options.popupConfig) {
+      NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
+    }
+
     M.addLayer(layer);
-  }
+  };
 }(map, mapProj, proj));
 
 <% vars['layerTypeGeoJSON']=True %>
@@ -104,12 +129,20 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
   options.styleName = '${styleName}';
 % endif
 
+% if label:
+  options.label = '${label}';
+% endif
+
 % if styleNameSLD:
   options.styleNameSLD = '${styleNameSLD}';
 % endif
 
 %if epsgCode:
   options.epsgCode = '${epsgCode}';
+% endif
+
+%if popup:
+  options.popupConfig = ${popup};
 % endif
 
   NK.addLayerType.geoJSONFile('${id}', '${name}', '${url}', options);
