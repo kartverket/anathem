@@ -1,5 +1,5 @@
 template: layers/geoJSONFile
-url: ../js/03-oslo.geojson
+url: js/03-oslo.geojson
 name: Unummererte mark&oslash;rer
 id: unlabeledmarkers
 epsgCode: 4326
