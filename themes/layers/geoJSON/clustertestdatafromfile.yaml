@@ -1,5 +1,5 @@
 template: layers/geoJSONFile
-url: /js/03-oslo.geojson
+url: js/03-oslo.geojson
 name: Grupperte mark&oslash;rer
 id: clustertest
 epsgCode: 4326
