@@ -1,4 +1,4 @@
-template: layers/wms_param
+template: layers/wms
 usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling
 name: Dekning sj&oslash;&shy;m&aring;ling

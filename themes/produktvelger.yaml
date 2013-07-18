@@ -8,7 +8,7 @@ mapscript:
   baselayers:   
     - template: layers/europa
   overlays  :
-    - template: layers/wmts_param
+    - template: layers/wmts
       usetoken: true
       name: Terreng&shy;modell
       layer: toporaster2

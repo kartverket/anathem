@@ -1,4 +1,4 @@
-template: layers/wms_param
+template: layers/wms
 usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.abas
 name: ABAS 
