@@ -25,7 +25,7 @@ mapscript:
     - include: layers/wms/sjogrenser
 
     - include: layers/dekning_n50_plast
-    - include: layers/dekning_n50_papir
+    #- include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
