@@ -46,7 +46,8 @@ mapscript:
     - include: layers/geoJSON/clustertestdatafromfile
     - include: layers/geoJSON/unclusteredtestdatafromfile
     - include: layers/geoJSON/kommunefjell
-    
+    - include: layers/wfsTest
+
   center    : 
     template: center/besseggen
 
