@@ -40,7 +40,8 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
       // there is an active easyXDM socket - send feature data
       message = {
         cmd: 'featureSelected', 
-        feature: feature.attributes,
+        feature: feature.fid,
+        attributes: feature.attributes,
         layer: feature.layer.shortid
       };
       NK.easyXDM.socket.postMessage(JSON.stringify(message));
