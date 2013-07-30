@@ -11,7 +11,7 @@ translations:
     source: Reloading maps in 
     translation: Pr&oslash;ver &aring; laste kartlagene p&aring; nytt om 
   - template: i18n/translation
-    source:  minutes.
+    source: minutes.
     translation: minutter. 
   - template: i18n/translation
     source: minute.

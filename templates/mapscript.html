@@ -135,10 +135,10 @@ NK.functions.pauseTokenUpdate = function () {
         NK.tokenError.pauseTimeRemainingElement.innerHTML = timeLeft.toString();
         if (timeLeft === 1) {
           if (NK.tokenError.pauseTimeRemainingText.textContent) {
-            NK.tokenError.pauseTimeRemainingText.textContent = OpenLayers.Lang.translate(' minute.');
+            NK.tokenError.pauseTimeRemainingText.textContent = ' ' + OpenLayers.Lang.translate('minute.');
           } else {
             // old IE...
-            NK.tokenError.pauseTimeRemainingText.innerText = OpenLayers.Lang.translate(' minute.');
+            NK.tokenError.pauseTimeRemainingText.innerText = ' ' + OpenLayers.Lang.translate('minute.');
           }
         }
       }
