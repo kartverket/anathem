@@ -1,0 +1,18 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Keyboard shortcuts
+    translation: Tastatursnarveier
+  - template: i18n/translation
+    source: You can navigate using the following keyboard shortcuts
+    translation: F&oslash;lgende taster kan brukes til navigasjon
+  - template: i18n/translation
+    source: Press TAB to change selected control. Press ENTER to activate the selected control.
+    translation: Flytt deg rundt i kartets navigasjon ved &aring; bruke TAB-tasten. Velg enkeltfunksjon ved hjelp av ENTER-tasten.
+  - template: i18n/translation
+    source: Keyboard shortcut
+    translation: Tastekombinasjon
+  - template: i18n/translation
+    source: Function
+    translation: Funksjon

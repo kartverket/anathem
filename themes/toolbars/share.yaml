@@ -13,6 +13,8 @@ controls:
   id: help-panel  
   controls:
   - template: controls/help
+    i18n:
+    - include: languages/nb/help
 - template: controls/container
   id: print-panel
   controls:

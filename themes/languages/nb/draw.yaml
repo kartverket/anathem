@@ -1,0 +1,21 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Drawing
+    translation: Tegning
+  - template: i18n/translation
+    source: Draw point
+    translation: Tegn punkt
+  - template: i18n/translation
+    source: Draw line
+    translation: Tegn linje
+  - template: i18n/translation
+    source: Draw polygon
+    translation: Tegn areal
+  - template: i18n/translation
+    source: Undo
+    translation: Angre 
+  - template: i18n/translation
+    source: Save
+    translation: Lagre 

@@ -21,13 +21,9 @@ NK.tokenService = "http://beta.norgeskart.no/ws/gkt.py";
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 
-OpenLayers.Util.extend(OpenLayers.Lang.nb, {
-  'Server error': 'Feil med tjenesten',
-  'An error has occured.': 'Ett eller flere kartlag vises ikke som de skal.',
-  'Reloading maps in ': 'Pr&oslash;ver &aring; laste kartlagene p&aring; nytt om ',
-  ' minutes.': ' minutter.',
-  ' minute.': ' minutt.'
-});
+%if i18n:
+  ${i18n}
+%endif
 
 NK.tokenError = {
   PAUSE_MINUTES: 2,
@@ -113,11 +109,11 @@ NK.functions.pauseTokenUpdate = function () {
     innerWrapper.appendChild(message);
 
     message = document.createElement('p');
-    message.innerHTML = OpenLayers.Lang.translate('Reloading maps in ');
+    message.innerHTML = OpenLayers.Lang.translate('Reloading maps in') + ' ';
     timeRemaining = document.createElement('span');
     timeRemaining.innerHTML = parseInt(NK.tokenError.PAUSE_MINUTES, 10);
     NK.tokenError.pauseTimeRemainingElement = timeRemaining;
-    NK.tokenError.pauseTimeRemainingText = document.createTextNode(OpenLayers.Lang.translate(NK.tokenError.PAUSE_MINUTES > 1 ? ' minutes.' : ' minute.'));
+    NK.tokenError.pauseTimeRemainingText = document.createTextNode(' ' + OpenLayers.Lang.translate(NK.tokenError.PAUSE_MINUTES > 1 ? 'minutes.' : 'minute.'));
     message.appendChild(timeRemaining);
     message.appendChild(NK.tokenError.pauseTimeRemainingText);
     innerWrapper.appendChild(message);
@@ -161,6 +157,10 @@ NK.functions.getNewToken = function () {
   ${functions}
 % endif
 
+  % if internationalization:
+    ${internationalization}
+  % endif
+
 NK.init = function () {
 
   var prmstr,
@@ -196,8 +196,11 @@ NK.init = function () {
   mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
-  OpenLayers.Lang.setCode('nb');
   OpenLayers.ImgPath = 'img/';
+
+%if language:
+  OpenLayers.Lang.setCode('${language}');
+%endif
 
   // extract URL parameters into dictionary
   prmstr = window.location.search.substr(1);
@@ -313,6 +316,7 @@ NK.init = function () {
     }());
 
   }
+
 };
 // end init()
 

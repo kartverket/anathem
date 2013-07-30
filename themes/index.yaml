@@ -4,6 +4,10 @@ template : base
 title    : Norgeskart
 mapscript: 
   template  : mapscript
+  language  : nb
+
+  i18n:
+  - include: languages/nb/base
 
   baselayers:   
     - template: layers/europa
@@ -47,6 +51,7 @@ mapscript:
     - include: layers/geoJSON/unclusteredtestdatafromfile
     - include: layers/geoJSON/kommunefjell
     - include: layers/wfsTest
+    - include: layers/test_error
 
   center    : 
     template: center/besseggen
@@ -54,6 +59,7 @@ mapscript:
   functions :
     - template: functions/updateURL
     - template: functions/readURL
+    - template: functions/vector
 
   controls  :
     - template: controls/geolocation
@@ -70,6 +76,8 @@ mapscript:
         id: tools-panel
         controls:
         - template: controls/draw
+          i18n:
+          - include: languages/nb/draw
         - template: controls/emergencyposter
         - template: controls/transformations
           url: http://beta.norgeskart.no/ws/trans.py

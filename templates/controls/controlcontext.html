@@ -1,6 +1,11 @@
 <%include file="/functions/addControlToContext.html" />
 
 (function (context, container) {
+
+%if i18n:
+	${i18n}
+%endif
+
 	var options = {};
 	if (container) {
 		options.div = container;
