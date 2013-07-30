@@ -69,6 +69,7 @@ mapscript:
         name: Verkt&oslash;y
         id: tools-panel
         controls:
+        - template: controls/draw
         - template: controls/emergencyposter
         - template: controls/transformations
           url: http://beta.norgeskart.no/ws/trans.py
