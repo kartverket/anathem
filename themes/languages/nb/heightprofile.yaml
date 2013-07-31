@@ -1,0 +1,9 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Height profile
+    translation: H&oslash;ydeprofil
+  - template: i18n/translation
+    source: Draw a line in the map.
+    translation: Tegn en linje p&aring; kartet.

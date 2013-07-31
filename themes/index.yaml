@@ -78,6 +78,9 @@ mapscript:
           i18n:
           - include: languages/nb/draw
         - template: controls/emergencyposter
+        - template: controls/heightprofile
+          i18n:
+          - include: languages/nb/heightprofile
         - template: controls/transformations
           url: http://beta.norgeskart.no/ws/trans.py
       - template: controls/container
