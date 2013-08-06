@@ -14,6 +14,7 @@ controls:
   id: point-panel
   controls:
     - template: controls/pointmenu
+      url: http://beta.norgeskart.no/ws/trans.py
 - template: controls/container
   id: magnifier-panel
   controls:
