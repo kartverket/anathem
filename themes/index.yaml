@@ -79,6 +79,8 @@ mapscript:
           - include: languages/nb/draw
         - template: controls/emergencyposter
         - template: controls/heightprofile
+          heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
+          gpxStorageServiceUrl: http://localhost/norgeskart/test
           i18n:
           - include: languages/nb/heightprofile
         - template: controls/transformations

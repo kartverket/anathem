@@ -18,4 +18,23 @@ translations:
     translation: Angre 
   - template: i18n/translation
     source: Save
-    translation: Lagre 
+    translation: Lagre
+  - template: i18n/translation
+    source: Longitude
+    translation: Lengdegrad
+  - template: i18n/translation
+    source: Latitude
+    translation: Breddegrad
+  - template: i18n/translation
+    source: Length
+    translation: Lengde
+  - template: i18n/translation
+    source: Circumference
+    translation: Omkrets
+  - template: i18n/translation
+    source: Area
+    translation: Areal
+  - template: i18n/translation
+    source: Measures
+    translation: M&aring;l
+

@@ -2,8 +2,29 @@ template: i18n/language
 language: nb
 translations:
   - template: i18n/translation
-    source: Height profile
-    translation: H&oslash;ydeprofil
+    source: Make a height profile
+    translation: Lage h&oslash;ydeprofil
   - template: i18n/translation
-    source: Draw a line in the map.
-    translation: Tegn en linje p&aring; kartet.
+    source: Click in the map to draw a line.
+    translation: Klikk p&aring; steder i kartet for &aring; tegne opp en linje.
+  - template: i18n/translation
+    source: Double click to finish
+    translation: Dobbeltklikk for &aring; avslutte
+  - template: i18n/translation
+    source: Use some other format
+    translation: Bruk et annet format
+  - template: i18n/translation
+    source: Show height profile
+    translation: Vis h&oslash;ydeprofil
+  - template: i18n/translation
+    source: Known height profiles
+    translation: Kjente h&oslash;ydeprofiler
+  - template: i18n/translation
+    source: Birkebeinerrennet
+    translation: Birkebeinerrennet
+  - template: i18n/translation
+    source: Besseggen
+    translation: Besseggen
+  - template: i18n/translation
+    source: Norseman
+    translation: Norseman
