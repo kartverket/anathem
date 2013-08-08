@@ -9,3 +9,4 @@ controls:
   id: search-panel
   controls:
   - template: controls/search
+    coordinates: http://beta.norgeskart.no/ws/trans.py
