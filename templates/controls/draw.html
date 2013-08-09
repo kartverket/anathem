@@ -1,5 +1,8 @@
 <%inherit file="/controls/controlcontext.html" />
 options.autoActivate = true;
 options.activeDrawControl = 'point';
+% if storageUrl:
+options.JSONDataStorageUrl = '${storageUrl}';
+% endif
 var control = new OpenLayers.Control.Draw(options);
 NK.functions.addControlToContext(control, context);

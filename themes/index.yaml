@@ -16,6 +16,7 @@ mapscript:
     - template: styles/unlabeledMarker
     - template: styles/labeledMarker
     - template: styles/omriss
+    - template: styles/track
     - template: styles/SLD
       name: maritimegrenser
       url: http://beta.norgeskart.no/xml/NMG.xml
@@ -77,10 +78,12 @@ mapscript:
         - template: controls/draw
           i18n:
           - include: languages/nb/draw
+          storageUrl: http://beta.norgeskart.no/ws/upload-json.py
         - template: controls/emergencyposter
         - template: controls/heightprofile
           heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
-          gpxStorageServiceUrl: http://localhost/norgeskart/test
+          gpxStorageUrl: http://beta.norgeskart.no/---TODO---/gpxStorage
+          trackStyleName: track
           i18n:
           - include: languages/nb/heightprofile
         - template: controls/transformations

@@ -6,14 +6,14 @@
   <%include file="/strategies/cluster.html"/>
 %endif
 
-%if not 'formatGeoJSON' in vars:
+% if not 'formatGeoJSON' in vars:
 NK.format = NK.format || {};
 NK.format.geoJSON = NK.format.geoJSON || new OpenLayers.Format.GeoJSON();
 <% vars['formatGeoJSON']=True %>
-%endif
+% endif
 
 
-%if not 'strategyTFS' in vars:
+% if not 'strategyTFS' in vars:
 NK.strategy = NK.strategy || {};
 NK.strategy.TFS = NK.strategy.TFS || new OpenLayers.Strategy.TFS({
   resFactor: 1, 
@@ -22,9 +22,9 @@ NK.strategy.TFS = NK.strategy.TFS || new OpenLayers.Strategy.TFS({
   format: NK.format.geoJSON
 });
 <% vars['strategyTFS']=True %>
-%endif
+% endif
 
-%if not 'layerTypeGeoJSON' in vars:
+% if not 'layerTypeGeoJSON' in vars:
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.geoJSON = (function (M, MP) {
@@ -106,21 +106,21 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 }(map, mapProj));
 
 <% vars['layerTypeGeoJSON']=True %>
-%endif
+% endif
 
 
 (function() {
 	var options = {};
 
-%if layerGroup:
+% if layerGroup:
 	options.layerGroup = "${layerGroup}";	
 % endif
 
-%if visible:
+% if visible:
 	options.visible = "${visible}";	
 % endif
 
-%if hidefromlayerswitcher:
+% if hidefromlayerswitcher:
 	options.hideFromLayerSwitcher = "${hidefromlayerswitcher}";	
 % endif
 
@@ -136,7 +136,7 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 	options.styleNameSLD = '${styleNameSLD}';
 % endif
 
-%if popup:
+% if popup:
   options.popupConfig = ${popup};
 % endif
 

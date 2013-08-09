@@ -28,3 +28,16 @@ translations:
   - template: i18n/translation
     source: Norseman
     translation: Norseman
+  - template: i18n/translation
+    source: An error occured.
+    translation: Det har skjedd en feil.
+  - template: i18n/translation
+    source: Unable to read track from file.
+    translation: Filen inneholder ingen GPX-data.
+  - template: i18n/translation
+    source: Upload GPX file
+    translation: Last opp en GPX-fil
+  - template: i18n/translation
+    source: Enter WKT geometry data
+    translation: Lim inn et WKT LINESTRING-uttrykk
+
