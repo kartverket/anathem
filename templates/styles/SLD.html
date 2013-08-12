@@ -1,12 +1,12 @@
-%if not 'formatSLD' in vars:
+% if not 'formatSLD' in vars:
 
 NK.format = NK.format || {};
 NK.format.SLD = NK.format.SLD || new OpenLayers.Format.SLD();
 
 <% vars['formatSLD']=True %>
-%endif
+% endif
 
-%if not 'functionSetLayerStylesSLD' in vars:
+% if not 'functionSetLayerStylesSLD' in vars:
 
 NK.styles = NK.styles || {};
 NK.styles.SLD = NK.styles.SLD || {};
@@ -38,17 +38,18 @@ NK.functions.setLayerStylesSLD = function (sld, styleName) {
           NK.styles.SLD[styleName].styleMap.styles["default"].rules.push( 
             new OpenLayers.Rule({
                 filter: new OpenLayers.Filter.Comparison({
-                  type: OpenLayers.Filter.Comparison.LIKE,
-                  property: "n",
-                  value: NK.format.SLD.featureTranslate[featureName][t] // could be NK.styles.SLD['${name}'].translations
-                }),
-                symbolizer: style.rules[0].symbolizer
+                type: OpenLayers.Filter.Comparison.LIKE,
+                property: "n",
+                value: NK.format.SLD.featureTranslate[featureName][t]
+              }),
+              symbolizer: style.rules[0].symbolizer
             })
           );
         }
       }
     }
   }
+
 
   NK.styles.SLD[styleName].ready = true; // read by NK.functions.setSLDStyleForLayer()
 
@@ -60,7 +61,7 @@ NK.functions.setLayerStylesSLD = function (sld, styleName) {
 };
 
 <% vars['functionSetLayerStylesSLD']=True %>
-%endif
+% endif
 
 (function (url, name) {
   NK.styles.SLD[name] = NK.styles.SLD[name] || {};
@@ -69,8 +70,8 @@ NK.functions.setLayerStylesSLD = function (sld, styleName) {
   s.layers = s.layers || [];
   // NK.styles.SLD['${name}'].translations = NK.styles.SLD['${name}'].translations || {};
   s.styleMap = s.styleMap || new OpenLayers.StyleMap({
-    'default':new OpenLayers.Style(),
-    'temporary':new OpenLayers.Style({
+    'default': new OpenLayers.Style(),
+    'temporary': new OpenLayers.Style({
       fillColor  : "#fe8",
       graphicZIndex: 1,
       fillOpacity: 1 

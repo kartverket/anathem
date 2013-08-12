@@ -4,10 +4,10 @@
 
 % if cluster:
   <%include file="/strategies/cluster.html"/>
-%endif
+% endif
 
 
-%if not 'layerTypeWFS' in vars:
+% if not 'layerTypeWFS' in vars:
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.WFS = (function (M, MP) {
@@ -102,21 +102,21 @@ NK.addLayerType.WFS = (function (M, MP) {
 }(map, mapProj));
 
 <% vars['layerTypeWFS']=True %>
-%endif
+% endif
 
 
 (function() {
 	var options = {};
 
-%if layerGroup:
+% if layerGroup:
 	options.layerGroup = "${layerGroup}";	
 % endif
 
-%if visible:
+% if visible:
 	options.visible = "${visible}";	
 % endif
 
-%if hidefromlayerswitcher:
+% if hidefromlayerswitcher:
 	options.hideFromLayerSwitcher = "${hidefromlayerswitcher}";	
 % endif
 
@@ -132,7 +132,7 @@ NK.addLayerType.WFS = (function (M, MP) {
 	options.styleNameSLD = '${styleNameSLD}';
 % endif
 
-%if popup:
+% if popup:
   options.popupConfig = ${popup};
 % endif
 

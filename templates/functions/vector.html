@@ -1,4 +1,4 @@
-%if not 'vectorControls' in vars:  
+% if not 'vectorControls' in vars:  
 
 NK.functions = NK.functions || {};
 NK.functions.vector = NK.functions.vector || {};
@@ -36,7 +36,7 @@ NK.functions.vector.addVectorHoverControls = function (map, layer, grouped) {
 NK.functions.vector.addVectorControls = function (map, layer, grouped) {
   var selectCtrl;
 
-  NK.functions.vector.addVectorHoverControls(map, layer, click, grouped);
+  NK.functions.vector.addVectorHoverControls(map, layer, grouped);
   
   selectCtrl = new OpenLayers.Control.SelectFeature(
     layer,
@@ -51,4 +51,4 @@ NK.functions.vector.addVectorControls = function (map, layer, grouped) {
 
 
 <% vars['vectorControls']=True %>
-%endif
+% endif

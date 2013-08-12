@@ -1,10 +1,10 @@
-%if not 'clustering' in vars:
+% if not 'clustering' in vars:
 NK.strategies = NK.strategies || {};
 NK.strategies.cluster = NK.strategies.cluster || new OpenLayers.Strategy.Cluster({threshold: 2, distance: 48});
 <% vars['clustering']=True %>
-%endif
+% endif
 
-%if not 'addClusteringRule' in vars:
+% if not 'addClusteringRule' in vars:
 
 NK.styles = NK.styles || {};
     
@@ -63,4 +63,4 @@ NK.styles.addClusteringRule = function (styleMap, renderings) {
 };
 
 <% vars['addClusteringRule']=True %>
-%endif
+% endif

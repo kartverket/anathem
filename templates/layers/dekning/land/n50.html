@@ -130,7 +130,7 @@
   M.addControl(selectControl);
 
 
-%if not 'n50LangNB' in vars:  
+% if not 'n50LangNB' in vars:  
 OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Map number': 'Kartblad',
   'Latest print': 'Siste trykk',
@@ -144,6 +144,6 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Vignette in map': 'Vignett i kartblad'
 });
 <% vars['n50LangNB']=True %>
-%endif
+% endif
 
 }(map, mapProj, proj));

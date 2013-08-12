@@ -1,7 +1,7 @@
 
 % if cluster:
   <%include file="/strategies/cluster.html"/>
-%endif
+% endif
 
 % if popup:
   <%include file="/functions/popup.html"/>
@@ -104,7 +104,7 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
 }(map, mapProj, proj));
 
 <% vars['layerTypeGeoJSON']=True %>
-%endif
+% endif
 
 (function () {
   var options = {};
@@ -113,11 +113,11 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
   options.layerGroup = '${layerGroup}';
 % endif
 
-%if visible:
+% if visible:
   options.visible = "${visible}"; 
 % endif
 
-%if hidefromlayerswitcher:
+% if hidefromlayerswitcher:
   options.hideFromLayerSwitcher = "${hidefromlayerswitcher}"; 
 % endif
 
@@ -137,11 +137,11 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
   options.styleNameSLD = '${styleNameSLD}';
 % endif
 
-%if epsgCode:
+% if epsgCode:
   options.epsgCode = '${epsgCode}';
 % endif
 
-%if popup:
+% if popup:
   options.popupConfig = ${popup};
 % endif
 

@@ -21,9 +21,9 @@ NK.tokenService = "http://beta.norgeskart.no/ws/gkt.py";
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 
-%if i18n:
+% if i18n:
   ${i18n}
-%endif
+% endif
 
 NK.tokenError = {
   PAUSE_MINUTES: 2,
@@ -153,7 +153,7 @@ NK.functions.getNewToken = function () {
   }
 };
 
-%if functions :
+% if functions :
   ${functions}
 % endif
 
@@ -198,9 +198,9 @@ NK.init = function () {
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
   OpenLayers.ImgPath = 'img/';
 
-%if language:
+% if language:
   OpenLayers.Lang.setCode('${language}');
-%endif
+% endif
 
   // extract URL parameters into dictionary
   prmstr = window.location.search.substr(1);

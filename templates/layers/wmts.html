@@ -1,4 +1,4 @@
-%if not 'layerTypeWMTS' in vars:
+% if not 'layerTypeWMTS' in vars:
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.WMTS = (function (M, MP) {
@@ -62,7 +62,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
 }(map, mapProj));
 
 <% vars['layerTypeWMTS']=True %>
-%endif
+% endif
 
 (function () {
   var url, 
