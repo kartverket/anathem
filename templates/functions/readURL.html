@@ -80,69 +80,74 @@ NK.functions.addLabeledMarker = function (params, number) {
   layer.addFeatures([feature]);
   return feature;
 };
-NK.functions.urlDataLayerCounter = 0;
-NK.functions.addDataLayerFromUrl = function (params) {
+
+NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
   var type,
       url,
-      options = {};
-
-  function addLayer (url, epsgCode) {
-    var mapProjection,
-        formatOptions,
-        geoJSONFormat,
-        layerOptions,
-        layer,
-        correctEpsgCode;
-
-    formatOptions = {
-      'internalProjection': map.getProjection(),
-      'externalProjection': map.getProjection()
-    };
-
-    // set external projection, if provided  
-    if (epsgCode && NK.projections[epsgCode]) {
-      formatOptions.externalProjection = NK.projections[epsgCode];
-      correctEpsgCode = epsgCode;
-    } else {
-      correctEpsgCode = '32633';
-    }
-
-    geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
-
-    layerOptions = {
-      shortid: 'urlDataLayer_' + NK.functions.urlDataLayerCounter, 
-      protocol: new OpenLayers.Protocol.HTTP({
-        'url': url,
-        'format': geoJSONFormat
-      }),
-      strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
-      styleMap: NK.styles.omriss,
-      projection: mapProjection,
-      displayInLayerSwitcher: false,
-      visibility: true
-    };
-
-    layer = new OpenLayers.Layer.Vector(
-      'urlDataLayer_' + NK.functions.urlDataLayerCounter++,
-      layerOptions
-    );
-    layer = OpenLayers.Util.extend(layer, {
-      'isUrlDataLayer': true,
-      'epsgCode': correctEpsgCode,
-      'url': url
-    });
-
-    map.addLayers([layer]);
-  }
+      epsgCode;
 
   type = params[0];
-  if (type === 'geojson') {
-    url = decodeURIComponent(params[1]);
-    addLayer(url, params[2]);
+  url = decodeURIComponent(params[1]);
+  epsgCode = params[2];
+
+  switch (type) {
+    case 'geojson':
+      NK.functions.addGeoJsonLayer(url, epsgCode);
+      break;
   }
 
 };
 
+NK.functions.addGeoJsonLayer = function (url, epsgCode) {
+  var mapProjection,
+      formatOptions,
+      geoJSONFormat,
+      layerOptions,
+      layer,
+      correctEpsgCode;
+
+  formatOptions = {
+    'internalProjection': map.getProjection(),
+    'externalProjection': map.getProjection()
+  };
+
+  // set external projection, if provided  
+  if (epsgCode && NK.projections[epsgCode]) {
+    formatOptions.externalProjection = NK.projections[epsgCode];
+    correctEpsgCode = epsgCode;
+  } else {
+    correctEpsgCode = '32633';
+  }
+
+  geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
+
+  layerOptions = {
+    shortid: 'urlDataLayer_' + NK.functions.urlDataLayerCounter, 
+    protocol: new OpenLayers.Protocol.HTTP({
+      'url': url,
+      'format': geoJSONFormat
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
+    styleMap: NK.styles.omriss,
+    projection: mapProjection,
+    displayInLayerSwitcher: false,
+    visibility: true
+  };
+
+  layer = new OpenLayers.Layer.Vector(
+    'urlDataLayer_' + NK.functions.urlDataLayerCounter++,
+    layerOptions
+  );
+  layer = OpenLayers.Util.extend(layer, {
+    'isUrlDataLayer': true,
+    'epsgCode': correctEpsgCode,
+    'url': url
+  });
+
+  map.addLayers([layer]);
+};
+
+NK.functions.urlDataLayerCounter = 0;
 NK.functions.setMapState = function (params) {
   var parms,
       zoom,
@@ -296,7 +301,7 @@ NK.functions.setMapState = function (params) {
           index += 3;
           break;
         case 'l':
-          NK.functions.addDataLayerFromUrl(parms.slice(index + 1, index + 4));
+          NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 4));
           index += 3;
           break;
       }
