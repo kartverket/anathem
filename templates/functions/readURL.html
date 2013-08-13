@@ -1,4 +1,5 @@
 <%include file="/styles/labeledMarker.html" />
+
 NK.functions.storeInitialLayerVisibility = function () {
   // store the initial layer visibility configuration
   var i, 
@@ -10,7 +11,7 @@ NK.functions.storeInitialLayerVisibility = function () {
     if (map.layers.hasOwnProperty(i)) {
       layer = map.layers[i];
       if (layer.visibility) {
-        if (!NK.defaultVisibleLayers || !$.inArray(layer.shortid, NK.defaultVisibleLayers)) {
+        if ((!NK.defaultVisibleLayers || !$.inArray(layer.shortid, NK.defaultVisibleLayers)) && !layer.isUrlDataLayer) {
           NK.initLayers.push(layer.shortid);
         }
       }
@@ -79,6 +80,68 @@ NK.functions.addLabeledMarker = function (params, number) {
   layer.addFeatures([feature]);
   return feature;
 };
+NK.functions.urlDataLayerCounter = 0;
+NK.functions.addDataLayerFromUrl = function (params) {
+  var type,
+      url,
+      options = {};
+
+  function addLayer (url, epsgCode) {
+    var mapProjection,
+        formatOptions,
+        geoJSONFormat,
+        layerOptions,
+        layer,
+        correctEpsgCode;
+
+    formatOptions = {
+      'internalProjection': map.getProjection(),
+      'externalProjection': map.getProjection()
+    };
+
+    // set external projection, if provided  
+    if (epsgCode && NK.projections[epsgCode]) {
+      formatOptions.externalProjection = NK.projections[epsgCode];
+      correctEpsgCode = epsgCode;
+    } else {
+      correctEpsgCode = '32633';
+    }
+
+    geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
+
+    layerOptions = {
+      shortid: 'urlDataLayer_' + NK.functions.urlDataLayerCounter, 
+      protocol: new OpenLayers.Protocol.HTTP({
+        'url': url,
+        'format': geoJSONFormat
+      }),
+      strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
+      styleMap: NK.styles.omriss,
+      projection: mapProjection,
+      displayInLayerSwitcher: false,
+      visibility: true
+    };
+
+    layer = new OpenLayers.Layer.Vector(
+      'urlDataLayer_' + NK.functions.urlDataLayerCounter++,
+      layerOptions
+    );
+    layer = OpenLayers.Util.extend(layer, {
+      'isUrlDataLayer': true,
+      'epsgCode': correctEpsgCode,
+      'url': url
+    });
+
+    map.addLayers([layer]);
+  }
+
+  type = params[0];
+  if (type === 'geojson') {
+    url = decodeURIComponent(params[1]);
+    addLayer(url, params[2]);
+  }
+
+};
 
 NK.functions.setMapState = function (params) {
   var parms,
@@ -121,7 +184,7 @@ NK.functions.setMapState = function (params) {
   }
 
   if (!!hash) {
-    parms = hash.slice(1).split("/");
+    parms = hash.split("/");
     if (parms.length >= 3) {
       zoom = parms[0];
       mapx = parms[1];
@@ -232,6 +295,10 @@ NK.functions.setMapState = function (params) {
           NK.functions.addLabeledMarker(parms.slice(index + 1, index + 4), ++labeledMarkerCount);
           index += 3;
           break;
+        case 'l':
+          NK.functions.addDataLayerFromUrl(parms.slice(index + 1, index + 4));
+          index += 3;
+          break;
       }
     }
     if (mapx && mapy && zoom) {
@@ -253,7 +320,8 @@ NK.functions.setMapStateFromURL = function () {
       search;
 
   search = window.location.search;
-  hash = window.location.hash;
+  hash = window.location.href.split("#")[1]; // avoids window.location.hash because Firefox automatically decodes URI encoded hashes
+
 
   return NK.functions.setMapState({'search': search, 'hash': hash});
 };

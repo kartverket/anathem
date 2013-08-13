@@ -62,43 +62,46 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 			visibility: (options && options.visible) ? 1 : 0
 		};
 
-		if (options.styleName && NK.styles && NK.styles[options.styleName]) {
-			layerOptions.styleMap = NK.styles[options.styleName];
+		if (options) {
+
+			if (options.styleName && NK.styles && NK.styles[options.styleName]) {
+				layerOptions.styleMap = NK.styles[options.styleName];
+			}
+
+			if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+				layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD];
+			}
+
+		    if (options.cluster && NK.strategies.cluster) {
+		      layerOptions.strategies.push(NK.strategies.cluster);
+		    }
 		}
-
-		if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
-			layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD];
-		}
-
-	    if (options.cluster && NK.strategies.cluster) {
-	      layerOptions.strategies.push(NK.strategies.cluster);
-	    }
-
 		layer = new OpenLayers.Layer.Vector(
 			name,
 			layerOptions
 		);
+		if (options) {
+		    if (options.cluster) {
+		      	NK.styles.addClusteringRule(layer.styleMap);
+		    }
 
-	    if (options.cluster) {
-	      	NK.styles.addClusteringRule(layer.styleMap);
-	    }
+			if (options && options.layerGroup) {
+				layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+			}
 
-		if (options && options.layerGroup) {
-			layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+			if (options && options.visible) {
+				NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+				NK.defaultVisibleLayers.push(id);
+			}
+
+		    if (options && options.popupConfig) {
+		      NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
+		    }
 		}
-
-		if (options && options.visible) {
-			NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
-			NK.defaultVisibleLayers.push(id);
-		}
-
-	    if (options && options.popupConfig) {
-	      NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
-	    }
 
 		M.addLayers([layer]);
 
-	    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+	    if (options && options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
 	        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
 	    }
 	};
@@ -140,5 +143,7 @@ NK.addLayerType.geoJSON = (function (M, MP) {
   options.popupConfig = ${popup};
 % endif
 
+% if name:
     NK.addLayerType.geoJSON("${name}", "${id}", "${url}", options);	
+% endif
 }());
