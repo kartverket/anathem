@@ -29,7 +29,7 @@ NK.functions.updateHistory = function (evt) {
                     uid += "/+"+layer.shortid;
                   }
                 } else {
-                  if ($.inArray(layer.shortid, NK.initLayers) > -1) {
+                  if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof(layer.shortid) != 'undefined') {
                     uid += "/-" + layer.shortid;
                   }
                 }
