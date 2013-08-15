@@ -82,7 +82,7 @@ mapscript:
         - template: controls/emergencyposter
         - template: controls/heightprofile
           heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
-          gpxStorageUrl: http://beta.norgeskart.no/---TODO---/gpxStorage
+          gpxStorageUrl: http://beta.norgeskart.no/ws/upload-gpx.py
           trackStyleName: track
           i18n:
           - include: languages/nb/heightprofile
