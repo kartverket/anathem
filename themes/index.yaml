@@ -52,7 +52,7 @@ mapscript:
     - include: layers/geoJSON/unclusteredtestdatafromfile
     - include: layers/geoJSON/kommunefjell
     - include: layers/wfsTest
-#    - include: layers/ssr
+    - include: layers/ssr
 
   center    : 
     template: center/besseggen
@@ -80,6 +80,7 @@ mapscript:
           i18n:
           - include: languages/nb/draw
           storageUrl: http://beta.norgeskart.no/ws/upload-json.py
+          styleName: track
         - template: controls/emergencyposter
         - template: controls/heightprofile
           heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation

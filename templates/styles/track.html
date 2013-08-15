@@ -3,8 +3,26 @@ NK.styles = NK.styles || {};
 NK.styles.track = NK.styles.track = new OpenLayers.StyleMap({
 	'default': new OpenLayers.Style({
 	  strokeWidth: 5,
-	  strokeColor  : "#616060",
-	  fillOpacity: 0
+	  strokeColor  : "#0058a3",
+	  fillOpacity: 0.4,
+	  fillColor: "#0058a3",
+	  graphicName: 'circle',
+	  pointRadius: 6
+	}),
+	'temporary': new OpenLayers.Style({
+	  strokeWidth: 5,
+	  strokeColor  : "#0058a3",
+	  fillOpacity: 0.4,
+	  strokeDashstyle: "${"${getStrokeDashStyle}"}",
+	  fillColor: "#0058a3",
+	  pointRadius: 6
+	},
+	{
+		context: {
+			getStrokeDashStyle: function (feature) {
+				return (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') ? 'solid' : 'dash';
+			}
+		}
 	})
 });
 <% vars['styles.track']=True %>

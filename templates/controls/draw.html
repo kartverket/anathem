@@ -1,8 +1,20 @@
+<%include file="/styles/track.html" />
+
 <%inherit file="/controls/controlcontext.html" />
+
 options.autoActivate = true;
 options.activeDrawControl = 'point';
+
 % if storageUrl:
 options.JSONDataStorageUrl = '${storageUrl}';
 % endif
+
+% if styleName:
+	options.styleName = '${styleName}';
+	if (NK.styles && NK.styles[options.styleName]) {
+		options.styleMap = NK.styles[options.styleName];
+	}
+% endif
+
 var control = new OpenLayers.Control.Draw(options);
 NK.functions.addControlToContext(control, context);
