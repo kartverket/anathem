@@ -14,7 +14,7 @@ NK.addLayerType.WFS = (function (M, MP) {
   var matrixIds,
       i;
 
-	return function (name, id, url, featureNS, featureType, options) {
+	return function (name, id, url, featureNS, featurePrefix, featureType, options) {
 
 		var protocolParameters,
 			protocol,
@@ -22,10 +22,13 @@ NK.addLayerType.WFS = (function (M, MP) {
 			layerOptions;
 
 		protocolParameters = {
-			version: '1.1.0',
+			version: options.version || '1.1.0',
 			url: url,
 			featureNS: featureNS,
-			featureType: featureType
+			featurePrefix: featurePrefix,
+			featureType: featureType,
+			outputFormat: options.outputFormat || 'application/gml+xml; version=3.2',
+			readFormat: new OpenLayers.Format.GML.v3()
 		};
 
 		protocol = new OpenLayers.Protocol.WFS(protocolParameters);
@@ -140,5 +143,10 @@ NK.addLayerType.WFS = (function (M, MP) {
   options.token = NK.gkToken;
 % endif
 
-    NK.addLayerType.WFS("${name}", "${id}", "${url}", "${namespace}", "${featuretype}", options);	
+% if version:
+  options.version = '${version}';
+% endif
+
+
+    NK.addLayerType.WFS("${name}", "${id}", "${url}", "${namespace}", "${namespacePrefix}", "${featuretype}", options);	
 }());
