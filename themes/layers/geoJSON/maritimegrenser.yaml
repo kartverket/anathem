@@ -7,3 +7,4 @@ styleNameSLD: maritimegrenser
 popup:
   template: popup/popup
   headingAttribute: n
+layerOpacity: 0.9
