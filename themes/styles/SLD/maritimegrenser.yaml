@@ -1,0 +1,82 @@
+template: styles/SLD
+name: maritimegrenser
+url: http://beta.norgeskart.no/xml/NMG.xml
+translations: 
+  - template: styles/SLDtranslation
+    featureName: DSO
+    target: DSO
+  - template: styles/SLDtranslation
+    featureName: med
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Spitsbergen
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Edge
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Nordaust
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Kvit
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Kong Karl
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Hopen
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Bj&oslash;rn
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Jan Mayen
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Prins Karl
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: Svalbard
+    target: Landareal
+  - template: styles/SLDtranslation
+    featureName: territorium
+    target: Sjoterritorium
+  - template: styles/SLDtranslation
+    featureName: Indre farvann
+    target: Tilstotende_sone
+  - template: styles/SLDtranslation
+    featureName: konomiske sone
+    target: Norges_okonomiske_sone
+  - template: styles/SLDtranslation
+    featureName: tende sone
+    target: Norges_okonomiske_sone
+  - template: styles/SLDtranslation
+    featureName: sonen ved Svalbard
+    target: Fiskevernsonen_ved_Svalbard
+  - template: styles/SLDtranslation
+    featureName: sonen ved Jan Mayen
+    target: Fiskerisonen_ved_Jan_Mayen
+  - template: styles/SLDtranslation
+    featureName: Smutt
+    target: Internasjonalt_farvann
+  - template: styles/SLDtranslation
+    featureName: avgrensningslinje
+    target: avgrensningslinje_for_sokkel
+  - template: styles/SLDtranslation
+    featureName: Yttergrense
+    target: Sokkelgrense
+  - template: styles/SLDtranslation
+    featureName: nautiske mil
+    target: 200_nautiske_mil
+  - template: styles/SLDtranslation
+    featureName: 
+    target: Avtalt_avgrensningslinje
+  - template: styles/SLDtranslation
+    featureName: 
+    target: Yttergrense_for_tilstotend_sone
+  - template: styles/SLDtranslation
+    featureName: Territorialgrense
+    target: Territorialgrense
+  - template: styles/SLDtranslation
+    featureName: Grunnlinje
+    target: Grunnlinje

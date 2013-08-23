@@ -17,9 +17,7 @@ mapscript:
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-    - template: styles/SLD
-      name: maritimegrenser
-      url: http://beta.norgeskart.no/xml/NMG.xml
+    - include: styles/SLD/maritimegrenser
 
   overlays  : 
     - include: layers/topo2

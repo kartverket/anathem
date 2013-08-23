@@ -3,7 +3,11 @@
 NK.format = NK.format || {};
 NK.format.SLD = NK.format.SLD || new OpenLayers.Format.SLD();
 
+// defined translations between layer data and SLD
+NK.format.SLD.featureTranslate = {};
+
 <% vars['formatSLD']=True %>
+
 % endif
 
 % if not 'functionSetLayerStylesSLD' in vars:
@@ -63,6 +67,10 @@ NK.functions.setLayerStylesSLD = function (sld, styleName) {
 <% vars['functionSetLayerStylesSLD']=True %>
 % endif
 
+% if translations:
+  ${translations}
+% endif
+
 (function (url, name) {
   NK.styles.SLD[name] = NK.styles.SLD[name] || {};
   var s = NK.styles.SLD[name];
@@ -77,25 +85,6 @@ NK.functions.setLayerStylesSLD = function (sld, styleName) {
       fillOpacity: 1 
     })
   });
-
-  // define translations between layer data and SLD
-  NK.format.SLD.featureTranslate = {
-    'DSO':['DSO'], //graae
-    'Landareal':['med','Spitsbergen','Edge','Nordaust','Kvit','Kong Karl','Hopen','Bj&oslash;rn','Jan Mayen','Prins Karl','Svalbard'], //oransje
-    'Sjoterritorium':['territorium'], //rose
-    'Tilstotende_sone':['Indre farvann'], //lysbla
-    'Norges_okonomiske_sone':['konomiske sone','tende sone'], //darkblaa
-    'Fiskevernsonen_ved_Svalbard':['sonen ved Svalbard'], //midblaa
-    'Fiskerisonen_ved_Jan_Mayen':['sonen ved Jan Mayen'], //midblaa
-    'Internasjonalt_farvann':['Smutt'], //groenn
-    'avgrensningslinje_for_sokkel':['avgrensningslinje'], //groenn, dash
-    'Sokkelgrense':['Yttergrense'], //groenn, cont
-    '200_nautiske_mil':['nautiske mil'], //blaa, cont
-    'Avtalt_avgrensningslinje':[], //blaa, cont
-    'Yttergrense_for_tilstotend_sone':[], //blaa, tynn
-    'Territorialgrense':['Territorialgrense'], //blaa, tykk
-    'Grunnlinje':['Grunnlinje'] //blaa, tynn
-  };
 
   OpenLayers.Request.GET({
     'url': url,
