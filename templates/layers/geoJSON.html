@@ -114,17 +114,12 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 		}
 
 	    if (NK.functions && NK.functions.vector) {
-	    	vectorControls = NK.functions.vector.addVectorControls(M, layer, {'groupByFid': true});
+	    	vectorControls = NK.functions.vector.addVectorControls(M, layer, {'groupByFid': true, 'preserveIntent': 'select'});
 
 			if (vectorControls.hover) {
 				vectorControls.hover.handlers.feature.stopClick = false;
 				vectorControls.hover.handlers.feature.stopDown = false;
 				vectorControls.hover.handlers.feature.stopUp = false;
-			}
-			if (vectorControls.select) {
-				vectorControls.select.handlers.feature.stopClick = false;
-				vectorControls.select.handlers.feature.stopDown = false;
-				vectorControls.select.handlers.feature.stopUp = false;
 			}
 		}
 

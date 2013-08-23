@@ -1,3 +1,5 @@
+<%include file="/functions/vector.html"/>
+
 % if popup:
   <%include file="/functions/popup.html"/>
 % endif
@@ -11,8 +13,8 @@
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.WFS = (function (M, MP) {
-  var matrixIds,
-      i;
+	var matrixIds,
+    	i;
 
 	return function (name, id, url, featureNS, featurePrefix, featureType, options) {
 
@@ -34,32 +36,14 @@ NK.addLayerType.WFS = (function (M, MP) {
 		protocol = new OpenLayers.Protocol.WFS(protocolParameters);
 
 		layerOptions = {
-
             strategies: [new OpenLayers.Strategy.BBOX()],
 			shortid: id,
 			protocol: protocol,
 			projection: MP,
 			displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
-			visibility: (options && options.visible) ? 1 : 0
-			/*
-			,
-			filter: new OpenLayers.Filter.Logical({
-                type: OpenLayers.Filter.Logical.OR,
-                filters: [
-                    new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
-                        property: "TYPE",
-                        value: "highway"
-                    }),
-                    new OpenLayers.Filter.Comparison({
-                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
-                        property: "TYPE",
-                        value: "road"
-                    })
-                ]
-            })
-			*/
+			visibility: !!(options.visibility) ? 1 : 0
 		};
+
 
 		if (options.styleName && NK.styles && NK.styles[options.styleName]) {
 			layerOptions.styleMap = NK.styles[options.styleName];
@@ -86,20 +70,22 @@ NK.addLayerType.WFS = (function (M, MP) {
 			layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
 		}
 
-		if (options && options.visible) {
+		if (options && options.visibility) {
 			NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
 			NK.defaultVisibleLayers.push(id);
 		}
+
+		M.addLayers([layer]);
 
 	    if (options && options.popupConfig) {
 	      NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
 	    }
 
-		M.addLayers([layer]);
-
 	    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
 	        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
 	    }
+	    NK.functions.vector.addVectorHoverControls(M, layer, false);
+
 	};
 
 }(map, mapProj));
@@ -116,7 +102,7 @@ NK.addLayerType.WFS = (function (M, MP) {
 % endif
 
 % if visible:
-	options.visible = "${visible}";	
+	options.visible = ${visible};	
 % endif
 
 % if hidefromlayerswitcher:
@@ -147,6 +133,9 @@ NK.addLayerType.WFS = (function (M, MP) {
   options.version = '${version}';
 % endif
 
+% if visible:
+  options.visibility = true;
+% endif
 
   NK.addLayerType.WFS("${name}", "${id}", "${url}", "${namespace}", "${namespacePrefix}", "${featuretype}", options);	
 }());
