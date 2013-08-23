@@ -317,59 +317,6 @@ NK.init = function () {
 
   }
 
-
-
-
-
-
-
-
-/* development test TODO: remove */
-
- (function () {
-
-    var layer;
-    layer = new OpenLayers.Layer.Vector(
-      'SSR-lag',
-      {
-        strategies: [new OpenLayers.Strategy.BBOX()],
-        protocol: new OpenLayers.Protocol.WFS({
-          version: '1.1.0',
-          srsName: 'EPSG:4326',
-          geometryName: 'posisjon',
-          url: 'http://wfs.geonorge.no/skwms1/wfs.stedsnavn',
-          featureNS: 'http://skjema.geonorge.no/SOSI/fagomraadestandard/Stedsnavn/4.5',
-          featurePrefix: 'app',
-          featureType: 'Navneenhet',
-          outputFormat: 'application/gml+xml; version=3.2',
-          readFormat: new OpenLayers.Format.GML.v3()
-        }),
-        shortid: 'stedsnavn',
-        projection: mapProj,
-        displayInLayerSwitcher: 1,
-        visibility: 1
-      }
-    );
-    layer = OpenLayers.Util.extend(layer, {'layerGroup': 'testlag.utvikling'});
-    map.addLayers([layer]);
-}());
-
-
-/* end development test */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
 // end init()
 
