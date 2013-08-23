@@ -14,39 +14,76 @@ NK.functions.vector.markAllById = function (layer, intent) {
   };
 };
 
-NK.functions.vector.addVectorHoverControls = function (map, layer, grouped) {
-  var hoverCtrl = new OpenLayers.Control.SelectFeature(
-    layer,
-    {
+NK.functions.vector.defaultAllFeatures = function (layer) {
+  return function(element) {
+    // highlight all elements with the same element.feature.fid
+    var ident = layer.getFeaturesByFid(element.feature.fid);
+    $.each(ident, function (i, feature) {
+      feature.renderIntent = intent;
+      layer.drawFeature(feature);
+    });
+  };
+};
+
+NK.functions.vector.addVectorHoverControls = function (map, layer, options) {
+  var hoverCtrl,
+      selectFeatureProperties;
+
+  selectFeatureProperties = {
       hover: true,
       highlightOnly: true,
       renderIntent: "temporary"
-    }
-  );
-  if (!!grouped) {
-    hoverCtrl.eventListeners = {
+  };
+
+  if (options && options.groupByFid) {
+    selectFeatureProperties.eventListeners = {
         beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
         featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
     };
   }
-  map.addControl(hoverCtrl);
-  hoverCtrl.activate();
-};
 
-NK.functions.vector.addVectorControls = function (map, layer, grouped) {
-  var selectCtrl;
-
-  NK.functions.vector.addVectorHoverControls(map, layer, grouped);
-  
-  selectCtrl = new OpenLayers.Control.SelectFeature(
+  hoverCtrl = new OpenLayers.Control.SelectFeature(
     layer,
-    {
-      clickFeature: click
-    }
+    selectFeatureProperties
   );
 
-  map.addControl(selectCtrl);
-  selectCtrl.activate();
+
+  map.addControl(hoverCtrl);
+  hoverCtrl.activate();
+  return hoverCtrl;
+};
+
+NK.functions.vector.addVectorControls = function (map, layer, options) {
+  var controls = {},
+      selectCtrl;
+
+  controls.hover = NK.functions.vector.addVectorHoverControls(map, layer, options);
+
+  if (options && options.clickHandler) {
+    selectCtrl = new OpenLayers.Control.SelectFeature(
+      layer,
+      {
+        clickFeature: function (feature) {
+          var i,
+              j,
+              f,
+              layer = feature.layer;
+
+          for (i = 0, j = layer.features.length; i < j; i += 1) {
+            f = feature.layer.features[i];
+            f.renderIntent = "default";
+            layer.drawFeature(f);
+          }
+          NK.functions.vector.markAllById(layer, "select")({feature: feature});
+        }
+      }
+    );
+
+    map.addControl(selectCtrl);
+    selectCtrl.activate();
+    controls.select = selectCtrl;
+  }
+  return controls;
 };
 
 
