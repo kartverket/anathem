@@ -25,7 +25,8 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'style': "default",
       'shortid': id, 
       'isBaseLayer': false,
-      'transitionEffect': 'resize'
+      'transitionEffect': 'resize',
+      'buffer': 4
     };
 
     layerOptions.displayInLayerSwitcher = !!(options.displayInLayerSwitcher) ? 1 : 0;
