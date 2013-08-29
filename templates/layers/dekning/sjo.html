@@ -167,7 +167,7 @@
       if (NK.easyXDM && NK.easyXDM.socket) {
         // there is an active easyXDM socket - send feature data
         message = {
-          cmd: 'featureSelected', 
+          type: 'featureSelected', 
           feature: feature.attributes,
           layer: feature.layer.shortid
         };
