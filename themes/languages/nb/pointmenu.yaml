@@ -1,0 +1,12 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: m.a.s.l.
+    translation: moh.
+  - template: i18n/translation
+    source: Meters above sea level
+    translation: meter over havet
+  - template: i18n/translation
+    source: more information about this place
+    translation: faktaark

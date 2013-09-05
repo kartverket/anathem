@@ -9,6 +9,8 @@ controls:
   id: embed-panel
   controls:
   - template: controls/embed
+    i18n:
+    - include: languages/nb/embed
 - template: controls/container
   id: help-panel  
   controls:
