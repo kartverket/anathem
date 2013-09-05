@@ -37,4 +37,13 @@ translations:
   - template: i18n/translation
     source: Measures
     translation: M&aring;l
+  - template: i18n/translation
+    source: Cancel
+    translation: Avbryt
+  - template: i18n/translation
+    source: Add text
+    translation: Legg til tekst
+  - template: i18n/translation
+    source: Update
+    translation: Oppdat&eacute;r
 

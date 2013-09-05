@@ -47,10 +47,11 @@ NK.functions.addLabeledMarker = function (params, number) {
 
   x = parseInt(params[0], 10);
   y = parseInt(params[1], 10);
+  properties = {};
 
-  label = decodeURIComponent(params[2]);
-  properties = {label: label};
-
+  if (params.length > 2) {
+    properties.label = decodeURIComponent(params[2]);
+  }  
   if (number) {
     properties.nr = number;
   } else {
@@ -67,7 +68,7 @@ NK.functions.addLabeledMarker = function (params, number) {
     null, 
     false, 
     null, //onPopupClose
-    {x: 4, y: -65},
+    {x: 10, y: -65},
     'user-marker'
   );
 

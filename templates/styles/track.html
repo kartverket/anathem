@@ -7,7 +7,31 @@ NK.styles.track = NK.styles.track = new OpenLayers.StyleMap({
 	  fillOpacity: 0.4,
 	  fillColor: "#0058a3",
 	  graphicName: 'circle',
-	  pointRadius: 6
+	  pointRadius: 6,
+	  fontColor: "#0058a3",
+	  fontSize: "16px",
+	  fontFamily: "Arial, sans-serif",
+	  fontWeight: "normal",
+	  labelAlign: "${"${getLabelAlign}"}",
+	  label: "${"${getLabel}"}",
+	  labelXOffset: "${"${getLabelXOffset}"}",
+	  labelYOffset: 0,
+	  labelOutlineColor: "white",
+	  labelOutlineWidth: 3	  
+	},
+	{
+		context: {
+			getLabel: function (feature) {
+				return feature.attributes.label || '';
+			},
+			getLabelXOffset: function (feature) {
+				return (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') ? 10 : 0;
+			},
+			getLabelAlign: function (feature) {
+				return (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') ? 'lm' : 'cm';
+			}
+
+		}
 	}),
 	'temporary': new OpenLayers.Style({
 	  strokeWidth: 5,
@@ -22,6 +46,38 @@ NK.styles.track = NK.styles.track = new OpenLayers.StyleMap({
 			getStrokeDashStyle: function (feature) {
 				return (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') ? 'solid' : 'dash';
 			}
+		}
+	}),
+	'select': new OpenLayers.Style({
+	  strokeWidth: 6,
+	  strokeColor  : "#f058a3",
+	  fillOpacity: 0.4,
+	  fillColor: "#f058a3",
+	  pointRadius: 5,
+	  cursor: 'text',
+	  fontColor: "#0058a3",
+	  fontSize: "16px",
+	  fontFamily: "Arial, sans-serif",
+	  fontWeight: "normal",
+	  labelAlign: "${"${getLabelAlign}"}",
+	  label: "${"${getLabel}"}",
+	  labelXOffset: "${"${getLabelXOffset}"}",
+	  labelYOffset: 0,
+	  labelOutlineColor: "white",
+	  labelOutlineWidth: 3	  
+	},
+	{
+		context: {
+			getLabel: function (feature) {
+				return feature.attributes.label || '';
+			},
+			getLabelXOffset: function (feature) {
+				return (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') ? 10 : 0;
+			},
+			getLabelAlign: function (feature) {
+				return (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') ? 'lm' : 'cm';
+			}
+
 		}
 	})
 });
