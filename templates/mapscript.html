@@ -281,10 +281,10 @@ NK.init = function () {
   }
 
   var mapPosition = {x: null, y: null};
-
   if (NK.functions.setMapStateFromURL) {
     mapPosition = NK.functions.setMapStateFromURL();
   }
+
   // decide which position to use
   if (!(mapPosition.x && mapPosition.y)) {
     map.setCenter(NK.defaultCenter, NK.defaultZoom);

@@ -17,8 +17,8 @@ translations:
     source: Show height profile
     translation: Vis h&oslash;ydeprofil
   - template: i18n/translation
-    source: Known height profiles
-    translation: Kjente h&oslash;ydeprofiler
+    source: Popular routes
+    translation: Popul&aelig;re h&oslash;ydeprofiler
   - template: i18n/translation
     source: Birkebeinerrennet
     translation: Birkebeinerrennet

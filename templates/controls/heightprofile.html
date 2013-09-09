@@ -15,5 +15,9 @@ options.gpxStorageUrl = '${gpxStorageUrl}';
 	}
 % endif
 
+% if predefinedGpxFiles:
+	${predefinedGpxFiles}
+% endif
+
 var control = new OpenLayers.Control.HeightProfile(options);
 NK.functions.addControlToContext(control, context);
