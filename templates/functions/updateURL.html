@@ -25,11 +25,11 @@ NK.functions.updateHistory = function (evt) {
             if (!layer.isBaseLayer) {
               if (!layer.isUrlDataLayer) {
                 if (layer.visibility) {
-                  if ($.inArray(layer.shortid, NK.initLayers) === -1) {
-                    uid += "/+"+layer.shortid;
+                  if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
+                    uid += "/+" + layer.shortid;
                   }
                 } else {
-                  if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof(layer.shortid) != 'undefined') {
+                  if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
                     uid += "/-" + layer.shortid;
                   }
                 }
