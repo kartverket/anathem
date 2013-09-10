@@ -14,6 +14,9 @@ translations:
     source: Draw polygon
     translation: Tegn areal
   - template: i18n/translation
+    source: Draw label
+    translation: Legg tekst til elementer i tegningen
+  - template: i18n/translation
     source: Undo
     translation: Angre 
   - template: i18n/translation
