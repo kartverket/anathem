@@ -1,0 +1,21 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: 'Make your own map'
+    translation: 'Lag ditt eget kart'
+  - template: i18n/translation
+    source: 'Buy map data:'
+    translation: 'Kj&oslash;p kartgrunnlag:'
+  - template: i18n/translation
+    source: 'Map data are geographic data in vector format.'
+    translation: 'Kartdata er geografiske data i vektorformat som benyttes til kartframstilling, som bakgrunnskart for andre tema og som koblingsdata mot annen informasjon.'
+  - template: i18n/translation
+    source: 'Free map data:'
+    translation: 'Gratis kartgrunnlag:'
+  - template: i18n/translation
+    source: 'Simple illustration maps of Norway, in several different formats. These maps can be used as they are, or easily be transformed to suit specific needs.'
+    translation: 'Enkle illustrasjonskart over Norge i flere ulike formater. De kan brukes slik de er, eller lett tilpasses akkurat det behovet du har.'
+
+
+
