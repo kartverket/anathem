@@ -10,3 +10,12 @@ translations:
   - template: i18n/translation
     source: more information about this place
     translation: faktaark
+  - template: i18n/translation
+    source: 'Coordinate system:'
+    translation: 'Koordinatsystem:'
+  - template: i18n/translation
+    source: 'Northing / latitude:'
+    translation: 'Nord / breddegrader:'
+  - template: i18n/translation
+    source: 'Easting / longitude:'
+    translation: '&Oslash;st / lengdegrader'
