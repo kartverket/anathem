@@ -2,6 +2,9 @@ template: i18n/language
 language: nb
 translations:
   - template: i18n/translation
+    source: Point menu
+    translation: Punktmeny
+  - template: i18n/translation
     source: m.a.s.l.
     translation: moh.
   - template: i18n/translation

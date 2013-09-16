@@ -5,6 +5,9 @@ translations:
     source: Drawing
     translation: Tegning
   - template: i18n/translation
+    source: Drawing tool
+    translation: Tegneverkt\u00F8y
+  - template: i18n/translation
     source: Draw point
     translation: Tegn punkt
   - template: i18n/translation

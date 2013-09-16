@@ -2,8 +2,11 @@ template: i18n/language
 language: nb
 translations:
   - template: i18n/translation
+    source: Height profile
+    translation: H\u00F8ydeprofil
+  - template: i18n/translation
     source: Make a height profile
-    translation: Lage h&oslash;ydeprofil
+    translation: Lage h\u00F8ydeprofil
   - template: i18n/translation
     source: Click in the map to draw a line.
     translation: Klikk p&aring; steder i kartet for &aring; tegne opp en linje.
@@ -40,4 +43,15 @@ translations:
   - template: i18n/translation
     source: Enter WKT geometry data
     translation: Lim inn et WKT LINESTRING-uttrykk
-
+  - template: i18n/translation
+    source: 'Generating height profile visualization'
+    translation: 'Genererer h&oslash;ydeprofil-visualisering'
+  - template: i18n/translation
+    source: 'Your height profile'
+    translation: 'Din h&oslash;ydeprofil'
+  - template: i18n/translation
+    source: 'Close'
+    translation: 'Lukk'
+  - template: i18n/translation
+    source: 'Open print friendly'
+    translation: '&Aring;pne utskriftsvennlig'
