@@ -92,7 +92,7 @@ NK.functions.updateToken = function (request) {
 };
 
 NK.functions.pauseTokenUpdate = function () {
-  var popup, innerWrapper, heading, message, timeRemaining;
+  var popup, innerWrapper, heading, message, timeRemaining, statusLink;
 
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
@@ -117,6 +117,12 @@ NK.functions.pauseTokenUpdate = function () {
     message.appendChild(timeRemaining);
     message.appendChild(NK.tokenError.pauseTimeRemainingText);
     innerWrapper.appendChild(message);
+
+    statusLink = document.createElement('a');
+    statusLink.setAttribute('href', 'http://status.kartverket.no');
+    statusLink.setAttribute('class', 'external-link');
+    statusLink.innerHTML = 'Se feilmeldinger p&aring; status.kartverket.no';
+    innerWrapper.appendChild(statusLink);
 
     popup.appendChild(innerWrapper);
     document.body.appendChild(popup);
