@@ -95,24 +95,29 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
     case 'geojson':
       NK.functions.addGeoJsonLayer(url, epsgCode);
       break;
+    case 'drawing':
+      NK.functions.addGeoJsonLayer(url, epsgCode, {'isDrawing': true});
+      break;
   }
 
 };
 
-NK.functions.addGeoJsonLayer = function (url, epsgCode) {
+NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   var mapProjection,
       formatOptions,
       geoJSONFormat,
       layerOptions,
       layer,
-      correctEpsgCode;
+      correctEpsgCode,
+      layerExtensions;
 
   formatOptions = {
     'internalProjection': map.getProjection(),
     'externalProjection': map.getProjection()
   };
 
-  // set external projection, if provided  
+  /* set external projection, if provided  */
+
   if (epsgCode && NK.projections[epsgCode]) {
     formatOptions.externalProjection = NK.projections[epsgCode];
     correctEpsgCode = epsgCode;
@@ -129,7 +134,7 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode) {
       'format': geoJSONFormat
     }),
     strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
-    styleMap: NK.styles.omriss,
+    styleMap: NK.styles.track,
     projection: mapProjection,
     displayInLayerSwitcher: false,
     visibility: true
@@ -139,11 +144,18 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode) {
     'urlDataLayer_' + NK.functions.urlDataLayerCounter++,
     layerOptions
   );
-  layer = OpenLayers.Util.extend(layer, {
+
+  layerExtensions = {
     'isUrlDataLayer': true,
     'epsgCode': correctEpsgCode,
     'url': url
-  });
+  };
+
+  if (extensionProperties) {
+    layerExtensions = OpenLayers.Util.extend(layerExtensions, extensionProperties); 
+  }
+
+  layer = OpenLayers.Util.extend(layer, layerExtensions);
 
   map.addLayers([layer]);
 };

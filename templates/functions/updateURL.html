@@ -34,7 +34,11 @@ NK.functions.updateHistory = function (evt) {
                   }
                 }
               } else {
-                uid += '/l/geojson/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                if (layer.isDrawing) {
+                  uid += '/l/drawing/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                } else {
+                  uid += '/l/geojson/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                }
               }
             }
           }
