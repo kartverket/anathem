@@ -121,7 +121,13 @@ NK.functions.pauseTokenUpdate = function () {
     statusLink = document.createElement('a');
     statusLink.setAttribute('href', 'http://status.kartverket.no');
     statusLink.setAttribute('class', 'external-link');
-    statusLink.innerHTML = 'Se feilmeldinger p&aring; status.kartverket.no';
+    statusLink.innerHTML = 'Se driftsstatus';
+    OpenLayers.Event.observe(statusLink, 'click', function (evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      window.open(evt.target.href, '_blank'); 
+      return false;
+    }, true);
     innerWrapper.appendChild(statusLink);
 
     popup.appendChild(innerWrapper);
