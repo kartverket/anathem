@@ -1,8 +1,8 @@
 <%inherit file="/controls/controlcontext.html" />
 
-%if group:
+% if group:
 options.layerGroup = "${group}";
-%endif
+% endif
 
 var control = new OpenLayers.Control.VectorLayerSwitcher(options);
 NK.functions.addControlToContext(control, context);

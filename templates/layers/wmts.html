@@ -1,4 +1,4 @@
-%if not 'layerTypeWMTS' in vars:
+% if not 'layerTypeWMTS' in vars:
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.WMTS = (function (M, MP) {
@@ -25,7 +25,8 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'style': "default",
       'shortid': id, 
       'isBaseLayer': false,
-      'transitionEffect': 'resize'
+      'transitionEffect': 'resize',
+      'buffer': 4
     };
 
     layerOptions.displayInLayerSwitcher = !!(options.displayInLayerSwitcher) ? 1 : 0;
@@ -62,7 +63,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
 }(map, mapProj));
 
 <% vars['layerTypeWMTS']=True %>
-%endif
+% endif
 
 (function () {
   var url, 

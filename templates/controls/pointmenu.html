@@ -1,3 +1,6 @@
 <%inherit file="/controls/controlcontext.html" />
+% if url:
+        options.url = "${url}";
+% endif
 
 NK.functions.addControlToContext(new OpenLayers.Control.PointMenu(options), context);

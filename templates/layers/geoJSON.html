@@ -1,3 +1,5 @@
+<%include file="/functions/vector.html"/>
+
 % if popup:
   <%include file="/functions/popup.html"/>
 % endif
@@ -6,14 +8,17 @@
   <%include file="/strategies/cluster.html"/>
 %endif
 
-%if not 'formatGeoJSON' in vars:
+% if not 'formatGeoJSON' in vars:
+
 NK.format = NK.format || {};
 NK.format.geoJSON = NK.format.geoJSON || new OpenLayers.Format.GeoJSON();
+
 <% vars['formatGeoJSON']=True %>
-%endif
+% endif
 
 
-%if not 'strategyTFS' in vars:
+% if not 'strategyTFS' in vars:
+
 NK.strategy = NK.strategy || {};
 NK.strategy.TFS = NK.strategy.TFS || new OpenLayers.Strategy.TFS({
   resFactor: 1, 
@@ -21,10 +26,11 @@ NK.strategy.TFS = NK.strategy.TFS || new OpenLayers.Strategy.TFS({
   mapBounds: mapBounds,
   format: NK.format.geoJSON
 });
-<% vars['strategyTFS']=True %>
-%endif
 
-%if not 'layerTypeGeoJSON' in vars:
+<% vars['strategyTFS']=True %>
+% endif
+
+% if not 'layerTypeGeoJSON' in vars:
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.geoJSON = (function (M, MP) {
@@ -43,7 +49,8 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 		var protocolParameters,
 			protocol,
 			layer,
-			layerOptions;
+			layerOptions,
+			vectorControls;
 
 		protocolParameters = {
 			last: false,
@@ -62,43 +69,61 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 			visibility: (options && options.visible) ? 1 : 0
 		};
 
-		if (options.styleName && NK.styles && NK.styles[options.styleName]) {
-			layerOptions.styleMap = NK.styles[options.styleName];
-		}
+		if (options) {
+			if (options.styleName && NK.styles && NK.styles[options.styleName]) {
+				layerOptions.styleMap = NK.styles[options.styleName];
+			}
 
-		if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
-			layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD];
-		}
+			if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+				layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD].styleMap;
+			}
 
-	    if (options.cluster && NK.strategies.cluster) {
-	      layerOptions.strategies.push(NK.strategies.cluster);
-	    }
+		    if (options.cluster && NK.strategies.cluster) {
+		      layerOptions.strategies.push(NK.strategies.cluster);
+		    }
+		}
 
 		layer = new OpenLayers.Layer.Vector(
 			name,
 			layerOptions
 		);
 
-	    if (options.cluster) {
-	      	NK.styles.addClusteringRule(layer.styleMap);
-	    }
+		if (options) {
+		    if (options.cluster) {
+		      	NK.styles.addClusteringRule(layer.styleMap);
+		    }
 
-		if (options && options.layerGroup) {
-			layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+			if (options.layerGroup) {
+				layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+			}
+
+			if (options.visible) {
+				NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+				NK.defaultVisibleLayers.push(id);
+			}
+			if (options.layerOpacity) {
+				layer.setOpacity(options.layerOpacity);
+			}
+
 		}
-
-		if (options && options.visible) {
-			NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
-			NK.defaultVisibleLayers.push(id);
-		}
-
-	    if (options && options.popupConfig) {
-	      NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
-	    }
 
 		M.addLayers([layer]);
 
-	    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+		if (options && options.popupConfig) {
+			NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
+		}
+
+	    if (NK.functions && NK.functions.vector) {
+	    	vectorControls = NK.functions.vector.addVectorControls(M, layer, {'groupByFid': true, 'preserveIntent': 'select'});
+
+			if (vectorControls.hover) {
+				vectorControls.hover.handlers.feature.stopClick = false;
+				vectorControls.hover.handlers.feature.stopDown = false;
+				vectorControls.hover.handlers.feature.stopUp = false;
+			}
+		}
+
+	    if (options && options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
 	        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
 	    }
 	};
@@ -106,21 +131,21 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 }(map, mapProj));
 
 <% vars['layerTypeGeoJSON']=True %>
-%endif
+% endif
 
 
 (function() {
 	var options = {};
 
-%if layerGroup:
+% if layerGroup:
 	options.layerGroup = "${layerGroup}";	
 % endif
 
-%if visible:
+% if visible:
 	options.visible = "${visible}";	
 % endif
 
-%if hidefromlayerswitcher:
+% if hidefromlayerswitcher:
 	options.hideFromLayerSwitcher = "${hidefromlayerswitcher}";	
 % endif
 
@@ -136,9 +161,16 @@ NK.addLayerType.geoJSON = (function (M, MP) {
 	options.styleNameSLD = '${styleNameSLD}';
 % endif
 
-%if popup:
+% if popup:
   options.popupConfig = ${popup};
 % endif
 
+% if layerOpacity:
+	options.layerOpacity = ${layerOpacity};
+% endif
+
+% if name:
     NK.addLayerType.geoJSON("${name}", "${id}", "${url}", options);	
+% endif
+
 }());

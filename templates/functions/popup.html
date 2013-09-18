@@ -1,28 +1,32 @@
-%if not 'popupFunctions' in vars:  
+% if not 'popupFunctions' in vars:  
 
 NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
 
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
-    var a  = feature.attributes, i, l;
-      var markup = '<article>';
-      if (conf.heading && a[conf.heading]) {
-        markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
-      }
-      if (conf.data) {
-        for (i = 0, l = conf.data.length; i < l; i += 1) {
-          if (conf.data[i].attribute && a[conf.data[i].attribute]) {
-            markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + '</p>';
-          }
+    var a = feature.attributes, 
+        i,
+        l,
+        markup = '<article>';
+
+    if (conf.heading && a[conf.heading]) {
+      markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
+    }
+    if (conf.data) {
+      for (i = 0, l = conf.data.length; i < l; i += 1) {
+        if (conf.data[i].attribute && a[conf.data[i].attribute]) {
+          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + '</p>';
         }
       }
-      markup += '</article>';
-      return markup;
+    }
+    markup += '</article>';
+    return markup;
   };
 };
 
-NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction) {
+NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction, options) {
+  var featureSelector = options.selectControl;
   return function (feature) {
     var popup, 
         message, 
@@ -30,7 +34,10 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
         featurePosition,
         popupPosition,
         offset = {},
-        xOffset, yOffset;
+        sameFidFeatures,
+        xOffset,
+        yOffset,
+        i, j;
 
     if (feature.cluster) {
       return false;
@@ -45,40 +52,58 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
         layer: feature.layer.shortid
       };
       NK.easyXDM.socket.postMessage(JSON.stringify(message));
-    } else {
-      // find out where to position the popup
+    }
 
+    if (feature.fid && feature.layer) {
+
+      sameFidFeatures = feature.layer.getFeaturesByFid(feature.fid);
+      for (i = 0, j = sameFidFeatures.length; i < j; i += 1) {
+        feature.layer.selectedFeatures.push(sameFidFeatures[i]);
+
+        this.highlight.apply(this, [sameFidFeatures[i]]);
+      } 
+    }
+
+    // find out where to position the popup
+    if (options && options.featureCentroidPosition) {
       featurePosition = feature.geometry.getBounds().getCenterLonLat();
+
       if (featurePosition) {
         xOffset = feature.layer.styleMap.styles[feature.renderIntent].defaultStyle.graphicXOffset || feature.layer.styleMap.styles['default'].defaultStyle.graphicXOffset || 0;
         xOffset += (feature.layer.styleMap.styles[feature.renderIntent].defaultStyle.graphicWidth || feature.layer.styleMap.styles['default'].defaultStyle.graphicWidth) / 2;
         yOffset = feature.layer.styleMap.styles[feature.renderIntent].defaultStyle.graphicYOffset || feature.layer.styleMap.styles['default'].defaultStyle.graphicYOffset || 0;
-          if (xOffset || yOffset) {
-            offset.x = -5;
-            offset.y = -18;
-            offset.addX = xOffset;
-            offset.addY = yOffset;
-          }
+
+        if (xOffset || yOffset) {
+          offset.x = -5;
+          offset.y = -18;
+          offset.addX = xOffset;
+          offset.addY = yOffset;
+        }
       }
-      mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
-      popupPosition = featurePosition || mousePosition;
-
-      M.panTo(popupPosition);
-      popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
-                               popupPosition,
-                               null,
-                               markupGeneratorFunction(feature),
-                               null, 
-                               true, 
-                               popupCloseFunction,
-                               offset,
-                               'selected-feature-popup');
-
-      popup.autoSize = true;
-      feature.popup = popup;
-      popup.feature = feature;
-      M.addPopup(popup);
     }
+
+    mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
+    popupPosition = featurePosition || mousePosition;
+
+    M.panTo(popupPosition);
+
+    popup = new OpenLayers.Popup.FramedSideAnchored(
+      "nk-selected-coverage-map", 
+      popupPosition,
+      null,
+      markupGeneratorFunction(feature),
+      null, 
+      true, 
+      popupCloseFunction,
+      offset,
+      'selected-feature-popup'
+    );
+
+    popup.autoSize = true;
+    feature.popup = popup;
+    popup.feature = feature;
+    M.addPopup(popup);
+  
   };
 };
 
@@ -98,7 +123,7 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
     }
   };
 
-  onFeatureSelect = NK.functions.popup.getFeatureSelector(M, generatePopupMarkup, onPopupClose);
+  onFeatureSelect = NK.functions.popup.getFeatureSelector(M, generatePopupMarkup, onPopupClose, popupConfig);
 
   onFeatureUnselect = function (feature) {
       if (feature.popup) {
@@ -110,10 +135,11 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   };
 
   selectControl = new OpenLayers.Control.SelectFeature(layer, {
-      onSelect: onFeatureSelect,
       onUnselect: onFeatureUnselect,
+      highlightOnly: true,
       autoActivate: true
   });
+  selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl);
 
   M.addControl(selectControl);
 

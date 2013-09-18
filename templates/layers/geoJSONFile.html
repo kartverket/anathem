@@ -1,7 +1,8 @@
+<%include file="/functions/vector.html"/>
 
 % if cluster:
   <%include file="/strategies/cluster.html"/>
-%endif
+% endif
 
 % if popup:
   <%include file="/functions/popup.html"/>
@@ -41,36 +42,38 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
       displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
       visibility: (options && options.visible) ? 1 : 0
     };
+    if (options) {
 
-    if (options.styleName && NK.styles && NK.styles[options.styleName]) {
-      layerOptions.styleMap = NK.styles[options.styleName];
-    }
+      if (options.styleName && NK.styles && NK.styles[options.styleName]) {
+        layerOptions.styleMap = NK.styles[options.styleName];
+      }
 
-    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
-      layerOptions.styleMap = NK.styles.SLD[options.styleName];
-    }
+      if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+        layerOptions.styleMap = NK.styles.SLD[options.styleName];
+      }
 
-    if (options.label) {
-      var tempSM = layerOptions.styleMap;
-      layerOptions.styleMap = new OpenLayers.StyleMap(
-        {
-          'default': tempSM.styles['default'].clone(),
-          'select': tempSM.styles.select, 
-          'temporary': tempSM.styles.temporary,
-          'delete': tempSM.styles['delete']
-        }
-      );
-      layerOptions.styleMap.styles['default'].context = {
-        'getLabel': function (feature) {
-          return feature.attributes[options.label];
-        }
-      };
+      if (options.label) {
+        var tempSM = layerOptions.styleMap;
+        layerOptions.styleMap = new OpenLayers.StyleMap(
+          {
+            'default': tempSM.styles['default'].clone(),
+            'select': tempSM.styles.select, 
+            'temporary': tempSM.styles.temporary,
+            'delete': tempSM.styles['delete']
+          }
+        );
+        layerOptions.styleMap.styles['default'].context = {
+          'getLabel': function (feature) {
+            return feature.attributes[options.label];
+          }
+        };
 
-      layerOptions.styleMap.styles['default'].defaultStyle.label = '${'${getLabel}'}';
-    }
+        layerOptions.styleMap.styles['default'].defaultStyle.label = '${'${getLabel}'}';
+      }
 
-    if (options.cluster && NK.strategies.cluster) {
-      layerOptions.strategies.push(NK.strategies.cluster);
+      if (options.cluster && NK.strategies.cluster) {
+        layerOptions.strategies.push(NK.strategies.cluster);
+      }
     }
 
     layer = new OpenLayers.Layer.Vector(
@@ -78,33 +81,35 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
       layerOptions
     );
 
-    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
-      NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
-    }
+    if (options) {
+      if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
+      }
 
-    if (options.cluster) {
-      NK.styles.addClusteringRule(layer.styleMap);
-    }
+      if (options.cluster) {
+        NK.styles.addClusteringRule(layer.styleMap);
+      }
 
-    if (options && options.layerGroup) {
-      layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
-    }
+      if (options && options.layerGroup) {
+        layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+      }
 
-    if (options && options.visible) {
-      NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
-      NK.defaultVisibleLayers.push(id);
-    }
+      if (options && options.visible) {
+        NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+        NK.defaultVisibleLayers.push(id);
+      }
 
-    if (options && options.popupConfig) {
-      NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
+      if (options && options.popupConfig) {
+        NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
+      }
     }
-
+    
     M.addLayer(layer);
   };
 }(map, mapProj, proj));
 
 <% vars['layerTypeGeoJSON']=True %>
-%endif
+% endif
 
 (function () {
   var options = {};
@@ -113,11 +118,11 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
   options.layerGroup = '${layerGroup}';
 % endif
 
-%if visible:
+% if visible:
   options.visible = "${visible}"; 
 % endif
 
-%if hidefromlayerswitcher:
+% if hidefromlayerswitcher:
   options.hideFromLayerSwitcher = "${hidefromlayerswitcher}"; 
 % endif
 
@@ -137,11 +142,11 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
   options.styleNameSLD = '${styleNameSLD}';
 % endif
 
-%if epsgCode:
+% if epsgCode:
   options.epsgCode = '${epsgCode}';
 % endif
 
-%if popup:
+% if popup:
   options.popupConfig = ${popup};
 % endif
 

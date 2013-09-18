@@ -38,7 +38,7 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
 
     layer.addFeatures(features);
 
-%if detailedLayer:
+% if detailedLayer:
     for (i = 0, j = M.layers.length; i < j; i += 1) {
       if (M.layers[i].shortid && M.layers[i].shortid === '${detailedLayer}') {
         detailedLayer = M.layers[i].clone();

@@ -21,13 +21,9 @@ NK.tokenService = "http://beta.norgeskart.no/ws/gkt.py";
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 
-OpenLayers.Util.extend(OpenLayers.Lang.nb, {
-  'Server error': 'Feil med tjenesten',
-  'An error has occured.': 'Ett eller flere kartlag vises ikke som de skal.',
-  'Reloading maps in ': 'Pr&oslash;ver &aring; laste kartlagene p&aring; nytt om ',
-  ' minutes.': ' minutter.',
-  ' minute.': ' minutt.'
-});
+% if i18n:
+  ${i18n}
+% endif
 
 NK.tokenError = {
   PAUSE_MINUTES: 2,
@@ -96,7 +92,7 @@ NK.functions.updateToken = function (request) {
 };
 
 NK.functions.pauseTokenUpdate = function () {
-  var popup, innerWrapper, heading, message, timeRemaining;
+  var popup, innerWrapper, heading, message, timeRemaining, statusLink;
 
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
@@ -113,14 +109,26 @@ NK.functions.pauseTokenUpdate = function () {
     innerWrapper.appendChild(message);
 
     message = document.createElement('p');
-    message.innerHTML = OpenLayers.Lang.translate('Reloading maps in ');
+    message.innerHTML = OpenLayers.Lang.translate('Reloading maps in') + ' ';
     timeRemaining = document.createElement('span');
     timeRemaining.innerHTML = parseInt(NK.tokenError.PAUSE_MINUTES, 10);
     NK.tokenError.pauseTimeRemainingElement = timeRemaining;
-    NK.tokenError.pauseTimeRemainingText = document.createTextNode(OpenLayers.Lang.translate(NK.tokenError.PAUSE_MINUTES > 1 ? ' minutes.' : ' minute.'));
+    NK.tokenError.pauseTimeRemainingText = document.createTextNode(' ' + OpenLayers.Lang.translate(NK.tokenError.PAUSE_MINUTES > 1 ? 'minutes.' : 'minute.'));
     message.appendChild(timeRemaining);
     message.appendChild(NK.tokenError.pauseTimeRemainingText);
     innerWrapper.appendChild(message);
+
+    statusLink = document.createElement('a');
+    statusLink.setAttribute('href', 'http://status.kartverket.no');
+    statusLink.setAttribute('class', 'external-link');
+    statusLink.innerHTML = 'Se driftsstatus';
+    OpenLayers.Event.observe(statusLink, 'click', function (evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      window.open(evt.target.href, '_blank'); 
+      return false;
+    }, true);
+    innerWrapper.appendChild(statusLink);
 
     popup.appendChild(innerWrapper);
     document.body.appendChild(popup);
@@ -139,10 +147,10 @@ NK.functions.pauseTokenUpdate = function () {
         NK.tokenError.pauseTimeRemainingElement.innerHTML = timeLeft.toString();
         if (timeLeft === 1) {
           if (NK.tokenError.pauseTimeRemainingText.textContent) {
-            NK.tokenError.pauseTimeRemainingText.textContent = OpenLayers.Lang.translate(' minute.');
+            NK.tokenError.pauseTimeRemainingText.textContent = ' ' + OpenLayers.Lang.translate('minute.');
           } else {
             // old IE...
-            NK.tokenError.pauseTimeRemainingText.innerText = OpenLayers.Lang.translate(' minute.');
+            NK.tokenError.pauseTimeRemainingText.innerText = ' ' + OpenLayers.Lang.translate('minute.');
           }
         }
       }
@@ -157,9 +165,13 @@ NK.functions.getNewToken = function () {
   }
 };
 
-%if functions :
+% if functions :
   ${functions}
 % endif
+
+  % if internationalization:
+    ${internationalization}
+  % endif
 
 NK.init = function () {
 
@@ -182,7 +194,7 @@ NK.init = function () {
   Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
   Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
 
-  proj = {  
+  NK.projections = proj = {  
     //pregenerated projection objects
     "32633": new OpenLayers.Projection('EPSG:32633'),
     "32632": new OpenLayers.Projection('EPSG:32632'),
@@ -196,8 +208,11 @@ NK.init = function () {
   mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
-  OpenLayers.Lang.setCode('nb');
   OpenLayers.ImgPath = 'img/';
+
+% if language:
+  OpenLayers.Lang.setCode('${language}');
+% endif
 
   // extract URL parameters into dictionary
   prmstr = window.location.search.substr(1);
@@ -278,10 +293,10 @@ NK.init = function () {
   }
 
   var mapPosition = {x: null, y: null};
-
   if (NK.functions.setMapStateFromURL) {
     mapPosition = NK.functions.setMapStateFromURL();
   }
+
   // decide which position to use
   if (!(mapPosition.x && mapPosition.y)) {
     map.setCenter(NK.defaultCenter, NK.defaultZoom);
@@ -307,12 +322,13 @@ NK.init = function () {
       }
 
       NK.functions.postMessage({
-        "event": "mapInitialized",
+        "type": "mapInitialized",
         "vectorLayers": vectorLayerData
       });
     }());
 
   }
+
 };
 // end init()
 

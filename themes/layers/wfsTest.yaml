@@ -1,0 +1,11 @@
+template: layers/wfs
+name: Riks&shy;grense
+id: riksgrense
+layerGroup: testlag.utvikling
+url: http://beta.norgeskart.no/ws/wfs.abas.py
+#url: http://openwms.statkart.no/skwms1/wms.abas
+featuretype: Riksgrense
+namespace: 
+namespacePrefix: 
+version: 1.1.0
+visible: false

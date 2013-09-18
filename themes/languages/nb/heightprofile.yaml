@@ -1,0 +1,57 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Height profile
+    translation: H\u00F8ydeprofil
+  - template: i18n/translation
+    source: Make a height profile
+    translation: Lage h\u00F8ydeprofil
+  - template: i18n/translation
+    source: Click in the map to draw a line.
+    translation: Klikk p&aring; steder i kartet for &aring; tegne opp en linje.
+  - template: i18n/translation
+    source: Double click to finish
+    translation: Dobbeltklikk for &aring; avslutte
+  - template: i18n/translation
+    source: Use some other format
+    translation: Bruk et annet format
+  - template: i18n/translation
+    source: Show height profile
+    translation: Vis h&oslash;ydeprofil
+  - template: i18n/translation
+    source: Popular routes
+    translation: Popul&aelig;re h&oslash;ydeprofiler
+  - template: i18n/translation
+    source: Birkebeinerrennet
+    translation: Birkebeinerrennet
+  - template: i18n/translation
+    source: Besseggen
+    translation: Besseggen
+  - template: i18n/translation
+    source: Norseman
+    translation: Norseman
+  - template: i18n/translation
+    source: An error occured.
+    translation: Det har skjedd en feil.
+  - template: i18n/translation
+    source: Unable to read track from file.
+    translation: Filen inneholder ingen GPX-data.
+  - template: i18n/translation
+    source: Upload GPX file
+    translation: Last opp en GPX-fil
+  - template: i18n/translation
+    source: Enter WKT geometry data
+    translation: Lim inn et WKT LINESTRING-uttrykk
+  - template: i18n/translation
+    source: 'Generating height profile visualization'
+    translation: 'Genererer h&oslash;ydeprofil-visualisering'
+  - template: i18n/translation
+    source: 'Your height profile'
+    translation: 'Din h&oslash;ydeprofil'
+  - template: i18n/translation
+    source: 'Close'
+    translation: 'Lukk'
+  - template: i18n/translation
+    source: 'Open print friendly'
+    translation: '&Aring;pne utskriftsvennlig'

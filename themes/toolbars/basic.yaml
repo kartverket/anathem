@@ -10,18 +10,21 @@ controls:
   controls:
   - template: controls/zoom
   - template: controls/zoomtoselection
-- template: controls/container
-  id: point-panel
-  controls:
-    - template: controls/pointmenu
-- template: controls/container
-  id: magnifier-panel
-  controls:
-    - template: controls/magnifier
+#- template: controls/container
+#  id: magnifier-panel
+#  controls:
+#    - template: controls/magnifier
 - template: controls/container
   id: pan-panel
   controls:
     - template: controls/pan
+- template: controls/container
+  id: point-panel
+  controls:
+    - template: controls/pointmenu
+      url: http://beta.norgeskart.no/ws/trans.py
+      i18n:
+      - include: languages/nb/pointmenu
 - template: controls/container
   id: layerselector-panel
   controls:
