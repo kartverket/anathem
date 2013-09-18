@@ -8,10 +8,10 @@
 % endif
 
 
-%if not 'layerTypeGeoJSONfile' in vars:
+%if not 'layerTypeGeoJSONfileMC' in vars:
 NK.addLayerType = NK.addLayerType || {};
 
-NK.addLayerType.geoJSONFile = (function (M, MP, P) {
+NK.addLayerType.geoJSONFileMC = (function (M, MP, P) {
   return function (id, name, url, options) {
     var layer,
         layerOptions,
@@ -146,5 +146,5 @@ NK.addLayerType.geoJSONFile = (function (M, MP, P) {
   options.popupConfig = ${popup};
 % endif
 
-  NK.addLayerType.geoJSONFile('${id}', '${name}', '${url}', options);
+  NK.addLayerType.geoJSONFileMC('${id}', '${name}', '${url}', options);
 }());

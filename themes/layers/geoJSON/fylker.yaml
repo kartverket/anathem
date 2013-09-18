@@ -1,10 +1,10 @@
-template: layers/geoJSONFile
-url: /json/norge/kommuner.json
+template: layers/geoJSONFileMC
+url: /json/norge/fylker.json
 name: Fylker
 id: fylker
 epsgCode: 32633 
 styleName: omrissFylker 
-layerGroup: testlag.utvikling
+layerGroup: nedlasting 
 popup:
   template: popup/popup
   headingAttribute: "n"
