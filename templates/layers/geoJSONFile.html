@@ -8,6 +8,10 @@
   <%include file="/functions/popup.html"/>
 % endif
 
+% if multiselect:
+  <%include file="/functions/multiselect.html"/>
+% endif
+
 %if not 'layerTypeGeoJSONfile' in vars:
 NK.addLayerType = NK.addLayerType || {};
 
