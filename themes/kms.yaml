@@ -18,6 +18,8 @@ mapscript  :
     - include: layers/sjo_hovedkart2
 
     - include: layers/geoJSON/fylker
+    - include: layers/geoJSON/fylker-utm35
+    - include: layers/geoJSON/fylker-utm32
     - include: layers/geoJSON/kommuner
     - include: layers/geoJSON/kommuner-utm35
     - include: layers/geoJSON/kommuner-utm32
