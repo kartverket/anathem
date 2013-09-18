@@ -1,0 +1,11 @@
+template: layers/geoJSONFileMC
+url: /json/dekning/dtm/utm33-100km.geojson
+name: DTM Dekning UTM33 100km grid
+id: dtm-dekning-utm33-100km
+epsgCode: 32633 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "n"
+

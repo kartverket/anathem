@@ -1,0 +1,11 @@
+template: layers/geoJSONFileMC
+url: /json/dekning/dtm/utm35.geojson
+name: DTM Dekning UTM35
+id: dtm-dekning-utm35
+epsgCode: 32633 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "ID"
+

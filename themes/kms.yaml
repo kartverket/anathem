@@ -18,6 +18,13 @@ mapscript  :
     - include: layers/sjo_hovedkart2
 
     - include: layers/geoJSON/fylker
+    - include: layers/geoJSON/kommuner
+    - include: layers/geoJSON/kommuner-utm35
+    - include: layers/geoJSON/kommuner-utm32
+    - include: layers/geoJSON/dtm-utm32
+    - include: layers/geoJSON/dtm-utm33
+    - include: layers/geoJSON/dtm-utm33-100km
+    - include: layers/geoJSON/dtm-utm35
     
   center    : 
     template: center/besseggen
