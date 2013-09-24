@@ -26,9 +26,6 @@ translations:
     source: 'Content providers: Kartverket, Geovekst, municipalities and Norge digitalt partners.'
     translation: 'Innholdsleverand&oslash;rer: Kartverket, Geovekst, kommuner og Norge digitalt-parter.'
   - template: i18n/translation
-    source: 'To ensure a good user experience, we recommend you provide descriptions for your map. As a result, the embedded map will cater to people using assistive technology.'
-    translation: 'For &aring; skape en god brukeropplevelse anbefaler vi at det legges inn beskrivelse. Kartutsnittet vil da bli tilrettelagt for brukere med spesielle behov.'
-    template: i18n/translation
     source: Previous
     translation: Forrige
   - template: i18n/translation
@@ -61,6 +58,12 @@ translations:
   - template: i18n/translation
     source: Click in the map to add markers with descriptions.
     translation: Klikk p&aring; steder i kartet for &aring; sette inn mark&oslash;rer med forklaring. Legg til flere punkter ved &aring; klikke i kartet.
+  - template: i18n/translation
+    source: To ensure a good user experience, we recommend you provide descriptions for your map. As a result, the embedded map will cater to people using assistive technology.
+    translation: For &aring; skape en god brukeropplevelse anbefaler vi at det legges inn beskrivelse. Kartutsnittet vil da bli tilrettelagt for brukere med spesielle behov.
+  - template: i18n/translation
+    source: Hold down left mouse button and draw desired embed area on the map. You may later adjust the size of the area with the buttons that appear on the corners of the drawn rectangle.
+    translation: Tegn &oslash;nsket utsnitt og st&oslash;rrelse i kartet ved &aring; holde nede venstre museknapp. Du kan justere st&oslash;rrelsen ved &aring; dra i hj&oslash;rnene p&aring; kartutsnittet.
   - template: i18n/translation
     source: Map description
     translation: Beskriv kartutsnitt
@@ -95,8 +98,8 @@ translations:
     source: 'Points:'
     translation: 'Punkter:'
   - template: i18n/translation
-    source: Generated code
-    translation: Generert kode
+    source: Select code and copy
+    translation: Merk kode og klipp ut
   - template: i18n/translation
     source: 'step <span>${stepCount}</span> of '
     translation: 'trinn <span>${stepCount}</span> av '
