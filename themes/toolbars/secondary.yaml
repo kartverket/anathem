@@ -17,20 +17,14 @@ controls:
     trackStyleName: track
     predefinedGpxFiles:
     - template: gpx/gpxFile
-      name: Trondheim - Oslo
-      url: http://seierstad.dyndns.org/test/trondheim-oslo.gpx
-    - template: gpx/gpxFile
       name: Rallarvegen Haugast&oslash;l - Fl&aring;m
-      url: http://seierstad.dyndns.org/test/rallarvegen.gpx
-    - template: gpx/gpxFile
-      name: Valler - Ullev&aring;l
-      url: http://seierstad.dyndns.org/test/track-2013-05-11-cycling.gpx
+      url: http://beta.norgeskart.no/xml/gpx/rallarvegen.gpx
     - template: gpx/gpxFile
       name: Birkebeinerrittet
-      url: http://seierstad.dyndns.org/test/birkebeinerrittet.gpx
+      url: http://beta.norgeskart.no/xml/gpx/birkebeinerrittet.gpx
     - template: gpx/gpxFile
       name: Birkebeinerrennet 2012
-      url: http://seierstad.dyndns.org/test/birkebeinerrennet-2012.gpx
+      url: http://beta.norgeskart.no/xml/gpx/birkebeinerrennet-2012.gpx
 
     i18n:
     - include: languages/nb/heightprofile
