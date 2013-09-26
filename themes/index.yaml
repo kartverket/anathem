@@ -17,7 +17,7 @@ mapscript:
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-    - include: styles/SLD/maritimegrenser
+#    - include: styles/SLD/maritimegrenser
 
   overlays  : 
     - include: layers/topo2
@@ -25,6 +25,7 @@ mapscript:
     - include: layers/flybilder
     - include: layers/grunnkart
     - include: layers/toporaster2
+#    - include: layers/test_error
 
     - include: layers/wms/kommunegrenser
     - include: layers/wms/amtskart
