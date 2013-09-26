@@ -2,6 +2,8 @@
 
 template : base
 title    : Norgeskart
+mapClass: embedded-map
+
 mapscript:
   template  : mapscript
   baselayers:   
