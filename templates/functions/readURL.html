@@ -310,7 +310,14 @@ NK.functions.setMapState = function (params) {
           highlight(extra);
           break;
         case 'm':
-          NK.functions.addLabeledMarker(parms.slice(index + 1, index + 4), ++labeledMarkerCount);
+          setTimeout(
+            (function (boundParameters, boundCounter){
+              return function () {
+                NK.functions.addLabeledMarker(boundParameters, boundCounter);  
+              };
+            }(parms.slice(index + 1, index + 4), ++labeledMarkerCount)),
+            500
+          );
           index += 3;
           break;
         case 'l':
