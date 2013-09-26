@@ -50,7 +50,7 @@ NK.functions.addLabeledMarker = function (params, number) {
   properties = {};
 
   if (params.length > 2) {
-    properties.label = decodeURIComponent(params[2]);
+    properties.popupText = decodeURIComponent(params[2]);
   }  
   if (number) {
     properties.nr = number;
@@ -64,7 +64,7 @@ NK.functions.addLabeledMarker = function (params, number) {
     "nk-user-marker" + (number ? '-' + number : ''), 
     feature.geometry.getBounds().getCenterLonLat(),
     null,
-    '<span class="label-text">' + feature.data.label + '</span>', //generatePopupMarkup(feature),
+    '<span class="label-text">' + feature.data.popupText + '</span>', //generatePopupMarkup(feature),
     null, 
     false, 
     null, //onPopupClose
@@ -313,6 +313,7 @@ NK.functions.setMapState = function (params) {
           setTimeout(
             (function (boundParameters, boundCounter){
               return function () {
+                console.log('boundCounter: ' + boundCounter);
                 NK.functions.addLabeledMarker(boundParameters, boundCounter);  
               };
             }(parms.slice(index + 1, index + 4), ++labeledMarkerCount)),
