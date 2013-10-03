@@ -17,7 +17,7 @@ mapscript:
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-#    - include: styles/SLD/maritimegrenser
+    - include: styles/SLD/maritimegrenser
 
   overlays  : 
     - include: layers/topo2
