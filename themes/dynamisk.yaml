@@ -39,3 +39,4 @@ mapscript:
     template: functions/readURL
   controls  :
     - template: controls/navigation
+    - template: controls/scaleline

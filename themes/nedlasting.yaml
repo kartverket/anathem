@@ -30,6 +30,9 @@ mapscript  :
     - include: layers/geoJSON/dtm-utm33-100km
     - include: layers/geoJSON/dtm-utm35
     - include: layers/geoJSON/raster-n50
+    #- include: layers/geoJSON/raster-n50-utm32
+    #- include: layers/geoJSON/raster-n50-utm33
+    #- include: layers/geoJSON/raster-n50-utm35
     - include: layers/geoJSON/raster-n250
     - include: layers/geoJSON/raster-n500
     - include: layers/geoJSON/raster-n1000
