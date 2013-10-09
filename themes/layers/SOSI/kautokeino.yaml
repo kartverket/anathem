@@ -1,0 +1,14 @@
+template: layers/SOSIFile
+url: /sosi/kautokeino.sos
+name: Bygg og anlegg i Kautokeino
+id: kautokeino
+epsgCode: 32635
+styleName: unlabeledMarker
+layerGroup: tjenester.fakta 
+popup:
+  template: popup/popup
+  headingAttribute: "OBJTYPE"
+  data:
+  - template: popup/data
+    attribute: "DATAFANGSTDATO"
+    label: Fylke
