@@ -11,4 +11,4 @@ popup:
   data:
   - template: popup/data
     attribute: "DATAFANGSTDATO"
-    label: Fylke
+    label: "Registrert dato" 
