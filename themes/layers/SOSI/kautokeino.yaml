@@ -1,10 +1,10 @@
 template: layers/SOSIFile
 url: /sosi/kautokeino.sos
-name: Bygg og anlegg i Kautokeino
+name: Anlegg i Kautokeino
 id: kautokeino
 epsgCode: 32635
 styleName: unlabeledMarker
-layerGroup: tjenester.fakta 
+layerGroup: testlag.utvikling
 popup:
   template: popup/popup
   headingAttribute: "OBJTYPE"

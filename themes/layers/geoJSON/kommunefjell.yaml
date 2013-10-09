@@ -4,7 +4,7 @@ name: Kommunenes fjelltopper
 id: fjelltopper
 epsgCode: 32633 
 styleName: unlabeledMarker
-layerGroup: testlag.utvikling
+layerGroup: tjenester.fakta 
 popup:
   template: popup/popup
   headingAttribute: "OFFISIELT NAVN"
