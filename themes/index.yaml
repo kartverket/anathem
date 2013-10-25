@@ -81,5 +81,5 @@ mapscript:
         url: /json/norge/500m.geojson
         detailedLayer: enkel
 
-splashscreen:
-  - template: splashscreen/betainfo
+#splashscreen:
+#  - template: splashscreen/betainfo
