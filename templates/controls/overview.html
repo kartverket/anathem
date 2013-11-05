@@ -2,10 +2,16 @@
 
 <%include file="/functions/vector.html" />
 <%include file="/styles/omriss.html" />
+OpenLayers.Util.extend(OpenLayers.Lang.nb, {
+  'Show big overview map': 'Vis stort oversiktskart',
+  'Show small overview map': 'Vis lite oversiktskart'
+});
 
 (function (M, MP, P) {
   var layer,
-      requestHandler;
+      requestHandler,
+      control,
+      detailedLayer;
 
   var norgeExtent = new OpenLayers.Bounds(-76856, 6453900, 1114892, 7939873);
 
@@ -15,12 +21,8 @@
       shortid: "${id}", 
       styleMap: NK.styles.omriss, 
       visibility: true
-//      , maxExtent: norgeExtent
-//      , isBaseLayer: true
     }
   );
-
-  //M.addLayer(layer);
 
   requestHandler = function (request) {
     var geojson_format,
@@ -36,25 +38,39 @@
 
     layer.addFeatures(features);
 
-  	options.maximized = true;
-  	options.maximizeTitle = 'Show the overview map';
-  	options.minimizeTitle = 'Hide the overview map';
-    options.minRatio = 1000;
-    options.maxRatio = 1000;
+% if detailedLayer:
+    for (i = 0, j = M.layers.length; i < j; i += 1) {
+      if (M.layers[i].shortid && M.layers[i].shortid === '${detailedLayer}') {
+        detailedLayer = M.layers[i].clone();
+        break;
+      }
+    }
+% endif
+
+  	options.maximized = false;
+  	options.maximizeTitle = OpenLayers.Lang.translate('Show big overview map');
+  	options.minimizeTitle = OpenLayers.Lang.translate('Show small overview map');
+    options.minRatio = 32;
+    options.maxRatio = 32;
     options.size = {w: 80, h: 90};
+    options.autoPan = true;
+    options.minRectSize = 5;
 
     options.mapOptions = OpenLayers.Util.extend(NK.mapOptions, {
       numZoomLevels: NK.zoomLevels,
-      maxExtent: norgeExtent,
       restrictedExtent: norgeExtent,
-      maxResolution: 20000.0,
       controls: [],
       baseLayer: layer
     });
-  	options.autoPan = false;
-  	options.layers = [layer];
 
-  	NK.functions.addControlToContext(new OpenLayers.Control.OverviewMap(options), context);
+    if (detailedLayer) {
+      options.layers = [layer, detailedLayer];
+    } else {
+      options.layers = [layer];
+    }
+
+    control = new OpenLayers.Control.OverviewMapExpandable(options);
+  	NK.functions.addControlToContext(control, context);
 
   };
 

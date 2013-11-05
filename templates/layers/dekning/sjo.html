@@ -2,10 +2,9 @@
   var styleMap,
       layer,
       dataResponseHandler,
-      request,
-      selectHandler,
       highlightAllById,
-      unhighlightAllById;
+      unhighlightAllById,
+      selectControl;
 
   <%include file="/styles/dekning/sjo.html" />  
 
@@ -56,7 +55,7 @@
 
   M.addLayer(layer);
 
-  request = OpenLayers.Request.GET({
+  OpenLayers.Request.GET({
     url: "${url}",
     callback: dataResponseHandler
   });
@@ -70,12 +69,11 @@
     });
   };
 
+  // un-highlight all elements with the same element.feature.fid;
   unhighlightAllById = function(element) {
-    // un-highlight all elements with the same element.feature.fid;
     var ident = layer.getFeaturesByFid (element.feature.fid);
+
     $.each(ident, function(i, feature) {
-      var bladscale = feature.attributes.s;
-      var mapscale  = map.getScale();
       feature.renderIntent = "default";
       layer.drawFeature(feature);
     });
@@ -94,50 +92,27 @@
   });
   map.addControl(highlightDekningCtrl);
   
-
-/*
-  selectHandler = function(feature) {
-    alert(feature.fid+"\n"+feature.attributes.vignett+"\n"+feature.attributes.n+"\n1:"+feature.attributes.s);
-    postEvent({
-      "event":"onSelect",
-      "element":"kartblad",
-      "type":"havnekart",
-      "id":feature.fid
-    });
-  };
-
-  var selectDekningCtrl = new OpenLayers.Control.SelectFeature(layer, {
-     multiple: true,
-     clickFeature: selectHandler,
-     autoActivate: true
-  });
-  map.addControl(selectDekningCtrl);
-*/
-
-
-  var selectControl;
-  var onPopupClose = null;
-
   function onPopupClose(evt) {
       selectControl.unselect(NK.selectedCoverageMap);
       delete NK.selectedCoverageMap;
   }
+
   function projectionName(projectionNumber) {
     switch (projectionNumber) {
       case '8':
         return 'Mercator';
       case '16':
         return 'Gauss Kr\u00FCger';
-        break;
       default:
-      return '';  
+        return '';  
     }
-    return '';
   }
+
   var datumNames = {
     '2': 'WGS84'
     // TODO: values for ED50 and NGO (see http://kartverket.no/en/Kart/Nautical-Charts/Nautical-Charts/) 
   };
+
   function generatePopupMarkup (feature) {
     var a  = feature.attributes;
     var mainMapFeature, i, j;
@@ -178,25 +153,73 @@
       }
       markup += '</article>';
       return markup;
-  };
+  }
 
   function onFeatureSelect (feature) {
-      NK = NK || {};
-      if (NK.selectedCoverageMap ) {
-          selectControl.unselect(NK.selectedCoverageMap);
-      }
-      NK.selectedCoverageMap = feature;
+    var i, 
+        j, 
+        mainMapNumber,
+        message,
+        vignettes = [],
+        specials = [],
+        a;
 
-      var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
-      M.setCenter(mousePosition);
-      var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
-                               mousePosition,
-                               null,
-                               generatePopupMarkup(feature),
-                               null, true, onPopupClose);
-      popup.autoSize = true;
-      feature.popup = popup;
-      M.addPopup(popup);
+      if (NK.easyXDM && NK.easyXDM.socket) {
+        // there is an active easyXDM socket - send feature data
+        message = {
+          type: 'featureSelected', 
+          feature: feature.attributes,
+          layer: feature.layer.shortid
+        };
+
+        if (feature.attributes.vignett) {
+            mainMapNumber = feature.attributes.vignett.slice(0, 3);
+            for (i = 0, j = feature.layer.features.length; i < j; i += 1) {
+              if (feature.layer.features[i].attributes.nr === mainMapNumber) {
+                message.mainMapFeature = feature.layer.features[i].attributes;
+              }
+            }
+        } else {
+            for (i = 0, j = feature.layer.features.length; i < j; i += 1) {
+              a = feature.layer.features[i].attributes;
+              if (a.vignett && a.vignett.indexOf(feature.attributes.nr) === 0) {
+                // feature[i] is a special or vignette in the selected map
+                
+                if (feature.attributes.s === a.s) {
+                  vignettes.push(a);
+                } else {
+                  specials.push(a);
+                }
+              }
+            }
+            if (specials.length > 0) {
+              message.specials = specials;
+            }
+            if (vignettes.length > 0) {
+              message.vignettes = vignettes;
+            }
+        }
+
+        NK.easyXDM.socket.postMessage(JSON.stringify(message));
+      } else {
+
+        NK = NK || {};
+        if (NK.selectedCoverageMap ) {
+            selectControl.unselect(NK.selectedCoverageMap);
+        }
+        NK.selectedCoverageMap = feature;
+
+        var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
+        M.setCenter(mousePosition);
+        var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
+                                 mousePosition,
+                                 null,
+                                 generatePopupMarkup(feature),
+                                 null, true, onPopupClose);
+        popup.autoSize = true;
+        feature.popup = popup;
+        M.addPopup(popup);
+      }
   }
   
   function onFeatureUnselect (feature) {

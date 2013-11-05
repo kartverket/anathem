@@ -1,0 +1,108 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Embed
+    translation: Bruk kartutsnitt
+  - template: i18n/translation
+    source: Select type
+    translation: Velg type
+  - template: i18n/translation
+    source: Dynamic map based on open services
+    translation: Dynamisk kart basert p&aring; &aring;pne tjenester
+  - template: i18n/translation
+    source: Static map
+    translation: Statisk kart
+  - template: i18n/translation
+    source: Terms
+    translation: Vilk&aring;r for bruk
+  - template: i18n/translation
+    source: You can use the maps freely for any internet based purposes. You are not allowed to combine multiple maps to form a bigger, continous map.
+    translation: Du kan fritt bruke kartutsnittene til alle nettbaserte form&aring;l. Kartene m&aring; brukes enkeltvis og ikke settes sammen slik at de danner et st&oslash;rre sammenhengende kart.
+  - template: i18n/translation
+    source: Svalbard terms
+    translation: Integrasjon av Svalbard-kart er ikke tillatt uten spesiell avtale med Norsk Polarinstitutt. Se bruksvilk&aring;rene i Norsk Polarinstitutts egen kartportal, TopoSvalbard (toposvalbard.npolar.no) for ytterligere informasjon.
+  - template: i18n/translation
+    source: 'Content providers: Kartverket, Geovekst, municipalities and Norge digitalt partners.'
+    translation: 'Innholdsleverand&oslash;rer: Kartverket, Geovekst, kommuner og Norge digitalt-parter.'
+  - template: i18n/translation
+    source: Previous
+    translation: Forrige
+  - template: i18n/translation
+    source: Next
+    translation: Neste
+  - template: i18n/translation
+    source: Show selected map area
+    translation: Vis kartutsnitt
+  - template: i18n/translation
+    source: Choose area
+    translation: Velg utsnitt
+  - template: i18n/translation
+    source: Include map tools
+    translation: Ta med kartverkt&oslash;y
+  - template: i18n/translation
+    source: Include markers
+    translation: Sett inn mark&oslash;r
+  - template: i18n/translation
+    source: Delete marker
+    translation: Slett mark&oslash;r
+  - template: i18n/translation
+    source: Comment
+    translation: Skriv inn kommentar
+  - template: i18n/translation
+    source: Add
+    translation: Legg til
+  - template: i18n/translation
+    source: Skip
+    translation: Hopp over
+  - template: i18n/translation
+    source: Click in the map to add markers with descriptions.
+    translation: Klikk p&aring; steder i kartet for &aring; sette inn mark&oslash;rer med forklaring. Legg til flere punkter ved &aring; klikke i kartet.
+  - template: i18n/translation
+    source: To ensure a good user experience, we recommend you provide descriptions for your map. As a result, the embedded map will cater to people using assistive technology.
+    translation: For &aring; skape en god brukeropplevelse anbefaler vi at det legges inn beskrivelse. Kartutsnittet vil da bli tilrettelagt for brukere med spesielle behov.
+  - template: i18n/translation
+    source: Hold down left mouse button and draw desired embed area on the map. You may later adjust the size of the area with the buttons that appear on the corners of the drawn rectangle.
+    translation: Tegn &oslash;nsket utsnitt og st&oslash;rrelse i kartet ved &aring; holde nede venstre museknapp. Du kan justere st&oslash;rrelsen ved &aring; dra i hj&oslash;rnene p&aring; kartutsnittet.
+  - template: i18n/translation
+    source: Map description
+    translation: Beskriv kartutsnitt
+  - template: i18n/translation
+    source: 'Short description:'
+    translation: 'Kort beskrivelse:'
+  - template: i18n/translation
+    source: I.ex.
+    translation: F.eks.
+  - template: i18n/translation
+    source: '"Stores in Hordaland"'
+    translation: '"Utsalgssteder i Hordaland"'
+  - template: i18n/translation
+    source: Why?
+    translation: Hvorfor?
+  - template: i18n/translation
+    source: A short description is shown when the mouse cursor is held over the embedded map.
+    translation: En kort beskrivelse vises n&aring;r musepekeren holdes over kartet.
+  - template: i18n/translation
+    source: 'Long description:'
+    translation: 'Lang beskrivelse:'
+  - template: i18n/translation
+    source: A long description is used when there is an error, or when the user is unable to see the map.
+    translation: Lang beskrivelse brukes n&aring;r det skjer en feil s&aring; kartet ikke kan vises, eller n&aring;r brukeren ikke kan se kartet.
+  - template: i18n/translation
+    source: Generate map
+    translation: Generere kart
+  - template: i18n/translation
+    source: Generate code
+    translation: Generere kode
+  - template: i18n/translation
+    source: 'Points:'
+    translation: 'Punkter:'
+  - template: i18n/translation
+    source: Select code and copy
+    translation: Merk kode og klipp ut
+  - template: i18n/translation
+    source: 'step <span>${stepCount}</span> of '
+    translation: 'trinn <span>${stepCount}</span> av '
+  - template: i18n/translation
+    source: Quit
+    translation: Avslutt

@@ -1,22 +1,97 @@
-var matrixIds = new Array(18);
+% if not 'layerTypeWMTS' in vars:
 
-for (var i=0; i<=18; ++i) {
-  matrixIds[i] = new Object();
-  matrixIds[i].identifier = mapProj + ":" + i;
-} 
+NK.addLayerType = NK.addLayerType || {};
+NK.addLayerType.WMTS = (function (M, MP) {
+  var matrixIds = [],
+      i;
 
-var wmts = new OpenLayers.Layer.WMTS({
-  name: decodeURIComponent(params.name),
-  url: params.url,
-  layer: params.layer,
-  matrixSet: mapProj,
-  matrixIds: matrixIds,
-  format: "image/png",
-  requestEncoding: "kvp",
-  style: "default",
-  shortid: params.id, 
-  visibility: ${visible}, 
-  transitionEffect: 'resize'
-});   
+  for (i = 0; i <= NK.zoomLevels; ++i) {
+    matrixIds[i] = {};
+    matrixIds[i].identifier = MP + ":" + i;
+  } 
 
-map.addLayers([wmts]);
+  return function (id, name, url, layer, options) {
+    var layer, 
+        layerOptions;
+
+    layerOptions = {
+      'name': name,
+      'url': url,
+      'layer': layer,
+      'matrixSet': MP,
+      'matrixIds': matrixIds,
+      'format': "image/png",
+      'requestEncoding': "kvp",
+      'style': "default",
+      'shortid': id, 
+      'isBaseLayer': false,
+      'transitionEffect': 'resize',
+      'buffer': 4
+    };
+
+    layerOptions.displayInLayerSwitcher = !!(options.displayInLayerSwitcher) ? 1 : 0;
+    layerOptions.visibility = !!(options.visibility) ? 1 : 0;
+
+    if (options.params) {
+      layerOptions.params = options.params;
+    }
+
+    layer = new OpenLayers.Layer.WMTS(layerOptions);
+
+    if (options.layerGroup) {
+      layer = OpenLayers.Util.extend(layer, {
+        'layerGroup': options.layerGroup
+      });
+    }
+
+    if (layer.params.GKT) {
+      layer.params.gkt = layer.params.GKT;
+      delete layer.params.GKT; 
+    }
+
+    if (options.visible) {
+      NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+      NK.defaultVisibleLayers.push(id);
+    }
+
+    layer.events.register("tileerror", layer, function(arg) {
+      NK.functions.getNewToken();
+    });
+
+    M.addLayers([layer]);
+  };
+}(map, mapProj));
+
+<% vars['layerTypeWMTS']=True %>
+% endif
+
+(function () {
+  var url, 
+      options = {};
+
+  % if url:
+    url = "${url}";
+  % else:
+    url = NK.mapservers.wmts;
+  % endif
+
+  % if hidefromlayerswitcher:
+    options.displayInLayerSwitcher = false;
+  % else:
+    options.displayInLayerSwitcher = true;
+  % endif
+
+  % if visible:
+    options.visibility = true;
+  % endif
+
+  % if layerGroup:
+    options.layerGroup = "${layerGroup}";
+  % endif
+
+  % if usetoken:
+    options.params = { 'gkt': NK.gkToken };
+  % endif
+
+  NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
+}());

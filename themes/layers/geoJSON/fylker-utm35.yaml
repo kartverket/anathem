@@ -1,0 +1,10 @@
+template: layers/geoJSONFileMC
+url: /json/norge/fylker-utm35.json
+name: Fylker UTM35
+id: fylker-utm35
+epsgCode: 32633 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "n"

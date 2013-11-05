@@ -1,0 +1,10 @@
+(function () {
+	var result = {
+		'heading': '${headingAttribute}'
+	};
+% if data:
+	result.data = [];
+	${data}
+% endif	
+	return result;
+}());

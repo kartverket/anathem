@@ -1,0 +1,6 @@
+template: layers/wmts
+usetoken: true
+name: terreng 
+layer: terreng_norgeskart 
+layerGroup: modus
+id: terreng

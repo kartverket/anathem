@@ -1,0 +1,23 @@
+<%inherit file="/controls/controlcontext.html" />
+
+% if heightProfileServiceUrl:
+options.heightProfileServiceUrl = '${heightProfileServiceUrl}';
+% endif
+
+% if gpxStorageUrl:
+options.gpxStorageUrl = '${gpxStorageUrl}';
+% endif
+
+% if trackStyleName:
+	var trackStyleName = '${trackStyleName}';
+	if (NK.styles && NK.styles[trackStyleName]) {
+		options.trackStyleMap = NK.styles[trackStyleName];
+	}
+% endif
+
+% if predefinedGpxFiles:
+	${predefinedGpxFiles}
+% endif
+
+var control = new OpenLayers.Control.HeightProfile(options);
+NK.functions.addControlToContext(control, context);

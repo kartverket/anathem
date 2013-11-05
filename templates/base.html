@@ -9,7 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>${title}</title>
     <meta name="description" content="" />
+    <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+    <meta name="apple-touch-fullscreen" content="yes" />
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
     <link rel="stylesheet" type="text/css" href="theme/default/style.css" />
@@ -22,14 +25,18 @@
     <script src="js/modernizr.min.js"></script>
     <script src="js/proj4js.min.js"></script>
     <script src="js/openlayers.min.js"></script>
-<!--    <script src="js/easyXDM.debug.js"></script> --><!-- our maps send status messages via an easyXDM API -->
-    <!-- todo: move a part of these scripts to a post-loading in plugins.js, where they are not needed immediately. -->
+    <script src="js/underscore-min.js"></script>
+    <script src="js/SOSI.js.min.js"></script>
   </head>
   <body style="height: 100%;">
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <header>
     </header>
+% if mapClass:
+    <div id="map" role="main" class="${mapClass}" style="width:100%; height:100%"></div>
+% else:
     <div id="map" role="main" style="width:100%; height:100%"></div>
+% endif
     <footer>
     </footer>
     <script src="js/jquery.js"></script>
@@ -38,16 +45,22 @@
     <![endif]-->
     <script src="js/plugins.min.js"></script>
     <script src="js/uniform/jquery.uniform.js"></script>
+
+% if includeXDM:
+    <%include file="/easyXDM.html" />
+% endif
+
     <script>
       ${mapscript}
+      // end mapscript
     </script>
     <!--[if lt IE 9]>
         <script>
             $(window).on('resize', function(evt) {
                 var win = $(window);
                 var body = $('body');
-                var h = parseInt(win.innerHeight());
-                var w = parseInt(win.innerWidth());
+                var h = parseInt(win.innerHeight(), 10);
+                var w = parseInt(win.innerWidth(), 10);
                 if (h >= 850) { body.removeClass('sub850h'); }
                 if (h >= 750) { body.removeClass('sub750h'); }
                 if (h >= 650) { body.removeClass('sub650h'); }
@@ -60,6 +73,11 @@
 
         </script>
     <![endif]-->
+% if splashscreen:
     ${splashscreen}
+% endif
+% if finalscripts:
+    ${finalscripts}
+% endif
   </body>
 </html>

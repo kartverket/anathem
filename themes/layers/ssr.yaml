@@ -1,0 +1,10 @@
+template: layers/wfs
+name: SSR
+id: stedsnavn
+layerGroup: testlag.utvikling
+url: http://wfs.geonorge.no/skwms1/wfs.stedsnavn
+featuretype: Navneenhet
+namespace: http://skjema.geonorge.no/SOSI/fagomr%C3%A5destandard/Stedsnavn/4.5
+namespacePrefix: app
+version: 1.1.0
+visible: false 

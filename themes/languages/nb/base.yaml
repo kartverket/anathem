@@ -1,0 +1,18 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Server error
+    translation: Feil med tjenesten
+  - template: i18n/translation
+    source: An error has occured.
+    translation: Ett eller flere kartlag vises ikke som de skal.
+  - template: i18n/translation
+    source: Reloading maps in 
+    translation: Pr&oslash;ver &aring; laste kartlagene p&aring; nytt om 
+  - template: i18n/translation
+    source: minutes.
+    translation: minutter. 
+  - template: i18n/translation
+    source: minute.
+    translation: minutt. 

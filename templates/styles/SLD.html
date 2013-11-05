@@ -1,0 +1,96 @@
+% if not 'formatSLD' in vars:
+
+NK.format = NK.format || {};
+NK.format.SLD = NK.format.SLD || new OpenLayers.Format.SLD();
+
+// defined translations between layer data and SLD
+NK.format.SLD.featureTranslate = {};
+
+<% vars['formatSLD']=True %>
+
+% endif
+
+% if not 'functionSetLayerStylesSLD' in vars:
+
+NK.styles = NK.styles || {};
+NK.styles.SLD = NK.styles.SLD || {};
+
+NK.functions.setSLDStyleForLayer = function (styleName, layer) {
+  NK.styles.SLD[styleName] = NK.styles.SLD[styleName] || {};
+  NK.styles.SLD[styleName].layers = NK.styles.SLD[styleName].layers || [];
+  NK.styles.SLD[styleName].layers.push(layer);
+
+  if (NK.styles.SLD[styleName].ready) {
+    layer.styleMap = NK.styles.SLD[styleName].styleMap;
+    layer.redraw();
+  }
+};
+
+NK.functions.setLayerStylesSLD = function (sld, styleName) {
+  var styles, 
+      style, 
+      i, j, t,
+      featureName;
+
+  for (featureName in sld.namedLayers) {
+    if (sld.namedLayers.hasOwnProperty(featureName)) {
+      styles = sld.namedLayers[featureName].userStyles;
+      style = styles[0];
+
+      for (t in NK.format.SLD.featureTranslate[featureName]) {
+        if (NK.format.SLD.featureTranslate[featureName].hasOwnProperty(t)) {
+          NK.styles.SLD[styleName].styleMap.styles["default"].rules.push( 
+            new OpenLayers.Rule({
+                filter: new OpenLayers.Filter.Comparison({
+                type: OpenLayers.Filter.Comparison.LIKE,
+                property: "n",
+                value: NK.format.SLD.featureTranslate[featureName][t]
+              }),
+              symbolizer: style.rules[0].symbolizer
+            })
+          );
+        }
+      }
+    }
+  }
+
+
+  NK.styles.SLD[styleName].ready = true; // read by NK.functions.setSLDStyleForLayer()
+
+  // update the layers already registered to use this style
+  for (i = 0, j = NK.styles.SLD[styleName].layers.length; i < j; i += 1) {
+    NK.styles.SLD[styleName].layers[i].styleMap = NK.styles.SLD[styleName].styleMap;
+    NK.styles.SLD[styleName].layers[i].redraw();
+  }
+};
+
+<% vars['functionSetLayerStylesSLD']=True %>
+% endif
+
+% if translations:
+  ${translations}
+% endif
+
+(function (url, name) {
+  NK.styles.SLD[name] = NK.styles.SLD[name] || {};
+  var s = NK.styles.SLD[name];
+
+  s.layers = s.layers || [];
+  // NK.styles.SLD['${name}'].translations = NK.styles.SLD['${name}'].translations || {};
+  s.styleMap = s.styleMap || new OpenLayers.StyleMap({
+    'default': new OpenLayers.Style(),
+    'temporary': new OpenLayers.Style({
+      fillColor  : "#fe8",
+      graphicZIndex: 1,
+      fillOpacity: 1 
+    })
+  });
+
+  OpenLayers.Request.GET({
+    'url': url,
+    success: function (req) {
+      var sld = NK.format.SLD.read(req.responseXML || req.responseText);
+      NK.functions.setLayerStylesSLD(sld, name);
+    } 
+  });
+}('${url}', '${name}'));

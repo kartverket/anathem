@@ -1,0 +1,353 @@
+<%include file="/styles/labeledMarker.html" />
+
+NK.functions.storeInitialLayerVisibility = function () {
+  // store the initial layer visibility configuration
+  var i, 
+      layer;
+
+  NK.initLayers = [];
+
+  for (i in map.layers) {
+    if (map.layers.hasOwnProperty(i)) {
+      layer = map.layers[i];
+      if (layer.visibility) {
+        if ((!NK.defaultVisibleLayers || !$.inArray(layer.shortid, NK.defaultVisibleLayers)) && !layer.isUrlDataLayer) {
+          NK.initLayers.push(layer.shortid);
+        }
+      }
+    }
+  }
+};
+
+NK.functions.setMapStateFromPopState = function (evt) {
+  if (evt && evt.originalEvent && evt.originalEvent.state) {
+    NK.functions.setMapState({'search': evt.originalEvent.state.search, 'hash': evt.originalEvent.state.hash});
+  }
+};
+
+$(window).on('popstate', NK.functions.setMapStateFromPopState);
+
+NK.functions.addLabeledMarker = function (params, number) {
+  var layers, 
+      layer, 
+      x, 
+      y, 
+      label,
+      feature,
+      popup,
+      properties;
+
+  layers = map.getLayersBy('shortid', 'pekere');
+  if (layers.length > 0) {
+    layer = layers[0];
+  } else {
+    layer = new OpenLayers.Layer.Vector("Mark&oslash;rer", {shortid: 'pekere', styleMap: NK.styles.labeledMarker});
+    map.addLayer(layer);
+  }
+
+  x = parseInt(params[0], 10);
+  y = parseInt(params[1], 10);
+  properties = {};
+
+  if (params.length > 2) {
+    properties.popupText = decodeURIComponent(params[2]);
+  }  
+  if (number) {
+    properties.nr = number;
+  } else {
+    properties.nr = '';
+  }
+
+  feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(x, y), properties);
+
+  popup = new OpenLayers.Popup.FramedSideAnchored(
+    "nk-user-marker" + (number ? '-' + number : ''), 
+    feature.geometry.getBounds().getCenterLonLat(),
+    null,
+    '<span class="label-text">' + feature.data.popupText + '</span>', //generatePopupMarkup(feature),
+    null, 
+    false, 
+    null, //onPopupClose
+    {x: 10, y: -65},
+    'user-marker'
+  );
+
+  popup.autoSize = true;
+  popup.panMapIfOutOfView = false;
+  feature.popup = popup;
+  map.addPopup(popup);
+  popup.show();
+
+  layer.addFeatures([feature]);
+  return feature;
+};
+
+NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
+  var type,
+      url,
+      epsgCode;
+
+  type = params[0];
+  url = decodeURIComponent(params[1]);
+  epsgCode = params[2];
+
+  switch (type) {
+    case 'geojson':
+      NK.functions.addGeoJsonLayer(url, epsgCode);
+      break;
+    case 'drawing':
+      NK.functions.addGeoJsonLayer(url, epsgCode, {'isDrawing': true});
+      break;
+  }
+
+};
+
+NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
+  var mapProjection,
+      formatOptions,
+      geoJSONFormat,
+      layerOptions,
+      layer,
+      correctEpsgCode,
+      layerExtensions;
+
+  formatOptions = {
+    'internalProjection': map.getProjection(),
+    'externalProjection': map.getProjection()
+  };
+
+  /* set external projection, if provided  */
+
+  if (epsgCode && NK.projections[epsgCode]) {
+    formatOptions.externalProjection = NK.projections[epsgCode];
+    correctEpsgCode = epsgCode;
+  } else {
+    correctEpsgCode = '32633';
+  }
+
+  geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
+
+  layerOptions = {
+    shortid: 'urlDataLayer_' + NK.functions.urlDataLayerCounter, 
+    protocol: new OpenLayers.Protocol.HTTP({
+      'url': url,
+      'format': geoJSONFormat
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
+    styleMap: NK.styles.track,
+    projection: mapProjection,
+    displayInLayerSwitcher: false,
+    visibility: true
+  };
+
+  layer = new OpenLayers.Layer.Vector(
+    'urlDataLayer_' + NK.functions.urlDataLayerCounter++,
+    layerOptions
+  );
+
+  layerExtensions = {
+    'isUrlDataLayer': true,
+    'epsgCode': correctEpsgCode,
+    'url': url
+  };
+
+  if (extensionProperties) {
+    layerExtensions = OpenLayers.Util.extend(layerExtensions, extensionProperties); 
+  }
+
+  layer = OpenLayers.Util.extend(layer, layerExtensions);
+
+  map.addLayers([layer]);
+};
+
+NK.functions.urlDataLayerCounter = 0;
+NK.functions.setMapState = function (params) {
+  var parms,
+      zoom,
+      mapx,
+      mapy,
+      xy,
+      index,
+      extra,
+      setLayerVisibility,
+      showLayerNamed,
+      hideLayerNamed,
+      highlight,
+      search,
+      searchArray,
+      searchInputField,
+      i, j, p,
+      hash,
+      labeledMarkerCount = 0,
+      pWSG84,
+      pUTM33;
+
+  search = params.search;
+  hash = params.hash;
+
+  if (params.search) {
+    search = search.replace('?', '');
+    searchArray = search.split('&');
+    for (i = 0, j = searchArray.length; i < j; i += 1) {
+      p = searchArray[i].split('=');
+      if (p[0] === 'sok') {
+        p[1] = decodeURIComponent(p[1]);
+        searchInputField = document.getElementById('searchInput');
+        if (searchInputField) {
+          searchInputField.value = p[1];
+        }
+        map.events.triggerEvent('searchForPhrase', {'phrase': p[1]});
+      }
+    }
+  }
+
+  if (!!hash) {
+    parms = hash.split("/");
+    if (parms.length >= 3) {
+      zoom = parms[0];
+      mapx = parms[1];
+      mapy = parms[2];
+
+      if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
+        pWSG84 = new Proj4js.Proj('EPSG:4326');   
+        pUTM33 = new Proj4js.Proj('EPSG:32633');   
+        xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
+        mapx = xy.x;
+        mapy = xy.y;
+      }
+    }
+
+    setLayerVisibility = function (layerName, visibility) {
+      var i, 
+          j,
+          layer,
+          layerSwitcherPresent;
+
+      layerSwitcherPresent =  map.getControlsByClass('OpenLayers.Control.RasterOverlayLayerSwitcher').length > 0;
+
+      for (i = 0, j = map.layers.length; i < j; i += 1) {
+        layer = map.layers[i];
+        if (layer.shortid === layerName) {
+          if (layerSwitcherPresent && visibility && layer.displayInLayerSwitcher && !layer.isBaseLayer && (layer.CLASS_NAME === "OpenLayers.Layer.WMTS" || layer.CLASS_NAME === "OpenLayers.Layer.WMS")) {
+              map.events.triggerEvent('rasterLayerChangeRequest', {'shortId': layerName});
+          } else {
+            layer.setVisibility(visibility);
+          }
+        }
+      }         
+    };
+
+    showLayerNamed = function (layerName) {
+      return setLayerVisibility(layerName, true);
+    };
+    
+    hideLayerNamed = function (layerName) {
+      return setLayerVisibility(layerName, false);
+    };
+
+    highlight = function (highlightParam) {
+      var select, 
+          layers,
+          layer;
+
+      select = highlightParam.slice(1).split("!");
+      layers = map.getBy("layers", "shortid", select[0]);
+
+      if (layers.length === 1) {
+        layer = layers[0];
+
+        /* set a new renderer rule to highlight elements with the given name */
+        layer.styleMap.styles['default'].addRules([
+          new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.FeatureId({
+              fids: [select[1]]
+            }),
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor : "orange",
+              graphicZIndex: 2,
+              fillColor : "orange",
+              fillOpacity: 0.1
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+        ]);
+
+        layer.styleMap.styles.temporary.addRules([
+          new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.FeatureId({
+              fids: [select[1]]
+            }),
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor: "yellow",
+              fillColor  : "orange",
+              fillOpacity: 0.2,
+              graphicZIndex: 100
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+        ]); 
+      }
+    };
+
+    for (index = 3; index < parms.length; index += 1) {
+      extra = parms[index];
+      switch (extra.charAt(0)) {
+        case '+':
+          showLayerNamed(extra.slice(1));
+          break;
+        case '-':
+          hideLayerNamed(extra.slice(1));
+          break;
+        case '!':
+          highlight(extra);
+          break;
+        case 'm':
+          setTimeout(
+            (function (boundParameters, boundCounter){
+              return function () {
+                console.log('boundCounter: ' + boundCounter);
+                NK.functions.addLabeledMarker(boundParameters, boundCounter);  
+              };
+            }(parms.slice(index + 1, index + 4), ++labeledMarkerCount)),
+            500
+          );
+          index += 3;
+          break;
+        case 'l':
+          NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 4));
+          index += 3;
+          break;
+      }
+    }
+    if (mapx && mapy && zoom) {
+      map.setCenter(new OpenLayers.LonLat(mapx, mapy), zoom);
+    }
+  }
+  var result = {
+    'x': mapx,
+    'y': mapy,
+    'zoom': zoom
+  };
+  return result;
+};
+
+NK.functions.setMapStateFromURL = function () {
+  // adjust layer visibility and pan/zoom based on hash, if available
+
+  var hash,
+      search;
+
+  search = window.location.search;
+  hash = window.location.href.split("#")[1]; // avoids window.location.hash because Firefox automatically decodes URI encoded hashes
+
+
+  return NK.functions.setMapState({'search': search, 'hash': hash});
+};

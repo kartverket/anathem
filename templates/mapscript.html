@@ -18,6 +18,24 @@ gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
 NK.gkToken = "unInitialized";
 NK.tokenService = "http://beta.norgeskart.no/ws/gkt.py";
+NK.tokenLastUpdated = new Date(0);
+NK.tokenUpdatePaused = false;
+
+% if i18n:
+  ${i18n}
+% endif
+
+NK.tokenError = {
+  PAUSE_MINUTES: 2,
+  RELOAD_LIMIT_SECONDS: 15,
+  messagePopup: null,
+  pauseTimeRemainingElement: null,
+  pauseTimeRemainingText: null,
+  pauseTimer: null,
+  pauseCountdownTimer: null
+};
+
+
 
 NK.mapservers = {};
 NK.mapservers.wmts = [
@@ -28,20 +46,115 @@ NK.zoomLevels = 18;
 
 NK.functions = NK.functions || {};
 
+NK.functions.resetTokenError = function () {
+  if (NK.tokenError.pauseTimeRemainingElement) {
+    NK.tokenError.pauseTimeRemainingElement.parentNode.removeChild(NK.tokenError.pauseTimeRemainingElement);
+    NK.tokenError.pauseTimeRemainingElement = null;
+  }
+  if (NK.tokenError.messagePopup) {
+    NK.tokenError.messagePopup.parentNode.removeChild(NK.tokenError.messagePopup);
+    NK.tokenError.messagePopup = null;
+  }
+  if (NK.tokenError.pauseTimer) {
+    clearTimeout(NK.tokenError.pauseTimer);
+    NK.tokenError.pauseTimer = null;
+  }
+  if (NK.tokenError.pauseCountdownInterval) {
+    clearInterval(NK.tokenError.pauseCountdownInterval);
+    NK.tokenError.pauseCountdownInterval = null;
+  }
+};
+
 NK.functions.updateToken = function (request) {
   var i, 
       j, 
-      oldToken = NK.gkToken, 
-      updatedTokensCount = 0;
+      reloadLimit;
+
+  reloadLimit = new Date(Date.now() - NK.tokenError.RELOAD_LIMIT_SECONDS * 1000);
 
   NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
 
-  for (i = 0, j = map.layers.length; i < j; i += 1) {
-    if (map.layers[i].params && map.layers[i].params.gkt) {
-      map.layers[i].params.gkt = NK.gkToken;
-      map.layers[i].redraw();
-      updatedTokensCount++;
+  if (NK.tokenLastUpdated < reloadLimit) { // was token updated less than RELOAD_LIMIT_SECONDS ago?
+    if (!NK.tokenUpdatePaused) {
+      NK.functions.resetTokenError();
+      NK.tokenLastUpdated = new Date();
+
+      for (i = 0, j = map.layers.length; i < j; i += 1) {
+        if (map.layers[i].params && map.layers[i].params.gkt) {
+          map.layers[i].params.gkt = NK.gkToken;
+          map.layers[i].redraw();
+        }
+      }
     }
+  } else {
+    NK.functions.pauseTokenUpdate();
+  }
+};
+
+NK.functions.pauseTokenUpdate = function () {
+  var popup, innerWrapper, heading, message, timeRemaining, statusLink;
+
+  if (!NK.tokenUpdatePaused) {
+    NK.tokenUpdatePaused = true;
+
+    popup = document.createElement('div');
+    popup.setAttribute('class', 'map-load-error');
+    innerWrapper = document.createElement('div');
+    innerWrapper.setAttribute('class', 'inner-wrapper');
+    heading = document.createElement('h1');
+    heading.innerHTML = OpenLayers.Lang.translate('Server error');
+    innerWrapper.appendChild(heading);
+    message = document.createElement('p');
+    message.innerHTML = OpenLayers.Lang.translate('An error has occured.');
+    innerWrapper.appendChild(message);
+
+    message = document.createElement('p');
+    message.innerHTML = OpenLayers.Lang.translate('Reloading maps in') + ' ';
+    timeRemaining = document.createElement('span');
+    timeRemaining.innerHTML = parseInt(NK.tokenError.PAUSE_MINUTES, 10);
+    NK.tokenError.pauseTimeRemainingElement = timeRemaining;
+    NK.tokenError.pauseTimeRemainingText = document.createTextNode(' ' + OpenLayers.Lang.translate(NK.tokenError.PAUSE_MINUTES > 1 ? 'minutes.' : 'minute.'));
+    message.appendChild(timeRemaining);
+    message.appendChild(NK.tokenError.pauseTimeRemainingText);
+    innerWrapper.appendChild(message);
+
+    statusLink = document.createElement('a');
+    statusLink.setAttribute('href', 'http://status.kartverket.no');
+    statusLink.setAttribute('class', 'external-link');
+    statusLink.innerHTML = 'Se driftsstatus';
+    OpenLayers.Event.observe(statusLink, 'click', function (evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      window.open(evt.target.href, '_blank'); 
+      return false;
+    }, true);
+    innerWrapper.appendChild(statusLink);
+
+    popup.appendChild(innerWrapper);
+    document.body.appendChild(popup);
+    NK.tokenError.messagePopup = popup;
+
+    NK.tokenError.pauseTimer = setTimeout(function () {
+      NK.tokenUpdatePaused = false;
+      NK.functions.getNewToken();
+    },  60 * parseInt(NK.tokenError.PAUSE_MINUTES, 10) * 1000);
+
+    NK.tokenError.pauseCountdownInterval = setInterval(function () {
+      var content, timeLeft;
+      if (NK.tokenError.pauseTimeRemainingElement) {
+        content = NK.tokenError.pauseTimeRemainingElement.innerHTML;
+        timeLeft = (parseInt(content, 10) - 1);
+        NK.tokenError.pauseTimeRemainingElement.innerHTML = timeLeft.toString();
+        if (timeLeft === 1) {
+          if (NK.tokenError.pauseTimeRemainingText.textContent) {
+            NK.tokenError.pauseTimeRemainingText.textContent = ' ' + OpenLayers.Lang.translate('minute.');
+          } else {
+            // old IE...
+            NK.tokenError.pauseTimeRemainingText.innerText = ' ' + OpenLayers.Lang.translate('minute.');
+          }
+        }
+      }
+    }, 60 * 1000);
   }
 };
 
@@ -52,7 +165,13 @@ NK.functions.getNewToken = function () {
   }
 };
 
-${functions}
+% if functions :
+  ${functions}
+% endif
+
+  % if internationalization:
+    ${internationalization}
+  % endif
 
 NK.init = function () {
 
@@ -75,7 +194,7 @@ NK.init = function () {
   Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
   Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
 
-  proj = {  
+  NK.projections = proj = {  
     //pregenerated projection objects
     "32633": new OpenLayers.Projection('EPSG:32633'),
     "32632": new OpenLayers.Projection('EPSG:32632'),
@@ -89,8 +208,11 @@ NK.init = function () {
   mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
-  OpenLayers.Lang.setCode('nb');
   OpenLayers.ImgPath = 'img/';
+
+% if language:
+  OpenLayers.Lang.setCode('${language}');
+% endif
 
   // extract URL parameters into dictionary
   prmstr = window.location.search.substr(1);
@@ -116,7 +238,7 @@ NK.init = function () {
     maxResolution: 21664.0,
   //      minResolution: 0.165283203125,
     numZoomLevels: NK.zoomLevels,
-    theme: 'theme/norgeskart/style.css',
+    theme: 'theme/norgeskart/style.css'
   };
 
   map = new OpenLayers.Map( 
@@ -128,20 +250,29 @@ NK.init = function () {
     })
   );
 
+  // Default placement and zoom of the map
+  ${center}
+
+  // load SLD styles
+% if styles:
+  ${styles}
+% endif
+
   // Base layers
   ${baselayers}
-
-  // Placement and zoom of the map
-  ${center}
 
   // Overlays
   ${overlays}
 
   var removePopups = function () {
-    var i, j, popup;
-    for (i = 0, j = map.popups.length; i < j; i += 1) {
-      popup = map.popups[i];
-      map.removePopup(popup);
+    var popup, p;
+
+    for (p in map.popups) {
+      if (map.popups.hasOwnProperty(p)) {
+        popup = map.popups[p];
+
+        map.removePopup(popup);
+      }
     }
   };
 
@@ -151,30 +282,56 @@ NK.init = function () {
   var controlContext = map;
   var container = null;
 
+% if controls:
   ${controls}
+% endif
+
 
   // initialize URL update state
   if (NK.functions.storeInitialLayerVisibility) {
     NK.functions.storeInitialLayerVisibility();
   }
-  if (NK.functions.setMapStateFromURL) {
-    NK.functions.setMapStateFromURL();
-  }
-  
-/*
-  xdmsocket = new easyXDM.Socket({});
-*/
-  postEvent = function (dico) {
-    if (!!xdmsocket) {
-      xdmsocket.postMessage(JSON.stringify(dico));
-    }
-  };
 
-  postEvent({
-    "event": "onInit",
-    "apiVersion": "0"
-  });
+  var mapPosition = {x: null, y: null};
+  if (NK.functions.setMapStateFromURL) {
+    mapPosition = NK.functions.setMapStateFromURL();
+  }
+
+  // decide which position to use
+  if (!(mapPosition.x && mapPosition.y)) {
+    map.setCenter(NK.defaultCenter, NK.defaultZoom);
+
+    if (NK.geolocator) {
+      NK.geolocator.activate();
+    } 
+  }
+
+  if (NK.functions.postMessage) {
+    (function () {
+      var vectorLayers,
+          layer,
+          vectorLayerData = [],
+          i, 
+          j;
+
+      vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
+
+      for (i = 0, j = vectorLayers.length; i < j; i += 1) {
+        layer = vectorLayers[i];
+        vectorLayerData.push({shortid: layer.shortid, name: layer.name});
+      }
+
+      NK.functions.postMessage({
+        "type": "mapInitialized",
+        "vectorLayers": vectorLayerData
+      });
+    }());
+
+  }
+
 };
+// end init()
+
 
 var addEvent = function(event, handler) {
   var listen = window.addEventListener || window.attachEvent;
@@ -184,10 +341,12 @@ var addEvent = function(event, handler) {
     listen("on" + event, handler);
   }
 };
+
 var cb = function(response, status, request) {
   NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
   NK.init();
 };
+
 var initializeToken = function () {
   $.ajax({
     url: NK.tokenService, 

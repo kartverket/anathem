@@ -1,0 +1,5 @@
+<%inherit file="/controls/controlcontext.html" />
+
+options.bind = true;
+NK.geolocator = new OpenLayers.Control.Geolocate(options); 
+NK.functions.addControlToContext(NK.geolocator, context);

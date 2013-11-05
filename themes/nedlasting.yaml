@@ -1,0 +1,59 @@
+# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
+
+template   : base
+title      : Norgeskart
+includeXDM : true
+mapscript  : 
+  template  : mapscript
+
+  baselayers:   
+    - template: layers/europa
+
+  styles    :
+    - template: styles/omriss
+    - template: styles/omrissFylker
+
+  overlays  : 
+    - include: layers/topo2
+    - include: layers/sjo_hovedkart2
+
+    - include: layers/geoJSON/fylker
+    - include: layers/geoJSON/fylker-utm35
+    - include: layers/geoJSON/fylker-utm33
+    - include: layers/geoJSON/fylker-utm32
+    - include: layers/geoJSON/kommuner
+    - include: layers/geoJSON/kommuner-utm35
+    - include: layers/geoJSON/kommuner-utm33
+    - include: layers/geoJSON/kommuner-utm32
+    - include: layers/geoJSON/dtm-utm32
+    - include: layers/geoJSON/dtm-utm33
+    - include: layers/geoJSON/dtm-utm33-100km
+    - include: layers/geoJSON/dtm-utm35
+    - include: layers/geoJSON/raster-n50
+    #- include: layers/geoJSON/raster-n50-utm32
+    #- include: layers/geoJSON/raster-n50-utm33
+    #- include: layers/geoJSON/raster-n50-utm35
+    - include: layers/geoJSON/raster-n250
+    - include: layers/geoJSON/raster-n500
+    - include: layers/geoJSON/raster-n1000
+    
+  center    : 
+    template: center/besseggen
+
+  functions :
+    - template: functions/updateURL
+    - template: functions/readURL
+
+  controls  :
+    - template: controls/geolocation
+    - template: controls/navigation
+    - template: controls/hashstate
+    - template: controls/container
+      id: overview-container-panel
+      controls:
+      - template: controls/overview
+        name: omriss
+        id: omriss.norge.500m
+        url: /json/norge/500m.geojson
+        detailedLayer: enkel
+

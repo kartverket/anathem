@@ -1,0 +1,14 @@
+template: layers/SOSIFile
+url: /sosi/kautokeino.sos
+name: Anlegg i Kautokeino
+id: kautokeino
+epsgCode: 32635
+styleName: unlabeledMarker
+layerGroup: testlag.utvikling
+popup:
+  template: popup/popup
+  headingAttribute: "OBJTYPE"
+  data:
+  - template: popup/data
+    attribute: "DATAFANGSTDATO"
+    label: "Registrert dato" 

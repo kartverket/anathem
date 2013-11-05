@@ -1,0 +1,66 @@
+% if not 'clustering' in vars:
+NK.strategies = NK.strategies || {};
+NK.strategies.cluster = NK.strategies.cluster || new OpenLayers.Strategy.Cluster({threshold: 2, distance: 48});
+<% vars['clustering']=True %>
+% endif
+
+% if not 'addClusteringRule' in vars:
+
+NK.styles = NK.styles || {};
+    
+/**
+ *	Method: addClusteringRule
+ *	Add clustering rule to a stylemap
+ *	
+ *	Parameters:
+ *	styleMap - {OpenLayers.StyleMap} The target stylemap
+ *  renderings - {Array} An optional array of target renderings (eg. ['default', 'temporary']). 
+ *		If no renderings are provided, the 'default' rendering is used by default.
+ *	
+ */
+NK.styles.addClusteringRule = function (styleMap, renderings) {
+	var i, j, rendering;
+
+	if (!renderings || renderings.length < 0) {
+		renderings = ['default'];
+	}
+	for (i = 0, j = renderings.length; i < j; i += 1) {
+		rendering = renderings[i];
+		styleMap.styles[rendering].addRules([
+	        new OpenLayers.Rule({
+	            // a rule contains an optional filter
+	            filter: new OpenLayers.Filter.Comparison({
+	                type: OpenLayers.Filter.Comparison.GREATER_THAN,
+	                property: "count",
+	                value: 0
+	            }),
+	            // if a feature matches the above filter, use these properties
+	            symbolizer: {
+	            	label: "${"${count}"}",
+					fontColor: "#fff",
+					fontSize: "12px",
+					fontFamily: "Arial, Courier New, monospace",
+					fontWeight: "bold",
+					labelOutlineColor: "white",
+					labelOutlineWidth: 0,				
+				    fillOpacity: 1,
+					labelXOffset: 0,
+					labelYOffset: 0,
+					graphicWidth: 64,
+					graphicHeight: 64,
+					graphicYOffset: -32,
+					graphicXOffset: -32,
+					zIndex: 1,
+					externalGraphic: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAElklEQVR42u1bPUhbURTOb6Ox1WZQIUIWUbQ4lJIpBBdxMEUQUSzUOoiDY8cO5Sm4t2sQnLpIQHBw0cFZHAwiUgwlBHEQJASHTOFhz3AmOV/uu3l5N0/M8GV5L+d853v359x7zw0EvvwxgRAhQnhDiDMGCO8ZA4Q44w2/GzLBzSvDQUKU0McBukEf2wq+BAHCyqDdixH2owARQj+T9BzsK+IHAUIgcJNChDolQFyD6CBhgpAhzBHmCeuEDcY6YZ6fZfjdQQ37cZMChJ6N4AhJwkcObKNFzLONpMofcwp5LUDUAZFRwiIIyA0W2bbKf9QrAWIKxymdr+2yVaQUXGLtFqCnibNhwgyTM4kZ9o149bRLgKiiuX9zQHaTsEXIEwqEY0KRcMkoEo75WZ7f3VTZZd+jbrqDesDDxj85IGhxUBccqA4u+L+W2g9xwTxDrQoQBKN9gpBREPpBOILB6eOIbUKfzCkBZoegvgA4wck2IfGdv9qlRyiwD+Q/ixImXQF6gaF0E+c/CWdM1EucsS/EIw2490qx6vT7sSZOfxGKCuJXhDLhgVBnPDHqjAdChXClsFVkn4jPmNPxwGnTH24y2u8pyN4QagSbg3UCm/9zo7C9h2YHMEX2qwSIAOXm4JfH5P4SqhyQG1TZFvADW8IciCUCBIBffxz2edzs/xEaMCh9NNgm6A5wTBiXWgESIAymvBUw2qMB745Je4E7NDCC2WEFTI1hQQBxJ2cCKHugDN68CAeA64S0s/RcgCDoL0uCwZ0mzf7JCHB32BH4LoHYgiwAzPdTQNETMODZBgWwwcB4Ajin0DoBNn+Q7lpAeR7tjaIKuFggTRa6AQsAmshXwdC+4LAECJpASeCzL/BeBTEGUOaXlJa0YFVX66AANWkVCZbSSSkzRMnPlGBgC6S3dgcFsEHavCXwn5KSImGrC/b/vOCoDIiZRFnglXe4Uoyh7e2cw7m/6gMBqg5zgpy4nU4/74QHy4KBU8FR3QcC1AVepwL/ZSHOtwGw67MmGJBS34YPBGhIqbHAf01aF6ApcEOAtPCxfSCADRZIQgzCdtkrEmAdCPBqusCq1AW6g2B3GpQToazDROjWBwLcukmEdFLhbcHRtQ8EuBZ4bWukwi96MfTofjGEl8OrgpHCC1gOFzSXw3hDBHUDn7SCGuCy7XRDpLslptgUTWhuilYMClBp76Yo7gaTQNFDQODeQPD3wPch4DoJmr/rg5FzHx2MnOsfjLg/GrOaHI2V2zwm2GwTHY1Zekdj+oejOR8fjv4G3HLocNT08XiJ8Kh7PM7/KRk9HmeEPSyQqHS4QCLsZYmMZbBExvKwRIaB64GnfVwkNY3qiFGcrdQIJghZv5XJMaeEbq2gmyrRtEahZLGFoIsahZLpVqtF3RZJjxLWNEpldwkHYD1xws92NUpl1xSlsjFTxdKzTMgkZhXF0r3dcvkOXZgYB6tIt1hi2yr/Ub9cmRnhKu4FF0EvsI0RjSszvrw0NUT4wDszn4EoC/wsw+8OadiPd6/NdS9OGhUAC2Hg6myke3m6jTB9fT5GiANh+vhZzOT1+f8X2ohXdZW6kAAAAABJRU5ErkJggg=='        
+				}
+	        }),
+	        new OpenLayers.Rule({
+	        	symbolizer: styleMap.styles[rendering].defaultStyle,
+	        	elseFilter: true
+	    	})
+		]);
+	}
+};
+
+<% vars['addClusteringRule']=True %>
+% endif

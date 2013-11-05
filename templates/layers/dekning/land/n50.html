@@ -1,3 +1,4 @@
+
 <%include file="/functions/vector.html" />
 <%include file="/styles/dekning/land.html" />
 
@@ -7,7 +8,6 @@
       onPopupClose = null,
       onFeatureUnselect,
       onFeatureSelect,
-      selectHandler,
       generatePopupMarkup,
       requestHandler;
 
@@ -52,17 +52,6 @@
     callback: requestHandler
   });
 
-  selectHandler = function(feature) {
-/*
-    postEvent({
-      "event": "onSelect", 
-      "element": "kartblad", 
-      "type": "n50", 
-      "id": feature.fid
-    });
-*/
-  };
-
   onPopupClose = function (evt) {
       selectControl.unselect(NK.selectedCoverageMap);
       delete NK.selectedCoverageMap;
@@ -102,22 +91,31 @@
   };
 
   onFeatureSelect = function (feature) {
-      NK = NK || {};
-      if (NK.selectedCoverageMap ) {
-          selectControl.unselect(NK.selectedCoverageMap);
-      }
-      NK.selectedCoverageMap = feature;
-
-      var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
-      M.setCenter(mousePosition);
-      var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
-                               mousePosition,
-                               null,
-                               generatePopupMarkup(feature),
-                               null, true, onPopupClose);
-      popup.autoSize = true;
-      feature.popup = popup;
-      M.addPopup(popup);
+      if (NK.easyXDM && NK.easyXDM.socket) {
+        // there is an active easyXDM socket - send feature data
+        var message = {
+          type: 'featureSelected', 
+          feature: feature.attributes,
+          layer: feature.layer.shortid
+        };
+        NK.easyXDM.socket.postMessage(JSON.stringify(message));
+      } else {
+        NK = NK || {};
+        if (NK.selectedCoverageMap ) {
+            selectControl.unselect(NK.selectedCoverageMap);
+        }
+        NK.selectedCoverageMap = feature;
+        var mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
+        M.setCenter(mousePosition);
+        var popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
+                                 mousePosition,
+                                 null,
+                                 generatePopupMarkup(feature),
+                                 null, true, onPopupClose);
+        popup.autoSize = true;
+        feature.popup = popup;
+        M.addPopup(popup);
+    }
   };
 
   NK.functions.vector.addVectorHoverControls(M, layer);
@@ -131,6 +129,8 @@
 
   M.addControl(selectControl);
 
+
+% if not 'n50LangNB' in vars:  
 OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Map number': 'Kartblad',
   'Latest print': 'Siste trykk',
@@ -143,5 +143,7 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
   'Special in map': 'Spesiale i kartblad',
   'Vignette in map': 'Vignett i kartblad'
 });
+<% vars['n50LangNB']=True %>
+% endif
 
 }(map, mapProj, proj));

@@ -1,54 +1,63 @@
-%if not 'vectorControls' in vars:  
+% if not 'vectorControls' in vars:  
 
 NK.functions = NK.functions || {};
 NK.functions.vector = NK.functions.vector || {};
 
-NK.functions.vector.markAllById = function (layer, intent) {
-  return function(element) {
+NK.functions.vector.markAllById = function (layer, intent, preserveIntent) {
+  return function(element, evt) {
+    if (preserveIntent && element.feature.renderIntent === preserveIntent) {
+      return false;
+    }
     // highlight all elements with the same element.feature.fid
     var ident = layer.getFeaturesByFid(element.feature.fid);
     $.each(ident, function (i, feature) {
-      feature.renderIntent = intent;
-      layer.drawFeature(feature);
+
+      if (preserveIntent && feature.renderIntent === preserveIntent) {
+        return false;
+      } else {
+        feature.renderIntent = intent;
+        layer.drawFeature(feature);
+      }
     });
   };
 };
 
-NK.functions.vector.addVectorHoverControls = function (map, layer, grouped) {
-  var hoverCtrl = new OpenLayers.Control.SelectFeature(
-    layer,
-    {
+NK.functions.vector.addVectorHoverControls = function (map, layer, options) {
+  var hoverCtrl,
+      selectFeatureProperties;
+
+  selectFeatureProperties = {
       hover: true,
       highlightOnly: true,
       renderIntent: "temporary"
-    }
-  );
-  if (!!grouped) {
-    hoverCtrl.eventListeners = {
-        beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary"),
-        featureunhighlighted: NK.functions.vector.markAllById(layer, "default")
+  };
+
+  if (options && options.groupByFid) {
+    selectFeatureProperties.eventListeners = {
+        beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary", options.preserveIntent),
+        featureunhighlighted: NK.functions.vector.markAllById(layer, "default", options.preserveIntent)
     };
   }
-  map.addControl(hoverCtrl);
-  hoverCtrl.activate();
-};
 
-NK.functions.vector.addVectorControls = function (map, layer, grouped) {
-  var selectCtrl;
-
-  NK.functions.vector.addVectorHoverControls(map, layer, click, grouped);
-  
-  selectCtrl = new OpenLayers.Control.SelectFeature(
+  hoverCtrl = new OpenLayers.Control.SelectFeature(
     layer,
-    {
-      clickFeature: click
-    }
+    selectFeatureProperties
   );
 
-  map.addControl(selectCtrl);
-  selectCtrl.activate();
+
+  map.addControl(hoverCtrl);
+  hoverCtrl.activate();
+  return hoverCtrl;
+};
+
+NK.functions.vector.addVectorControls = function (map, layer, options) {
+  var controls = {};
+
+  controls.hover = NK.functions.vector.addVectorHoverControls(map, layer, options);
+
+  return controls;
 };
 
 
 <% vars['vectorControls']=True %>
-%endif
+% endif

@@ -1,0 +1,74 @@
+% if not 'easyXDM' in vars:
+
+<script type="text/javascript" src="js/easyXDM.debug.js"></script>
+<script type="text/javascript">
+    easyXDM.DomHelper.requiresJSON("js/json2.js");
+</script>
+
+<% vars['easyXDM']=True %>
+% endif
+
+<script type="text/javascript">
+	var NK = NK || {};
+	NK.easyXDM = NK.easyXDM || {};
+
+	NK.easyXDM.socket = new easyXDM.Socket({
+		onMessage: function (data, origin) {
+			var json, 
+				lonLat, 
+				vectorLayers,
+				rasterLayers,
+				layer,
+				raster,
+				i, 
+				j,
+				k,
+				l;
+
+			if (origin === this.remote) {
+				json = easyXDM.getJSONObject().parse(data);
+				
+				if (json) {
+					if (json.cmd === 'setCenter') {
+						map.setCenter(new OpenLayers.LonLat(json.x, json.y), json.zoom);
+
+					} else if (json.cmd === 'setVisibleVectorLayer') {
+						vectorLayers  = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
+
+						for (i = 0, j = vectorLayers.length; i < j; i += 1) {
+							layer = vectorLayers[i];
+
+							if (layer.shortid === json.shortid) {
+								layer.setVisibility(true);
+
+								if (layer.preferredBackground) {
+									rasterLayers = map.getLayersByClass("OpenLayers.Layer.WMTS");
+
+									for (k = 0, l = rasterLayers.length; k < l; k += 1) {
+										raster = rasterLayers[k];
+
+										if (raster.shortid === layer.preferredBackground) {
+											raster.setVisibility(true);
+										} else if (!raster.isBaseLayer) {
+											raster.setVisibility(false);
+										}
+									}
+								}
+							} else {
+								layer.setVisibility(false);
+							}
+						} 
+					}
+				}
+			}
+		}
+	});
+
+NK.functions = NK.functions || {};
+NK.functions.postMessage = function (msg) {
+	if (!!NK.easyXDM.socket) {
+		NK.easyXDM.socket.postMessage(JSON.stringify(msg));
+	}
+};
+</script>
+

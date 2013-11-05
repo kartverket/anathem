@@ -1,0 +1,51 @@
+% if not 'styles.embed.box' in vars:
+OpenLayers.Util.extend(OpenLayers.Lang.nb, {
+    'Height': 'H\u00F8yde',
+    'Width': 'Bredde'
+});
+NK.styles = NK.styles || {};
+NK.styles.embed = NK.styles.embed || {};
+NK.styles.embed.box = new OpenLayers.StyleMap({
+	'default': new OpenLayers.Style({
+	  strokeWidth: 2,
+	  strokeColor  : "#616060",
+	  fillOpacity: 0, 
+	  label: OpenLayers.Lang.translate('Height') + "${": ${height}\\n"}" + OpenLayers.Lang.translate('Width') + "${": ${width}"}",
+	  fontColor: "#616060",
+	  fontSize: "12px",
+	  fontFamily: "Courier New, monospace",
+	  fontWeight: "bold",
+	  labelAlign: "lt",
+	  labelOutlineColor: "white",
+	  labelOutlineWidth: 5,
+	  labelXOffset: "${"${getXOffset}"}",
+	  labelYOffset: "${"${getYOffset}"}"
+	}, 
+	{
+		context: {
+			getXOffset: function (feature) {
+				return parseInt(feature.attributes.width, 10) / 2 + 7;
+			},
+			getYOffset: function (feature) {
+				return parseInt(feature.attributes.height, 10) / 2 - 2;
+			}
+		}
+	})
+});
+
+NK.styles.embed.mask =  new OpenLayers.Style({
+	strokeWidth: 2,
+	strokeColor  : "#616060",
+	fillOpacity: 0, 
+	label: OpenLayers.Lang.translate('Height') + "${": ${height}\\n"}" + OpenLayers.Lang.translate('Width') + "${": ${width}"}",
+	fontColor: "#616060",
+	fontSize: "12px",
+	fontFamily: "Courier New, monospace",
+	fontWeight: "bold",
+	labelAlign: "cm",
+	labelOutlineColor: "white",
+	labelOutlineWidth: 5
+});
+
+<% vars['styles.embed.box']=True %>
+% endif

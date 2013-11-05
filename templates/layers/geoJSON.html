@@ -1,0 +1,176 @@
+<%include file="/functions/vector.html"/>
+
+% if popup:
+  <%include file="/functions/popup.html"/>
+% endif
+
+% if cluster:
+  <%include file="/strategies/cluster.html"/>
+%endif
+
+% if not 'formatGeoJSON' in vars:
+
+NK.format = NK.format || {};
+NK.format.geoJSON = NK.format.geoJSON || new OpenLayers.Format.GeoJSON();
+
+<% vars['formatGeoJSON']=True %>
+% endif
+
+
+% if not 'strategyTFS' in vars:
+
+NK.strategy = NK.strategy || {};
+NK.strategy.TFS = NK.strategy.TFS || new OpenLayers.Strategy.TFS({
+  resFactor: 1, 
+  ratio: 1, 
+  mapBounds: mapBounds,
+  format: NK.format.geoJSON
+});
+
+<% vars['strategyTFS']=True %>
+% endif
+
+% if not 'layerTypeGeoJSON' in vars:
+
+NK.addLayerType = NK.addLayerType || {};
+NK.addLayerType.geoJSON = (function (M, MP) {
+  var matrixIds,
+      i;
+
+	matrixIds = [];
+
+	for (i = 0; i <= NK.zoomLevels; ++i) {
+		matrixIds[i] = {};
+		matrixIds[i].identifier = MP + ":" + i;
+	} 
+
+	return function (name, id, url, options) {
+
+		var protocolParameters,
+			protocol,
+			layer,
+			layerOptions,
+			vectorControls;
+
+		protocolParameters = {
+			last: false,
+			format: NK.format.geoJSON,
+			url: url
+		};
+
+		protocol = new OpenLayers.Protocol.TFS(protocolParameters);
+
+		layerOptions = {
+			shortid: id,
+			strategies: [NK.strategy.TFS],
+			protocol: protocol,
+			projection: MP,
+			displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
+			visibility: (options && options.visible) ? 1 : 0
+		};
+
+		if (options) {
+			if (options.styleName && NK.styles && NK.styles[options.styleName]) {
+				layerOptions.styleMap = NK.styles[options.styleName];
+			}
+
+			if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+				layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD].styleMap;
+			}
+
+		    if (options.cluster && NK.strategies.cluster) {
+		      layerOptions.strategies.push(NK.strategies.cluster);
+		    }
+		}
+
+		layer = new OpenLayers.Layer.Vector(
+			name,
+			layerOptions
+		);
+
+		if (options) {
+		    if (options.cluster) {
+		      	NK.styles.addClusteringRule(layer.styleMap);
+		    }
+
+			if (options.layerGroup) {
+				layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
+			}
+
+			if (options.visible) {
+				NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
+				NK.defaultVisibleLayers.push(id);
+			}
+			if (options.layerOpacity) {
+				layer.setOpacity(options.layerOpacity);
+			}
+
+		}
+
+		M.addLayers([layer]);
+
+		if (options && options.popupConfig) {
+			NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
+		}
+
+	    if (NK.functions && NK.functions.vector) {
+	    	vectorControls = NK.functions.vector.addVectorControls(M, layer, {'groupByFid': true, 'preserveIntent': 'select'});
+
+			if (vectorControls.hover) {
+				vectorControls.hover.handlers.feature.stopClick = false;
+				vectorControls.hover.handlers.feature.stopDown = false;
+				vectorControls.hover.handlers.feature.stopUp = false;
+			}
+		}
+
+	    if (options && options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+	        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
+	    }
+	};
+
+}(map, mapProj));
+
+<% vars['layerTypeGeoJSON']=True %>
+% endif
+
+
+(function() {
+	var options = {};
+
+% if layerGroup:
+	options.layerGroup = "${layerGroup}";	
+% endif
+
+% if visible:
+	options.visible = "${visible}";	
+% endif
+
+% if hidefromlayerswitcher:
+	options.hideFromLayerSwitcher = "${hidefromlayerswitcher}";	
+% endif
+
+% if cluster:
+	options.cluster = true;
+% endif
+
+% if styleName:
+	options.styleName = '${styleName}';
+% endif
+
+% if styleNameSLD:
+	options.styleNameSLD = '${styleNameSLD}';
+% endif
+
+% if popup:
+  options.popupConfig = ${popup};
+% endif
+
+% if layerOpacity:
+	options.layerOpacity = ${layerOpacity};
+% endif
+
+% if name:
+    NK.addLayerType.geoJSON("${name}", "${id}", "${url}", options);	
+% endif
+
+}());

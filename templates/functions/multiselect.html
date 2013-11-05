@@ -1,0 +1,139 @@
+%if not 'popupFunctions' in vars:  
+
+NK.functions = NK.functions || {};
+NK.functions.popup = NK.functions.popup || {};
+
+NK.functions.popup.generatePopupMarkup = function (conf) {
+  return function (feature) {
+    var a  = feature.attributes, i, l;
+      var markup = '<article>';
+      if (conf.heading && a[conf.heading]) {
+        markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
+      }
+      if (conf.data) {
+        for (i = 0, l = conf.data.length; i < l; i += 1) {
+          if (conf.data[i].attribute && a[conf.data[i].attribute]) {
+            markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + '</p>';
+          }
+        }
+      }
+      markup += '</article>';
+      return markup;
+  };
+};
+
+NK.functions.popup.getFeatureUnselector = function (M) {
+  return function (feature) {
+    if (feature.popup) {
+      feature.popup.feature = null;
+      M.removePopup(feature.popup);
+      feature.popup.destroy();
+      feature.popup = null;
+    }
+
+    if (NK.easyXDM && NK.easyXDM.socket) {
+      // there is an active easyXDM socket - send feature data
+      var message = {
+        cmd: 'featureUnselected', 
+        feature: feature.fid,
+        attributes: feature.attributes,
+        layer: feature.layer.shortid
+      };
+      NK.easyXDM.socket.postMessage(JSON.stringify(message));
+    } 
+  }
+}
+
+NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction) {
+  return function (feature) {
+    var popup, 
+        message, 
+        mousePosition,
+        featurePosition,
+        popupPosition,
+        offset = {},
+        xOffset, yOffset;
+
+    if (feature.cluster) {
+      return false;
+    }
+
+    if (NK.easyXDM && NK.easyXDM.socket) {
+      // there is an active easyXDM socket - send feature data
+      var message = {
+        cmd: 'featureSelected', 
+        feature: feature.fid,
+        attributes: feature.attributes,
+        layer: feature.layer.shortid
+      };
+      NK.easyXDM.socket.postMessage(JSON.stringify(message));
+    } else {
+      // find out where to position the popup
+
+      featurePosition = feature.geometry.getBounds().getCenterLonLat();
+      if (featurePosition) {
+        xOffset = feature.layer.styleMap.styles[feature.renderIntent].defaultStyle.graphicXOffset || feature.layer.styleMap.styles['default'].defaultStyle.graphicXOffset || 0;
+        xOffset += (feature.layer.styleMap.styles[feature.renderIntent].defaultStyle.graphicWidth || feature.layer.styleMap.styles['default'].defaultStyle.graphicWidth) / 2;
+        yOffset = feature.layer.styleMap.styles[feature.renderIntent].defaultStyle.graphicYOffset || feature.layer.styleMap.styles['default'].defaultStyle.graphicYOffset || 0;
+          if (xOffset || yOffset) {
+            offset.x = -5;
+            offset.y = -18;
+            offset.addX = xOffset;
+            offset.addY = yOffset;
+          }
+      }
+      mousePosition = map.getLonLatFromPixel((map.getControlsByClass('OpenLayers.Control.MousePosition')[0]).lastXy);
+      popupPosition = featurePosition || mousePosition;
+
+      M.panTo(popupPosition);
+      popup = new OpenLayers.Popup.FramedSideAnchored("nk-selected-coverage-map", 
+                               popupPosition,
+                               null,
+                               markupGeneratorFunction(feature),
+                               null, 
+                               true, 
+                               popupCloseFunction,
+                               offset,
+                               'selected-feature-popup');
+
+      popup.autoSize = true;
+      feature.popup = popup;
+      popup.feature = feature;
+      M.addPopup(popup);
+    }
+  };
+};
+
+NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
+
+  var generatePopupMarkup,
+      onFeatureSelect,
+      onFeatureUnselect,
+      onPopupClose,
+      selectControl;
+      
+  generatePopupMarkup = NK.functions.popup.generatePopupMarkup(popupConfig);
+
+  onPopupClose = function (evt) {
+    if (this.feature) {
+      selectControl.unselect(this.feature);
+    }
+  };
+
+  onFeatureSelect = NK.functions.popup.getFeatureSelector(M, generatePopupMarkup, onPopupClose);
+  onFeatureUnselect = NK.functions.popup.getFeatureUnselector(M);
+
+  selectControl = new OpenLayers.Control.SelectFeature(layer, {
+      onSelect: onFeatureSelect,
+      onUnselect: onFeatureUnselect,
+      multiple: true,
+      toggle : true,
+      autoActivate: true
+  });
+
+  M.addControl(selectControl);
+
+};
+
+<% vars['popupFunctions']=True %>
+%endif

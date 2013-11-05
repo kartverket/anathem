@@ -1,0 +1,10 @@
+template: layers/geoJSONFileMC
+url: /json/dekning/raster/n50.geojson
+name: Raster N50
+id: raster-n50
+epsgCode: 32633 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "n"

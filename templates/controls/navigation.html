@@ -1,7 +1,7 @@
 <%inherit file="/controls/controlcontext.html" />
-
+options.dragPanOptions = {enableKinetic: false};
 NK.functions.addControlToContext(new OpenLayers.Control.Navigation(options), context);
-NK.functions.addControlToContext(new OpenLayers.Control.ScaleLine(options), context);
+NK.functions.addControlToContext(new OpenLayers.Control.TouchNavigation(options), context);
 NK.functions.addControlToContext(new OpenLayers.Control.KeyboardDefaults(options), context);
 NK.functions.addControlToContext(new OpenLayers.Control.MousePosition({
 	draw: function() {

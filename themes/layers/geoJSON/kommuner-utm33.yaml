@@ -1,0 +1,11 @@
+template: layers/geoJSONFileMC
+url: /json/norge/kommuner-utm33.json
+name: Kommuner UTM33
+id: kommuner-utm33
+epsgCode: 32633 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "n"
+

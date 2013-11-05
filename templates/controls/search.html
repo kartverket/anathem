@@ -1,3 +1,6 @@
 <%inherit file="/controls/controlcontext.html" />
+% if coordinates:
+        options.coordinates = "${coordinates}";
+% endif
 
 NK.functions.addControlToContext(new OpenLayers.Control.Search(options), context);
