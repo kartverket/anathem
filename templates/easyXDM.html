@@ -18,7 +18,12 @@
 				lonLat, 
 				vectorLayers,
 				rasterLayers,
+				features,
+				feature,
+				layers,
 				layer,
+				controls,
+				selector,
 				raster,
 				i, 
 				j,
@@ -58,6 +63,68 @@
 								layer.setVisibility(false);
 							}
 						} 
+					} else if (json.cmd === 'getFeaturesInLayer') {
+						layers = map.getLayersBy('shortid', json.layer);
+
+						if (layers.length > 0) {
+							layer = layers[0];
+							features = [];
+
+							for (k = 0, l = layer.features.length; k < l; k += 1) {
+								feature = {};
+								feature.fid = layer.features[k].fid;
+								feature['attributes'] = layer.features[k]['attributes'];
+
+								features.push(feature);
+							}
+							NK.functions.postMessage({"type": "layerFeatures", "layer": layer.shortid, "features": features});
+						} else {
+							NK.functions.postMessage({"type": "error", "message": "no such layer"});
+						}
+					} else if (json.cmd === 'getVisibleFeaturesInLayer') {
+						layers = map.getLayersBy('shortid', json.layer);
+
+						if (layers.length > 0) {
+							layer = layers[0];
+							features = [];
+
+							for (k = 0, l = layer.features.length; k < l; k += 1) {
+								if (layer.features[k].getVisibility() && layer.features[k].onScreen()) {
+									feature = {};
+									feature.fid = layer.features[k].fid;
+									feature['attributes'] = layer.features[k]['attributes'];
+
+									features.push(feature);
+								}
+							}
+							NK.functions.postMessage({"type": "layerVisibleFeatures", "layer": layer.shortid, "features": features});
+						} else {
+							NK.functions.postMessage({"type": "error", "message": "no such layer"});
+						}
+					} else if (json.cmd === 'selectFeature') {
+						layers = map.getLayersBy('shortid', json.layer);
+						feature = null;
+						selector = null;
+
+						if (layers.length > 0) {
+							layer = layers[0];
+							feature = layer.getFeatureByFid(json.feature);
+
+							if (feature) {
+								controls = layer.map.getControlsByClass('OpenLayers.Control.SelectFeature');
+
+								for (i = 0, j = controls.length; i < j && selector === null; i += 1) {
+									if (controls[i].layer.shortid === layer.shortid) {
+										selector = controls[i];
+									}
+								}
+							}
+						}
+						if (feature !== null && selector !== null) {
+							selector.select(feature);
+						} else {
+							NK.functions.postMessage({"type": "error", "message": "no such layer or feature"});
+						}
 					}
 				}
 			}
