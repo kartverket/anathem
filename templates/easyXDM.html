@@ -29,6 +29,38 @@
 				j,
 				k,
 				l;
+				var getVisibleFeaturesInLayer = function (layer) {
+					var features = [],
+						feature,
+						i,
+						j;
+
+					for (i = 0, j = layer.features.length; i < j; i += 1) {
+						if (layer.features[i].getVisibility() && layer.features[i].onScreen()) {
+							feature = {};
+							feature.fid = layer.features[i].fid;
+							feature['attributes'] = layer.features[i]['attributes'];
+
+							features.push(feature);
+						}
+					}
+					return features;
+				};
+				var getFeatures = function (layer) {
+					var features = [],
+						feature,
+						i,
+						j;
+
+					for (i = 0, j = layer.features.length; i < j; i += 1) {
+						feature = {};
+						feature.fid = layer.features[i].fid;
+						feature['attributes'] = layer.features[i]['attributes'];
+
+						features.push(feature);
+					}
+					return features;
+				};
 
 			if (origin === this.remote) {
 				json = easyXDM.getJSONObject().parse(data);
@@ -63,43 +95,53 @@
 								layer.setVisibility(false);
 							}
 						} 
-					} else if (json.cmd === 'getFeaturesInLayer') {
-						layers = map.getLayersBy('shortid', json.layer);
+					} else if (json.cmd === 'getFeatures') {
+						if (json.layer) {
+							layers = map.getLayersBy('shortid', json.layer);
 
-						if (layers.length > 0) {
-							layer = layers[0];
-							features = [];
+							if (layers.length > 0) {
+								features = getFeatures(layers[0]);
 
-							for (k = 0, l = layer.features.length; k < l; k += 1) {
-								feature = {};
-								feature.fid = layer.features[k].fid;
-								feature['attributes'] = layer.features[k]['attributes'];
-
-								features.push(feature);
+								NK.functions.postMessage({"type": "layerFeatures", "layer": layer.shortid, "features": features});
+							} else {
+								NK.functions.postMessage({"type": "error", "message": "no such layer"});
 							}
-							NK.functions.postMessage({"type": "layerFeatures", "layer": layer.shortid, "features": features});
 						} else {
-							NK.functions.postMessage({"type": "error", "message": "no such layer"});
+							vectorLayers  = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
+							layers = [];
+
+							for (i = 0, j = vectorLayers.length; i < j; i += 1) {
+								layer = vectorLayers[i];
+								layers.push[{
+									"layer": layer.shortid,
+									"features": getFeaturesInLayer(layer)
+								}];
+							}
+							NK.functions.postMessage({"type": "features", "layers": layers});							
 						}
-					} else if (json.cmd === 'getVisibleFeaturesInLayer') {
-						layers = map.getLayersBy('shortid', json.layer);
+					} else if (json.cmd === 'getVisibleFeatures') {
+						if (json.layer) {
+							layers = map.getLayersBy('shortid', json.layer);
 
-						if (layers.length > 0) {
-							layer = layers[0];
-							features = [];
+							if (layers.length > 0) {
+								features = getVisibleFeaturesInLayer(layers[0]);
 
-							for (k = 0, l = layer.features.length; k < l; k += 1) {
-								if (layer.features[k].getVisibility() && layer.features[k].onScreen()) {
-									feature = {};
-									feature.fid = layer.features[k].fid;
-									feature['attributes'] = layer.features[k]['attributes'];
-
-									features.push(feature);
-								}
+								NK.functions.postMessage({"type": "layerVisibleFeatures", "layer": layer.shortid, "features": features});
+							} else {
+								NK.functions.postMessage({"type": "error", "message": "no such layer"});
 							}
-							NK.functions.postMessage({"type": "layerVisibleFeatures", "layer": layer.shortid, "features": features});
 						} else {
-							NK.functions.postMessage({"type": "error", "message": "no such layer"});
+							vectorLayers  = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
+							layers = [];
+
+							for (i = 0, j = vectorLayers.length; i < j; i += 1) {
+								layer = vectorLayers[i];
+								layers.push[{
+									"layer": layer.shortid,
+									"features": getVisibleFeaturesInLayer(layer)
+								}];
+							}
+							NK.functions.postMessage({"type": "visibleFeatures", "layers": layers});
 						}
 					} else if (json.cmd === 'selectFeature') {
 						layers = map.getLayersBy('shortid', json.layer);

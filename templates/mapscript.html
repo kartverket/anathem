@@ -324,7 +324,9 @@ NK.init = function () {
       for (i = 0, j = vectorLayers.length; i < j; i += 1) {
         layer = vectorLayers[i];
         vectorLayerData.push({shortid: layer.shortid, name: layer.name, visibility: layer.visibility});
+
         if (layer.visibility && layer.features && layer.features.length) {
+
           for (k = 0, l = layer.features.length; k < l; k += 1) {
             feature = layer.features[k];
             vectorFeatureData.push({
@@ -332,6 +334,7 @@ NK.init = function () {
               "attributes": feature.attributes
             });
           }
+
         }
       }
 
@@ -339,6 +342,7 @@ NK.init = function () {
         "type": "mapInitialized",
         "vectorLayers": vectorLayerData
       };
+
       if (vectorFeatureData.length > 0) {
         message.visibleLayerFeatures = vectorFeatureData;
       }
