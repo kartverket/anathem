@@ -46,7 +46,7 @@
 					}
 					return features;
 				};
-				var getFeatures = function (layer) {
+				var getFeaturesInLayer = function (layer) {
 					var features = [],
 						feature,
 						i,
@@ -100,7 +100,8 @@
 							layers = map.getLayersBy('shortid', json.layer);
 
 							if (layers.length > 0) {
-								features = getFeatures(layers[0]);
+								layer = layers[0];
+								features = getFeaturesInLayer(layer);
 
 								NK.functions.postMessage({"type": "layerFeatures", "layer": layer.shortid, "features": features});
 							} else {
@@ -124,7 +125,8 @@
 							layers = map.getLayersBy('shortid', json.layer);
 
 							if (layers.length > 0) {
-								features = getVisibleFeaturesInLayer(layers[0]);
+								layer = layers[0];
+								features = getVisibleFeaturesInLayer(layer);
 
 								NK.functions.postMessage({"type": "layerVisibleFeatures", "layer": layer.shortid, "features": features});
 							} else {
@@ -133,7 +135,7 @@
 						} else {
 							vectorLayers  = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
 							layers = [];
-
+							console.log(vectorLayers.length);
 							for (i = 0, j = vectorLayers.length; i < j; i += 1) {
 								layer = vectorLayers[i];
 								layers.push[{
