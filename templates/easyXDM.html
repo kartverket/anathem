@@ -159,13 +159,19 @@
 
 								for (i = 0, j = controls.length; i < j && selector === null; i += 1) {
 									if (controls[i].layer.shortid === layer.shortid) {
-										selector = controls[i];
+										if (controls[i].click) {
+											// ensure the correct control is used
+											selector = controls[i];
+										}
 									}
 								}
 							}
 						}
 						if (feature !== null && selector !== null) {
-							selector.select(feature);
+							if (json.panAndZoom && feature.geometry.bounds) {
+								feature.layer.map.zoomToExtent(feature.geometry.bounds);
+							}
+							selector.clickFeature.call(selector, feature);
 						} else {
 							NK.functions.postMessage({"type": "error", "message": "no such layer or feature"});
 						}
