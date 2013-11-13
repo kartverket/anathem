@@ -11,6 +11,8 @@ controls:
     storageUrl: http://beta.norgeskart.no/ws/upload-json.py
     styleName: track
   - template: controls/emergencyposter
+    i18n:
+    - include: languages/nb/emergencyposter
   - template: controls/heightprofile
     heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
     gpxStorageUrl: http://beta.norgeskart.no/ws/upload-gpx.py
