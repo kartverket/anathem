@@ -67,11 +67,8 @@ mapscript:
     - template: controls/scaleline
     - template: controls/hashstate
     - include: toolbars/basic
-    - include: toolbars/search
-    - include: toolbars/share
+    - include: toolbars/top
     - include: toolbars/secondary
-    - template: controls/container
-      id: top-decoration-bar
     - template: controls/container
       id: overview-container-panel
       controls:
