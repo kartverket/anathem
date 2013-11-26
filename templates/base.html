@@ -3,7 +3,12 @@
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en" style="height:100%"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en" style="height:100%"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js lt-ie10" lang="en" style="height:100%"> <![endif]-->
+% if manifestName:
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en" style="height:100%" manifest="${manifestName}.manifest"> <!--<![endif]-->
+% else:
 <!--[if gt IE 9]><!--> <html class="no-js" lang="en" style="height:100%"> <!--<![endif]-->
+% endif
+
   <head>
     <!-- by kartverket / Thomas Hirsch 2012 - public domain -->
     <meta charset="utf-8" />
