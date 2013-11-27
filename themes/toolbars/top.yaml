@@ -11,6 +11,10 @@ controls:
   controls:
   - template: controls/search
     coordinates: http://beta.norgeskart.no/ws/trans.py
+    searchUrl: https://ws.geonorge.no/SKWSIndexSSR/ssr/sok
+    streetAddressesSearchUrl: http://beta.norgeskart.no/ws/veg.py
+    addressSearchUrl: http://beta.norgeskart.no/ws/adr.py
+    propertySearchUrl: http://beta.norgeskart.no/ws/eie.py
 - template: controls/container
   id: share-panel
   controls:

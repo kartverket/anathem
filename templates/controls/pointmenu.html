@@ -2,5 +2,16 @@
 % if url:
         options.url = "${url}";
 % endif
-
+% if infoUrl:
+        options.infoUrl = "${infoUrl}";
+% endif
+% if forecastUrl:
+        options.forecastUrl = "${forecastUrl}";
+% endif
+% if sunriseUrl:
+        options.sunriseUrl = "${sunriseUrl}";
+% endif
+% if propertyUrl:
+        options.propertyUrl = "${propertyUrl}";
+% endif
 NK.functions.addControlToContext(new OpenLayers.Control.PointMenu(options), context);
