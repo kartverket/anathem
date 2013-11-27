@@ -17,7 +17,7 @@ gkopen = "http://opencache.statkart.no/gatekeeper/gk/gk.open";
 gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
 NK.gkToken = "unInitialized";
-NK.tokenService = "http://beta.norgeskart.no/ws/gkt.py";
+NK.tokenService = "${tokenServiceUrl}";
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 

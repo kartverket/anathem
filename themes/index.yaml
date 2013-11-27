@@ -6,6 +6,7 @@ manifestName: index
 mapscript: 
   template  : mapscript
   language  : nb
+  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
 
   i18n:
   - include: languages/nb/base
