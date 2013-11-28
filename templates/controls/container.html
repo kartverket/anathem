@@ -24,23 +24,29 @@
 
 
 	% if name:
-	var header = document.createElement("div");
-	header.className = "panel-name";
-	var name = document.createElement('span');
-	name.innerHTML = "${name}";
+		% if toggleButton:
+			var header = document.createElement("button");
+		% else:
+			var header = document.createElement("div");
+		% endif
 
-	% if svgIcon:
-	header.innerHTML = OpenLayers.Util.hideFromOldIE('${svgIcon}');
-	%endif
+		header.className = "panel-name";
+		var name = document.createElement('span');
+		name.innerHTML = "${name}";
 
-	header.appendChild(name);
-	container.appendChild(header);
-	OpenLayers.Event.observe(header, 'click', OpenLayers.Function.bind(function (evt) {
-		if (OpenLayers.Element.hasClass(this,'minified')) {
-			OpenLayers.Element.removeClass(this, 'minified');
-		} else {
-			OpenLayers.Element.addClass(this, 'minified');
-		}	}, container));
+		% if svgIcon:
+			header.innerHTML = OpenLayers.Util.hideFromOldIE('${svgIcon}');
+		%endif
+
+		header.appendChild(name);
+		container.appendChild(header);
+		OpenLayers.Event.observe(header, 'click', OpenLayers.Function.bind(function (evt) {
+			if (OpenLayers.Element.hasClass(this,'minified')) {
+				OpenLayers.Element.removeClass(this, 'minified');
+			} else {
+				OpenLayers.Element.addClass(this, 'minified');
+			}	
+		}, container));
 	% endif
 
 
