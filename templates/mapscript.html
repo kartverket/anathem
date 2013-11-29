@@ -253,19 +253,25 @@ NK.init = function () {
     })
   );
 
+% if center:
   // Default placement and zoom of the map
   ${center}
+% endif
 
-  // load SLD styles
 % if styles:
+  // load SLD styles
   ${styles}
 % endif
 
+% if baselayers:
   // Base layers
   ${baselayers}
+% endif
 
+%if overlays:
   // Overlays
   ${overlays}
+% endif
 
   var removePopups = function () {
     var popup, p;
