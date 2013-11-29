@@ -3,6 +3,8 @@ title    : Norgeskart
 mapClass: embedded-map
 mapscript:
   template  : mapscript
+  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
+  
   baselayers:   
     - template: layers/europa
   overlays  : 
