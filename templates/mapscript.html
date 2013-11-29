@@ -17,7 +17,11 @@ gkopen = "http://opencache.statkart.no/gatekeeper/gk/gk.open";
 gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
 NK.gkToken = "unInitialized";
+
+% if tokenServiceUrl:
 NK.tokenService = "${tokenServiceUrl}";
+% endif
+
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 
