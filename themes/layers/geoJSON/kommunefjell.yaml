@@ -17,4 +17,5 @@ popup:
     label: Kommune
   - template: popup/data
     attribute: "HOYDE [m]"
-    label: Hoyde
+    label: H&oslash;yde
+    unit: "m"

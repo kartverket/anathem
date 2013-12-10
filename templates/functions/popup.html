@@ -16,7 +16,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     if (conf.data) {
       for (i = 0, l = conf.data.length; i < l; i += 1) {
         if (conf.data[i].attribute && a[conf.data[i].attribute]) {
-          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + '</p>';
+          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</p>';
         }
       }
     }
