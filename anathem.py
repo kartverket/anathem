@@ -19,7 +19,7 @@ config   = yaml.load(open("themes/%s.yaml" % tema, "r"))
 defaults = yaml.load(open("default.yaml", "r"))
 lookup   = TemplateLookup(directories=['./templates/'])
 
-def recurse_render(data):
+def recurse_render(data, breadcrumbs):
   """
   render a template as indicated by the given configuration. 
   data: a dictionary containing at least a "template" key, and 
@@ -30,7 +30,7 @@ def recurse_render(data):
     # load another configuration file indicated by the include key
     include_name = data["include"]
     include = yaml.load(open("themes/%s.yaml" % include_name, "r"))
-    return recurse_render(include)
+    return recurse_render(include, breadcrumbs + ['inc:'+include_name])
 
   elif "template" in data:
     # load template indicated by the template key
@@ -42,9 +42,9 @@ def recurse_render(data):
     for key,value in data.items():
       try: 
         if type(value)==type(dict()):
-          data[key] = recurse_render(value)
+          data[key] = recurse_render(value, breadcrumbs + [template_name])
         if type(value)==type(list()):
-          data[key] = "\n".join([recurse_render(x) for x in value])
+          data[key] = "\n".join([recurse_render(x, breadcrumbs + [template_name]) for x in value])
       except IOError, er:
         print "Template specified in configuration %s was not found:" % template_name
         print er
@@ -57,18 +57,19 @@ def recurse_render(data):
     try:
       return template.render(**allkeys)
     except NameError, er:
-      print "\nMissing parameter while parsing template '%s'." % template_name
+      print "\nMissing parameter while parsing template '%s'. <br/>" % template_name
+      print "\nPath: %s <br/>" % ("; ".join(breadcrumbs),)
        
       try: 
         code   = open("templates/%s.html" % template_name, "r").read()
         params = re_param.findall(code)
-        print "The template supports *and* requires the following parameters:"
-        print "Provide it with an empty string if it is not to be included.\n"
+        print "The template supports *and* requires the following parameters: <br/>"
+        print "Provide it with an empty string if it is not to be included. <br/><br/>\n"
         for param in params:
-          print "%s %s" % (param in allkeys and "OK:     " or "MISSING:",param)
-        print ""
+          print "%s %s <br/>" % (param in allkeys and "OK:     " or "MISSING:",param)
+        print "<br/>"
       except:
-        print "DEBUG: could not parse template code to identify required parameters."
+        print "DEBUG: could not parse template code to identify required parameters.<br/>"
 
       #print exceptions.text_error_template().render()
       sys.exit(1)
@@ -77,6 +78,6 @@ def recurse_render(data):
       print exceptions.text_error_template().render()
       sys.exit(1)
   
-print recurse_render(config)
+print recurse_render(config, [])
 
 
