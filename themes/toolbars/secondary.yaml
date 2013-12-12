@@ -46,3 +46,9 @@ controls:
   #  group: testlag.utvikling
   #  title: Test under utvikling
   #  buttonText: Test 
+- template: controls/container
+  name: "&nbsp;Gamle NK"
+  id: gamlenk-panel
+  controls:
+  - template: controls/gamlenkbutton
+
