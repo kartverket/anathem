@@ -22,7 +22,7 @@ controls:
   id: point-panel
   controls:
     - template: controls/pointmenu
-      url: http://beta.norgeskart.no/ws/trans.py
+      url: /ws/trans.py
       i18n:
       - include: languages/nb/pointmenu
 - template: controls/container

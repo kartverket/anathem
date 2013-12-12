@@ -1,6 +1,6 @@
 template: styles/SLD
 name: maritimegrenser
-url: http://beta.norgeskart.no/xml/NMG.xml
+url: /xml/NMG.xml
 translations: 
   - template: styles/SLDtranslation
     featureName: DSO

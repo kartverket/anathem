@@ -2,7 +2,7 @@ template: layers/wfs
 name: Riks&shy;grense
 id: riksgrense
 layerGroup: testlag.utvikling
-url: http://beta.norgeskart.no/ws/wfs.abas.py
+url: /ws/wfs.abas.py
 #url: http://openwms.statkart.no/skwms1/wms.abas
 featuretype: Riksgrense
 namespace: 
