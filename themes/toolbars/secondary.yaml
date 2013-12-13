@@ -47,6 +47,7 @@ controls:
   #  title: Test under utvikling
   #  buttonText: Test 
 - template: controls/gamlenkcontainer
-  name: "Gamle Norges- kartet"
+  name: "Gamle Norges- kart"
+  tooltip: "g&aring; til gamle Norgeskart"
   id: gamlenk-panel
 
