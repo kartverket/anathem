@@ -3,6 +3,11 @@ title    : Norgeskart
 mapClass: embedded-map
 mapscript:
   template  : mapscript
+  styles    :
+    - template: styles/unlabeledMarker
+    - template: styles/labeledMarker
+    - template: styles/omriss
+    - template: styles/track
   baselayers:   
     - template: layers/europa
   overlays  : 
