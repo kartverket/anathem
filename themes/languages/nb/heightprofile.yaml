@@ -41,6 +41,9 @@ translations:
     source: Upload GPX file
     translation: Last opp en GPX-fil
   - template: i18n/translation
+    source: Choose File
+    translation: Velg fil
+  - template: i18n/translation
     source: Enter WKT geometry data
     translation: Lim inn et WKT LINESTRING-uttrykk
   - template: i18n/translation
