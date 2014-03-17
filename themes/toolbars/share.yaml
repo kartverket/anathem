@@ -32,4 +32,7 @@ controls:
     orderUrl: 'http://www.kartverket.no/Kart/Gratis-kartdata/Last-ned-gratis-kartdata/Illustrasjonskart-av-N5000/'
     i18n:
     - include: languages/nb/makeyourown
-    
+- template: controls/container
+  id: geoportal-panel
+  controls:
+  - template: controls/geoportal

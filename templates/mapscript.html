@@ -3,7 +3,7 @@
 var NK = NK || {};
 NK.mapEventListeners = {};
 
-var gkopen, 
+var gkopen,
     gkopen_wmts,
     proj,
     mapProj,
@@ -67,8 +67,8 @@ NK.functions.resetTokenError = function () {
 };
 
 NK.functions.updateToken = function (request) {
-  var i, 
-      j, 
+  var i,
+      j,
       reloadLimit;
 
   reloadLimit = new Date(Date.now() - NK.tokenError.RELOAD_LIMIT_SECONDS * 1000);
@@ -126,7 +126,7 @@ NK.functions.pauseTokenUpdate = function () {
     OpenLayers.Event.observe(statusLink, 'click', function (evt) {
       evt.stopPropagation();
       evt.preventDefault();
-      window.open(evt.target.href, '_blank'); 
+      window.open(evt.target.href, '_blank');
       return false;
     }, true);
     innerWrapper.appendChild(statusLink);
@@ -195,7 +195,7 @@ NK.init = function () {
   Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
   Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
 
-  NK.projections = proj = {  
+  NK.projections = proj = {
     //pregenerated projection objects
     "32633": new OpenLayers.Projection('EPSG:32633'),
     "32632": new OpenLayers.Projection('EPSG:32632'),
@@ -228,7 +228,7 @@ NK.init = function () {
   // Create map canvas
 
   if (!!params.proj) {
-    mapProj = proj[params.proj]; 
+    mapProj = proj[params.proj];
   }
 
   NK.mapOptions = {
@@ -242,8 +242,8 @@ NK.init = function () {
     theme: 'theme/norgeskart/style.css'
   };
 
-  map = new OpenLayers.Map( 
-    'map', 
+  map = new OpenLayers.Map(
+    'map',
     OpenLayers.Util.extend(NK.mapOptions, {
       controls: [], //defined later
       numZoomLevels: NK.zoomLevels,
@@ -304,7 +304,7 @@ NK.init = function () {
 
     if (NK.geolocator) {
       NK.geolocator.activate();
-    } 
+    }
   }
 
   if (NK.functions.postMessage) {
@@ -312,7 +312,7 @@ NK.init = function () {
       var vectorLayers,
           layer,
           vectorLayerData = [],
-          i, 
+          i,
           j;
 
       vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
@@ -329,6 +329,63 @@ NK.init = function () {
     }());
 
   }
+
+    NK.functions.getCapabilities = function (url) {
+      return $.ajax({
+          url: url,
+          type: 'GET',
+          data: {service: 'WMS', request: 'getCapabilities'},
+          dataType: 'xml'
+      });
+    };
+    NK.functions.urlParam = function (name) {
+        var results = new RegExp('[\\/&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results == null) {
+            return null;
+        } else {
+            return results[1] || 0;
+        }
+    };
+    NK.functions.addDynamicLayer = function (name, url, layerText) {
+        var wms = new OpenLayers.Layer.WMS(
+            name,
+            url,
+            {
+                gkt: NK.gkToken,
+                layers: layerText,
+                transparent: true,
+                format: 'image/png'
+            },
+            {
+                shortid: layerText,
+                isBaseLayer: false,
+                buffer: 1,
+                visibility: true,
+                transitionEffect: 'resize',
+                singleTile: true
+            }
+        );
+        if (wms.params.GKT) {
+            wms.params.gkt = wms.params.GKT;
+            delete wms.params.GKT;
+        }
+        map.addLayers([wms]);
+    };
+    var layers = [];
+    var wmsUrl = NK.functions.urlParam('url');
+    NK.functions.getCapabilities(wmsUrl).done(function (xml) {
+        $(xml).find('Layer').each(function () {
+            layers.push($(this).children('Name').text());
+            var name = $(this).children('Name').text();
+            var layer = $(this).children('Name').text();
+            NK.functions.addDynamicLayer(name, wmsUrl, layer);
+        });
+    });
+
+    NK.functions.addLayerSwitcher = function () {
+        map.addControl(new OpenLayers.Control.Navigation());
+        map.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerList')}));
+    };
 
 };
 // end init()
@@ -350,7 +407,7 @@ var cb = function(response, status, request) {
 
 var initializeToken = function () {
   $.ajax({
-    url: NK.tokenService, 
+    url: NK.tokenService,
     success: cb,
     type: 'GET'
   });

@@ -2,63 +2,63 @@ var NK = NK || {};
 NK.functions = NK.functions || {};
 
 NK.functions.updateHistory = function (evt) {
-  var center,
-      zoom,
-      i,
-      layer,
-      uid,
-      search,
-      searchInput;
+    var center,
+        zoom,
+        i,
+        layer,
+        uid,
+        search,
+        searchInput;
 
-  if (!!map) {
-    center = map.getCenter();
-    zoom   = map.getZoom();
+    if (!!map) {
+        center = map.getCenter();
+        zoom = map.getZoom();
 
-    if (!!center && !!zoom) {
-      uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat); 
-      /* 1m precision ought to be enough for everyone --BG */
+        if (!!center && !!zoom) {
+            uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat);
+            /* 1m precision ought to be enough for everyone --BG */
 
-      if (!!NK.initLayers && !!map.layers) { 
-        for (i in map.layers) {
-          if (map.layers.hasOwnProperty(i)) {
-            layer = map.layers[i];
-            if (!layer.isBaseLayer) {
-              if (!layer.isUrlDataLayer) {
-                if (layer.visibility) {
-                  if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
-                    uid += "/+" + layer.shortid;
-                  }
-                } else {
-                  if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
-                    uid += "/-" + layer.shortid;
-                  }
+            if (!!NK.initLayers && !!map.layers) {
+                for (i in map.layers) {
+                    if (map.layers.hasOwnProperty(i)) {
+                        layer = map.layers[i];
+                        if (!layer.isBaseLayer) {
+                            if (!layer.isUrlDataLayer) {
+                                if (layer.visibility) {
+                                    if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
+                                        uid += "/+" + layer.shortid;
+                                    }
+                                } else {
+                                    if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
+                                        uid += "/-" + layer.shortid;
+                                    }
+                                }
+                            } else {
+                                if (layer.isDrawing) {
+                                    uid += '/l/drawing/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                                } else {
+                                    uid += '/l/geojson/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                                }
+                            }
+                        }
+                    }
                 }
-              } else {
-                if (layer.isDrawing) {
-                  uid += '/l/drawing/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
-                } else {
-                  uid += '/l/geojson/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
-                }
-              }
             }
-          }
         }
-      }
-    }
-    searchInput = document.getElementById('searchInput');
-    if (!!searchInput) {
-      search = searchInput.value;
-      if (history.pushState) {
-        if (!!search) {
-          history.pushState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
-        } else {
-          history.pushState({'hash': uid}, document.title, '#' + uid);        
+        searchInput = document.getElementById('searchInput');
+        if (!!searchInput) {
+            search = searchInput.value;
+            if (history.pushState) {
+                if (!!search) {
+                    history.pushState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+                } else {
+                    history.pushState({'hash': uid}, document.title, '#' + uid);
+                }
+            } else {
+                window.location.hash = uid;
+            }
         }
-      } else {
-        window.location.hash = uid;
-      }
     }
-  }
 };
 
 NK.mapEventListeners = NK.mapEventListeners || {};
