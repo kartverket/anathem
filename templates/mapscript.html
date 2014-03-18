@@ -370,7 +370,28 @@ NK.init = function () {
             delete wms.params.GKT;
         }
         map.addLayers([wms]);
+        NK.functions.createLegend();
     };
+
+    NK.functions.createLegend = function () {
+        var legendDiv = OpenLayers.Util.getElement('legendBox');
+        legendDiv.innerHTML = "";
+        // create getLegendGraphic request for all active layers
+        for (var i = 1; i < map.layers.length; i++) {
+            if (map.layers[i].visibility) {
+                var legendURL = map.layers[i].getFullRequestString({
+                    REQUEST: "GetLegendGraphic",
+                    EXCEPTIONS: "application/vnd.ogc.se_inimage",
+                    FORMAT: "image/png",
+                    SERVICE: "WMS",
+                    VERSION: "1.1.1",
+                    LAYER: map.layers[i].params.LAYERS
+                });
+                legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
+            }
+        }
+    }
+
     var layers = [];
     var wmsUrl = NK.functions.urlParam('url');
     NK.functions.getCapabilities(wmsUrl).done(function (xml) {
