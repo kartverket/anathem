@@ -76,13 +76,13 @@ NK.functions.updateScaleLine = function () {
             if(layers.getVisibility()) {
                 //NK.functions.addControlToContext(new OpenLayers.Control.ScaleLine({bottomOutUnits:'nm '}));
                 scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
-                if (!!scaleLine){
+                if (scaleLine.length > 0){
                     scaleLine[0].bottomOutUnits = 'nm';
                     scaleLine[0].eBottom.style.visibility = "visible";
                 }
             } else {
                 scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
-                if (!!scaleLine){
+                if (scaleLine.length > 0){
                     scaleLine[0].bottomOutUnits = '';
                     scaleLine[0].eBottom.style.visibility = "hidden";
                 }
