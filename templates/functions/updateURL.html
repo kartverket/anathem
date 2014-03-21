@@ -58,6 +58,7 @@ NK.functions.updateHistory = function (evt) {
         window.location.hash = uid;
       }
     }
+    NK.functions.updateScaleLine();
   }
 };
 
@@ -66,3 +67,22 @@ NK.mapEventListeners.moveend = NK.functions.updateHistory;
 NK.mapEventListeners.zoomend = NK.functions.updateHistory;
 NK.mapEventListeners.changelayer = NK.functions.updateHistory;
 NK.mapEventListeners.changebaselayer = NK.functions.updateHistory;
+
+NK.functions.updateScaleLine = function () {
+    var layers, scaleLine;
+    if (!!self.map){
+        layers = self.map.getLayersByName("Sj&oslash;")[0];
+        if (!!layers) {
+            if(layers.getVisibility()) {
+                //NK.functions.addControlToContext(new OpenLayers.Control.ScaleLine({bottomOutUnits:'nm '}));
+                scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
+                scaleLine[0].bottomOutUnits = 'nm';
+                scaleLine[0].eBottom.style.visibility = "visible";
+            } else {
+                scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
+                scaleLine[0].bottomOutUnits = '';
+                scaleLine[0].eBottom.style.visibility = "hidden";
+            }
+        }
+    }
+}
