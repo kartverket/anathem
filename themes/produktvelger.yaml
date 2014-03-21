@@ -40,4 +40,5 @@ mapscript:
   functions :
   controls  :
     - template: controls/navigation
+    - include: toolbars/embed-basic-toolbar
 
