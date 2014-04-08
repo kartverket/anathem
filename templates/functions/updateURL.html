@@ -78,12 +78,14 @@ NK.functions.updateScaleLine = function () {
                 scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
                 if (scaleLine.length > 0){
                     scaleLine[0].bottomOutUnits = 'nm';
+                    scaleLine[0].bottomInUnits = 'nm';
                     scaleLine[0].eBottom.style.visibility = "visible";
                 }
             } else {
                 scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
                 if (scaleLine.length > 0){
                     scaleLine[0].bottomOutUnits = '';
+                    scaleLine[0].bottomInUnits = '';
                     scaleLine[0].eBottom.style.visibility = "hidden";
                 }
             }
