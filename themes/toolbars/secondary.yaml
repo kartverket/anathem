@@ -10,44 +10,9 @@ controls:
     - include: languages/nb/draw
     storageUrl: /ws/upload-json.py
     styleName: track
-  - template: controls/emergencyposter
-  - template: controls/heightprofile
-    heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
-    gpxStorageUrl: /ws/upload-gpx.py
-    trackStyleName: track
-    predefinedGpxFiles:
-    - template: gpx/gpxFile
-      name: Rallarvegen Haugast&oslash;l - Fl&aring;m
-      url: /xml/gpx/rallarvegen.gpx
-    - template: gpx/gpxFile
-      name: Birkebeinerrittet
-      url: /xml/gpx/birkebeinerrittet.gpx
-    - template: gpx/gpxFile
-      name: Birkebeinerrennet 2012
-      url: /xml/gpx/birkebeinerrennet-2012.gpx
 
     i18n:
     - include: languages/nb/heightprofile
   - template: controls/transformations
     url: /ws/trans.py
-- template: controls/container
-  name: Tjenester
-  id: services-panel
-  controls:
-  - template: controls/overlaygrouppanel
-    group: tjenester.fakta
-    title: Fakta
-    buttonText: Fakta
-    #groupheaders:
-    #- template: controls/overlaygroupheader
-    #  group: fakta
-    #  heading: Over&shy;skrift
-  #- template: controls/overlaygrouppanel
-  #  group: testlag.utvikling
-  #  title: Test under utvikling
-  #  buttonText: Test 
-- template: controls/gamlenkcontainer
-  name: "Gamle Norges- kart"
-  tooltip: "g&aring; til gamle Norgeskart"
-  id: gamlenk-panel
 
