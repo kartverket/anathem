@@ -2,9 +2,11 @@
 
 template : base
 title    : Norgeskart
+manifestName: index
 mapscript: 
   template  : mapscript
   language  : nb
+  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
 
   i18n:
   - include: languages/nb/base
@@ -27,34 +29,30 @@ mapscript:
     - include: layers/grunnkart
     - include: layers/toporaster2
 
-    #- include: layers/wms/kommunegrenser
-    #- include: layers/wms/amtskart
-    #- include: layers/wms/dybdedata
-    #- include: layers/wms/dybdelag
-    #- include: layers/wms/havbunnraster
-    #- include: layers/wms/dekning_sjomaaling
-    #- include: layers/wms/dybdekontur
-    #- include: layers/wms/dybdekurver_havomraader
-    #- include: layers/wms/kystkontur
-    #- include: layers/wms/sjogrenser
+    - include: layers/wms/kommunegrenser
+    - include: layers/wms/amtskart
+    - include: layers/wms/dybdedata
+    - include: layers/wms/dybdelag
+    - include: layers/wms/havbunnraster
+    - include: layers/wms/dekning_sjomaaling
+    - include: layers/wms/dybdekontur
+    - include: layers/wms/dybdekurver_havomraader
+    - include: layers/wms/kystkontur
+    - include: layers/wms/sjogrenser
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
-#    - include: layers/omriss_norge_1000m
-#    - include: layers/omriss_norge_500m
 
     # fakta layers
     - include: layers/geoJSON/kommunefjell
-    # test layers
-    #- include: layers/geoJSON/maritimegrenser
-    #- include: layers/geoJSON/clustertestdatafromfile
-    #- include: layers/geoJSON/unclusteredtestdatafromfile
-    #- include: layers/SOSI/kautokeino
-    #- include: layers/wfsTest
-    #- include: layers/ssr
+    # tilgjengelighet
+    - include: layers/wms/tilgjengelighet_generell
+    - include: layers/wms/tilgjengelighet_tettsted
+    - include: layers/wms/tilgjengelighet_friluft
+    - include: layers/wms/tilgjengelighet_kultur
 
   center    : 
     template: center/besseggen
@@ -70,11 +68,8 @@ mapscript:
     - template: controls/scaleline
     - template: controls/hashstate
     - include: toolbars/basic
-    - include: toolbars/search
-    - include: toolbars/share
+    - include: toolbars/top
     - include: toolbars/secondary
-    - template: controls/container
-      id: top-decoration-bar
     - template: controls/container
       id: overview-container-panel
       controls:
@@ -83,6 +78,3 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
-
-#splashscreen:
-#  - template: splashscreen/betainfo

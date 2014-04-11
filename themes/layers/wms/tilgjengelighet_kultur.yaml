@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet?
+name: Kultur
+layers: kultur
+layerGroup: tjenester.tilgjengelighet
+id: kultur
+usetoken: true
+singleTile: true

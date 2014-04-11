@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet?
+name: Tettsted
+layers: tettsted
+layerGroup: tjenester.tilgjengelighet
+id: tettsted
+usetoken: true
+singleTile: true
