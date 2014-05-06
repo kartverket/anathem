@@ -1,0 +1,9 @@
+template: layers/wfs
+name: UU
+id: uu
+layerGroup: tjenester.tilgjengelighet
+url: http://wfs.geonorge.no/skwms1/wfs.tilgjengelighet
+featuretype: Fiskeplass
+namespace: http://skjema.geonorge.no/SOSI/Universelutforming
+namespacePrefix: app
+version: 2.0.0

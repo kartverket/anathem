@@ -2,5 +2,16 @@
 % if coordinates:
         options.coordinates = "${coordinates}";
 % endif
-
+% if searchUrl:
+        options.searchUrl = "${searchUrl}";
+% endif
+% if streetAddressesSearchUrl:
+        options.streetAddressesSearchUrl = "${streetAddressesSearchUrl}";
+% endif
+% if addressSearchUrl:
+        options.addressSearchUrl = "${addressSearchUrl}";
+% endif
+% if propertySearchUrl:
+        options.propertySearchUrl = "${propertySearchUrl}";
+% endif
 NK.functions.addControlToContext(new OpenLayers.Control.Search(options), context);

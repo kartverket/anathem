@@ -1,9 +1,9 @@
 template: layers/wfs
 name: Riks&shy;grense
 id: riksgrense
-layerGroup: testlag.utvikling
-url: /ws/wfs.abas.py
-#url: http://openwms.statkart.no/skwms1/wms.abas
+layerGroup: tjenester.tilgjengelighet
+#url: /ws/wfs.abas.py
+url: http://openwms.statkart.no/skwms1/wms.abas
 featuretype: Riksgrense
 namespace: 
 namespacePrefix: 

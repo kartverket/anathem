@@ -48,11 +48,14 @@ mapscript:
 
     # fakta layers
     - include: layers/geoJSON/kommunefjell
-    # tilgjengelighet
+    # tilgjengelighet WMS
     - include: layers/wms/tilgjengelighet_generell
     - include: layers/wms/tilgjengelighet_tettsted
     - include: layers/wms/tilgjengelighet_friluft
     - include: layers/wms/tilgjengelighet_kultur
+    # tilgjengelighet WFS
+    - include: layers/wfsTest
+    - include: layers/wfs/uu_test
 
   center    : 
     template: center/besseggen

@@ -17,7 +17,11 @@ gkopen = "http://opencache.statkart.no/gatekeeper/gk/gk.open";
 gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
 NK.gkToken = "unInitialized";
-NK.tokenService = "/ws/gkt.py";
+
+% if tokenServiceUrl:
+NK.tokenService = "${tokenServiceUrl}";
+% endif
+
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 
@@ -41,7 +45,9 @@ NK.mapservers = {};
 NK.mapservers.wmts = [
   "http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
   "http://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
-  "http://gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts"
+  "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts",
+  "http://opencache2.statkart.no/gatekeeper/gk/gk.open_wmts",
+  "http://opencache3.statkart.no/gatekeeper/gk/gk.open_wmts"
 ];
 NK.zoomLevels = 18;
 
@@ -132,7 +138,7 @@ NK.functions.pauseTokenUpdate = function () {
     innerWrapper.appendChild(statusLink);
 
     popup.appendChild(innerWrapper);
-    //document.body.appendChild(popup);
+    document.body.appendChild(popup);
     NK.tokenError.messagePopup = popup;
 
     NK.tokenError.pauseTimer = setTimeout(function () {
@@ -251,19 +257,25 @@ NK.init = function () {
     })
   );
 
+% if center:
   // Default placement and zoom of the map
   ${center}
+% endif
 
-  // load SLD styles
 % if styles:
+  // load SLD styles
   ${styles}
 % endif
 
+% if baselayers:
   // Base layers
   ${baselayers}
+% endif
 
+%if overlays:
   // Overlays
   ${overlays}
+% endif
 
   var removePopups = function () {
     var popup, p;
@@ -311,21 +323,44 @@ NK.init = function () {
     (function () {
       var vectorLayers,
           layer,
+          feature,
           vectorLayerData = [],
+          vectorFeatureData = [],
           i, 
-          j;
+          j,
+          k,
+          l,
+          message;
 
       vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
 
       for (i = 0, j = vectorLayers.length; i < j; i += 1) {
         layer = vectorLayers[i];
-        vectorLayerData.push({shortid: layer.shortid, name: layer.name});
+        vectorLayerData.push({shortid: layer.shortid, name: layer.name, visibility: layer.visibility});
+
+        if (layer.visibility && layer.features && layer.features.length) {
+
+          for (k = 0, l = layer.features.length; k < l; k += 1) {
+            feature = layer.features[k];
+            vectorFeatureData.push({
+              "feature": feature.fid,
+              "attributes": feature.attributes
+            });
+          }
+
+        }
       }
 
-      NK.functions.postMessage({
+      message = {
         "type": "mapInitialized",
         "vectorLayers": vectorLayerData
-      });
+      };
+
+      if (vectorFeatureData.length > 0) {
+        message.visibleLayerFeatures = vectorFeatureData;
+      }
+
+      NK.functions.postMessage(message);
     }());
 
   }
