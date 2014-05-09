@@ -6,7 +6,6 @@ manifestName: index
 mapscript: 
   template  : mapscript
   language  : nb
-  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
 
   i18n:
   - include: languages/nb/base
@@ -54,8 +53,7 @@ mapscript:
     - include: layers/wms/tilgjengelighet_friluft
     - include: layers/wms/tilgjengelighet_kultur
     # tilgjengelighet WFS
-    - include: layers/wfsTest
-    - include: layers/wfs/uu_test
+    # - include: layers/wfs/uu_test
 
   center    : 
     template: center/besseggen

@@ -1,5 +1,5 @@
 template: layers/wfs
-name: UU
+name: UU-Test
 id: uu
 layerGroup: tjenester.tilgjengelighet
 url: http://wfs.geonorge.no/skwms1/wfs.tilgjengelighet
