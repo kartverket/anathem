@@ -14,4 +14,4 @@ controls:
 - template: controls/container
   id: logo-panel-geonorge
   controls:
-  - template: controls/GeoLogo
+  - template: controls/geoLogo
