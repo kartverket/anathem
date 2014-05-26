@@ -42,7 +42,24 @@ controls:
   name: Tjenester
   id: services-panel
   controls:
+  #- template: controls/overlaygrouppanel
+  #  group: tjenester.tilgjengelighet
+  #  title: tilgjengelighet
+  #  buttonText: WFS-Test
   - template: controls/overlaygrouppanel
-    group: tjenester.tilgjengelighet
-    title: tilgjengelighet
-    buttonText: tilgjengelighet
+    group: tjenester.kultur
+    title: kultur
+    buttonText: Kultur
+  - template: controls/overlaygrouppanel
+    group: tjenester.Friluft
+    title: Friluft
+    buttonText: Friluft
+  - template: controls/overlaygrouppanel
+    group: tjenester.Generelt
+    title: Generelt
+    buttonText: Generelt
+  - template: controls/overlaygrouppanel
+    group: tjenester.tettsted
+    title: tettsted
+    buttonText: Tettsted
+

@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Turisthytte
+layers: turisthytte
+layerGroup: tjenester.Friluft
+id: turisthytte
+usetoken: true
+singleTile: true

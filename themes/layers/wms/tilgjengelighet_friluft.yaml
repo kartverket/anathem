@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet?
-name: Friluft
-layers: friluft
-layerGroup: tjenester.tilgjengelighet
-id: friluft
-usetoken: true
-singleTile: true

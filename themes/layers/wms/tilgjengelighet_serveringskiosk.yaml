@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Serveringkiosk
+layers: serveringskiosk
+layerGroup: tjenester.Friluft
+id: serveringskiosk
+usetoken: true
+singleTile: true

@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Statlig sikra
+layers: statlig_sikra_polygon
+layerGroup: tjenester.Friluft
+id: statlig_sikra_polygon
+usetoken: true
+singleTile: true

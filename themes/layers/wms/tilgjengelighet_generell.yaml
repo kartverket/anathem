@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet?
-name: Generell
-layers: generell
-layerGroup: tjenester.tilgjengelighet
-id: generell
-usetoken: true
-singleTile: true
