@@ -1,0 +1,123 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: 'Emergency poster'
+    translation: 'N\u00F8dplakat'
+  - template: i18n/translation
+    source: 'Make an emergency poster'
+    translation: 'Lag en n\u00F8dplakat'
+  - template: i18n/translation
+    source: 'Select a position in the map'
+    translation: 'Velg et punkt i kartet'
+  - template: i18n/translation
+    source: 'Legal'
+    translation: 'Ansvar'
+  - template: i18n/translation
+    source: 'Location'
+    translation: 'Sted'
+  - template: i18n/translation
+    source: 'Preview'
+    translation: 'Visning'
+  - template: i18n/translation
+    source: 'Name your marker'
+    translation: 'Gi punktet ditt et navn'
+  - template: i18n/translation
+    source: 'E.g. the name of your cabin'
+    translation: 'F.eks. navn p&aring; hytta'
+  - template: i18n/translation
+    source: 'Location is'
+    translation: 'Stedet er'
+  - template: i18n/translation
+    source: 'Choose a different location nearby'
+    translation: 'Velg et annet stedsnavn i n&aelig;rheten'
+  - template: i18n/translation
+    source: 'The Emergency poster is developed in cooperation with the Joint Rescue Coordination Centres and the emergency services. The Norwegian Mapping Authority is responsible for the data layer; meaning names of locations and mapping - as well as the underlying technology.'
+    translation: 'N\u00F8dplakaten er utviklet i samarbeid med Hovedredningsentralene og n\u00F8detatene. Kartverket er ansvarlig for datagrunnlaget, dvs. stedsnavn og kart - samt teknologien bak.'
+  - template: i18n/translation
+    source: It\'s the user\'s responsibility to ensure that the location displayed on the poster is correct.
+    translation:  'Det er brukerens ansvar &aring; kontrollere at det er korrekt hytte eller sted som vises p&aring; plakaten.'
+  - template: i18n/translation
+    source: 'The Norwegian Mapping Authority is not responsible for possible errors caused by the user, data layer or technology.'
+    translation: 'Kartverket tar ikke ansvar for mulige feil som skyldes brukeren, datagrunnlaget eller teknologien.'
+  - template: i18n/translation
+    source: 'New location'
+    translation: 'Velg nytt sted'
+  - template: i18n/translation
+    source: 'Accept and prepare print'
+    translation: 'Godkjenn og klargj&oslash;r utskrift'
+  - template: i18n/translation
+    source: 'Accept and proceed'
+    translation: 'Jeg godtar og g&aring;r videre'
+  - template: i18n/translation
+    source: 'Download PDF'
+    translation: 'Lagre PDF'
+  - template: i18n/translation
+    source: 'Open PDF'
+    translation: '&Aring;pne PDF'
+  - template: i18n/translation
+    source: 'Doctor'
+    translation: 'Lege'
+  - template: i18n/translation
+    source: 'Police'
+    translation: 'Politi'
+  - template: i18n/translation
+    source: 'Fire'
+    translation: 'Brann'
+  - template: i18n/translation
+    source: 'While speaking to the emergency services, say the following:'
+    translation: 'Ved henvendelse til n&oslash;detaten, si f&oslash;lgende:'
+  - template: i18n/translation
+    source: 'My location is'
+    translation: 'Stedet er'
+  - template: i18n/translation
+    source: 'My position is'
+    translation: 'Min posisjon er'
+  - template: i18n/translation
+    source: 'in'
+    translation: 'i'
+  - template: i18n/translation
+    source: 'degrees'
+    translation: 'grader'
+  - template: i18n/translation
+    source: 'minutes'
+    translation: 'minutter'
+  - template: i18n/translation
+    source: 'seconds'
+    translation: 'sekunder'
+  - template: i18n/translation
+    source: 'decimal degrees'
+    translation: 'desimalgrader'
+  - template: i18n/translation
+    source: 'decimal minutes'
+    translation: 'desimalminutter'
+  - template: i18n/translation
+    source: 'north'
+    translation: 'nord'
+  - template: i18n/translation
+    source: 'south'
+    translation: 's&oslash;r'
+  - template: i18n/translation
+    source: 'east'
+    translation: '&oslash;st'
+  - template: i18n/translation
+    source: 'west'
+    translation: 'vest'
+  - template: i18n/translation
+    source: 'N'
+    translation: 'N'
+  - template: i18n/translation
+    source: 'S'
+    translation: 'S'
+  - template: i18n/translation
+    source: 'E'
+    translation: '&Oslash;'
+  - template: i18n/translation
+    source: 'Unknown'
+    translation: 'Ukjent'
+  - template: i18n/translation
+    source: 'municipality'
+    translation: 'kommune'
+  - template: i18n/translation
+    source: 'No alternative places found nearby (2 km)'
+    translation: 'Ingen andre stedsnavn ble funnet i n&aelig;rheten (2 km)'

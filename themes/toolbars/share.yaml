@@ -2,6 +2,10 @@ template: controls/container
 id: share-toolbar
 controls:
 - template: controls/container
+  id: print-panel
+  controls:
+  - template: controls/print
+- template: controls/container
   id: getURL-panel
   controls:
   - template: controls/getURL
@@ -17,10 +21,6 @@ controls:
   - template: controls/help
     i18n:
     - include: languages/nb/help
-- template: controls/container
-  id: print-panel
-  controls:
-  - template: controls/print
 - template: controls/container
   id: make-your-own-panel
   controls:
