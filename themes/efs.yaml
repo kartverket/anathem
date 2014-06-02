@@ -1,0 +1,22 @@
+# Kartvelger til kartverket.no/efs 
+
+template   : base
+title      : Norgeskart
+includeXDM : true
+mapscript:
+  template  : mapscript
+  baselayers:   
+    - template: layers/europa
+  overlays  :
+    - include: layers/sjo_hovedkart2
+    - include: layers/dekning_sjo_hovedkart
+    - include: layers/dekning_havnekart
+    - include: layers/dekning_kystkart
+    - include: layers/dekning_overseilingskart
+
+  center    : 
+    template: center/besseggen
+  functions :
+  controls  :
+    - template: controls/navigation
+    - include: toolbars/embed-basic-toolbar
