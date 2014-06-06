@@ -6,7 +6,7 @@ translations:
     translation: Tegning
   - template: i18n/translation
     source: Drawing tool
-    translation: Tegne og M\u00E5le
+    translation: Tegne og m\u00E5le
   - template: i18n/translation
     source: Draw point
     translation: Tegn punkt
