@@ -48,9 +48,11 @@ mapscript:
     # fakta layers
     - include: layers/geoJSON/kommunefjell
     # tilgjengelighet WMS
+    - include: layers/wms/tilgjengelighet_friluft
+    - include: layers/wms/tilgjengelighet_tettsted
     - include: layers/wms/tilgjengelighet_baderampe
     - include: layers/wms/tilgjengelighet_fiskeplass 
-    - include: layers/wms/tilgjengelighet_friluftsomrade 
+    - include: layers/wms/tilgjengelighet_friluftsomrade
     - include: layers/wms/tilgjengelighet_gapahukhytte 
     - include: layers/wms/tilgjengelighet_grillbalplass 
     - include: layers/wms/tilgjengelighet_HC-parkeringsplasser 
