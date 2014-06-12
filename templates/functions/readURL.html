@@ -325,6 +325,31 @@ NK.functions.setMapState = function (params) {
           NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 4));
           index += 3;
           break;
+        case 'w':
+          var wmsUrl = NK.functions.urlParam('url');
+          var layers = [];
+          var resultWMS = NK.functions.getCapabilities(wmsUrl);
+          resultWMS.done(function (xml) {
+            $(xml).find('Layer').each(function () {
+              layers.push($(this).children('Name').text());
+              var name = $(this).children('Name').text();
+              var layer = $(this).children('Name').text();
+              NK.functions.addDynamicLayer(name, wmsUrl, layer);
+
+              var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+              geoportal.showControls();
+              var menuLink = $('#showLayer');
+              event.preventDefault();
+              $(menuLink).parent().addClass("current");
+              $(menuLink).parent().siblings().removeClass("current");
+              var tab = $(menuLink).attr("href");
+              $(".tab-content").not(tab).css("display", "none");
+              $(tab).fadeIn();
+            });
+            console.log(layers);
+          });
+          index += 5;
+          break;
       }
     }
     if (mapx && mapy && zoom) {

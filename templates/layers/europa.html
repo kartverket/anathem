@@ -24,7 +24,8 @@ wmts = new OpenLayers.Layer.WMTS({
   opacity: 1.0,
   params: {
     gkt: NK.gkToken
-  }
+  },
+  displayInLayerSwitcher:0
 });
 
 if (wmts.params.GKT) {

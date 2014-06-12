@@ -17,6 +17,9 @@ NK.functions.updateHistory = function (evt) {
         if (!!center && !!zoom) {
             uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat);
             /* 1m precision ought to be enough for everyone --BG */
+            if(!!NK.urlParam){
+              uid += '/w/url=' + NK.urlParam[0];
+            }
 
             if (!!NK.initLayers && !!map.layers) {
                 for (i in map.layers) {
@@ -58,6 +61,8 @@ NK.functions.updateHistory = function (evt) {
                 window.location.hash = uid;
             }
         }
+      NK.functions.updateScaleLine();
+      NK.functions.createLegend();
     }
 };
 
@@ -66,3 +71,28 @@ NK.mapEventListeners.moveend = NK.functions.updateHistory;
 NK.mapEventListeners.zoomend = NK.functions.updateHistory;
 NK.mapEventListeners.changelayer = NK.functions.updateHistory;
 NK.mapEventListeners.changebaselayer = NK.functions.updateHistory;
+
+NK.functions.updateScaleLine = function () {
+    var layers, scaleLine;
+    if (!!self.map){
+        layers = self.map.getLayersByName("Sj&oslash;")[0];
+        if (!!layers) {
+            if(layers.getVisibility()) {
+                //NK.functions.addControlToContext(new OpenLayers.Control.ScaleLine({bottomOutUnits:'nm '}));
+                scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
+                if (scaleLine.length > 0){
+                    scaleLine[0].bottomOutUnits = 'nm';
+                    scaleLine[0].bottomInUnits = 'nm';
+                    scaleLine[0].eBottom.style.visibility = "visible";
+                }
+            } else {
+                scaleLine = map.getControlsByClass('OpenLayers.Control.ScaleLine');
+                if (scaleLine.length > 0){
+                    scaleLine[0].bottomOutUnits = '';
+                    scaleLine[0].bottomInUnits = '';
+                    scaleLine[0].eBottom.style.visibility = "hidden";
+                }
+            }
+        }
+    }
+}

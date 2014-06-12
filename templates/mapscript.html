@@ -36,7 +36,6 @@ NK.tokenError = {
 };
 
 
-
 NK.mapservers = {};
 NK.mapservers.wmts = [
   "http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
@@ -68,8 +67,8 @@ NK.functions.resetTokenError = function () {
 
 NK.functions.updateToken = function (request) {
   var i,
-      j,
-      reloadLimit;
+    j,
+    reloadLimit;
 
   reloadLimit = new Date(Date.now() - NK.tokenError.RELOAD_LIMIT_SECONDS * 1000);
 
@@ -138,7 +137,7 @@ NK.functions.pauseTokenUpdate = function () {
     NK.tokenError.pauseTimer = setTimeout(function () {
       NK.tokenUpdatePaused = false;
       NK.functions.getNewToken();
-    },  60 * parseInt(NK.tokenError.PAUSE_MINUTES, 10) * 1000);
+    }, 60 * parseInt(NK.tokenError.PAUSE_MINUTES, 10) * 1000);
 
     NK.tokenError.pauseCountdownInterval = setInterval(function () {
       var content, timeLeft;
@@ -166,7 +165,71 @@ NK.functions.getNewToken = function () {
   }
 };
 
-% if functions :
+NK.functions.getCapabilities = function (url) {
+  return $.ajax({
+    url: url,
+    type: 'GET',
+    data: {service: 'WMS', request: 'getCapabilities'},
+    dataType: 'xml'
+  });
+};
+NK.functions.urlParam = function (name) {
+  var results = new RegExp('[\\/&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (results == null) {
+    return null;
+  } else {
+    return results[1] || 0;
+  }
+};
+NK.functions.addDynamicLayer = function (name, url, layerText) {
+  var wms = new OpenLayers.Layer.WMS(
+    name,
+    url,
+    {
+      gkt: NK.gkToken,
+      layers: layerText,
+      transparent: true,
+      format: 'image/png'
+    },
+    {
+      shortid: layerText,
+      isBaseLayer: false,
+      buffer: 1,
+      visibility: false,
+      transitionEffect: 'resize',
+      singleTile: true
+    }
+  );
+  if (wms.params.GKT) {
+    wms.params.gkt = wms.params.GKT;
+    delete wms.params.GKT;
+  }
+  map.addLayers([wms]);
+  NK.functions.createLegend();
+};
+
+NK.functions.createLegend = function () {
+  var legendDiv = OpenLayers.Util.getElement('legendBox');
+  if (!!legendDiv) {
+    legendDiv.innerHTML = "";
+    // create getLegendGraphic request for all active layers
+    for (var i = 1; i < map.layers.length; i++) {
+      if (map.layers[i].visibility) {
+        var legendURL = map.layers[i].getFullRequestString({
+          REQUEST: "GetLegendGraphic",
+          EXCEPTIONS: "application/vnd.ogc.se_inimage",
+          FORMAT: "image/png",
+          SERVICE: "WMS",
+          VERSION: "1.1.1",
+          LAYER: map.layers[i].params.LAYERS
+        });
+        legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
+      }
+    }
+  }
+}
+
+% if functions:
   ${functions}
 % endif
 
@@ -177,36 +240,36 @@ NK.functions.getNewToken = function () {
 NK.init = function () {
 
   var prmstr,
-      prmarr,
-      params,
-      tmparr,
-      i,
-      j;
+    prmarr,
+    params,
+    tmparr,
+    i,
+    j;
 
   if (!OpenLayers || !Proj4js) {
     setTimeout(NK.init, 100);
     return;
   }
 
-  Proj4js.defs["EPSG:4326"] ="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
-  Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:32633"]="+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:32635"]="+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
+  Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+  Proj4js.defs["EPSG:32632"] = "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32633"] = "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32635"] = "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:3575"] = "+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:3034"] = "+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
 
   NK.projections = proj = {
     //pregenerated projection objects
     "32633": new OpenLayers.Projection('EPSG:32633'),
     "32632": new OpenLayers.Projection('EPSG:32632'),
     "32635": new OpenLayers.Projection('EPSG:32635'),
-    "4326" : new OpenLayers.Projection('EPSG:4326'),
-    "3034" : new OpenLayers.Projection('EPSG:3034'),
-    "3575" : new OpenLayers.Projection('EPSG:3575')
+    "4326": new OpenLayers.Projection('EPSG:4326'),
+    "3034": new OpenLayers.Projection('EPSG:3034'),
+    "3575": new OpenLayers.Projection('EPSG:3575')
   };
 
   mapProj = proj["32633"];
-  mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
+  mapBounds = new OpenLayers.Bounds(-2500000.0, 3500000.0, 3045984.0, 9045984.0);
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
   OpenLayers.ImgPath = 'img/';
@@ -217,7 +280,7 @@ NK.init = function () {
 
   // extract URL parameters into dictionary
   prmstr = window.location.search.substr(1);
-  prmarr = prmstr.split ("&");
+  prmarr = prmstr.split("&");
   params = {};
 
   for (i = 0, j = prmarr.length; i < j; i += 1) {
@@ -234,10 +297,10 @@ NK.init = function () {
   NK.mapOptions = {
     projection: mapProj,
     displayProjection: mapProj,
-    maxExtent:  mapBounds,
+    maxExtent: mapBounds,
     units: "m",
     maxResolution: 21664.0,
-  //      minResolution: 0.165283203125,
+    //      minResolution: 0.165283203125,
     numZoomLevels: NK.zoomLevels,
     theme: 'theme/norgeskart/style.css'
   };
@@ -310,10 +373,10 @@ NK.init = function () {
   if (NK.functions.postMessage) {
     (function () {
       var vectorLayers,
-          layer,
-          vectorLayerData = [],
-          i,
-          j;
+        layer,
+        vectorLayerData = [],
+        i,
+        j;
 
       vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
 
@@ -330,89 +393,30 @@ NK.init = function () {
 
   }
 
-    NK.functions.getCapabilities = function (url) {
-      return $.ajax({
-          url: url,
-          type: 'GET',
-          data: {service: 'WMS', request: 'getCapabilities'},
-          dataType: 'xml'
-      });
-    };
-    NK.functions.urlParam = function (name) {
-        var results = new RegExp('[\\/&]' + name + '=([^&#]*)').exec(window.location.href);
-        if (results == null) {
-            return null;
-        } else {
-            return results[1] || 0;
-        }
-    };
-    NK.functions.addDynamicLayer = function (name, url, layerText) {
-        var wms = new OpenLayers.Layer.WMS(
-            name,
-            url,
-            {
-                gkt: NK.gkToken,
-                layers: layerText,
-                transparent: true,
-                format: 'image/png'
-            },
-            {
-                shortid: layerText,
-                isBaseLayer: false,
-                buffer: 1,
-                visibility: false,
-                transitionEffect: 'resize',
-                singleTile: true
-            }
-        );
-        if (wms.params.GKT) {
-            wms.params.gkt = wms.params.GKT;
-            delete wms.params.GKT;
-        }
-        map.addLayers([wms]);
-        NK.functions.createLegend();
-    };
 
-    NK.functions.createLegend = function () {
-        var legendDiv = OpenLayers.Util.getElement('legendBox');
-        legendDiv.innerHTML = "";
-        // create getLegendGraphic request for all active layers
-        for (var i = 1; i < map.layers.length; i++) {
-            if (map.layers[i].visibility) {
-                var legendURL = map.layers[i].getFullRequestString({
-                    REQUEST: "GetLegendGraphic",
-                    EXCEPTIONS: "application/vnd.ogc.se_inimage",
-                    FORMAT: "image/png",
-                    SERVICE: "WMS",
-                    VERSION: "1.1.1",
-                    LAYER: map.layers[i].params.LAYERS
-                });
-                legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
-            }
-        }
-    }
-
-    var layers = [];
-    var wmsUrl = NK.functions.urlParam('url');
-    NK.functions.getCapabilities(wmsUrl).done(function (xml) {
-        $(xml).find('Layer').each(function () {
-            layers.push($(this).children('Name').text());
-            var name = $(this).children('Name').text();
-            var layer = $(this).children('Name').text();
-            NK.functions.addDynamicLayer(name, wmsUrl, layer);
-        });
+  var layers = [];
+  var wmsUrl = NK.functions.urlParam('url');
+  NK.functions.getCapabilities(wmsUrl).done(function (xml) {
+    $(xml).find('Layer').each(function () {
+      layers.push($(this).children('Name').text());
+      var name = $(this).children('Name').text();
+      var layer = $(this).children('Name').text();
+      NK.functions.addDynamicLayer(name, wmsUrl, layer);
     });
+  });
 
-    NK.functions.addLayerSwitcher = function () {
-        map.addControl(new OpenLayers.Control.Navigation());
-        map.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerList')}));
-    };
+  NK.functions.addLayerSwitcher = function () {
+    var loadingpanel = new OpenLayers.Control.LoadingPanel();
+    map.addControl(loadingpanel);
+    map.addControl(new OpenLayers.Control.Navigation());
+    map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList')}));
+  };
 
 };
 // end init()
 
 
-var addEvent = function(event, handler) {
+var addEvent = function (event, handler) {
   var listen = window.addEventListener || window.attachEvent;
   if (window.addEventListener) {
     listen(event, handler, false);
@@ -421,7 +425,7 @@ var addEvent = function(event, handler) {
   }
 };
 
-var cb = function(response, status, request) {
+var cb = function (response, status, request) {
   NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
   NK.init();
 };
