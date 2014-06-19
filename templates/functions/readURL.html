@@ -327,27 +327,39 @@ NK.functions.setMapState = function (params) {
           break;
         case 'w':
           var wmsUrl = NK.functions.urlParam('url');
+          var wmsParams;
           var layers = [];
-          var resultWMS = NK.functions.getCapabilities(wmsUrl);
-          resultWMS.done(function (xml) {
-            $(xml).find('Layer').each(function () {
-              layers.push($(this).children('Name').text());
-              var name = $(this).children('Name').text();
-              var layer = $(this).children('Name').text();
-              NK.functions.addDynamicLayer(name, wmsUrl, layer);
-
-              var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
-              geoportal.showControls();
-              var menuLink = $('#showLayer');
-              event.preventDefault();
-              $(menuLink).parent().addClass("current");
-              $(menuLink).parent().siblings().removeClass("current");
-              var tab = $(menuLink).attr("href");
-              $(".tab-content").not(tab).css("display", "none");
-              $(tab).fadeIn();
+          //checkk for layers
+          if(wmsUrl.indexOf("+", 0) !== -1) {
+            wmsParams = wmsUrl.split("/+");
+            wmsUrl = wmsParams[0];
+            for (var i = 1; i < wmsParams.length; i++ ) {
+              NK.functions.addDynamicLayer(wmsParams[i], wmsParams[0], wmsParams[i], true);
+              console.log(wmsParams);
+            }
+          } else {
+            var resultWMS = NK.functions.getCapabilities(wmsUrl);
+            resultWMS.done(function (xml) {
+              $(xml).find('Layer').each(function () {
+                layers.push($(this).children('Name').text());
+                var name = $(this).children('Name').text();
+                var layer = $(this).children('Name').text();
+                NK.functions.addDynamicLayer(name, wmsUrl, layer, false);
+              });
+              console.log(layers);
             });
-            console.log(layers);
-          });
+          }
+          var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+          geoportal.showControls();
+          geoportal.steps.show = 'current';
+          var menuLink = $('#showLayer');
+          event.preventDefault();
+          $(menuLink).parent().addClass("current");
+          $(menuLink).parent().siblings().removeClass("current");
+          var tab = $(menuLink).attr("href");
+          $(".tab-content").not(tab).css("display", "none");
+          $(tab).fadeIn();
+
           index += 5;
           break;
       }

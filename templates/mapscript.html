@@ -166,12 +166,17 @@ NK.functions.getNewToken = function () {
 };
 
 NK.functions.getCapabilities = function (url) {
-  return $.ajax({
-    url: url,
-    type: 'GET',
-    data: {service: 'WMS', request: 'getCapabilities'},
-    dataType: 'xml'
-  });
+  if(!!url) {
+    if(url.indexOf("?", url.length - 1) === -1) {
+      url += "?";
+    }
+    return $.ajax({
+      url: url,
+      type: 'GET',
+      data: {service: 'WMS', request: 'getCapabilities'},
+      dataType: 'xml'
+    });
+  }
 };
 NK.functions.urlParam = function (name) {
   var results = new RegExp('[\\/&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -181,7 +186,13 @@ NK.functions.urlParam = function (name) {
     return results[1] || 0;
   }
 };
-NK.functions.addDynamicLayer = function (name, url, layerText) {
+NK.functions.addLayerSwitcher = function () {
+  var loadingpanel = new OpenLayers.Control.LoadingPanel();
+  map.addControl(loadingpanel);
+  map.addControl(new OpenLayers.Control.Navigation());
+  map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList')}));
+};
+NK.functions.addDynamicLayer = function (name, url, layerText, visible) {
   var wms = new OpenLayers.Layer.WMS(
     name,
     url,
@@ -195,7 +206,7 @@ NK.functions.addDynamicLayer = function (name, url, layerText) {
       shortid: layerText,
       isBaseLayer: false,
       buffer: 1,
-      visibility: false,
+      visibility: visible,
       transitionEffect: 'resize',
       singleTile: true
     }
@@ -392,25 +403,6 @@ NK.init = function () {
     }());
 
   }
-
-
-  var layers = [];
-  var wmsUrl = NK.functions.urlParam('url');
-  NK.functions.getCapabilities(wmsUrl).done(function (xml) {
-    $(xml).find('Layer').each(function () {
-      layers.push($(this).children('Name').text());
-      var name = $(this).children('Name').text();
-      var layer = $(this).children('Name').text();
-      NK.functions.addDynamicLayer(name, wmsUrl, layer);
-    });
-  });
-
-  NK.functions.addLayerSwitcher = function () {
-    var loadingpanel = new OpenLayers.Control.LoadingPanel();
-    map.addControl(loadingpanel);
-    map.addControl(new OpenLayers.Control.Navigation());
-    map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList')}));
-  };
 
 };
 // end init()
