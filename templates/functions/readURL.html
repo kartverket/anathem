@@ -353,7 +353,6 @@ NK.functions.setMapState = function (params) {
           geoportal.showControls();
           geoportal.steps.show = 'current';
           var menuLink = $('#showLayer');
-          event.preventDefault();
           $(menuLink).parent().addClass("current");
           $(menuLink).parent().siblings().removeClass("current");
           var tab = $(menuLink).attr("href");
