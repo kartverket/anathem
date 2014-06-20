@@ -353,8 +353,8 @@ NK.functions.setMapState = function (params) {
           geoportal.showControls();
           geoportal.steps.show = 'current';
           var menuLink = $('#showLayer');
+          $(menuLink).parent().parent().parent().children().children().removeClass("current");
           $(menuLink).parent().addClass("current");
-          $(menuLink).parent().siblings().removeClass("current");
           var tab = $(menuLink).attr("href");
           $(".tab-content").not(tab).css("display", "none");
           $(tab).fadeIn();
