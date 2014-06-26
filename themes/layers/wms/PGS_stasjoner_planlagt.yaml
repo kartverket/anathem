@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.fastmerker?
+name: stasjoner planlagt
+layers: PGS_stasjoner_planlagt
+layerGroup: tjenester.CPOS-stasjoner
+id: PGS_stasjoner_planlagt
+usetoken: true
+singleTile: true

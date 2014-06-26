@@ -29,36 +29,36 @@ mapscript:
     - include: layers/grunnkart
     - include: layers/toporaster2
 
-    #- include: layers/wms/kommunegrenser
-    #- include: layers/wms/amtskart
-    #- include: layers/wms/dybdedata
-    #- include: layers/wms/dybdelag
-    #- include: layers/wms/havbunnraster
-    #- include: layers/wms/dekning_sjomaaling
-    #- include: layers/wms/dybdekontur
-    #- include: layers/wms/dybdekurver_havomraader
-    #- include: layers/wms/kystkontur
-    #- include: layers/wms/sjogrenser
+    - include: layers/wms/kommunegrenser
+    - include: layers/wms/amtskart
+    - include: layers/wms/dybdedata
+    - include: layers/wms/dybdelag
+    - include: layers/wms/havbunnraster
+    - include: layers/wms/dekning_sjomaaling
+    - include: layers/wms/dybdekontur
+    - include: layers/wms/dybdekurver_havomraader
+    - include: layers/wms/kystkontur
+    - include: layers/wms/sjogrenser
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
-#    - include: layers/omriss_norge_1000m
-#    - include: layers/omriss_norge_500m
 
     # fakta layers
     - include: layers/geoJSON/kommunefjell
-    # test layers
-    #- include: layers/geoJSON/maritimegrenser
-    #- include: layers/geoJSON/clustertestdatafromfile
-    #- include: layers/geoJSON/unclusteredtestdatafromfile
-    #- include: layers/SOSI/kautokeino
-    #- include: layers/wfsTest
-    #- include: layers/ssr
+    # Fastmerker
+    - include: layers/wms/Fastmerker_alle
+    - include: layers/wms/Niv_fastmerker
+    - include: layers/wms/Trekantpunkt
+    - include: layers/wms/Stamnettpunkt
+    - include: layers/wms/Landsnettpunkt
+    - include: layers/wms/PGS_stasjoner
+    - include: layers/wms/Svenske_finske_stasjoner
+    - include: layers/wms/PGS_stasjoner_planlagt
 
-  center    : 
+  center    :
     template: center/besseggen
 
   functions :
@@ -82,6 +82,3 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
-
-#splashscreen:
-#  - template: splashscreen/betainfo

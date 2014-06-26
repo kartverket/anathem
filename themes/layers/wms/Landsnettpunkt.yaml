@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.fastmerker?
+name: Landsnett punkt
+layers: Landsnettpunkt
+layerGroup: tjenester.Fastmerker
+id: Landsnettpunkt
+usetoken: true
+singleTile: true

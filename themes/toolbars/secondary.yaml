@@ -46,16 +46,12 @@ controls:
     group: tjenester.fakta
     title: Fakta
     buttonText: Fakta
-    #groupheaders:
-    #- template: controls/overlaygroupheader
-    #  group: fakta
-    #  heading: Over&shy;skrift
-  #- template: controls/overlaygrouppanel
-  #  group: testlag.utvikling
-  #  title: Test under utvikling
-  #  buttonText: Test 
-- template: controls/gamlenkcontainer
-  name: "Gamle Norges- kart"
-  tooltip: "g&aring; til gamle Norgeskart"
-  id: gamlenk-panel
+  - template: controls/overlaygrouppanel
+    group: tjenester.Fastmerker
+    title: Fastmerker
+    buttonText: Fastmerker
+  - template: controls/overlaygrouppanel
+    group: tjenester.CPOS-stasjoner
+    title: CPOS-stasjoner
+    buttonText: CPOS-stasjoner
 
