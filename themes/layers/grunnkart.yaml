@@ -4,3 +4,4 @@ name: enkel
 layer: norges_grunnkart 
 layerGroup: modus
 id: enkel 
+visible: true
