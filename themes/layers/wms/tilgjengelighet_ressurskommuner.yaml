@@ -6,3 +6,4 @@ layerGroup: tjenester.Generelt
 id: ressurskommuner
 usetoken: true
 singleTile: true
+getfeature: true

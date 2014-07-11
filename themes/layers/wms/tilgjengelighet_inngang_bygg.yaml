@@ -6,3 +6,4 @@ layerGroup: tjenester.tettsted
 id: inngang_bygg
 usetoken: true
 singleTile: true
+getfeature: true

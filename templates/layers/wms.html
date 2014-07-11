@@ -1,4 +1,5 @@
 (function () {
+  var options = {};
   var wms = new OpenLayers.Layer.WMS(
     "${name}",
     "${url}",
@@ -32,5 +33,42 @@
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT; 
   }
+
+% if getfeature:
+  options.styleName = 'unlabeledMarker';
+  options.popupConfig = (function () {
+    var result = {
+      'heading': 'Layer'
+    };
+    result.data = [];
+
+    return result;
+  }());
+  var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2(options);
+  var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
+    url: "${url}",
+    title: "${name}",
+    queryVisible: true,
+    infoFormat: 'text/plain',
+    eventListeners: {
+      "getfeatureinfo": function(event) {
+        map.addPopup(new OpenLayers.Popup.FramedSideAnchored(
+          null,
+          map.getLonLatFromPixel(event.xy),
+          null,
+          markupGeneratorFunction(event.text),
+          null,
+          true,
+          closePopupCallBack,
+          {x: 10, y: -65},
+          'selected-feature-popup, user-marker'
+        ), true);
+      }
+    }
+  });
+  map.addControl(featureInfo);
+  featureInfo.activate();
+% endif
+
   map.addLayers([wms]);
 }());

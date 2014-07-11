@@ -6,3 +6,4 @@ layerGroup: tjenester.Friluft
 id: hc_parkering_friluft
 usetoken: true
 singleTile: true
+getfeature: true

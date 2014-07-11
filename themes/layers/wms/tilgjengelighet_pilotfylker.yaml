@@ -6,3 +6,4 @@ layerGroup: tjenester.Generelt
 id: pilotfylker
 usetoken: true
 singleTile: true
+getfeature: true

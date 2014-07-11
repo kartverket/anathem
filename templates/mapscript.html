@@ -166,6 +166,14 @@ NK.functions.getNewToken = function () {
   }
 };
 
+var closePopupCallBack = function () {
+  var itemIndex;
+  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
+    map.popups[itemIndex].hide();
+  }
+  this.hide();
+};
+
 % if functions :
   ${functions}
 % endif

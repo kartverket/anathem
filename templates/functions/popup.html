@@ -5,7 +5,7 @@ NK.functions.popup = NK.functions.popup || {};
 
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
-    var a = feature.attributes, 
+    var a = feature.attributes,
         i,
         l,
         markup = '<article>';
@@ -24,7 +24,187 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     return markup;
   };
 };
+NK.functions.popup.generatePopupMarkup2 = function (conf) {
+  return function (feature) {
+    var a = feature,
+    i,
+    l,
+    markup = '<article>',
+    tmpMarkup = '';
 
+    var test;
+    test = a.split("\n");
+
+  var uuDict = {
+    "adko_ru_led":"Atkomstvei rullestol med ledsager: ",
+    "adko_rull":"Atkomstvei rullestol: ",
+    "adko_syns":"Atkomstvei synshemmede: ",
+    "dekke":"Dekke: ",
+    "diameter":"Diameter: ",
+    "flytebrygge":"Flytebrygge: ",
+    "registrert":"Registrert: ",
+    "kommentar":"Kommentar: ",
+    "plankeavstand":"Plankeavstand: ",
+    "rekkverk":"Rekkverk: ",
+    "stoppka_hoyde":"Stoppkant hoeyde: ",
+    "adko_el_rulle":"Atkomstvei el. rullestol: ",
+    "stoppkant":"Stoppkant: ",
+    "oppdatert":"Oppdatert: ",
+    "ringeklokke":" ",
+    "naturbase_nr":" ",
+    "hytteeier":" ",
+    "adko_stig_forhold":" ",
+    "tverrfall":" ",
+    "shape_area":" ",
+    "feil":" ",
+    "t_tur_syn":" ",
+    "tilgj_automat":" ",
+    "bord_utstikk":" ",
+    "spesialfottyperute":" ",
+    "t_alt":" ",
+    "t_auto_rulle":" ",
+    "helning":" ",
+    "gnr":" ",
+    "gid":" ",
+    "hoyde_skranke":" ",
+    "badeplass_tilrettelagt_for":" ",
+    "t_bad_syn":" ",
+    "belysning":" ",
+    "bnr":" ",
+    "aut_hoyde":" ",
+    "skiltet":" ",
+    "turomraade":" ",
+    "lyssignal":" ",
+    "rampe_stig":" ",
+    "bord_hoyde":" ",
+    "kap_personbiler":" ",
+    "hytte_id":" ",
+    "merket":" ",
+    "rampe_bredde":" ",
+    "byggtype":" ",
+    "varmekabel":" ",
+    "nedsenk_1":" ",
+    "eierforhold":" ",
+    "dorapner":" ",
+    "terskel_hoyde":" ",
+    "overbygg":" ",
+    "navn":" ",
+    "gate_type":" ",
+    "ringekl_hoyde":" ",
+    "t_fisk_syn":" ",
+    "X":" ",
+    "landga_stig":" ",
+    "bredde":" ",
+    "t_syn":" ",
+    "komm":" ",
+    "kommunenr":" ",
+    "opphav":" ",
+    "stig_forhold":" ",
+    "naturbasenr":" ",
+    "wkb_geometry":" ",
+    "nedsenk_2":" ",
+    "kommunenavn":" ",
+    "moteplass":" ",
+    "t_elrull":" ",
+    "inngang_bredde":" ",
+    "storrelse":" ",
+    "man_knap_hoyde":" ",
+    "inngang_type":" ",
+    "adko_stig_grad":" ",
+    "fiskeplass":" ",
+    "eier_tekst":" ",
+    "rampe_tverrfall":" ",
+    "turomraade_tilrettelagt_for":" ",
+    "kontrast":" ",
+    "t_man_rulle":" ",
+    "dortype":" ",
+    "avstand_servicebygg":" ",
+    "subtypekod":" ",
+    "tilgjengelighet_mulig":" ",
+    "stigning":" ",
+    "frihoyde":" ",
+    "bilde":" ",
+    "lengde":" ",
+    "link_skjema":" ",
+    "avstand_park":" ",
+    "t_rulleled":" ",
+    "rampe":" ",
+    "objtype":" ",
+    "veitype":" ",
+    "t_bad_rulle":" ",
+    "t_fisk_rulle":" ",
+    "kap_uu":" ",
+    "avstand_hc_park":" ",
+    "fiskeplass_tilrettelagt_for":" ",
+    "ptema":" ",
+    "rampe_tilgjengelig":" ",
+    "hand_hoy_1":" ",
+    "t_rulle":" ",
+    "malemetode":" ",
+    "ledelinje":" ",
+    "lydsignal":" ",
+    "atko_stigning":" ",
+    "hand_hoy_2":" ",
+    "badeplass":" ",
+    "tverrfall_grad":" ",
+    "userid":" ",
+    "t_rullled":" ",
+    "forbed_forslag":" ",
+    "byggnr":" ",
+    "objectid":" ",
+    "led_lin_kontrast":" ",
+    "byggtyp_nb":" ",
+    "avstand_serv_bygg":" ",
+    "t_tur_rulle":" ",
+    "tilrettela":" ",
+    "kontrast_inngang":" ",
+    "shape_length":" ",
+    "avgift":" ",
+    "betjenings":" ",
+    "atko_stigforhold":" ",
+    "dekke_tilstand":" ",
+    "ogc_fid":" ",
+    "noyaktighe":" ",
+    "handlist":" ",
+    "link_bilde":" ",
+    "operator":" ",
+    "hoyde_inngang":" ",
+    "arstidbruk":" ",
+    "tilgj_aut":" ",
+    "bygg_funksjon":" ",
+    "lenke":" ",
+    "stig_grad":" "
+  };
+
+  if(test.length > 4) {
+      var tmp = test[2].replace(/'/g,"").toUpperCase().split(" ");
+      var uuDictResponse = [];
+      markup += '<h1 class="h">' + tmp[1] + '</h1>';
+      markup += '<div class="externalToolbarLink"><a href="http://kartverket.no/tilgjengelighet/"><br>Les mer om Tilgjengelighetstjenester</a></div>';
+      for (i = 5, l = test.length - 1; i < l; i +=1) {
+        tmp = test[i].split(" = ");
+        if (uuDict[tmp[0].trim()] !== " ") {
+          tmpMarkup += '<p>' + uuDict[tmp[0].trim()] + tmp[1] + '</p>';
+        }
+        uuDictResponse[tmp[0].trim()] = tmp[1].replace(/'/g,"");
+      }
+      markup += '<table style="width:80px"><tr>';
+      markup += '<td id="flat_td"><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol/' + uuDictResponse['t_rulle'] + '.png" /></td>';
+      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/syn/' + uuDictResponse['t_syn'] + '.png" /></td>';
+      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_led/' + uuDictResponse['t_rullled'] + '.png" /></td>';
+      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_el/' + uuDictResponse['t_elrull'] + '.png" /></td>';
+      markup += '</tr></table>';
+      if (uuDictResponse['bilde'] != '') {
+        markup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=200 width=250 SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] +'"></a>';
+      }
+    } else {
+      markup += "Ingen data for denne punkt";
+    }
+
+    markup += tmpMarkup + '</article>';
+    return markup;
+  };
+};
 NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction, options) {
   var featureSelector = options.selectControl;
   return function (feature) {

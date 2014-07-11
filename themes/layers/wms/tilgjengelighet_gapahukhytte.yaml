@@ -6,3 +6,4 @@ layerGroup: tjenester.Friluft
 id: gapahukhytte
 usetoken: true
 singleTile: true
+getfeature: true

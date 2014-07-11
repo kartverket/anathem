@@ -6,3 +6,4 @@ layerGroup: tjenester.Friluft
 id: statlig_sikra_polygon
 usetoken: true
 singleTile: true
+getfeature: true
