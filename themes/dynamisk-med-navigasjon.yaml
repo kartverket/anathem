@@ -41,3 +41,6 @@ mapscript:
     - template: controls/navigation
     - template: controls/scaleline
     - include: toolbars/embed-basic-toolbar
+    - template: controls/logo
+      left: "75px"
+      

@@ -43,3 +43,4 @@ mapscript:
   controls  :
     - template: controls/navigation
     - template: controls/scaleline
+    - template: controls/logo

@@ -40,5 +40,6 @@ mapscript:
     template: functions/readURL
   controls:
     - template: controls/scaleline
+    - template: controls/logo
   center:
     template: center/besseggen
