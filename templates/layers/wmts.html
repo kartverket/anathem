@@ -13,13 +13,24 @@ NK.addLayerType.WMTS = (function (M, MP) {
   return function (id, name, url, layer, options) {
     var layer, 
         layerOptions;
+    var myMatrixIds = matrixIds;
+
+    if (options.customProj) {
+      var myMatrixIds = [],
+        i;
+
+      for (i = 0; i <= NK.zoomLevels; ++i) {
+        myMatrixIds[i] = {};
+        myMatrixIds[i].identifier = options.customProj + ":" + i;
+      } 
+    } 
 
     layerOptions = {
       'name': name,
       'url': url,
       'layer': layer,
-      'matrixSet': MP,
-      'matrixIds': matrixIds,
+      'matrixSet': options.customProj || MP,
+      'matrixIds': myMatrixIds,
       'format': "image/png",
       'requestEncoding': "kvp",
       'style': "default",
@@ -91,6 +102,10 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if usetoken:
     options.params = { 'gkt': NK.gkToken };
+  % endif
+
+  % if epsg:
+    options.customProj = "${epsg}"
   % endif
 
   NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
