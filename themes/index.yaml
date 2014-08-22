@@ -26,7 +26,7 @@ mapscript:
     - include: layers/sjo_hovedkart2
     - include: layers/flybilder
     - include: layers/terreng
-    #- include: layers/grunnkart
+    - include: layers/grunnkart
     - include: layers/svalbard
     - include: layers/toporaster2
 

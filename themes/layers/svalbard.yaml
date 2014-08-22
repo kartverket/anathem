@@ -8,5 +8,6 @@ databbox: "369976.3899489096,8221306.539890718,878234.7199568129,9010718.7699019
 #extent: "-5120900.0,4449374.235882,5976551.52823,9998100.0"
 tileorigin: "-5120900.0,9998100.0" 
 shortMatrixIds: true
-layerGroup: modus
+layerGroup: flere 
 id: svalbard 
+

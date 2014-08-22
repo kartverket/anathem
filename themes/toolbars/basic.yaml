@@ -39,3 +39,9 @@ controls:
   controls:
   - template: controls/vectorlayerselector
     group: dekning
+- template: controls/container
+  id: layerselector-panel
+  controls:
+  - template: controls/rasterlayerselector-popup
+    title: "Flere"
+    group: flere
