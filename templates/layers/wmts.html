@@ -15,13 +15,17 @@ NK.addLayerType.WMTS = (function (M, MP) {
         layerOptions;
     var myMatrixIds = matrixIds;
 
-    if (options.customProj) {
+    if (!!options.customProj) {
       var myMatrixIds = [],
         i;
 
       for (i = 0; i <= NK.zoomLevels; ++i) {
         myMatrixIds[i] = {};
-        myMatrixIds[i].identifier = options.customProj + ":" + i;
+        if (!!options.shortMatrixIds) {
+          myMatrixIds[i].identifier = "" + i;
+        } else {
+          myMatrixIds[i].identifier = options.customProj + ":" + i;
+        }
       } 
     } 
 
@@ -40,10 +44,28 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'buffer': 4
     };
 
+    if (!!options.extent) {
+      var c = options.extent.split(",");
+      var customBounds = new OpenLayers.Bounds(c);
+      layerOptions['tileFullExtent'] = customBounds;
+    }
+    if (!!options.tileorigin) {
+      var c = options.tileorigin.split(",");
+      var origin = new OpenLayers.LonLat(c);
+      layerOptions['tileOrigin'] = origin;
+    }
+    if (!!options.databbox) {
+      var c = options.databbox.split(",");
+      var customBounds = new OpenLayers.Bounds(c);
+      layerOptions['maxExtent'] = customBounds;
+      layerOptions['displayOutsideMaxExtent'] = false;
+      layerOptions['visibility'] = 1;
+    }
+
     layerOptions.displayInLayerSwitcher = !!(options.displayInLayerSwitcher) ? 1 : 0;
     layerOptions.visibility = !!(options.visibility) ? 1 : 0;
 
-    if (options.params) {
+    if (!!options.params) {
       layerOptions.params = options.params;
     }
 
@@ -106,6 +128,22 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if epsg:
     options.customProj = "${epsg}"
+  % endif
+
+  % if shortMatrixIds:
+    options.shortMatrixIds = true
+  % endif
+
+  % if extent:
+    options.extent = "${extent}"
+  % endif
+
+  % if databbox:
+    options.databbox = "${databbox}"
+  % endif
+
+  % if tileorigin:
+    options.tileorigin = "${tileorigin}"
   % endif
 
   NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
