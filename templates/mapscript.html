@@ -22,6 +22,11 @@ NK.gkToken = "unInitialized";
 NK.tokenService = "${tokenServiceUrl}";
 % endif
 
+NK.baseProjection = "32633";
+% if projection:
+NK.baseProjection = "${projection}";
+% endif
+
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 
@@ -209,7 +214,7 @@ NK.init = function () {
     "3575" : new OpenLayers.Projection('EPSG:3575')
   };
 
-  mapProj = proj["32633"];
+  mapProj = proj[NK.baseProjection];
   mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
