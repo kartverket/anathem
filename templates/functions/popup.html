@@ -26,202 +26,465 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
 };
 NK.functions.popup.generatePopupMarkup2 = function (conf) {
   return function (feature) {
-    var a = feature,
-    i,
-    l,
-    markup = '<article style="overflow-y: scroll;">',
-    tmpMarkup = '';
+    var a = feature.attributes,
+      i,
+      l,
+      markup = '<article>';
 
+    if (conf.heading && a[conf.heading]) {
+      markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
+    }
+    if (conf.data) {
+      for (i = 0, l = conf.data.length; i < l; i += 1) {
+        if (conf.data[i].attribute && a[conf.data[i].attribute]) {
+          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</p>';
+        }
+      }
+    }
+    markup += '</article>';
+    return markup;
+  };
+};
+NK.functions.popup.generatePopupMarkup2 = function (conf) {
+  return function (feature) {
+    var a = feature, i, l, markup = '', tmpMarkup = '';
     var test;
     test = a.split("\n");
+    var uuDict = {
+      'friluftsomrade': {
+        'info': {
+          'name': 'FRILUFT - Friluftsomr&aring;de:',
+          'extra': 'Friluftsomr&aring;der hvor det er registrert tilgjengelighet.'
+        },
+        'content': {
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Badeplass:': '',
+          'Badeplass tilgjengelig rullestol:': 't_bad_rulle',
+          'Badeplass tilgjengelig svaksynt:': 't_bad_syn',
+          'Fiskeplass:': '',
+          'Fiskeplass tilgjengelig rullestol:': 't_fisk_rulle',
+          'Fiskeplass tilgjengelig svaksynt:': 't_fisk_syn',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'baderampe': {
+        'info': {
+          'name': 'FRILUFT - Baderampe',
+          'extra': 'Baderamper innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Atkomstvei rullestol: ': 'adko_rull',
+          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
+          'Atkomstvei el. rullestol:': 'adko_el_rulle',
+          'Atkomstvei synshemmede:': 'adko_syns',
+          'Rampe:': 'rampe',
+          'Rampe tverrfall:': {'rampe': '&deg;'},
+          'Rampestigning:': {'rampe': '&deg;'},
+          'Rampe bredde:': {'rampe_bredde': 'cm'},
+          'H&aring;ndlist:': 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'H&aring;ndlist h&oslash;yde 2:': {'hand_hoy_2': 'cm'},
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'fiskeplass': {
+        'info': {
+          'name': 'FRILUFT - Fiskeplass:',
+          'extra': 'Fiskeplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Atkomstvei rullestol: ': 'adko_rull',
+          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
+          'Atkomstvei el. rullestol:': 'adko_el_rulle',
+          'Atkomstvei synshemmede:': 'adko_syns',
+          'Flytebrygge:': 'flytebrygge',
+          'Stigning:': {'landga_stig': '&deg;'},
+          'Diameter:': {'diameter': 'cm'},
+          'Dekke:': 'dekke',
+          'Plankeavstand:': {'plankeavstand': 'cm'},
+          'Rekkverk:': 'rekkverk',
+          'Stoppkant:': 'stoppkant',
+          'Stoppkant h&oslash;yde:': {'kommentar': 'cm'},
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'gapahukhytte': {
+        'info': {
+          'name': 'FRILUFT - Gapahuk:',
+          'extra': 'Gapahuker og hytter innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Atkomstvei rullestol: ': 'adko_rull',
+          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
+          'Atkomstvei el. rullestol:': 'adko_el_rulle',
+          'Atkomstvei synshemmede:': 'adko_syns',
+          'St&oslash;rrelse:': {'storrelse': 'm2'},
+          'H&oslash;yde inngang:': {'hoyde_inngang': 'cm'},
+          'Kontrast inngang:': 'kontrast_inngang',
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'grillbalplass': {
+        'info': {
+          'name': 'FRILUFT - Grillplass, b&aring;lplass:',
+          'extra': 'Grillplasser, b&aring;lplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Atkomstvei rullestol: ': 'adko_rull',
+          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
+          'Atkomstvei el. rullestol:': 'adko_el_rulle',
+          'Atkomstvei synshemmede:': 'adko_syns',
+          'Dekke:': 'dekke',
+          'Helning:': {'helning': '&deg;'},
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'hcparkering_friluft': {
+        'info': {
+          'name': 'FRILUFT - HC-parkeringsplass:',
+          'extra': 'Enkelte HC-parkeringsplasser i n&aelig;rheten av et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Skiltet:': 'skiltet',
+          'Merket:': 'merket',
+          'Bredde:': {'bredde': 'cm'},
+          'Lengde:': {'lengde': 'cm'},
+          'Avgift:': 'avgift',
+          'Tilgjengelig automat:': 'tilgj_aut',
+          'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
+          'Kommentar:': 'kommentar',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'parkeringsomrader_friluft': {
+        'info': {
+          'name': 'FRILUFT - Parkeringsomr&aring;de:',
+          'extra': 'Parkeringsomr&aring;der i n&aelig;rheten av friluftsomr&aring;der med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Kapasitet:': 'kap_personbiler',
+          'HC-parkeringsplasser:': 'kap_uu',
+          'Dekke:': 'dekke',
+          'Veidekketilstand:': 'dekke_tilstand',
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'parkeringsomrader_tettsted': {
+        'info': {
+          'name': 'TETTSTED - Parkeringsomr&aring;de:',
+          'extra': 'Parkeringsomr&aring;der innenfor tettsteder og i n&aelig;rheten av utvalgte offentlige bygninger. Det ble foretatt en vurdering med hensyn til tilgjengelighet for bevegelseshemmede.'
+        },
+        'content': {
+          'Kapasitet:': 'kap_personbiler',
+          'HC-parkeringsplasser:': 'kap_uu',
+          'Dekke:': 'dekke',
+          'Veidekketilstand:': 'dekke_tilstand',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'hc-parkeringsplasser': {
+        'info': {
+          'name': 'TETTSTED - HC-parkeringsplass:',
+          'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
+        },
+        'content': {
+          'HC-skilt:': 'skiltet',
+          'Merket:': 'merket',
+          'Avstand servicebygg:': {'avstand_servicebygg': 'm'},
+          'Bredde:': {'bredde': 'cm'},
+          'Lengde:': {'lengde': 'cm'},
+          'Avgift:': 'avgift',
+          'Tilgjengelig automat:': 'tilgj_automat',
+          'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'inngang_bygg': {
+        'info': {
+          'name': 'TETTSTED - Inngang bygg:',
+          'extra': 'Inngangspartier til utvalgte offentlige bygninger innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
+        },
+        'content': {
+          'Avstand til HC-parkering:': {'avstand_hc_park': 'm'},
+          'D&oslash;rtype:': 'dortype',
+          'Rampe bredde:': {'rampe_bredde': 'cm'},
+          'H&aring;ndlist:': 'handlist',
+          'Terskel h&oslash;yde:': 'terskel_hoyde',
+          'D&oslash;r&aring;pner:': 'dorapner',
+          'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
+          'Inngang bredde:': {'inngang_bredde': 'cm'},
+          'Stigning ankomstvei:': {'adko_stig_grad': '&deg;'},
+          'Bygg funksjon:': 'bygg_funksjon',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'kulturminner_flate': {
+        'info': {
+          'name': 'KULTUR - kulturminne (flate)',
+          'extra': 'Riksantikvarens registrerte kulturminner (flate) med ulike typer tilrettelegging.'
+        },
+        'content': {
+          'Navn:': 'lok_navn',
+          'Kategori:': 'kategori_2',
+          'Tilrettelegging:': 'tilrettela',
+          'Lok-ID:': 'lok_id'
+        }
+      },
+      'kulturminner_punkt': {
+        'info': {
+          'name': 'KULTUR - kulturminne (punkt)',
+          'extra': 'Riksantikvarens registrerte kulturminner (punkt) med ulike typer tilrettelegging.'
+        },
+        'content': {
+          'Navn:': 'lok_navn',
+          'Kategori:': 'kategori_2',
+          'Tilrettelegging:': 'tilrettela',
+          'Lok-ID:': 'lok_id'
+        }
+      },
+      'pilotfylker': {
+        'info': {
+          'name': 'GENERELL - pilotfylke',
+          'extra': ''
+        },
+        'content': {
+          'Status:': 'status'
+        }
+      },
+      'ressurskommuner': {
+        'info': {
+          'name': 'GENERELL - ressurskommuner',
+          'extra': ''
+        },
+        'content': {
+          'Status:': 'status'
+        }
+      },
+      'serveringskiosk': {
+        'info': {
+          'name': 'FRILUFT - Kiosk:',
+          'extra': 'Kiosker og serveringssteder innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Atkomstvei rullestol: ': 'adko_rull',
+          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
+          'Atkomstvei el. rullestol:': 'adko_el_rulle',
+          'Atkomstvei synshemmede:': 'adko_syns',
+          'H&oslash;yde skranke:': {'hoyde_skranke': 'cm'},
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'sittegruppe': {
+        'info': {
+          'name': 'FRILUFT - Sittegruppe, hvilebenker:',
+          'extra': 'Sittegrupper og hvilebenker innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Atkomstvei rullestol: ': 'adko_rull',
+          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
+          'Atkomstvei el. rullestol:': 'adko_el_rulle',
+          'Atkomstvei synshemmede:': 'adko_syns',
+          'Dekke:': 'dekke',
+          'Helning:': {'helning': '&deg;'},
+          'H&oslash;yde bord:': {'bord_hoyde': 'cm'},
+          'Utstikk bord:': {'bord_utstikk': 'cm'},
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'statlig_sikra_polygon': {
+        'info': {
+          'name': 'FRILUFT - Statlig sikra friluftsomr&aring;de:',
+          'extra': 'Statlig sikra friluftsomr&aring;der vurdert med hensyn til tilgjengelighet for rullestolbrukere og synshemmede.'
+        },
+        'content': {
+          'Navn:': 'navn',
+          'Turomr&aring;de:': '',
+          'Fiskeplass:': '',
+          'Badeplass:': '',
+          'Kommentar:': 'kommentar',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'vei': {
+        'info': {
+          'name': 'TETTSTED - Veisystem:',
+          'extra': 'Veier innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
+        },
+        'content': {
+          'Gatetype:': 'gate_type',
+          'Dekke:': 'dekke',
+          'Veidekketilstand:': 'dekke_tilstand',
+          'Bredde:': {'bredde': 'cm'},
+          'Nedsenk 1:': {'nedsenk_1': 'cm'},
+          'Nedsenk 2:': {'nedsenk_2': 'cm'},
+          'Stigning ankomstvei:': {'stig_grad': '&deg;'},
+          'Tverrfall:': {'tverrfall_grad': '&deg;'},
+          'Ledelinje:': 'ledelinje',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'toalett': {
+        'info': {
+          'name': 'FRILUFT - Toalett, omkledningsrom:',
+          'extra': 'Toaletter, omkledningsrom eller kombinasjoner av dem innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
+        },
+        'content': {
+          'Stigning ankomstvei:': {'atko_stigning': '&deg;'},
+          'Stigningsforhold ankomstvei:': {'adko_stig_forhold': '&deg;'},
+          'Avstand HC-parkering:': {'avstand_hc_park': 'm'},
+          'D&oslash;rtype:': 'inngang_type',
+          'Bredde inngang:': 'inngang_bredde',
+          'Terskel h&oslash;yde:': 'terskel_hoyde',
+          'D&oslash;r&aring;pner:': 'dorapner',
+          'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
+          'Rampe:': 'rampe',
+          'Rampe bredde:': {'rampe_bredde': 'cm'},
+          'H&aring;ndlist:': 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'H&aring;ndlist h&oslash;yde 2:': {'hand_hoy_2': 'cm'},
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'turisthytte': {
+        'info': {
+          'name': 'FRILUFT - Turisthytte:',
+          'extra': 'Turisthytter som er tilrettelagt for bevegelseshemmede'
+        },
+        'content': {
+          'Navn:': 'navn',
+          'Eier:': 'eier_tekst',
+          'Kommentar:': 'kommentar',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      },
+      'turvei': {
+        'info': {
+          'name': 'FRILUFT - Turvei:',
+          'extra': 'Turveier vurdert med hensyn til tilgjengelighet.'
+        },
+        'content': {
+          'Veitype:': 'veitype',
+          'Spesial fottyperute:': 'spesialfottyperute',
+          'Dekke:': 'dekke',
+          'Veidekketilstand:': 'dekke_tilstand',
+          'Belysning': 'belysning',
+          'Bredde:': {'bredde': 'cm'},
+          'Stigning:': {'stigning': '&deg;'},
+          'Tverrfall:': {'tverrfall': '&deg;'},
+          'Ledelinje:': 'ledelinje',
+          'Fri h&oslash;yde:': 'frihoyde',
+          'Ledelinje kontrast:': 'led_lin_kontrast',
+          'Kommentar:': 'kommentar',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Registrert:': 'registrert',
+          'Oppdatert:': 'oppdatert'
+        }
+      }
+    };
 
-  var uuDict = {
-  "adko_ru_led":"Atkomstvei rullestol med ledsager: ",
-  "adko_rull":"Atkomstvei rullestol: ",
-  "adko_syns":"Atkomstvei synshemmede: ",
-  "dekke":"Dekke: ",
-  "diameter":"Diameter: ",
-  "flytebrygge":"Flytebrygge: ",
-  "registrert":"Registrert: ",
-  "kommentar":"Kommentar: ",
-  "plankeavstand":"Plankeavstand: ",
-  "rekkverk":"Rekkverk: ",
-    "stoppka_hoyde":"Stoppkant hoeyde: ",
-  "adko_el_rulle":"Atkomstvei el. rullestol: ",
-  "stoppkant":"Stoppkant: ",
-  "oppdatert":"Oppdatert: ",
-  "ringeklokke":" ",
-  "naturbase_nr":" ",
-  "hytteeier":" ",
-  "adko_stig_forhold":" ",
-  "tverrfall":" ",
-  "shape_area":" ",
-  "feil":" ",
-  "t_tur_syn":" ",
-  "tilgj_automat":" ",
-  "bord_utstikk":" ",
-  "spesialfottyperute":" ",
-  "t_alt":" ",
-  "t_auto_rulle":" ",
-  "helning":" ",
-  "gnr":" ",
-  "gid":" ",
-  "hoyde_skranke":" ",
-  "badeplass_tilrettelagt_for":" ",
-  "t_bad_syn":"Tilgjengelig svaksynt: ",
-  "belysning":" ",
-  "bnr":" ",
-  "aut_hoyde":" ",
-  "skiltet":" ",
-  "turomraade":" ",
-  "lyssignal":" ",
-  "rampe_stig":"Rampestigning: ",
-  "bord_hoyde":" ",
-  "kap_personbiler":" ",
-  "hytte_id":" ",
-  "merket":" ",
-  "rampe_bredde":"Rampe bredde: ",
-  "byggtype":" ",
-  "varmekabel":" ",
-  "nedsenk_1":" ",
-  "eierforhold":" ",
-  "dorapner":" ",
-  "terskel_hoyde":" ",
-  "overbygg":" ",
-  "navn":" ",
-  "gate_type":" ",
-  "ringekl_hoyde":" ",
-  "t_fisk_syn":"Tilgjengelig svaksynt: ",
-  "X":" ",
-  "landga_stig":" ",
-  "bredde":" ",
-  "t_syn":" ",
-  "komm":" ",
-  "kommunenr":" ",
-  "opphav":" ",
-  "stig_forhold":" ",
-  "naturbasenr":" ",
-  "wkb_geometry":" ",
-  "nedsenk_2":" ",
-  "kommunenavn":" ",
-  "moteplass":" ",
-  "t_elrull":" ",
-  "inngang_bredde":" ",
-  "storrelse":" ",
-  "man_knap_hoyde":" ",
-  "inngang_type":" ",
-  "adko_stig_grad":" ",
-  "fiskeplass":" ",
-  "eier_tekst":" ",
-  "rampe_tverrfall":"Rampe tverrfall: ",
-  "turomraade_tilrettelagt_for":" ",
-  "kontrast":" ",
-  "t_man_rulle":" ",
-  "dortype":" ",
-  "avstand_servicebygg":" ",
-  "subtypekod":" ",
-  "tilgjengelighet_mulig":" ",
-  "stigning":" ",
-  "frihoyde":" ",
-  "bilde":" ",
-  "lengde":" ",
-  "link_skjema":" ",
-  "avstand_park":" ",
-  "t_rulleled":" ",
-  "rampe":"Rampe: ",
-  "objtype":" ",
-  "veitype":" ",
-  "t_bad_rulle":"Tilgjengelig rullestol: ",
-  "t_fisk_rulle":"Tilgjengelig rullestol: ",
-  "kap_uu":" ",
-  "avstand_hc_park":" ",
-  "fiskeplass_tilrettelagt_for":" ",
-  "ptema":" ",
-  "rampe_tilgjengelig":" ",
-  "hand_hoy_1":" ",
-  "t_rulle":" ",
-  "malemetode":" ",
-  "ledelinje":" ",
-  "lydsignal":" ",
-  "atko_stigning":" ",
-  "hand_hoy_2":" ",
-  "badeplass":" ",
-  "tverrfall_grad":" ",
-  "userid":" ",
-  "t_rullled":" ",
-  "forbed_forslag":"Forbedringsforslag: ",
-  "byggnr":" ",
-  "objectid":" ",
-  "led_lin_kontrast":" ",
-  "byggtyp_nb":" ",
-  "avstand_serv_bygg":" ",
-  "t_tur_rulle":" ",
-  "tilrettela":"Tilrettelegging: ",
-  "kontrast_inngang":" ",
-  "shape_length":" ",
-  "avgift":"Avgift: ",
-  "betjenings":" ",
-  "atko_stigforhold":" ",
-  "dekke_tilstand":" ",
-  "ogc_fid":" ",
-  "noyaktighe":" ",
-  "handlist":" ",
-  "link_bilde":" ",
-  "operator":" ",
-  "hoyde_inngang":" ",
-  "arstidbruk":" ",
-  "tilgj_aut":" ",
-  "bygg_funksjon":" ",
-  "lenke":" ",
-  "stig_grad":" ",
-  "status":"Status: ",
-  "webside":"Webside: ",
-  "lok_navn":"Navn: ",
-  "lok_id":"Lok-ID: ",
-  "kategori_2":"Kategori: "
-  };
-
-  if(test.length > 4) {
-      var tmp = test[2].replace(/'/g,"").toUpperCase().split(" ");
+    if (test.length > 4) {
+      var tmp = test[2].replace(/'/g, "").toLowerCase().split(" ");
+      var uuDictTmp = uuDict[tmp[1]];
+      var tmpResp = [];
       var uuDictResponse = [];
-      markup += '<h1 class="h">' + tmp[1] + '</h1>';
-      markup += '<div class="externalToolbarLink"><a href="http://kartverket.no/tilgjengelighet/"><br>Les mer om Tilgjengelighetstjenester</a></div>';
-      for (i = 5, l = test.length - 1; i < l; i +=1) {
-        tmp = test[i].split(" = ");
-        if (uuDict[tmp[0].trim()] !== " ") {
-          tmpMarkup += '<p>' + uuDict[tmp[0].trim()] + tmp[1] + '</p>';
+      markup += '<article style="overflow-y: scroll; height:380px" >';
+      try {
+        markup += '<h1 class="h">' + uuDictTmp['info']['name'] + '</h1>';
+        markup += '<p>' + uuDictTmp['info']['extra'] + '</p>';
+        markup += '<div class="externalToolbarLink"><a href="http://kartverket.no/tilgjengelighet/"><br>Les mer om Tilgjengelighetstjenester</a></div>';
+        for (i = 5, l = test.length - 1; i < l; i += 1) {
+          tmp = test[i].split(" = ");
+          if (tmp[1])
+            tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
+          if (!!tmp[1]) {
+            uuDictResponse[tmp[0].trim()] = tmp[1].replace(/'/g, "");
+          }
         }
-        if(!!tmp[1]){
-          uuDictResponse[tmp[0].trim()] = tmp[1].replace(/'/g,"");
+        for (var prop in uuDictTmp['content']) {
+          tmpMarkup += '<p>' + prop + ' ';
+          if (!!tmpResp[uuDictTmp['content'][prop]]) {
+            if (!!uuDictTmp['content'][prop]) {
+              tmpMarkup += tmpResp[uuDictTmp['content'][prop]] + '</p>';
+            } else {
+              tmpMarkup += 'Ingen tilrettelegging </p>';
+            }
+          } else {
+            if (typeof uuDictTmp['content'][prop] === 'object') {
+              for (var internprop in uuDictTmp['content'][prop]) {
+                tmpMarkup += tmpResp[internprop];
+                tmpMarkup += uuDictTmp['content'][prop][internprop];
+              }
+            } else {
+              tmpMarkup += '</p>';
+            }
+          }
         }
+      } catch (e) {
+        /*
+        console.log(e);
+        */
       }
+
       markup += '<table style="width:80px"><tr>';
-      if(!!uuDictResponse['t_rulle']){
-      markup += '<td id="flat_td"><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol/' + uuDictResponse['t_rulle'] + '.png" /></td>';
+      if (!!uuDictResponse['t_rulle']) {
+        markup += '<td id="flat_td"><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol/' + uuDictResponse['t_rulle'] + '.png" height=20 width=20 /></td>';
       }
-      if(!!uuDictResponse['t_syn']){
-      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/syn/' + uuDictResponse['t_syn'] + '.png" /></td>';
+      if (!!uuDictResponse['t_syn']) {
+        markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/syn/' + uuDictResponse['t_syn'] + '.png" height=20 width=20 /></td>';
       }
-      if(!!uuDictResponse['t_rullled']){
-      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_led/' + uuDictResponse['t_rullled'] + '.png" /></td>';
+      if (!!uuDictResponse['t_rullled']) {
+        markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_led/' + uuDictResponse['t_rullled'] + '.png" height=20 width=20 /></td>';
       }
-      if(!!uuDictResponse['t_elrull']){
-      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_el/' + uuDictResponse['t_elrull'] + '.png" /></td>';
+      if (!!uuDictResponse['t_elrull']) {
+        markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_el/' + uuDictResponse['t_elrull'] + '.png" height=20 width=20 /></td>';
       }
-      if(!!uuDictResponse['t_tur_rulle']){
-      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol/' + uuDictResponse['t_tur_rulle'] + '.png" /></td>';
+      if (!!uuDictResponse['t_tur_rulle']) {
+        markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol/' + uuDictResponse['t_tur_rulle'] + '.png" height=20 width=20 /></td>';
       }
-      if(!!uuDictResponse['t_tur_syn']){
-      markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/syn/' + uuDictResponse['t_tur_syn'] + '.png" /></td>';
+      if (!!uuDictResponse['t_tur_syn']) {
+        markup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/syn/' + uuDictResponse['t_tur_syn'] + '.png" height=20 width=20 /></td>';
       }
       markup += '</tr></table>';
       if (!!uuDictResponse['bilde']) {
-        markup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=200 width=250 SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] +'"></a>';
+        markup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=180 width=250 SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"></a>';
       }
     } else {
+      markup += '<article>';
       markup += "Ingen data for denne punkt";
     }
-
     markup += tmpMarkup + '</article>';
     return markup;
   };
