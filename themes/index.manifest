@@ -3,6 +3,8 @@ js/modernizr.min.js
 js/proj4js.min.js
 js/openlayers.min.js
 js/jquery.js
+js/jquery.storageapi.min.js
+js/jquery.caret.js
 js/plugins.min.js
 js/uniform/jquery.uniform.js
 theme/default/style.css
