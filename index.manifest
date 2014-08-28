@@ -1,4 +1,6 @@
 CACHE MANIFEST
+# version 1 - update this line to clear the cache on user computers
+
 index.html
 js/modernizr.min.js
 js/proj4js.min.js
