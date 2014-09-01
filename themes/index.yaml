@@ -7,6 +7,7 @@ mapscript:
   template  : mapscript
   language  : nb
   tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
+  projection: 32633
 
   i18n:
   - include: languages/nb/base
@@ -28,6 +29,8 @@ mapscript:
     - include: layers/terreng
     - include: layers/grunnkart
     - include: layers/toporaster2
+   # - include: layers/janmayen
+   # - include: layers/svalbard
 
     #- include: layers/wms/kommunegrenser
     #- include: layers/wms/amtskart
