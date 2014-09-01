@@ -7,6 +7,13 @@ mapClass: embedded-map
 mapscript:
   template  : mapscript
   tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
+
+  styles    :
+    - template: styles/unlabeledMarker
+    - template: styles/labeledMarker
+    - template: styles/omriss
+    - template: styles/track
+
   
   baselayers:   
     - template: layers/europa
