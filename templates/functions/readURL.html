@@ -122,7 +122,7 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
     formatOptions.externalProjection = NK.projections[epsgCode];
     correctEpsgCode = epsgCode;
   } else {
-    correctEpsgCode = '32633';
+    correctEpsgCode = NK.baseProjection;
   }
 
   geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
@@ -210,8 +210,8 @@ NK.functions.setMapState = function (params) {
 
       if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
         pWSG84 = new Proj4js.Proj('EPSG:4326');   
-        pUTM33 = new Proj4js.Proj('EPSG:32633');   
-        xy = Proj4js.transform(pWSG84, pUTM33, new Proj4js.Point(mapy, mapx));
+        pUTM = new Proj4js.Proj('EPSG:'+NK.baseProjection);   
+        xy = Proj4js.transform(pWSG84, pUTM, new Proj4js.Point(mapy, mapx));
         mapx = xy.x;
         mapy = xy.y;
       }
