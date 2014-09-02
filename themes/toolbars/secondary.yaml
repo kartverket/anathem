@@ -43,10 +43,6 @@ controls:
   id: services-panel
   controls:
   - template: controls/overlaygrouppanel
-    group: tjenester.fakta
-    title: Fakta
-    buttonText: Fakta
-  - template: controls/overlaygrouppanel
     group: tjenester.Fastmerker
     title: Fastmerker
     buttonText: Fastmerker

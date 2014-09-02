@@ -362,6 +362,18 @@ NK.init = function () {
     }());
 
   }
+  var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
+    url: "http://wms.geonorge.no/skwms1/wms.fastmerker?",
+    queryVisible: true,
+    infoFormat: 'text/html',
+    eventListeners: {
+      "getfeatureinfo": function(event) {
+        window.open().document.write(event.text);
+      }
+    }
+  });
+  map.addControl(featureInfo);
+  featureInfo.activate();
 
 };
 // end init()
