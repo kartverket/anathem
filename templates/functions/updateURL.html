@@ -1,6 +1,18 @@
 var NK = NK || {};
 NK.functions = NK.functions || {};
 
+NK.functions.addedLayers = function () {
+  var re = /[+]\w*/;
+  var results = re.exec(window.location.href);
+  if (results == null) {
+    return null;
+  } else {
+    return results[0].substr(1);
+  }
+};
+
+NK.addedLayer = NK.functions.addedLayers();
+
 NK.functions.updateHistory = function (evt) {
   var center,
       zoom,
@@ -22,6 +34,10 @@ NK.functions.updateHistory = function (evt) {
         for (i in map.layers) {
           if (map.layers.hasOwnProperty(i)) {
             layer = map.layers[i];
+            if(layer.shortid === NK.addedLayer && typeof layer.shortid !== 'undefined'){
+              layer.setVisibility(true);
+              NK.addedLayer = null;
+            }
             if (!layer.isBaseLayer) {
               if (!layer.isUrlDataLayer) {
                 if (layer.visibility) {
