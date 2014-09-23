@@ -5,4 +5,13 @@
 % if left:
 	options.logoPaddingLeft = '${left}';
 % endif
+% if right:
+	options.logoPaddingRight = '${right}';
+% endif
+% if bottom:
+	options.logoPaddingBottom = '${bottom}';
+% endif
+% if top:
+	options.logoPaddingTop = '${top}';
+% endif
 NK.functions.addControlToContext(new OpenLayers.Control.Logo(options), context);
