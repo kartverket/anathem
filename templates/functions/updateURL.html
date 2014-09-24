@@ -26,6 +26,9 @@ NK.functions.updateHistory = function (evt) {
     center = map.getCenter();
     zoom   = map.getZoom();
 
+    var mouseCursor= document.getElementById('map').style;
+    mouseCursor.cursor = 'default';
+
     if (!!center && !!zoom) {
       uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat); 
       /* 1m precision ought to be enough for everyone --BG */
@@ -43,6 +46,7 @@ NK.functions.updateHistory = function (evt) {
                 if (layer.visibility) {
                   if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
                     uid += "/+" + layer.shortid;
+                    mouseCursor.cursor = 'pointer'
                   }
                 } else {
                   if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
