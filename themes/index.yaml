@@ -49,10 +49,7 @@ mapscript:
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
     # Fastmerker
-    - include: layers/wms/Fastmerker_alle
     - include: layers/wms/Niv_fastmerker
     - include: layers/wms/Trekantpunkt
     - include: layers/wms/Stamnettpunkt
