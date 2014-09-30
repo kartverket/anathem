@@ -2,5 +2,7 @@ template: layers/wmts
 usetoken: true
 name: Papirkart 
 layer: toporaster2
-layerGroup: flere 
+layerGroup: modus 
 id: toporaster
+visible: false
+hidefromlayerswitcher: true
