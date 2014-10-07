@@ -1,6 +1,0 @@
-template: layers/wms
-name: Enkelt
-url: http://opencache.statkart.no/gatekeeper/gk/gk.open
-layers: topo2enkel
-layerGroup: modus
-id: enkelt

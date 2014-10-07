@@ -7,6 +7,12 @@ mapClass: embedded-map
 mapscript: 
   template  : mapscript
   tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
+
+  styles    :
+    - template: styles/unlabeledMarker
+    - template: styles/labeledMarker
+    - template: styles/omriss
+    - template: styles/track
   
   baselayers:   
     - template: layers/europa
@@ -17,17 +23,6 @@ mapscript:
     - include: layers/terreng
     - include: layers/grunnkart
     - include: layers/toporaster2
-
-    - include: layers/wms/kommunegrenser
-    - include: layers/wms/amtskart
-    - include: layers/wms/dybdedata
-    - include: layers/wms/dybdelag
-    - include: layers/wms/havbunnraster
-    - include: layers/wms/dekning_sjomaaling
-    - include: layers/wms/dybdekontur
-    - include: layers/wms/dybdekurver_havomraader
-    - include: layers/wms/kystkontur
-    - include: layers/wms/sjogrenser
 
     - include: layers/dekning_n50_plast
     #- include: layers/dekning_n50_papir
@@ -40,5 +35,6 @@ mapscript:
     template: functions/readURL
   controls:
     - template: controls/scaleline
+    - template: controls/popout
   center:
     template: center/besseggen
