@@ -22,7 +22,7 @@ mapscript:
     - template: styles/track
     #- include: styles/SLD/maritimegrenser
 
-  overlays  : 
+  overlays  :
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
     - include: layers/flybilder
@@ -53,17 +53,17 @@ mapscript:
 
     # fakta layers
     - include: layers/geoJSON/kommunefjell
-     # NRL - Luftfartshindre
-     - include: layers/wms/nrl_alle
-     - include: layers/wms/NRL_punkt_over_60m_med_lys
-     - include: layers/wms/NRL_punkt_alle_uten_lys
-     - include: layers/wms/NRL_punkt_alle_med_lys
-     - include: layers/wms/NRL_punkt_over_60m_uten_lys
-     - include: layers/wms/NRL_linjepunkt
-     - include: layers/wms/NRL_linje_merka
-     - include: layers/wms/NRL_linje_umerka
-     - include: layers/wms/NRL_linje_uten_hoyde_umerka
-     - include: layers/wms/NRL_linje_uten_hoyde_merka
+    # NRL - Luftfartshindre
+    - include: layers/wms/nrl_alle
+    - include: layers/wms/NRL_punkt_over_60m_med_lys
+    - include: layers/wms/NRL_punkt_alle_uten_lys
+    - include: layers/wms/NRL_punkt_alle_med_lys
+    - include: layers/wms/NRL_punkt_over_60m_uten_lys
+    - include: layers/wms/NRL_linjepunkt
+    - include: layers/wms/NRL_linje_merka
+    - include: layers/wms/NRL_linje_umerka
+    - include: layers/wms/NRL_linje_uten_hoyde_umerka
+    - include: layers/wms/NRL_linje_uten_hoyde_merka
 
   center    : 
     template: center/besseggen
