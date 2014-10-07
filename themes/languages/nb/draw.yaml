@@ -3,7 +3,7 @@ language: nb
 translations:
   - template: i18n/translation
     source: Drawing
-    translation: Tegning
+    translation: Tegne og m\u00E5le
   - template: i18n/translation
     source: Drawing tool
     translation: Tegne og m\u00E5le

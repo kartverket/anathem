@@ -2,4 +2,7 @@
 % if svgLogo:
 	options.svgLogo = '${svgLogo}';
 % endif
+% if left:
+	options.logoPaddingLeft = '${left}';
+% endif
 NK.functions.addControlToContext(new OpenLayers.Control.Logo(options), context);

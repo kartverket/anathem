@@ -16,7 +16,7 @@ controls:
     addressSearchUrl: http://beta.norgeskart.no/ws/adr.py
     propertySearchUrl: http://beta.norgeskart.no/ws/eie.py
 - template: controls/container
-  id: share-panel
+  id: del-panel #norwegian, because AdBlock pro hides panels called share-panel
   controls:
   - template: controls/container
     id: print-panel
