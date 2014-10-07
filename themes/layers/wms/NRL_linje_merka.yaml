@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.nrl_hoyde?
-name: Linje merka
-layers: NRL_linje_merka
-layerGroup: tjenester.NRL
-id: NRL_linje_merka
-usetoken: true
-singleTile: true

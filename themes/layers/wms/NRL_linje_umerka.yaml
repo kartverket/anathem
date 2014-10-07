@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.nrl_hoyde?
-name: Linje umerka
-layers: NRL_linje_umerka
-layerGroup: tjenester.NRL
-id: NRL_linje_umerka
-usetoken: true
-singleTile: true

@@ -43,6 +43,18 @@ controls:
   id: services-panel
   controls:
   - template: controls/overlaygrouppanel
-    group: tjenester.NRL
-    title: NRL
-    buttonText: NRL
+    group: tjenester.alle_hindre
+    title: Alle hindre
+    buttonText: Alle hindre
+  - template: controls/overlaygrouppanel
+    group: tjenester.andre_linjethindre
+    title: Andre linjehindre
+    buttonText: Andre linjehindre
+  - template: controls/overlaygrouppanel
+    group: tjenester.kraftledninger
+    title: Kraftledninger
+    buttonText: Kraftledninger
+  - template: controls/overlaygrouppanel
+    group: tjenester.punkthindre
+    title: Punkthindre
+    buttonText: Punkthindre

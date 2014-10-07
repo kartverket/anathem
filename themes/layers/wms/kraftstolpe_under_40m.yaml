@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/nrl3?
+name: Kraftstolpe under 40 m
+layers: kraftstolpe_under_40m
+layerGroup: tjenester.kraftledninger
+id: kraftstolpe_under_40m
+usetoken: true
+singleTile: true
+

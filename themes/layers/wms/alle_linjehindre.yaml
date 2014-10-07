@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/nrl3?
+name: Alle linjehindre
+layers: alle_linjehindre
+layerGroup: tjenester.alle_hindre
+id: alle_linjehindre
+usetoken: true
+singleTile: true

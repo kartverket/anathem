@@ -1,0 +1,10 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/nrl3?
+name: Punkthindre under 40
+layers: punkthindre_under_40m
+layerGroup: tjenester.punkthindre
+id: punkthindre_under_40m
+usetoken: true
+singleTile: true
+
+

@@ -1,0 +1,10 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/nrl3?
+name: Andre linjer under 40 m
+layers: andre_linjer_under_40m
+layerGroup: tjenester.andre_linjethindre
+id: andre_linjer_under_40m
+usetoken: true
+singleTile: true
+
+
