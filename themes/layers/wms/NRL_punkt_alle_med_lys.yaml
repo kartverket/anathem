@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.nrl_hoyde?
+name: Punkt alle med lys
+layers: NRL_punkt_alle_med_lys
+layerGroup: tjenester.NRL
+id: NRL_punkt_alle_med_lys
+usetoken: true
+singleTile: true

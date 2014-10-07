@@ -28,18 +28,6 @@ mapscript:
     - include: layers/terreng
     - include: layers/grunnkart
     - include: layers/toporaster2
-
-    #- include: layers/wms/kommunegrenser
-    #- include: layers/wms/amtskart
-    #- include: layers/wms/dybdedata
-    #- include: layers/wms/dybdelag
-    #- include: layers/wms/havbunnraster
-    #- include: layers/wms/dekning_sjomaaling
-    #- include: layers/wms/dybdekontur
-    #- include: layers/wms/dybdekurver_havomraader
-    #- include: layers/wms/kystkontur
-    #- include: layers/wms/sjogrenser
-
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
@@ -50,13 +38,17 @@ mapscript:
 
     # fakta layers
     - include: layers/geoJSON/kommunefjell
-    # test layers
-    #- include: layers/geoJSON/maritimegrenser
-    #- include: layers/geoJSON/clustertestdatafromfile
-    #- include: layers/geoJSON/unclusteredtestdatafromfile
-    #- include: layers/SOSI/kautokeino
-    #- include: layers/wfsTest
-    #- include: layers/ssr
+    # NRL - Luftfartshindre
+    - include: layers/wms/nrl_alle
+    - include: layers/wms/NRL_punkt_over_60m_med_lys
+    - include: layers/wms/NRL_punkt_alle_uten_lys
+    - include: layers/wms/NRL_punkt_alle_med_lys
+    - include: layers/wms/NRL_punkt_over_60m_uten_lys
+    - include: layers/wms/NRL_linjepunkt
+    - include: layers/wms/NRL_linje_merka
+    - include: layers/wms/NRL_linje_umerka
+    - include: layers/wms/NRL_linje_uten_hoyde_umerka
+    - include: layers/wms/NRL_linje_uten_hoyde_merka
 
   center    : 
     template: center/besseggen

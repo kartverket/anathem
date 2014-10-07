@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.nrl_hoyde?
+name: Alle luftfartshindrer
+layers: nrl_hoyde
+layerGroup: tjenester.NRL
+id: luftfartshindre
+usetoken: true
+singleTile: true

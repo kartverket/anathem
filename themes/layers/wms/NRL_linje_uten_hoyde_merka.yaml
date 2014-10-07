@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.nrl_hoyde?
+name: Linje uten hoyde merka
+layers: NRL_linje_uten_hoyde_merka
+layerGroup: tjenester.NRL
+id: NRL_linje_uten_hoyde_merka
+usetoken: true
+singleTile: true
