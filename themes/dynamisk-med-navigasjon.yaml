@@ -1,5 +1,5 @@
 template : base
-title    : Norgeskart
+title    : Geonorge - Norgeskart
 mapClass: embedded-map
 mapscript:
   template  : mapscript
