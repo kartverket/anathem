@@ -190,7 +190,8 @@ NK.functions.addLayerSwitcher = function () {
   var loadingpanel = new OpenLayers.Control.LoadingPanel();
   map.addControl(loadingpanel);
   map.addControl(new OpenLayers.Control.Navigation());
-  map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList')}));
+  map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList'), 
+                                                       'filter': {'key':'dynamicLayer', 'value':true}}));
 };
 NK.functions.removeDynamicLayers = function() {
   var dLayers = map.getLayersBy("dynamicLayer",true);
