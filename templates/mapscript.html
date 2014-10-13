@@ -393,7 +393,31 @@ NK.init = function () {
     }());
 
   }
-
+  var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2();
+  var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
+    url: "http://wms.geonorge.no/skwms1/wms.tilgjengelighet?",
+    queryVisible: true,
+    infoFormat: 'text/plain',
+    eventListeners: {
+    "getfeatureinfo": function(event) {
+      try {
+        map.addPopup(new OpenLayers.Popup.FramedSideAnchored(
+          null,
+          map.getLonLatFromPixel(event.xy),
+          null,
+          markupGeneratorFunction(event.text),
+          null,
+          true,
+          closePopupCallBack,
+          {x: 10, y: -65},
+          'selected-feature-popup, user-marker'
+          ), true);
+        } catch(e) {}
+      }
+    }
+  });
+  map.addControl(featureInfo);
+  featureInfo.activate();
 };
 // end init()
 

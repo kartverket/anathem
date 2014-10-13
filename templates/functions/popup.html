@@ -26,27 +26,6 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
 };
 NK.functions.popup.generatePopupMarkup2 = function (conf) {
   return function (feature) {
-    var a = feature.attributes,
-      i,
-      l,
-      markup = '<article>';
-
-    if (conf.heading && a[conf.heading]) {
-      markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
-    }
-    if (conf.data) {
-      for (i = 0, l = conf.data.length; i < l; i += 1) {
-        if (conf.data[i].attribute && a[conf.data[i].attribute]) {
-          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</p>';
-        }
-      }
-    }
-    markup += '</article>';
-    return markup;
-  };
-};
-NK.functions.popup.generatePopupMarkup2 = function (conf) {
-  return function (feature) {
     var a = feature, i, l, markup = '', tmpMarkup = '';
     var test;
     test = a.split("\n");
