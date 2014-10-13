@@ -26,12 +26,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
 };
 NK.functions.popup.generatePopupMarkup2 = function (conf) {
   return function (feature) {
-    var a = feature,
-    i,
-    l,
-    markup = '<article style="overflow-y: scroll;">',
-    tmpMarkup = '';
-
+    var a = feature, i, l, markup = '', tmpMarkup = '';
     var test;
     test = a.split("\n");
 
