@@ -1,6 +1,27 @@
 var NK = NK || {};
 NK.functions = NK.functions || {};
 
+NK.functions.createLegend = function () {
+  var legendDiv = OpenLayers.Util.getElement('legendBox');
+  if (!!legendDiv) {
+    legendDiv.innerHTML = "";
+    // create getLegendGraphic request for all active layers
+    for (var i = 1; i < map.layers.length; i++) {
+      if (map.layers[i].visibility && map.layers[i].layerGroup != "modus") {
+        var legendURL = map.layers[i].getFullRequestString({
+          REQUEST: "GetLegendGraphic",
+          EXCEPTIONS: "application/vnd.ogc.se_inimage",
+          FORMAT: "image/png",
+          SERVICE: "WMS",
+          VERSION: "1.1.1",
+          LAYER: map.layers[i].params.LAYERS
+        });
+        legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
+      }
+    }
+  }
+};
+
 NK.functions.updateHistory = function (evt) {
   var center,
       zoom,
@@ -59,6 +80,7 @@ NK.functions.updateHistory = function (evt) {
       }
     }
     NK.functions.updateScaleLine();
+    NK.functions.createLegend();
   }
 };
 
