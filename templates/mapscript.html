@@ -192,6 +192,12 @@ NK.functions.addLayerSwitcher = function () {
   map.addControl(new OpenLayers.Control.Navigation());
   map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList')}));
 };
+NK.functions.removeDynamicLayers = function() {
+  var dLayers = map.getLayersBy("dynamicLayer",true);
+  for (var i=0; i<dLayers.length; i++) {
+    map.removeLayer(dLayers[i]);
+  }
+};
 NK.functions.addDynamicLayer = function (name, url, layerText, visible) {
   var wms = new OpenLayers.Layer.WMS(
     name,
@@ -209,7 +215,8 @@ NK.functions.addDynamicLayer = function (name, url, layerText, visible) {
       ratio: 1.0,
       visibility: visible,
       transitionEffect: 'resize',
-      singleTile: true
+      singleTile: true,
+      dynamicLayer: true
     }
   );
   if (wms.params.GKT) {
