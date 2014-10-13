@@ -205,7 +205,8 @@ NK.functions.addDynamicLayer = function (name, url, layerText, visible) {
     {
       shortid: layerText,
       isBaseLayer: false,
-      buffer: 1,
+      buffer: 0,
+      ratio: 1.0,
       visibility: visible,
       transitionEffect: 'resize',
       singleTile: true
