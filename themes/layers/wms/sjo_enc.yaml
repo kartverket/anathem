@@ -1,0 +1,10 @@
+template: layers/wms
+usetoken: true
+url: http://wms.geonorge.no/skwms1/wms.ecc_enc
+name: "Elektr. Sj&oslash;kart"
+layers: "cells"
+layerGroup: modus
+id: sjo_enc
+singleTile: true
+visible: "false"
+hidefromlayerswitcher: true

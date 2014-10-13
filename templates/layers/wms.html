@@ -28,6 +28,11 @@
     wms = OpenLayers.Util.extend(wms, { layerGroup: '${layerGroup}' });
   % endif
 
+  % if hidefromlayerswitcher:
+    wms["displayInLayerSwitcher"] = false;
+  % endif
+
+
   if (wms.params.GKT) {
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT; 
