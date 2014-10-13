@@ -4,3 +4,8 @@ name: Sj&oslash;
 layer: sjo_hovedkart2
 layerGroup: modus
 id: sjo
+onZoom:
+  template: strategies/onZoom
+  maxZoom: 10
+  altLayer: sjo_enc
+

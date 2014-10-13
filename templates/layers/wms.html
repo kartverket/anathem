@@ -8,19 +8,23 @@
       % endif    
       layers: "${layers}", 
       transparent: ${transparent}, 
+  % if styles:
+      styles: "${styles}",
+  % endif
       format: '${format}'
     },
     {
       shortid: "${id}", 
       isBaseLayer: false,
-      buffer: 4,
+      buffer: 0,
+      ratio: 1, 
       visibility: ${visible}, 
-      transitionEffect: 'resize',
   % if singleTile:
-      singleTile: true
+      singleTile: true,
   % else:
-      singleTile: false
+      singleTile: false,
   % endif
+      transitionEffect: 'resize'
     }
   );
 
