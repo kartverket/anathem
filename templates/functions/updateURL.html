@@ -16,7 +16,7 @@ NK.functions.createLegend = function () {
           VERSION: "1.1.1",
           LAYER: map.layers[i].params.LAYERS
         });
-        legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
+        legendDiv.innerHTML += map.layers[i].name + "<br><img src=" + legendURL + "><br>";
       }
     }
   }
