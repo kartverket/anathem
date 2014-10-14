@@ -225,6 +225,13 @@ NK.functions.addDynamicLayer = function (name, url, layerText, title, visible) {
   NK.functions.createLegend();
 };
 
+NK.functions.imgError = function(image, altText) {
+  image.style.visibility='hidden';
+  image.style.width="10px";
+  image.style.height="1px";
+  altText.style.visibility='visible'; 
+};
+
 NK.functions.createLegend = function () {
   var legendDiv = OpenLayers.Util.getElement('legendBox');
   if (!!legendDiv) {
@@ -242,7 +249,10 @@ NK.functions.createLegend = function () {
           LAYER: layer.params.LAYERS
         });
         var name = layer.title || layer.name;
-        legendDiv.innerHTML += name + "<br/><img src=" + legendURL + "><br>";
+        var id   = "legend_" + layer.name;
+        legendDiv.innerHTML += name + "<br/><img src='" + legendURL + "' onerror='NK.functions.imgError(this, "+id+");'>";
+        legendDiv.innerHTML += "<span id='"+id+"' style='visibility:hidden'><a href='"+ legendURL +"' style='color:#fff'><i>Feil ved lasting av tegnforklaringen</i></a><br/>";
+       
       }
     }
   }
