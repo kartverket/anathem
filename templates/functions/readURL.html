@@ -84,23 +84,48 @@ NK.functions.addLabeledMarker = function (params, number) {
 
 NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
   var type,
-      url,
-      epsgCode;
+      url;
 
   type = params[0];
-  url = decodeURIComponent(params[1]);
-  epsgCode = params[2];
+  url  = params[1];
+  if (url.indexOf("%")>-1) { // you can URL-encode or escape
+    url = decodeURIComponent(url);
+  }
 
   switch (type) {
     case 'geojson':
-      NK.functions.addGeoJsonLayer(url, epsgCode);
+      NK.functions.addGeoJsonLayer(url, "32633"); //FIXME: hardcoding EPSG code, should move to all WGS as per the latest GeoJSON memorandum
       break;
     case 'drawing':
-      NK.functions.addGeoJsonLayer(url, epsgCode, {'isDrawing': true});
+      NK.functions.addGeoJsonLayer(url, "32633", {'isDrawing': true});
+      break;
+    case 'wms':
+      NK.functions.addWMSLayer(url);
       break;
   }
 
 };
+
+NK.functions.addWMSLayer = function(wmsUrl) {
+  var layers = [];
+  var resultWMS = NK.functions.getCapabilities(wmsUrl);
+  resultWMS.error(function (msg) { console.log(msg); });
+  resultWMS.done(function (xml) {
+    $(xml).find('Layer').each(function () {
+      var name = $(this).children('Name').text();
+      var title = $(this).children('Title').text();
+      layers.push(name);
+      NK.functions.addDynamicLayer(title, wmsUrl, name, title, false);
+    });
+    console.log(layers);
+  });
+
+  var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+  geoportal.showControls();
+  $("#geoportalUrl")[0].value = wmsUrl;
+  geoportal.displayLayerList();
+};
+
 
 NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   var mapProjection,
@@ -336,40 +361,9 @@ NK.functions.setMapState = function (params) {
           index += 3;
           break;
         case 'l':
-          NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 4));
-          index += 3;
-          break;
         case 'w':
-          var wmsUrl = NK.functions.urlParam('url');
-          var wmsParams;
-          var layers = [];
-          //check for layers
-          if(wmsUrl.indexOf("+", 0) !== -1) {
-            wmsParams = wmsUrl.split("/+");
-            wmsUrl = wmsParams[0];
-            for (var i = 1; i < wmsParams.length; i++ ) {
-              NK.functions.addDynamicLayer(wmsParams[i], wmsParams[0], wmsParams[i], false, true);
-              console.log(wmsParams);
-            }
-          } else {
-            var resultWMS = NK.functions.getCapabilities(wmsUrl);
-            resultWMS.error(function (msg) { console.log(msg); });
-            resultWMS.done(function (xml) {
-              $(xml).find('Layer').each(function () {
-                var name = $(this).children('Name').text();
-                var title = $(this).children('Title').text();
-                layers.push(name);
-                NK.functions.addDynamicLayer(title, wmsUrl, name, title, false);
-              });
-              console.log(layers);
-            });
-          }
-          var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
-          geoportal.showControls();
-          $("#geoportalUrl")[0].value = wmsUrl;
-          geoportal.displayLayerList();
-
-          index += 5;
+          NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 3));
+          index += 2;
           break;
       }
     }
