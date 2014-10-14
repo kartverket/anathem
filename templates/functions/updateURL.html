@@ -36,11 +36,21 @@ NK.functions.updateHistory = function (evt) {
                                         uid += "/-" + layer.shortid;
                                     }
                                 }
-                            } else {
-                                if (layer.isDrawing) {
+                            } else if (layer.visibility) {
+                                if (layer.type == 'drawing') {
                                     uid += '/l/drawing/['+ layer.url.trim() +']';
-                                } else {
+                                } else if (layer.type == 'geojson') {
                                     uid += '/l/geojson/['+ layer.url.trim() +']';
+                                } else if (layer.type == 'wms') {
+                                    if (uid.indexOf(layer.url.trim())==-1) {
+                                      uid += '/l/wms/[' + layer.url.trim() + ']';
+                                    }
+                                    var id = layer.params.LAYERS;
+                                    if (id.indexOf("/")>-1) {
+                                      uid += '/[+'+id+']';
+                                    } else { 
+                                      uid += '/+'+id;
+                                    }
                                 }
                             }
                         }

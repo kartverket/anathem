@@ -188,7 +188,7 @@ NK.functions.addLayerSwitcher = function () {
   map.addControl(loadingpanel);
   map.addControl(new OpenLayers.Control.Navigation());
   map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList'), 
-                                                       'filter': {'key':'dynamicLayer', 'value':true}}));
+                                                       'filter': {'key':'isUrlDataLayer', 'value':true}}));
 };
 NK.functions.removeDynamicLayers = function() {
   var dLayers = map.getLayersBy("dynamicLayer",true);
@@ -214,7 +214,8 @@ NK.functions.addDynamicLayer = function (name, url, layerText, title, visible) {
       visibility: visible,
       transitionEffect: 'resize',
       singleTile: true,
-      dynamicLayer: true
+      isUrlDataLayer: true,
+      type: 'wms'
     }
   );
   if (wms.params.GKT) {
