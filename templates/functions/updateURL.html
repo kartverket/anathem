@@ -38,9 +38,9 @@ NK.functions.updateHistory = function (evt) {
                                 }
                             } else {
                                 if (layer.isDrawing) {
-                                    uid += '/l/drawing/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                                    uid += '/l/drawing/['+ layer.url.trim() +']';
                                 } else {
-                                    uid += '/l/geojson/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                                    uid += '/l/geojson/['+ layer.url.trim() +']';
                                 }
                             }
                         }
