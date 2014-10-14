@@ -167,13 +167,10 @@ NK.functions.getNewToken = function () {
 
 NK.functions.getCapabilities = function (url) {
   if(!!url) {
-    if(url.indexOf("?", url.length - 1) === -1) {
-      url += "?";
-    }
     return $.ajax({
-      url: url,
+      url: '/ws/geoportal.charset.py',
       type: 'GET',
-      data: {service: 'WMS', request: 'getCapabilities'},
+      data: url,
       dataType: 'xml'
     });
   }
@@ -199,7 +196,7 @@ NK.functions.removeDynamicLayers = function() {
     map.removeLayer(dLayers[i]);
   }
 };
-NK.functions.addDynamicLayer = function (name, url, layerText, visible) {
+NK.functions.addDynamicLayer = function (name, url, layerText, title, visible) {
   var wms = new OpenLayers.Layer.WMS(
     name,
     url,
@@ -210,7 +207,7 @@ NK.functions.addDynamicLayer = function (name, url, layerText, visible) {
       format: 'image/png'
     },
     {
-      //shortid: layerText,
+      title: title,
       isBaseLayer: false,
       buffer: 0,
       ratio: 1.0,
@@ -234,16 +231,18 @@ NK.functions.createLegend = function () {
     legendDiv.innerHTML = "";
     // create getLegendGraphic request for all active layers
     for (var i = 1; i < map.layers.length; i++) {
-      if (map.layers[i].visibility) {
+      var layer = map.layers[i];
+      if (layer.visibility && (!!layer.params.LAYERS)) {
         var legendURL = map.layers[i].getFullRequestString({
           REQUEST: "GetLegendGraphic",
           EXCEPTIONS: "application/vnd.ogc.se_inimage",
           FORMAT: "image/png",
           SERVICE: "WMS",
           VERSION: "1.1.1",
-          LAYER: map.layers[i].params.LAYERS
+          LAYER: layer.params.LAYERS
         });
-        legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
+        var name = layer.title || layer.name;
+        legendDiv.innerHTML += name + "<br/><img src=" + legendURL + "><br>";
       }
     }
   }

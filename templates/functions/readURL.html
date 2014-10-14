@@ -329,35 +329,30 @@ NK.functions.setMapState = function (params) {
           var wmsUrl = NK.functions.urlParam('url');
           var wmsParams;
           var layers = [];
-          //checkk for layers
+          //check for layers
           if(wmsUrl.indexOf("+", 0) !== -1) {
             wmsParams = wmsUrl.split("/+");
             wmsUrl = wmsParams[0];
             for (var i = 1; i < wmsParams.length; i++ ) {
-              NK.functions.addDynamicLayer(wmsParams[i], wmsParams[0], wmsParams[i], true);
+              NK.functions.addDynamicLayer(wmsParams[i], wmsParams[0], wmsParams[i], false, true);
               console.log(wmsParams);
             }
           } else {
             var resultWMS = NK.functions.getCapabilities(wmsUrl);
+            resultWMS.error(function (msg) { console.log(msg); });
             resultWMS.done(function (xml) {
               $(xml).find('Layer').each(function () {
-                layers.push($(this).children('Name').text());
                 var name = $(this).children('Name').text();
-                var layer = $(this).children('Name').text();
-                NK.functions.addDynamicLayer(name, wmsUrl, layer, false);
+                var title = $(this).children('Title').text();
+                layers.push(name);
+                NK.functions.addDynamicLayer(title, wmsUrl, name, title, false);
               });
               console.log(layers);
             });
           }
           var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
           geoportal.showControls();
-          geoportal.steps.show = 'current';
-          var menuLink = $('#showLayer');
-          $(menuLink).parent().parent().parent().children().children().removeClass("current");
-          $(menuLink).parent().addClass("current");
-          var tab = $(menuLink).attr("href");
-          $(".tab-content").not(tab).css("display", "none");
-          $(tab).fadeIn();
+          geoportal.displayLayerList();
 
           index += 5;
           break;
