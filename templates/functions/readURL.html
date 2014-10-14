@@ -182,8 +182,11 @@ NK.functions.setMapState = function (params) {
       pWSG84,
       pUTM33;
 
+  var SAFE_SEQUENCE = "\n\n"; // a separator that cannot occur in URL
+
   search = params.search;
   hash = params.hash;
+
 
   if (params.search) {
     search = search.replace('?', '');
@@ -202,7 +205,18 @@ NK.functions.setMapState = function (params) {
   }
 
   if (!!hash) {
-    parms = hash.split("/");
+    var tokens;
+    if (hash.indexOf("[") > -1) {
+      var tokenRE = /\[.*?\]/ ;
+      tokens  = tokenRE.exec(hash);
+      hash = hash.replace(tokenRE, SAFE_SEQUENCE);
+    }
+    var parms = hash.split("/");
+    for (p in parms) {
+      if (parms[p] == SAFE_SEQUENCE) {
+        parms[p] = tokens.pop().slice(1,-1);
+      }
+    }
     if (parms.length >= 3) {
       zoom = parms[0];
       mapx = parms[1];
