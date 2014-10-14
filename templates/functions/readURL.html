@@ -352,6 +352,7 @@ NK.functions.setMapState = function (params) {
           }
           var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
           geoportal.showControls();
+          $("#geoportalUrl")[0].value = wmsUrl;
           geoportal.displayLayerList();
 
           index += 5;
