@@ -19,6 +19,11 @@ NK.functions.createLegend = function () {
         legendDiv.innerHTML += map.layers[i].name + "<br><img src=" + legendURL + "><br>";
       }
     }
+    $('legendBox').eq(0).ready(function() {
+      if (legendDiv.clientHeight > (window.innerHeight / 2) ){
+        document.getElementById('legend').setAttribute("style","height:"+ (window.innerHeight / 2) + "px;overflow-y:auto");
+      }
+    });
   }
 };
 
