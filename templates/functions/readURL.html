@@ -27,7 +27,7 @@ NK.functions.setMapStateFromPopState = function (evt) {
 
 $(window).on('popstate', NK.functions.setMapStateFromPopState);
 
-NK.functions.addLabeledMarker = function (params, number) {
+NK.functions.addLabeledMarker = function (params, number, okToHide) {
   var layers, 
       layer, 
       x, 
@@ -75,7 +75,7 @@ NK.functions.addLabeledMarker = function (params, number) {
   popup.autoSize = true;
   popup.panMapIfOutOfView = false;
 
-  if (!!feature.data.popupText) {
+  if (okToHide && !!feature.data.popupText) {
     feature.popup = popup;
     map.addPopup(popup);
     popup.show();
@@ -317,7 +317,7 @@ NK.functions.setMapState = function (params) {
             (function (boundParameters, boundCounter){
               return function () {
                 console.log('boundCounter: ' + boundCounter);
-                NK.functions.addLabeledMarker(boundParameters, boundCounter);  
+                NK.functions.addLabeledMarker(boundParameters, boundCounter, true);  
               };
             }(parms.slice(index + 1, index + 4), ++labeledMarkerCount)),
             500
