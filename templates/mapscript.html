@@ -240,7 +240,7 @@ NK.functions.createLegend = function () {
     // create getLegendGraphic request for all active layers
     for (var i = 1; i < map.layers.length; i++) {
       var layer = map.layers[i];
-      if (layer.visibility && (!!layer.params.LAYERS)) {
+      if (layer.visibility && (!!layer.params) && (!!layer.params.LAYERS)) {
         var legendURL = map.layers[i].getFullRequestString({
           REQUEST: "GetLegendGraphic",
           EXCEPTIONS: "application/vnd.ogc.se_inimage",
