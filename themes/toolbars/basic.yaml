@@ -19,13 +19,6 @@ controls:
   controls:
     - template: controls/pan
 - template: controls/container
-  id: point-panel
-  controls:
-    - template: controls/pointmenu
-      url: /ws/trans.py
-      i18n:
-      - include: languages/nb/pointmenu
-- template: controls/container
   id: layerselector-panel
   controls:
   - template: controls/rasterlayerselector
