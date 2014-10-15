@@ -116,10 +116,11 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   resultWMS.done(function (xml) {
     $(xml).find('Layer').each(function () {
       var name = $(this).children('Name').text();
+      if (!name) {return;}
       var title = $(this).children('Title').text();
       var visible = !!NK.visibleLayerQueue[name]; 
       layers.push(name);
-      if (visible) {NK.visibleLayerQueue[name] = false;}
+      if (visible) {delete NK.visibleLayerQueue[name];}
       NK.functions.addDynamicLayer(title, wmsUrl, name, title, visible);
     });
     console.log(layers);
