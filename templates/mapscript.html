@@ -183,6 +183,13 @@ var closePopupCallBack = function () {
   this.hide();
 };
 
+NK.functions.imgError = function(image, altText) {
+  image.style.visibility='hidden';
+  image.style.width="10px";
+  image.style.height="1px";
+  altText.style.visibility='visible';
+};
+
 % if functions :
   ${functions}
 % endif
@@ -396,6 +403,7 @@ NK.init = function () {
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2();
   var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
     url: "http://wms.geonorge.no/skwms1/wms.tilgjengelighet?",
+    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.tilgjengelighet?",
     queryVisible: true,
     infoFormat: 'text/plain',
     eventListeners: {
