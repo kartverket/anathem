@@ -1,5 +1,7 @@
 <%include file="/styles/labeledMarker.html" />
 
+NK.visibleLayerQueue = NK.visibleLayerQueue || {}; 
+
 NK.functions.storeInitialLayerVisibility = function () {
   // store the initial layer visibility configuration
   var i, 
@@ -115,8 +117,10 @@ NK.functions.addWMSLayer = function(wmsUrl) {
     $(xml).find('Layer').each(function () {
       var name = $(this).children('Name').text();
       var title = $(this).children('Title').text();
+      var visible = !!NK.visibleLayerQueue[name]; 
       layers.push(name);
-      NK.functions.addDynamicLayer(title, wmsUrl, name, title, false);
+      if (visible) {NK.visibleLayerQueue[name] = false;}
+      NK.functions.addDynamicLayer(title, wmsUrl, name, title, visible);
     });
     console.log(layers);
   });
@@ -282,10 +286,15 @@ NK.functions.setMapState = function (params) {
       if (map.getLayersByName(layerName).length) {
         return setLayerVisibility(layerName, true);
       } else {
+        var found = false;
         for (var l in map.layers) {
           if (map.layers[l].params && map.layers[l].params.LAYERS == layerName) { 
             return setLayerVisibility(map.layers[l].name, true);
+            found = true;
           }
+        }
+        if (!found) {
+          NK.visibleLayerQueue[layerName]=true;
         }
       }
     };
