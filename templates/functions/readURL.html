@@ -123,6 +123,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       NK.functions.addDynamicLayer(title, wmsUrl, name, title, visible);
     });
     console.log(layers);
+    NK.functions.updateHistory();
   });
 
   var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
