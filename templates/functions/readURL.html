@@ -248,16 +248,24 @@ NK.functions.setMapState = function (params) {
   }
 
   if (!!hash) {
-    var tokens;
+    var tokens = [], match;
     if (hash.indexOf("[") > -1) {
-      var tokenRE = /\[.*?\]/ ;
-      tokens  = tokenRE.exec(hash);
+      var tokenRE = /\[.*?\]/g ;
+      while(!!(match = tokenRE.exec(hash))) {
+        tokens.push(match[0].slice(1,-1)); 
+      }
+      hash = hash.replace(tokenRE, SAFE_SEQUENCE);
+    } else if (hash.indexOf("%5B") > -1) {
+      var tokenRE = /\%5B.*?\%5D/g ;
+      while(!!(match = tokenRE.exec(hash))) { 
+        tokens.push(match[0].slice(3,-3)); 
+      }
       hash = hash.replace(tokenRE, SAFE_SEQUENCE);
     }
     var parms = hash.split("/");
     for (p in parms) {
       if (parms[p] == SAFE_SEQUENCE) {
-        parms[p] = tokens.pop().slice(1,-1);
+        parms[p] = tokens.pop();
       }
     }
     if (parms.length >= 3) {
