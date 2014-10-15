@@ -196,7 +196,16 @@ NK.functions.removeDynamicLayers = function() {
     map.removeLayer(dLayers[i]);
   }
 };
-NK.functions.addDynamicLayer = function (name, url, layerText, title, visible) {
+
+NK.functions.closePopupCallBack = function () {
+  var itemIndex;
+  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
+    map.popups[itemIndex].hide();
+  }
+  this.hide();
+};
+
+NK.functions.addDynamicLayer = function (name, url, layerText, title, visible, featureInfoFormat) {
   var wms = new OpenLayers.Layer.WMS(
     name,
     url,
@@ -221,6 +230,33 @@ NK.functions.addDynamicLayer = function (name, url, layerText, title, visible) {
   if (wms.params.GKT) {
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT;
+  }
+  if (!!featureInfoFormat) {
+    var popupFn = NK.functions.popup.wmsFeatureInfoPopup;
+    var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
+      url: url,
+      proxyUrl: "/ws/px.py?"+url,
+      title: title,
+      queryVisible: true,
+      infoFormat: featureInfoFormat,
+      eventListeners: {
+        "getfeatureinfo": function(event) {
+          var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event), null, true,
+                            NK.functions.closePopupCallBack, {x: 10, y: -65}, 'selected-feature-popup, user-marker')
+          map.addPopup(popup, true);
+          if (!event.features.length && (!event.text || !event.text.trim().length)) {
+            setTimeout(function() {
+              map.removePopup(popup);
+            }, 3000);
+          }
+        }
+      }
+    });
+    wms.featureInfoControl = featureInfo;
+    map.addControl(featureInfo);
+    if (visible) {
+      featureInfo.activate();
+    }
   }
   map.addLayers([wms]);
   NK.functions.createLegend();
@@ -258,14 +294,6 @@ NK.functions.createLegend = function () {
     }
   }
 }
-
-var closePopupCallBack = function () {
-  var itemIndex;
-  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
-    map.popups[itemIndex].hide();
-  }
-  this.hide();
-};
 
 % if functions :
   ${functions}
@@ -430,31 +458,6 @@ NK.init = function () {
     }());
 
   }
-  var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2();
-  var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
-    url: "http://wms.geonorge.no/skwms1/wms.tilgjengelighet?",
-    queryVisible: true,
-    infoFormat: 'text/plain',
-    eventListeners: {
-    "getfeatureinfo": function(event) {
-      try {
-        map.addPopup(new OpenLayers.Popup.FramedSideAnchored(
-          null,
-          map.getLonLatFromPixel(event.xy),
-          null,
-          markupGeneratorFunction(event.text),
-          null,
-          true,
-          closePopupCallBack,
-          {x: 10, y: -65},
-          'selected-feature-popup, user-marker'
-          ), true);
-        } catch(e) {}
-      }
-    }
-  });
-  map.addControl(featureInfo);
-  featureInfo.activate();
 };
 // end init()
 
