@@ -400,10 +400,16 @@ NK.functions.setMapState = function (params) {
           index += 3;
           break;
         case 'l':
-        case 'w':
           NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 3));
           index += 2;
           break;
+        case 'w':
+          var url = NK.functions.urlParam('url');
+          NK.functions.parseParamsAndAddDataLayerFromUrl(['wms',url,'']);
+          while ((parms[index] !== null) && parms[index].charAt(0) != '+') {
+            index += 1;
+          }
+          index -= 1;
       }
     }
     if (mapx && mapy && zoom) {
