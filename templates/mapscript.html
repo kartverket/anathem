@@ -214,7 +214,7 @@ NK.functions.closePopupCallBack = function () {
 };
 
 NK.functions.addDynamicWFSLayer = function (name, url, type, title, version, visible) {
-  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET"});
+  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET", "styleName":"track"});
   wfsLayer.type = 'wfs';
   wfsLayer.isUrlDataLayer = true;
   if (visible) {
