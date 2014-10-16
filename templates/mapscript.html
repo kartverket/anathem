@@ -7,6 +7,7 @@ var gkopen,
     gkopen_wmts,
     proj,
     mapProj,
+    bounds,
     mapBounds,
     xdmsocket,
     initLayers,
@@ -390,8 +391,21 @@ NK.init = function () {
     "3575" : new OpenLayers.Projection('EPSG:3575')
   };
 
-  mapProj = proj[NK.baseProjection];
-  mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
+  NK.boundsFromScale = function(left, top, sd) {
+    var TILE = 256 * 0.28 * 0.001;
+    var size = TILE * sd;
+    return new OpenLayers.Bounds(left, top - size, left + size, top); 
+  };
+
+  NK.bounds = bounds = {
+    "32632" : NK.boundsFromScale(-2000000.0, 9045984.0, 7.737142857142858E7),
+    "32633" : NK.boundsFromScale(-2500000.0, 9045984.0, 7.737142857142858E7),
+    "32634" : NK.boundsFromScale(-3000000.0, 9045984.0, 7.737142857142858E7),
+    "32635" : NK.boundsFromScale(-3500000.0, 9045984.0, 7.737142857142858E7)
+  }
+  
+  mapProj   = proj[NK.baseProjection];
+  mapBounds = bounds[NK.baseProjection];
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
   OpenLayers.ImgPath = 'img/';
