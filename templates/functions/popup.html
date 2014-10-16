@@ -3,25 +3,41 @@
 NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
 
+NK.functions.popup.smartData = function (str) {
+  if (str.indexOf('://')>-1) {
+    return '<a href="' + str + '" style="color:#fff">' + str + '</a>';
+  }
+  return str;
+}
+
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
-    var a = feature.attributes,
+    var a = feature.attributes, attr,
         i,
         l,
         markup = '<article>';
 
-    if (conf.heading && a[conf.heading]) {
+    if (!!conf.heading && a[conf.heading]) {
       markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
     }
-    if (conf.data) {
+    markup += "<table>";
+    if (!!conf.data) {
       for (i = 0, l = conf.data.length; i < l; i += 1) {
         if (conf.data[i].attribute && a[conf.data[i].attribute]) {
-          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</p>';
+          markup += '<tr><td>' + OpenLayers.Lang.translate(conf.data[i].label) + ': </td><td>' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</td></tr>';
         }
       }
+    } else { // this popup is not actually configured
+      for (attr in a) {
+        markup += '<tr><td>' + attr + ': </td><td>' + NK.functions.popup.smartData( a[attr] ) + '</td></tr>';
+      }
     }
-    markup += '</article>';
-    return markup;
+    markup += '</table></article>';
+    if (a.length > 10) {
+      return '<div style="overflow:scroll">'+markup+'</div>';
+    } else {
+      return markup;
+    }
   };
 };
 NK.functions.popup.wmsFeatureInfoPopup = function (event) {
@@ -124,6 +140,8 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
       onFeatureUnselect,
       onPopupClose,
       selectControl;
+
+  popupConfig = popupConfig || {};
       
   generatePopupMarkup = NK.functions.popup.generatePopupMarkup(popupConfig);
 
