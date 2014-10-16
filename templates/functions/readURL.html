@@ -406,7 +406,7 @@ NK.functions.setMapState = function (params) {
         case 'w':
           var url = NK.functions.urlParam('url');
           NK.functions.parseParamsAndAddDataLayerFromUrl(['wms',url,'']);
-          while ((parms[index] !== null) && parms[index].charAt(0) != '+') {
+          while ((parms[index] != null) && parms[index].charAt(0) != '+') {
             index += 1;
           }
           index -= 1;
