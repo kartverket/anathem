@@ -10,10 +10,6 @@ controls:
   controls:
   - template: controls/zoom
   - template: controls/zoomtoselection
-#- template: controls/container
-#  id: magnifier-panel
-#  controls:
-#    - template: controls/magnifier
 - template: controls/container
   id: pan-panel
   controls:
