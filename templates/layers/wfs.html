@@ -25,7 +25,9 @@ NK.addLayerType.WFS = (function (M, MP) {
 
 		protocolParameters = {
 			version: options.version || '1.1.0',
-			url: url,
+			url: '/ws/px.py?'+url,
+			proxyUrl: '/ws/px.py?'+url,
+			origUrl: url,
 			featureNS: featureNS,
 			featurePrefix: featurePrefix,
 			featureType: featureType,
@@ -33,7 +35,26 @@ NK.addLayerType.WFS = (function (M, MP) {
 			readFormat: new OpenLayers.Format.GML.v3()
 		};
 
-		protocol = new OpenLayers.Protocol.WFS(protocolParameters);
+                if (!!options.method && options.method=="GET") {
+                  protocolParameters = {
+                        url: '/ws/px.py?'+url,
+                        origUrl: url,
+			featureType: featureType,
+                        params: {
+                          request: "GetFeature",
+                          service: "wfs",
+                          typename: featureType, 
+                          version: options.version || '1.1.0'
+                        },
+                        format: new OpenLayers.Format.GML({
+                          featureNS: featureNS,
+                          geometryName: "wkb_geometry"
+                        })
+                  };
+		  protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
+                } else {
+  		  protocol = new OpenLayers.Protocol.WFS(protocolParameters);
+                }
 
 		layerOptions = {
             strategies: [new OpenLayers.Strategy.BBOX()],
@@ -86,6 +107,7 @@ NK.addLayerType.WFS = (function (M, MP) {
 	    }
 	    NK.functions.vector.addVectorHoverControls(M, layer, false);
 
+            return layer;
 	};
 
 }(map, mapProj));
@@ -93,6 +115,8 @@ NK.addLayerType.WFS = (function (M, MP) {
 <% vars['layerTypeWFS']=True %>
 % endif
 
+% if name: 
+## do nothing if name is not given - useful to just include the functions above
 
 (function() {
 	var options = {};
@@ -138,4 +162,7 @@ NK.addLayerType.WFS = (function (M, MP) {
 % endif
 
   NK.addLayerType.WFS("${name}", "${id}", "${url}", "${namespace}", "${namespacePrefix}", "${featuretype}", options);	
+
 }());
+
+% endif

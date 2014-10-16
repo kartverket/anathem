@@ -113,9 +113,29 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
 
 NK.functions.addWFSLayer = function(wfsUrl) {
   if (map.getLayersBy("url",wfsUrl).length) {return;}
+  var layers = [];
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl); 
-  //TODO
-}
+  resultWFS.error(function (msg) { console.log(msg); });
+  resultWFS.done(function (xml) {
+    var version = $(xml).find('ServiceTypeVersion')
+    if (!!version) {version = version.text().trim();}
+    $(xml).find('FeatureType').each(function () {
+      var name = $(this).children('Name').text();
+      if (!name) {return;}
+      var title = $(this).children('Title').text();
+      var visible = !!NK.visibleLayerQueue[name]; 
+      layers.push(name);
+      if (visible) {delete NK.visibleLayerQueue[name];}
+      NK.functions.addDynamicWFSLayer(title, wfsUrl, name, title, version, visible);
+    });
+    NK.functions.updateHistory();
+  });
+
+  var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+  geoportal.showControls();
+  $("#geoportalUrl")[0].value = wfsUrl;
+  geoportal.displayLayerList();
+};
 
 NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
@@ -142,7 +162,6 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       if (visible) {delete NK.visibleLayerQueue[name];}
       NK.functions.addDynamicLayer(title, wmsUrl, name, title, visible, featureInfoFormat);
     });
-    console.log(layers);
     NK.functions.updateHistory();
   });
 
@@ -400,7 +419,6 @@ NK.functions.setMapState = function (params) {
           setTimeout(
             (function (boundParameters, boundCounter){
               return function () {
-                console.log('boundCounter: ' + boundCounter);
                 NK.functions.addLabeledMarker(boundParameters, boundCounter);  
               };
             }(parms.slice(index + 1, index + 4), ++labeledMarkerCount)),

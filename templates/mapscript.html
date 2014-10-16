@@ -213,7 +213,17 @@ NK.functions.closePopupCallBack = function () {
   this.hide();
 };
 
+NK.functions.addDynamicWFSLayer = function (name, url, type, title, version, visible) {
+  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET"});
+  wfsLayer.type = 'wfs';
+  wfsLayer.isUrlDataLayer = true;
+  if (visible) {
+    wfsLayer.setVisibility(true);
+  }
+} 
+
 NK.functions.addDynamicLayer = function (name, url, layerText, title, visible, featureInfoFormat) {
+  // TODO: merge with templates/layers/wms.html 
   var wms = new OpenLayers.Layer.WMS(
     name,
     url,
@@ -314,9 +324,9 @@ NK.functions.createLegend = function () {
   ${functions}
 % endif
 
-  % if internationalization:
-    ${internationalization}
-  % endif
+% if internationalization:
+  ${internationalization}
+% endif
 
 NK.init = function () {
 

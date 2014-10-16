@@ -11,6 +11,7 @@ mapscript:
 
   baselayers:   
     - template: layers/europa
+    - template: layers/wfs ## include just wfs functions, not any layer 
 
   styles    :
     - template: styles/unlabeledMarker

@@ -51,6 +51,16 @@ NK.functions.updateHistory = function (evt) {
                                     } else { 
                                       uid += '/+'+id;
                                     }
+                                } else if (layer.type == 'wfs') {
+                                    if (uid.indexOf(layer.protocol.origUrl.trim())==-1) {
+                                      uid += '/l/wfs/[' + layer.protocol.origUrl.trim() + ']';
+                                    }
+                                    var id = layer.protocol.featureType;
+                                    if (id.indexOf("/")>-1) {
+                                      uid += '/[+'+id+']';
+                                    } else { 
+                                      uid += '/+'+id;
+                                    }
                                 }
                             }
                         }
