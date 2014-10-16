@@ -1,4 +1,12 @@
 <%inherit file="/controls/controlcontext.html" />
-
+% if serviceURL:
+        options.serviceURL = "${serviceURL}";
+% endif
+% if ssrwsURL:
+        options.ssrwsURL = "${ssrwsURL}";
+% endif
+% if pdfServiceUrl:
+        options.pdfServiceUrl = "${pdfServiceUrl}";
+% endif
 var control = new OpenLayers.Control.EmergencyPoster(options);
 NK.functions.addControlToContext(control, context);

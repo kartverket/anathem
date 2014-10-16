@@ -1,0 +1,15 @@
+<%inherit file="/controls/controlcontext.html" />
+% if group:
+	options.layerGroup = "${group}";
+% endif
+% if title:
+	options.title = "${title}";
+% endif
+options.popup = true;
+
+var control = new OpenLayers.Control.RasterOverlayLayerSwitcher(options);
+NK.functions.addControlToContext(control, context);
+
+if (NK.functions.updateHistory) {
+	control.events.register("buttonclick", NK.functions.updateHistory);
+}

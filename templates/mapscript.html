@@ -17,7 +17,16 @@ gkopen = "http://opencache.statkart.no/gatekeeper/gk/gk.open";
 gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
 NK.gkToken = "unInitialized";
-NK.tokenService = "/ws/gkt.py";
+
+% if tokenServiceUrl:
+NK.tokenService = "${tokenServiceUrl}";
+% endif
+
+NK.baseProjection = "32633";
+% if projection:
+NK.baseProjection = "${projection}";
+% endif
+
 NK.tokenLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 
@@ -131,7 +140,7 @@ NK.functions.pauseTokenUpdate = function () {
     innerWrapper.appendChild(statusLink);
 
     popup.appendChild(innerWrapper);
-    //document.body.appendChild(popup);
+    document.body.appendChild(popup);
     NK.tokenError.messagePopup = popup;
 
     NK.tokenError.pauseTimer = setTimeout(function () {
@@ -342,25 +351,47 @@ NK.init = function () {
     return;
   }
 
-  Proj4js.defs["EPSG:4326"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
-  Proj4js.defs["EPSG:32632"] = "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:32633"] = "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:32635"] = "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:3575"] = "+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-  Proj4js.defs["EPSG:3034"] = "+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
+  Proj4js.defs["EPSG:4326"] ="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+  Proj4js.defs["EPSG:32629"]="+proj=utm +zone=29 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32630"]="+proj=utm +zone=30 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32631"]="+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32632"]="+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32633"]="+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32634"]="+proj=utm +zone=34 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32635"]="+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:32636"]="+proj=utm +zone=36 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:25831"]="+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+  Proj4js.defs["EPSG:25832"]="+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+  Proj4js.defs["EPSG:25833"]="+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+  Proj4js.defs["EPSG:25834"]="+proj=utm +zone=34 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+  Proj4js.defs["EPSG:25835"]="+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+  Proj4js.defs["EPSG:25836"]="+proj=utm +zone=36 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+  Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+  Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
 
   NK.projections = proj = {
     //pregenerated projection objects
     "32633": new OpenLayers.Projection('EPSG:32633'),
+    "32629": new OpenLayers.Projection('EPSG:32629'),
+    "32630": new OpenLayers.Projection('EPSG:32630'),
+    "32631": new OpenLayers.Projection('EPSG:32631'),
     "32632": new OpenLayers.Projection('EPSG:32632'),
+    "32634": new OpenLayers.Projection('EPSG:32634'),
     "32635": new OpenLayers.Projection('EPSG:32635'),
-    "4326": new OpenLayers.Projection('EPSG:4326'),
-    "3034": new OpenLayers.Projection('EPSG:3034'),
-    "3575": new OpenLayers.Projection('EPSG:3575')
+    "32636": new OpenLayers.Projection('EPSG:32636'),
+    "25831": new OpenLayers.Projection('EPSG:25831'),
+    "25832": new OpenLayers.Projection('EPSG:25832'),
+    "25833": new OpenLayers.Projection('EPSG:25833'),
+    "25834": new OpenLayers.Projection('EPSG:25834'),
+    "25835": new OpenLayers.Projection('EPSG:25835'),
+    "25836": new OpenLayers.Projection('EPSG:25836'),
+    "4326" : new OpenLayers.Projection('EPSG:4326'),
+    "3034" : new OpenLayers.Projection('EPSG:3034'),
+    "3575" : new OpenLayers.Projection('EPSG:3575')
   };
 
-  mapProj = proj["32633"];
-  mapBounds = new OpenLayers.Bounds(-2500000.0, 3500000.0, 3045984.0, 9045984.0);
+  mapProj = proj[NK.baseProjection];
+  mapBounds = new OpenLayers.Bounds(-2500000.0,3500000.0,3045984.0,9045984.0);
 
   OpenLayers.Util.onImageLoadErrorColor = 'transparent';
   OpenLayers.ImgPath = 'img/';
@@ -405,19 +436,25 @@ NK.init = function () {
     })
   );
 
+% if center:
   // Default placement and zoom of the map
   ${center}
+% endif
 
-  // load SLD styles
 % if styles:
+  // load SLD styles
   ${styles}
 % endif
 
+% if baselayers:
   // Base layers
   ${baselayers}
+% endif
 
+%if overlays:
   // Overlays
   ${overlays}
+% endif
 
   var removePopups = function () {
     var popup, p;
@@ -464,22 +501,45 @@ NK.init = function () {
   if (NK.functions.postMessage) {
     (function () {
       var vectorLayers,
-        layer,
-        vectorLayerData = [],
-        i,
-        j;
+          layer,
+          feature,
+          vectorLayerData = [],
+          vectorFeatureData = [],
+          i, 
+          j,
+          k,
+          l,
+          message;
 
       vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
 
       for (i = 0, j = vectorLayers.length; i < j; i += 1) {
         layer = vectorLayers[i];
-        vectorLayerData.push({shortid: layer.shortid, name: layer.name});
+        vectorLayerData.push({shortid: layer.shortid, name: layer.name, visibility: layer.visibility});
+
+        if (layer.visibility && layer.features && layer.features.length) {
+
+          for (k = 0, l = layer.features.length; k < l; k += 1) {
+            feature = layer.features[k];
+            vectorFeatureData.push({
+              "feature": feature.fid,
+              "attributes": feature.attributes
+            });
+          }
+
+        }
       }
 
-      NK.functions.postMessage({
+      message = {
         "type": "mapInitialized",
         "vectorLayers": vectorLayerData
-      });
+      };
+
+      if (vectorFeatureData.length > 0) {
+        message.visibleLayerFeatures = vectorFeatureData;
+      }
+
+      NK.functions.postMessage(message);
     }());
 
   }

@@ -2,7 +2,13 @@
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en" style="height:100%"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en" style="height:100%"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en" style="height:100%"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" style="height:100%"> <!--<![endif]-->
+<!--[if IE 9]>    <html class="no-js lt-ie10" lang="en" style="height:100%"> <![endif]-->
+% if manifestName:
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en" style="height:100%" manifest="${manifestName}.manifest"> <!--<![endif]-->
+% else:
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en" style="height:100%"> <!--<![endif]-->
+% endif
+
   <head>
     <!-- by kartverket / Thomas Hirsch 2012 - public domain -->
     <meta charset="utf-8" />
@@ -10,9 +16,10 @@
     <title>${title}</title>
     <meta name="description" content="" />
     <meta name="google" content="notranslate" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#333333" />
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
     <link rel="stylesheet" type="text/css" href="theme/default/style.css" />
@@ -21,7 +28,7 @@
     <![endif]-->
     <link rel="stylesheet" media="print" type="text/css" href="theme/norgeskart/print.css" />
   </head>
-  <body style="height: 100%;">
+  <body style="height: 100%; overflow: hidden;">
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <header>
     </header>
@@ -38,6 +45,7 @@
     <script src="js/underscore-min.js"></script>
     <script src="js/SOSI.js.min.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="js/jquery.storageapi.min.js"></script>
     <!--[if IE]>
     <script src="js/xdr.js"></script>
     <![endif]-->
