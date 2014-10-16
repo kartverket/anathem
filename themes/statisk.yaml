@@ -1,7 +1,7 @@
 # Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
 
 template : base
-title    : Geonorge - Norgeskart
+title    : "Geonorge | Norgeskart"
 mapClass: embedded-map
 
 mapscript: 
