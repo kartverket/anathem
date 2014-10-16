@@ -251,6 +251,13 @@ NK.functions.addDynamicLayer = function (name, url, layerText, title, visible, f
       }
     });
     wms.featureInfoControl = featureInfo;
+    wms.events.register('visibilitychanged', wms, function() {
+      if(this.getVisibility()) {
+        featureInfo.activate();
+      } else {
+        featureInfo.deactivate();
+      }
+    });
     map.addControl(featureInfo);
     if (visible) {
       featureInfo.activate();
