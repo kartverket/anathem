@@ -90,7 +90,7 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
 
   type = params[0];
   url  = params[1];
-  if (url.indexOf("%")>-1) { // you can URL-encode or escape
+  if (url.indexOf("%")>-1) { // you can URL-encode or escape or both
     url = decodeURIComponent(url);
   }
 
@@ -104,14 +104,23 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
     case 'wms':
       NK.functions.addWMSLayer(url);
       break;
+    case 'wfs':
+      NK.functions.addWFSLayer(url);
+      break;
   }
 
 };
 
+NK.functions.addWFSLayer = function(wfsUrl) {
+  if (map.getLayersBy("url",wfsUrl).length) {return;}
+  var resultWFS = NK.functions.getWFSCapabilities(wfsUrl); 
+  //TODO
+}
+
 NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
   var layers = [];
-  var resultWMS = NK.functions.getCapabilities(wmsUrl);
+  var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   resultWMS.error(function (msg) { console.log(msg); });
   resultWMS.done(function (xml) {
     var featureInfoFormat = null;

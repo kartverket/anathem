@@ -165,16 +165,26 @@ NK.functions.getNewToken = function () {
   }
 };
 
-NK.functions.getCapabilities = function (url) {
+NK.functions.getWMSCapabilities = function (url) {
+  return NK.functions.corsRequest(url, {"service":"WMS", "request":"getCapabilities"});
+};
+NK.functions.getWFSCapabilities = function (url) {
+  return NK.functions.corsRequest(url, {"service":"WFS", "request":"getCapabilities"});
+};
+NK.functions.corsRequest = function (url, params) {
   if(!!url) {
+    if (url.slice(-1) != '?') {url = url+'?';}
+    for (var k in params) {
+      url += k+"="+params[k]+"&";
+    }
     return $.ajax({
-      url: '/ws/geoportal.charset.py',
+      url: '/ws/px.py',
       type: 'GET',
       data: url,
       dataType: 'xml'
     });
   }
-};
+}
 
 NK.functions.urlParam = function (name) {
   var results = new RegExp('[#/\\&]'+name+'=(.*?)($|/\\+)').exec(window.location.href);
