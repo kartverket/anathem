@@ -29,7 +29,7 @@ NK.functions.popup.wmsFeatureInfoPopup = function (event) {
     return "Ingen informasjon.";
   }
   if (event.object.infoFormat == "text/html") {
-    return '<div style="width:100%; height:300px; overflow:scroll">'+event.text+'</div>';
+    return '<div style="width:100%; height:300px; overflow:scroll; background-color:#fff; color:#000">'+event.text+'</div>';
   }
   if (event.object.infoFormat == "text/plain") {
     return event.text;
