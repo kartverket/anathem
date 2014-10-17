@@ -227,7 +227,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
   if (map.getLayersBy("url",wfsUrl).length) {return;}
   var layers = [];
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
-  resultWFS.error(function (msg) { console.log(msg); });
+  resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWFS.done(function (xml) {
     var version = $(xml).find('ServiceTypeVersion')
     if (!!version) {version = version.text().trim();}
@@ -257,7 +257,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
   var layers = [];
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
-  resultWMS.error(function (msg) { console.log(msg); });
+  resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
     var featureInfoFormat = null;
     $(xml).find('GetFeatureInfo').each(function () {

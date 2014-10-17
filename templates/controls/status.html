@@ -26,6 +26,7 @@ NK.status.refresh = function() {
 
 NK.functions.log = function(msg) {
   var now = new Date().getTime();
+  console.log(msg);
   NK.status.messages[new Date().getTime()] = msg;
   NK.status.refresh();
   setTimeout(NK.status.refresh, 21000);
