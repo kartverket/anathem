@@ -6,7 +6,7 @@ mapscript:
   template  : mapscript
   language  : nb
   tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-  projection: 32633
+  projection: 32635
 
   i18n:
   - include: languages/nb/base
@@ -36,6 +36,7 @@ mapscript:
     - template: functions/popup
 
   controls  :
+    - template: controls/status
     - template: controls/geolocation
     - template: controls/navigation
     - template: controls/scaleline
