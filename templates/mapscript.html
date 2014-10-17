@@ -231,16 +231,21 @@ NK.functions.addWFSLayer = function(wfsUrl) {
   resultWFS.done(function (xml) {
     var version = $(xml).find('ServiceTypeVersion')
     if (!!version) {version = version.text().trim();}
-    $(xml).find('FeatureType').each(function () {
-      var name = $(this).children('Name').text();
-      if (!name) {return;}
-      var title = $(this).children('Title').text();
-      var visible = !!NK.visibleLayerQueue[name];
-      layers.push(name);
-      if (visible) {delete NK.visibleLayerQueue[name];}
-      NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible);
-    });
-    NK.functions.updateHistory();
+    var exception = $(xml).find('ExceptionText').text();
+    if (!!exception) {
+      NK.functions.log(exception);
+    } else {
+      $(xml).find('FeatureType').each(function () {
+        var name = $(this).children('Name').text();
+        if (!name) {return;}
+        var title = $(this).children('Title').text();
+        var visible = !!NK.visibleLayerQueue[name];
+        layers.push(name);
+        if (visible) {delete NK.visibleLayerQueue[name];}
+        NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible);
+      });
+      NK.functions.updateHistory();
+    }
   });
 
   var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];

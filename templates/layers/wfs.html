@@ -47,16 +47,15 @@ NK.addLayerType.WFS = (function (M, MP) {
                           srsName: options.epsg || "EPSG:"+NK.baseProjection, 
                           version: options.version || '1.1.0'
                         },
-                        format: new OpenLayers.Format.GML.v3({
-                        })
+                        format: new OpenLayers.Format.GML.v3()
                   };
 		  protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
                 } else {
   		  protocol = new OpenLayers.Protocol.WFS(protocolParameters);
                 }
 
-		layerOptions = {
-            strategies: [new OpenLayers.Strategy.BBOX()],
+                layerOptions = {
+                        strategies: [new OpenLayers.Strategy.BBOX()],
 			shortid: id,
 			protocol: protocol,
 			projection: MP,
@@ -81,21 +80,27 @@ NK.addLayerType.WFS = (function (M, MP) {
 			name,
 			layerOptions
 		);
+                layer.events.register("loadend", layer, function(evt) {
+                  var root = evt.response.priv.responseXML.firstChild;
+                  if (root.localName == "ExceptionReport") {
+                    NK.functions.log(root.textContent.trim());
+                  }
+                });
 
 	    if (options.cluster) {
 	      	NK.styles.addClusteringRule(layer.styleMap);
 	    }
 
-		if (options && options.layerGroup) {
+	    if (options && options.layerGroup) {
 			layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
 		}
 
 		if (options && options.visibility) {
 			NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
 			NK.defaultVisibleLayers.push(id);
-		}
+	    }
 
-		M.addLayers([layer]);
+            M.addLayers([layer]);
 
 	    if (options && options.popupConfig) {
 	      NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
