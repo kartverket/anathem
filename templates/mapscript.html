@@ -274,9 +274,16 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       if (!name) {return;}
       var title = $(this).children('Title').text();
       var visible = !!NK.visibleLayerQueue[name];
+      var bbox = $(xml).find('BoundingBox');
       layers.push(name);
       if (visible) {delete NK.visibleLayerQueue[name];}
-      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat);
+      if (!!bbox) {
+        var atts = bbox[0].attributes;
+        bounds = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
+                                       atts["maxx"].value, atts["maxy"].value);
+        //FIXME: convert from atts["srs"].value to map.projection
+      }
+      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, bounds);
     });
     NK.functions.updateHistory();
   });
@@ -293,7 +300,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, 
   wfsLayer.setVisibility(!!visible);
 } 
 
-NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat) {
+NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds) {
   // TODO: merge with templates/layers/wms.html 
   var wms = new OpenLayers.Layer.WMS(
     name,
@@ -316,6 +323,10 @@ NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visi
       type: 'wms'
     }
   );
+  if (!!bounds) {
+    wms.maxExtent = bounds;
+    wms.displayOutsideMaxExtent = false;
+  }
   if (wms.params.GKT) {
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT;
@@ -345,6 +356,12 @@ NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visi
     wms.events.register('visibilitychanged', wms, function() {
       if(this.getVisibility()) {
         featureInfo.activate();
+        if (!!this.maxExtent) {
+          var extent = this.maxExtent;
+          if (!extent.containsLonLat(map.getCenter())) {
+            map.zoomToExtent(extent);
+          }
+        }
       } else {
         featureInfo.deactivate();
       }
