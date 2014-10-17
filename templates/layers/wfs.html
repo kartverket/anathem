@@ -44,6 +44,7 @@ NK.addLayerType.WFS = (function (M, MP) {
                           request: "GetFeature",
                           service: "wfs",
                           typename: featureType, 
+                          srsName: options.epsg || "EPSG:"+NK.baseProjection, 
                           version: options.version || '1.1.0'
                         },
                         format: new OpenLayers.Format.GML.v3({
