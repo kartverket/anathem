@@ -223,16 +223,72 @@ NK.functions.closePopupCallBack = function () {
   this.hide();
 };
 
-NK.functions.addDynamicWFSLayer = function (name, url, type, title, version, visible) {
+NK.functions.addWFSLayer = function(wfsUrl) {
+  if (map.getLayersBy("url",wfsUrl).length) {return;}
+  var layers = [];
+  var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
+  resultWFS.error(function (msg) { console.log(msg); });
+  resultWFS.done(function (xml) {
+    var version = $(xml).find('ServiceTypeVersion')
+    if (!!version) {version = version.text().trim();}
+    $(xml).find('FeatureType').each(function () {
+      var name = $(this).children('Name').text();
+      if (!name) {return;}
+      var title = $(this).children('Title').text();
+      var visible = !!NK.visibleLayerQueue[name];
+      layers.push(name);
+      if (visible) {delete NK.visibleLayerQueue[name];}
+      NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible);
+    });
+    NK.functions.updateHistory();
+  });
+
+  var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+  geoportal.showControls(wfsUrl);
+  geoportal.displayLayerList();
+};
+
+NK.functions.addWMSLayer = function(wmsUrl) {
+  if (map.getLayersBy("url",wmsUrl).length) {return;}
+  var layers = [];
+  var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
+  resultWMS.error(function (msg) { console.log(msg); });
+  resultWMS.done(function (xml) {
+    var featureInfoFormat = null;
+    $(xml).find('GetFeatureInfo').each(function () {
+      $(this).children('Format').each(function() {
+        if ($(this).text() == 'text/html') {
+          featureInfoFormat = 'text/html';
+        } else if ($(this).text() == 'text/plain') {
+          featureInfoFormat = featureInfoFormat || 'text/plain';
+        }
+      });
+    });
+    $(xml).find('Layer').each(function () {
+      var name = $(this).children('Name').text();
+      if (!name) {return;}
+      var title = $(this).children('Title').text();
+      var visible = !!NK.visibleLayerQueue[name];
+      layers.push(name);
+      if (visible) {delete NK.visibleLayerQueue[name];}
+      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat);
+    });
+    NK.functions.updateHistory();
+  });
+
+  var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+  geoportal.showControls(wmsUrl);
+  geoportal.displayLayerList();
+};
+
+NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible) {
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET", "styleName":"track"});
   wfsLayer.type = 'wfs';
   wfsLayer.isUrlDataLayer = true;
-  if (visible) {
-    wfsLayer.setVisibility(true);
-  }
+  wfsLayer.setVisibility(!!visible);
 } 
 
-NK.functions.addDynamicLayer = function (name, url, layerText, title, visible, featureInfoFormat) {
+NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat) {
   // TODO: merge with templates/layers/wms.html 
   var wms = new OpenLayers.Layer.WMS(
     name,
