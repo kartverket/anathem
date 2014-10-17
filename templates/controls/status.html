@@ -5,10 +5,10 @@ NK.status.messages = {};
 document.body.appendChild(NK.status);
 
 NK.status.refresh = function() {
-  var content = "", msg;
+  var content = "", msg, height;
   var now = new Date().getTime();
   for (msg in NK.status.messages) { 
-    if (now > parseInt(msg) + 3000) {
+    if (now > parseInt(msg) + 20000) {
       delete NK.status.messages[msg];
     }
   }
@@ -16,14 +16,19 @@ NK.status.refresh = function() {
     content += '<div class="statusmsg">'+NK.status.messages[msg]+'</div>';
   }
   NK.status.innerHTML = content;
-  $("#status").animate({height:Object.keys(NK.status.messages).length * 15 + "px"}); 
+
+  if (!!Object.keys(NK.status.messages).length) {
+    $("#status").animate({"max-height": "200px"}); 
+  } else {
+    $("#status").animate({"max-height": "0px"}); 
+  }
 }
 
 NK.functions.log = function(msg) {
   var now = new Date().getTime();
   NK.status.messages[new Date().getTime()] = msg;
   NK.status.refresh();
-  setTimeout(NK.status.refresh, 5000);
+  setTimeout(NK.status.refresh, 21000);
   return now;
 }
 NK.functions.updateLog = function(time, msg) {
