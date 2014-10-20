@@ -1,25 +1,37 @@
 var NK = NK || {};
 NK.functions = NK.functions || {};
 
+NK.functions.addedLayers = function () {
+  var re = /[+]\w*/;
+  var results = re.exec(window.location.href);
+  if (results == null) {
+    return null;
+  } else {
+    return results[0].substr(1);
+  }
+};
+
+NK.addedLayer = NK.functions.addedLayers();
+
 NK.functions.createLegend = function () {
-var legendDiv = OpenLayers.Util.getElement('legendBox');
-    if (!!legendDiv) {
-legendDiv.innerHTML = "";
-// create getLegendGraphic request for all active layers
-for (var i = 1; i < map.layers.length; i++) {
-if (map.layers[i].visibility) {
-var legendURL = map.layers[i].getFullRequestString({
-REQUEST: "GetLegendGraphic",
-EXCEPTIONS: "application/vnd.ogc.se_inimage",
-FORMAT: "image/png",
-SERVICE: "WMS",
-VERSION: "1.1.1",
-LAYER: map.layers[i].params.LAYERS
-});
-legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
-}
-}
+  var legendDiv = OpenLayers.Util.getElement('legendBox');
+  if (!!legendDiv) {
+    legendDiv.innerHTML = "";
+    // create getLegendGraphic request for all active layers
+    for (var i = 1; i < map.layers.length; i++) {
+      if (map.layers[i].visibility) {
+        var legendURL = map.layers[i].getFullRequestString({
+          REQUEST: "GetLegendGraphic",
+          EXCEPTIONS: "application/vnd.ogc.se_inimage",
+          FORMAT: "image/png",
+          SERVICE: "WMS",
+          VERSION: "1.1.1",
+          LAYER: map.layers[i].params.LAYERS
+        });
+        legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
+      }
     }
+  }
 };
 
 NK.functions.updateHistory = function (evt) {
@@ -35,6 +47,9 @@ NK.functions.updateHistory = function (evt) {
     center = map.getCenter();
     zoom   = map.getZoom();
 
+    var mouseCursor= document.getElementById('map').style;
+    mouseCursor.cursor = 'default';
+
     if (!!center && !!zoom) {
       uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat); 
       /* 1m precision ought to be enough for everyone --BG */
@@ -43,11 +58,16 @@ NK.functions.updateHistory = function (evt) {
         for (i in map.layers) {
           if (map.layers.hasOwnProperty(i)) {
             layer = map.layers[i];
+            if(layer.shortid === NK.addedLayer && typeof layer.shortid !== 'undefined'){
+              layer.setVisibility(true);
+              NK.addedLayer = null;
+            }
             if (!layer.isBaseLayer) {
               if (!layer.isUrlDataLayer) {
                 if (layer.visibility) {
                   if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
                     uid += "/+" + layer.shortid;
+                    mouseCursor.cursor = 'pointer'
                   }
                 } else {
                   if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
@@ -71,9 +91,21 @@ NK.functions.updateHistory = function (evt) {
       search = searchInput.value;
       if (history.pushState) {
         if (!!search) {
-          history.pushState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+          if (!!history.state) {
+            if (history.state.hash != uid) {
+              history.pushState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+            }
+          } else {
+            history.pushState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+          }
         } else {
-          history.pushState({'hash': uid}, document.title, '#' + uid);        
+          if (!!history.state) {
+            if (history.state.hash != uid) {
+              history.pushState({'hash': uid}, document.title, '#' + uid);
+            }
+          } else {
+            history.pushState({'hash': uid}, document.title, '#' + uid);
+          }
         }
       } else {
         window.location.hash = uid;
