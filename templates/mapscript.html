@@ -255,7 +255,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
 
 NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
-  var layers = [];
+  var layers = [], layerBounds;
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
@@ -279,11 +279,12 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       if (visible) {delete NK.visibleLayerQueue[name];}
       if (!!bbox) {
         var atts = bbox[0].attributes;
-        bounds = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
-                                       atts["maxx"].value, atts["maxy"].value);
-        //FIXME: convert from atts["srs"].value to map.projection
+        if (atts['CRS'].value == map.projection.projCode) { //TODO: convert from atts["srs"].value to map.projection for anything else
+          layerBounds = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
+                                         atts["maxx"].value, atts["maxy"].value);
+        }
       }
-      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, bounds);
+      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds);
     });
     NK.functions.updateHistory();
   });
