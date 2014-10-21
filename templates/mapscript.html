@@ -255,7 +255,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
 
 NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
-  var layers = [], layerBounds;
+  var layers = [], formats=[], layerBounds;
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
@@ -267,6 +267,11 @@ NK.functions.addWMSLayer = function(wmsUrl) {
         } else if ($(this).text() == 'text/plain') {
           featureInfoFormat = featureInfoFormat || 'text/plain';
         }
+      });
+    });
+    $(xml).find('GetMap').each(function () {
+      $(this).children('Format').each(function () {;
+        formats.push($(this).text());
       });
     });
     $(xml).find('Layer').each(function () {
@@ -284,7 +289,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
                                          atts["maxx"].value, atts["maxy"].value);
         }
       }
-      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds);
+      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats);
     });
     NK.functions.updateHistory();
   });
@@ -301,8 +306,9 @@ NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, 
   wfsLayer.setVisibility(!!visible);
 } 
 
-NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds) {
+NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats) {
   // TODO: merge with templates/layers/wms.html 
+  // TODO: put parameters into an array
   var wms = new OpenLayers.Layer.WMS(
     name,
     url,
@@ -321,6 +327,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visi
       transitionEffect: 'resize',
       singleTile: true,
       isUrlDataLayer: true,
+      dataFormats: dataFormats,
       type: 'wms'
     }
   );
