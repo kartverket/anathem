@@ -32,12 +32,12 @@ controls:
     - template: controls/embed
       i18n:
       - include: languages/nb/embed
-#  - template: controls/container
-#    id: export-panel
-#    controls:
-#    - template: controls/export
-#      i18n:
-#      - include: languages/nb/export
+  - template: controls/container
+    id: export-panel
+    controls:
+    - template: controls/export
+      i18n:
+      - include: languages/nb/export
   - template: controls/container
     id: help-panel  
     controls:
