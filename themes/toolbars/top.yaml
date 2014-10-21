@@ -16,7 +16,7 @@ controls:
     addressSearchUrl: http://norgeskart.no/ws/adr.py
     propertySearchUrl: http://norgeskart.no/ws/eie.py
 - template: controls/container
-  id: share-panel
+  id: del-panel 
   controls:
   - template: controls/container
     id: print-panel
