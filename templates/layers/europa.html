@@ -25,7 +25,12 @@ wmts = new OpenLayers.Layer.WMTS({
   params: {
     gkt: NK.gkToken
   },
-  displayInLayerSwitcher:0
+  displayInLayerSwitcher:0,
+
+  dataURL:  "http://openwms.statkart.no/skwms1/wms.europa",
+  dataType: "wms",
+  dataFormats: ["image/png","image/png; mode=24bit","image/jpeg"],
+  dataLayers: "Europa_WMS"
 });
 
 if (wmts.params.GKT) {
