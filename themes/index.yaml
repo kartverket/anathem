@@ -7,7 +7,6 @@ mapscript:
   template  : mapscript
   language  : nb
   tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
-  projection: 32633
 
   i18n:
   - include: languages/nb/base
@@ -22,26 +21,13 @@ mapscript:
     - template: styles/track
     #- include: styles/SLD/maritimegrenser
 
-  overlays  :
+  overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
     - include: layers/flybilder
     - include: layers/terreng
     - include: layers/grunnkart
     - include: layers/toporaster2
-   # - include: layers/janmayen
-   # - include: layers/svalbard
-
-    #- include: layers/wms/kommunegrenser
-    #- include: layers/wms/amtskart
-    #- include: layers/wms/dybdedata
-    #- include: layers/wms/dybdelag
-    #- include: layers/wms/havbunnraster
-    #- include: layers/wms/dekning_sjomaaling
-    #- include: layers/wms/dybdekontur
-    #- include: layers/wms/dybdekurver_havomraader
-    #- include: layers/wms/kystkontur
-    #- include: layers/wms/sjogrenser
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
@@ -51,31 +37,41 @@ mapscript:
 #    - include: layers/omriss_norge_1000m
 #    - include: layers/omriss_norge_500m
 
-    # NRL - Luftfartshindre
-    - include: layers/wms/alle_linjehindre 
-    - include: layers/wms/alle_linjepunkthindre 
-    - include: layers/wms/alle_punkthindre 
-    - include: layers/wms/andre_linjer_60m_og_over 
-    - include: layers/wms/andre_linjer_mellom_40m_60m 
-    - include: layers/wms/andre_linjer_under_40m 
-    - include: layers/wms/andre_linjer_uten_hoyde 
-    - include: layers/wms/kraftledning_60m_og_over 
-    - include: layers/wms/kraftledning_mellom_40m_60m 
-    - include: layers/wms/kraftledning_under_40m 
-    - include: layers/wms/kraftledning_uten_hoyde 
-    - include: layers/wms/kraftstolpe_60m_og_over 
-    - include: layers/wms/kraftstolpe_mellom_40m_60m 
-    - include: layers/wms/kraftstolpe_under_40m 
-    - include: layers/wms/kraftstolpe_uten_hoyde 
-    - include: layers/wms/linjepunkt_60m_og_over 
-    - include: layers/wms/linjepunkt_mellom_40m_60m 
-    - include: layers/wms/linjepunkt_under_40m 
-    - include: layers/wms/linjepunkt_uten_hoyde 
-    - include: layers/wms/Punkthindre_60m_og_over 
-    - include: layers/wms/punkthindre_mellom_40m_60m 
-    - include: layers/wms/punkthindre_under_40m 
-    - include: layers/wms/punkthindre_uten_hoyde 
-    
+    # SSR - stedsnavn
+    - include: layers/wms/ssrSpraak
+    - include: layers/wms/ssrSpraakNorsk
+    - include: layers/wms/ssrSpraakNordsamisk
+    - include: layers/wms/ssrSpraakSorsamisk
+    - include: layers/wms/ssrSpraakLulesamisk
+    - include: layers/wms/ssrSpraakKvensk
+    - include: layers/wms/ssrNavnetype
+    - include: layers/wms/ssrNavnetypeTerrengformer
+    - include: layers/wms/ssrNavnetypeVannkontur
+    - include: layers/wms/ssrNavnetypeMarkslag
+    - include: layers/wms/ssrNavnetypeKystdata
+    - include: layers/wms/ssrNavnetypeBygninger_eiendom
+    - include: layers/wms/ssrNavnetypeSamferdsel
+    - include: layers/wms/ssrNavnetypeAdministrative_omraader
+    - include: layers/wms/ssrVedtaksstatus_dato
+    - include: layers/wms/ssrVedtatt_og_godkjent
+
+    - include: layers/wms/ssrVedtatt_siste_24md
+    - include: layers/wms/ssrVedtatt_siste_12md
+    - include: layers/wms/ssrVedtatt_siste_6md
+    - include: layers/wms/ssrVedtatt_siste_3md
+    - include: layers/wms/ssrVedtatt_siste_md
+
+    - include: layers/wms/ssrAvslaatt
+    - include: layers/wms/ssrUvurdert
+    - include: layers/wms/ssrForeslaatt
+    - include: layers/wms/ssrInternasjonalt
+    - include: layers/wms/ssrPrivat
+    - include: layers/wms/ssrHistorisk
+    - include: layers/wms/ssrVedtak_paaklaget
+    - include: layers/wms/ssrSamlevedtak
+    - include: layers/wms/ssrGodkjent
+    - include: layers/wms/ssrVedtatt
+
   center    : 
     template: center/besseggen
 

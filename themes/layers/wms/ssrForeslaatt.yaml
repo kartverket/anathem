@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
+name: Foresl&aring;tt
+layers: Foreslaatt
+layerGroup: tjenester.Vedtatt_og_godkjent_skrivemaate
+id: Foreslaatt
+usetoken: true
+singleTile: true

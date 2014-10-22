@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
+name: Bebyggelse/ eiendom
+layers: Bygninger_eiendom
+layerGroup: tjenester.Navnetype
+id: Bygninger_eiendom
+usetoken: true
+singleTile: true

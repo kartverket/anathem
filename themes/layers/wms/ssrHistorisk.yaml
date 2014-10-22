@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
+name: Historisk
+layers: Historisk
+layerGroup: tjenester.Vedtatt_og_godkjent_skrivemaate
+id: Historisk
+usetoken: true
+singleTile: true

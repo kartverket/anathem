@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
-name: Andre linjer uten hoyde
-layers: andre_linjer_uten_hoyde
-layerGroup: tjenester.andre_linjethindre
-id: andre_linjer_uten_hoyde
-usetoken: true
-singleTile: true
-

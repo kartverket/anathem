@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
-name: Alle punkthindre
-layers: alle_punkthindre
-layerGroup: tjenester.alle_hindre
-id: alle_punkthindre
-usetoken: true
-singleTile: true

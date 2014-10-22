@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
+name: Vedtatt siste 6md
+layers: Vedtatt_siste_6md
+layerGroup: tjenester.Vedtaksstatus-dato
+id: Vedtatt_siste_6md
+usetoken: true
+singleTile: true

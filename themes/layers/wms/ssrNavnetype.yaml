@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
+name: Alle
+layers: Navnetype
+layerGroup: tjenester.Navnetype
+id: Navnetype
+usetoken: true
+singleTile: true

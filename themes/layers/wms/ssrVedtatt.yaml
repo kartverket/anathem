@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
+name: Vedtatt
+layers: Vedtatt
+layerGroup: tjenester.Vedtatt_og_godkjent_skrivemaate
+id: Vedtatt
+usetoken: true
+singleTile: true

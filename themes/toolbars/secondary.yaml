@@ -37,18 +37,18 @@ controls:
   id: services-panel
   controls:
   - template: controls/overlaygrouppanel
-    group: tjenester.alle_hindre
-    title: Alle hindre
-    buttonText: Alle hindre
+    group: tjenester.Spraak
+    title: Spr&aring;k
+    buttonText: Spr&aring;k
   - template: controls/overlaygrouppanel
-    group: tjenester.andre_linjethindre
-    title: Andre linjehindre
-    buttonText: Andre linjehindre
+    group: tjenester.Navnetype
+    title: Navnetype
+    buttonText: Navnetype
   - template: controls/overlaygrouppanel
-    group: tjenester.kraftledninger
-    title: Kraftledninger
-    buttonText: Kraftledninger
+    group: tjenester.Vedtaksstatus-dato
+    title: Vedtaks status
+    buttonText: Vedtaks status
   - template: controls/overlaygrouppanel
-    group: tjenester.punkthindre
-    title: Punkthindre
-    buttonText: Punkthindre
+    group: tjenester.Vedtatt_og_godkjent_skrivemaate
+    title: Godkjent m&aring;te
+    buttonText: Godkjent m&aring;te

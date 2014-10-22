@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
-name: Kraftledning under 40 m
-layers: kraftledning_under_40m
-layerGroup: tjenester.kraftledninger
-id: kraftledning_under_40m
-usetoken: true
-singleTile: true
-

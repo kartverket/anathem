@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
-name: Kraftledning 60m og over
-layers: kraftledning_60m_og_over
-layerGroup: tjenester.kraftledninger
-id: kraftledning_60m_og_over
-usetoken: true
-singleTile: true
-

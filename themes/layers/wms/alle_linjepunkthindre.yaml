@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
-name: Alle linjepunkthindre
-layers: alle_linjepunkthindre
-layerGroup: tjenester.alle_hindre
-id: alle_linjepunkthindre
-usetoken: true
-singleTile: true
