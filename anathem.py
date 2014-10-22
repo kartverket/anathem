@@ -49,6 +49,10 @@ def recurse_render(data, breadcrumbs):
         print "Template specified in configuration %s was not found:" % template_name
         print er
         sys.exit(1)
+      except TypeError, er:
+        print "Error in template structure in %s:" % template_name
+        print er
+        sys.exit(1)
     # then render the main template
     # or catch any exceptions, and be a bit smart helping the user to find the mistake
     allkeys = defaults.copy()
