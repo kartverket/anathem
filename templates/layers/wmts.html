@@ -77,6 +77,13 @@ NK.addLayerType.WMTS = (function (M, MP) {
       });
     }
 
+    if (options.dataURL) {
+      layer.dataURL     = options.dataURL;
+      layer.dataLayers  = options.dataLayers;
+      layer.dataType    = options.dataType;
+      layer.dataFormats = options.dataFormats.split(",");
+    }
+
     if (layer.params.GKT) {
       layer.params.gkt = layer.params.GKT;
       delete layer.params.GKT; 
@@ -140,6 +147,13 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if databbox:
     options.databbox = "${databbox}"
+  % endif
+
+  % if dataURL:
+    options.dataURL     = "${dataURL}"
+    options.dataLayers  = "${dataLayers}"
+    options.dataType    = "${dataType}"
+    options.dataFormats = "${dataFormats}"
   % endif
 
   % if tileorigin:

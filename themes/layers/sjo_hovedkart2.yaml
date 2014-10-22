@@ -4,3 +4,7 @@ name: Sj&oslash;
 layer: sjo_hovedkart2
 layerGroup: modus
 id: sjo
+dataType:    "wms"
+dataURL :    "http://wms.geonorge.no/skwms1/wms.sjo_hovedkart2"
+dataFormats: "image/png,image/png; mode=24bit,image/jpeg"
+dataLayers:  "Sjokart_hovedkartserien2"
