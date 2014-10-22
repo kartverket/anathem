@@ -1,0 +1,12 @@
+template: layers/wmts
+usetoken: true
+name: arctic 
+layer: Arcticerm 
+layerGroup: modus
+isBaseLayer: true
+id: arctic 
+visible: true
+dataType:    "wms"
+dataURL :    "http://wms.geonorge.no/skwms1/wms.arctic2"
+dataFormats: "image/png,image/png; mode=24bit,image/jpeg"
+dataLayers:  "Arctic_2"

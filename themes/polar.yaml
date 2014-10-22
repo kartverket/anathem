@@ -6,14 +6,14 @@ mapscript:
   template  : mapscript
   language  : nb
   tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-  projection: 32633
-  maxResolution: 21664.0
+  projection: 3575
+  maxResolution: 141683.1563 
 
   i18n:
   - include: languages/nb/base
 
   baselayers:   
-    - template: layers/europa
+    - include: layers/arctic
     - template: layers/wfs ## include just wfs functions, not any layer 
 
   styles    :
@@ -24,11 +24,9 @@ mapscript:
     - include: styles/SLD/maritimegrenser
 
   overlays  : 
-    - include: layers/grunnkart
-    - include: layers/sjo_hovedkart2
 
   center    : 
-    template: center/besseggen
+    template: center/pole
 
   functions :
     - template: functions/updateURL
@@ -38,21 +36,10 @@ mapscript:
 
   controls  :
     - template: controls/status
-#    - template: controls/geolocation
+    - template: controls/geolocation
     - template: controls/navigation
     - template: controls/scaleline
     - template: controls/hashstate
     - include: toolbars/basic
     - include: toolbars/top
     - include: toolbars/secondary
-    - template: controls/container
-      id: overview-container-panel
-      controls:
-      - template: controls/overview
-        name: omriss
-        id: omriss.norge.500m
-        url: /json/norge/500m.geojson
-        detailedLayer: enkel
-
-#splashscreen:
-#  - template: splashscreen/betainfo

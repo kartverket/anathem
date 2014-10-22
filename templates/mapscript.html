@@ -492,6 +492,7 @@ NK.init = function () {
 
   NK.bounds = bounds = {
     "4326" : NK.boundsFromScale(90, -180, 2.795411320143589E8),
+    "3575" : NK.boundsFromScale(-1.8133594E7, 1.07763E7, 5.0601127250000006E8),
  
     "25829" : NK.boundsFromScale(-500000.0, 9045984.0, 7.737142857142858E7),
     "25830" : NK.boundsFromScale(-1000000.0, 9045984.0, 7.737142857142858E7),
@@ -542,10 +543,9 @@ NK.init = function () {
     projection: mapProj,
     displayProjection: mapProj,
     maxExtent: mapBounds,
-    units: "m",
-    maxResolution: 21664.0,
-    //      minResolution: 0.165283203125,
-    numZoomLevels: NK.zoomLevels,
+    //units: "m",
+    maxResolution: (mapBounds.right - mapBounds.left) / 256, //zoom level 2
+    //numZoomLevels: NK.zoomLevels,
     theme: 'theme/norgeskart/style.css'
   };
 
@@ -553,7 +553,7 @@ NK.init = function () {
     'map',
     OpenLayers.Util.extend(NK.mapOptions, {
       controls: [], //defined later
-      numZoomLevels: NK.zoomLevels,
+      //numZoomLevels: NK.zoomLevels,
       eventListeners: NK.mapEventListeners
     })
   );
