@@ -247,8 +247,8 @@ NK.functions.addWMSLayer = function(wmsUrl) {
     $(xml).find('Attribution').each(function () {
       attribution = { 
         'title': $(this).children('Title').text(),
-        'href' : $(this).children('OnlineResource').text(),
-        'logo' : $(this).children('LogoURL').children('OnlineResource').text()
+        'href' : $(this).children('OnlineResource')[0].getAttribute("xlink:href"),
+        'logo' : $(this).children('LogoURL').children('OnlineResource')[0].getAttribute("xlink:href")
       }
     });
     $(xml).find('AccessConstraints').each(function () {
