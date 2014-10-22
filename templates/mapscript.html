@@ -225,7 +225,7 @@ NK.functions.closePopupCallBack = function () {
 
 NK.functions.addWFSLayer = function(wfsUrl) {
   if (map.getLayersBy("url",wfsUrl).length) {return;}
-  var layers = [];
+  var layers = [], formats={};
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
   resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWFS.done(function (xml) {
@@ -235,6 +235,11 @@ NK.functions.addWFSLayer = function(wfsUrl) {
     if (!!exception) {
       NK.functions.log(exception);
     } else {
+      $(xml).find('OutputFormats').each(function () {
+        $(this).children('Format').each(function () {;
+          formats[$(this).text()] = true;
+        });
+      });
       $(xml).find('FeatureType').each(function () {
         var name = $(this).children('Name').text();
         if (!name) {return;}
@@ -242,7 +247,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         var visible = !!NK.visibleLayerQueue[name];
         layers.push(name);
         if (visible) {delete NK.visibleLayerQueue[name];}
-        NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible);
+        NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible, Object.keys(formats));
       });
       NK.functions.updateHistory();
     }
@@ -299,10 +304,12 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   geoportal.displayLayerList();
 };
 
-NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible) {
+NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible, dataFormats) {
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET", "styleName":"track"});
   wfsLayer.type = 'wfs';
   wfsLayer.isUrlDataLayer = true;
+  wfsLayer.url = url;
+  wfsLayer.dataFormats = dataFormats;
   wfsLayer.setVisibility(!!visible);
 } 
 
