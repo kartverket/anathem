@@ -1,12 +1,12 @@
 template: layers/wmts
 usetoken: true
 name: arctic 
-layer: Arcticerm 
+layer: arctic_test
 layerGroup: modus
 isBaseLayer: true
 id: arctic 
 visible: true
 dataType:    "wms"
-dataURL :    "http://wms.geonorge.no/skwms1/wms.arctic2"
+dataURL :    "http://wms.geonorge.no/skwms1/wms.arctic_cascading"
 dataFormats: "image/png,image/png; mode=24bit,image/jpeg"
-dataLayers:  "Arctic_2"
+dataLayers:  "Arctic_cascading"
