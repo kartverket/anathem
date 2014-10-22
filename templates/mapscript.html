@@ -225,7 +225,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
 
 NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
-  var layers = [], formats=[], layerBounds;
+  var layers = [], formats=[], layerBounds, attribution, constraints;
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
@@ -244,6 +244,16 @@ NK.functions.addWMSLayer = function(wmsUrl) {
         formats.push($(this).text());
       });
     });
+    $(xml).find('Attribution').each(function () {
+      attribution = { 
+        'title': $(this).children('Title').text(),
+        'href' : $(this).children('OnlineResource').text(),
+        'logo' : $(this).children('LogoURL').children('OnlineResource').text()
+      }
+    });
+    $(xml).find('AccessConstraints').each(function () {
+      constraints = $(this).text();
+    });
     $(xml).find('Layer').each(function () {
       var name = $(this).children('Name').text();
       if (!name) {return;}
@@ -259,7 +269,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
                                          atts["maxx"].value, atts["maxy"].value);
         }
       }
-      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats);
+      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats, attribution, constraints);
     });
     NK.functions.updateHistory();
   });
@@ -269,16 +279,18 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   geoportal.displayLayerList();
 };
 
-NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible, dataFormats) {
+NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible, dataFormats, attribution, constraints) {
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET", "styleName":"track"});
   wfsLayer.type = 'wfs';
   wfsLayer.isUrlDataLayer = true;
   wfsLayer.url = url;
   wfsLayer.dataFormats = dataFormats;
+  wfsLayer.attribution = attribution;
+  wfsLayer.constraints = constraints;
   wfsLayer.setVisibility(!!visible);
 } 
 
-NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats) {
+NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats, attribution, constraints) {
   // TODO: merge with templates/layers/wms.html 
   // TODO: put parameters into an array
   var wms = new OpenLayers.Layer.WMS(
@@ -300,6 +312,8 @@ NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visi
       singleTile: true,
       isUrlDataLayer: true,
       dataFormats: dataFormats,
+      attribution: attribution,
+      constraints: constraints,
       type: 'wms'
     }
   );
