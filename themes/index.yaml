@@ -51,8 +51,6 @@ mapscript:
 #    - include: layers/omriss_norge_1000m
 #    - include: layers/omriss_norge_500m
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
     # NRL - Luftfartshindre
     - include: layers/wms/alle_linjehindre 
     - include: layers/wms/alle_linjepunkthindre 
