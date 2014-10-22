@@ -2,7 +2,7 @@ template: i18n/language
 language: nb
 translations:
   - template: i18n/translation
-    source: Quit
+    source: Close 
     translation: Avslutt
   - template: i18n/translation
     source: Export 
@@ -17,18 +17,46 @@ translations:
     source: Next 
     translation: Neste
   - template: i18n/translation
-    source: "This guide helps you to select a map area for print or export from the base map. The exported map will not include overlays or user data painted on the map." 
-    translation: "Her kan du velge et kartutsnitt fra grunnkartene som lages et bilde av. Eksporten vil ikke inkludere brukertegninger eller tematiske kartlag."
+    source: "This guide helps you to select a map area for print or export from the base map or overlay service." 
+    translation: "Her kan du velge et kartutsnitt fra grunnkartene eller tematiske kartlag og eksportere tilknyttede data i formatene som tjenesten tilbyr."
   - template: i18n/translation
-    source: "All map data is free for any use if attribution is given to \"Kartverket\" (License: CC-BY)."
-    translation: "Alle kartene er fri for all bruk hvis kildehenvisningen \"Kartverket\" er angitt. (Lisens: CC-BY)"
+    source: "All map data is subject to the copyright of the service owner. Where provided, we will display license information as reported by the service."
+    translation: "Alle kartene har tjenesteeierens opphavsrett. Hvis lisenseringsinformasjonen er angitt vises denne ved eksporten."
   - template: i18n/translation
-    source: "Choose output size and format" 
-    translation: "Velg st&oslash;rrelse og format."
+    source: "Choose data layer and output format" 
+    translation: "Velg datakilde og format."
   - template: i18n/translation
-    source: "From the drop down box below, select the size of the map to be exported." 
-    translation: "Fra rullgardinene nedenfor, velg st&oslash;rrelse og format av eksporten."
-
-
+    source: "From the drop down boxes below, select the source and format of the exported data." 
+    translation: "Fra rullegardinene nedenfor kan du velge kilde, kartlagene, og format av data som eksporteres."
+  - template: i18n/translation
+    source: Source 
+    translation: Kilde
+  - template: i18n/translation
+    source: Layer 
+    translation: Lag
+  - template: i18n/translation
+    source: Size 
+    translation: "St&oslash;rr."
+  - template: i18n/translation
+    source: Preview
+    translation: "Forh&aring;ndsvisning"
+  - template: i18n/translation
+    source: Download dataset from source
+    translation: "Last ned datasett fra kilden"
+  - template: i18n/translation
+    source: License 
+    translation: Lisens
+  - template: i18n/translation
+    source: Attribution 
+    translation: Navngivelse
+  - template: i18n/translation
+    source: "Missing download support for layer type" 
+    translation: "Kartlagtype ikke st&oslash;ttes"
+  - template: i18n/translation
+    source: "As shown"
+    translation: "Som vist"
+  - template: i18n/translation
+    source: px 
+    translation: piksler
 
 
