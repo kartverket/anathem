@@ -1,0 +1,39 @@
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: 'Add Layer'
+    translation: 'Nytt kartlag'
+  - template: i18n/translation
+    source: 'Connect to service'
+    translation: 'Koble til tjeneste'
+  - template: i18n/translation
+    source: 'Service'
+    translation: 'Tjeneste'
+  - template: i18n/translation
+    source: 'Layer'
+    translation: 'Lag'
+  - template: i18n/translation
+    source: 'Legend'
+    translation: 'Tegnfor- klaring'
+  - template: i18n/translation
+    source: 'Base URL'
+    translation: 'Basis-URL'
+  - template: i18n/translation
+    source: 'e.g.'
+    translation: 'f.eks.'
+  - template: i18n/translation
+    source: 'Connect'
+    translation: 'Koble til'
+  - template: i18n/translation
+    source: 'No legend available'
+    translation: 'Ingen tegnforklaring tilgjengelig'
+  - template: i18n/translation
+    source: 'Next'
+    translation: 'Neste'
+  - template: i18n/translation
+    source: 'Close'
+    translation: 'Avslutt'
+
+
+

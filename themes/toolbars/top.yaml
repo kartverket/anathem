@@ -48,4 +48,6 @@ controls:
     id: geoportal-panel
     controls:
     - template: controls/geoportal
+      i18n:
+      - include: languages/nb/geoportal
     
