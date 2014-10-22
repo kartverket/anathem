@@ -399,7 +399,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
       var uuDictTmp = uuDict[tmp[1]];
       var tmpResp = [];
       var uuDictResponse = [];
-      markup += '<article style="overflow-y: scroll; height:380px" >';
+      markup += '<article style="overflow-y: auto; height:380px" >';
       try {
         markup += '<h1 class="h">' + uuDictTmp['info']['name'] + '</h1>';
         markup += '<p>' + uuDictTmp['info']['extra'] + '</p>';
@@ -460,7 +460,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
       if (!!uuDictResponse['bilde']) {
         var dictBilde = uuDictResponse['bilde'].split('.');
         dictBilde = dictBilde[0];
-        markup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=180 width=250 SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" onerror="NK.functions.imgError(this, ' + dictBilde + ');"></a>';
+        markup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=180 width=246 SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" onerror="NK.functions.imgError(this, ' + dictBilde + ');"></a>';
         markup += '<span id="' + dictBilde + '" style="visibility:hidden"><a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" style="color:#fff"><i>Feil ved lasting av bilde</i></a></span><br/>';
       }
     } else {
