@@ -190,7 +190,7 @@ NK.functions.closePopupCallBack = function () {
 
 NK.functions.addWFSLayer = function(wfsUrl) {
   if (map.getLayersBy("url",wfsUrl).length) {return;}
-  var layers = [], formats={};
+  var layers = [], formats={}, attribution, constraints;
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
   resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWFS.done(function (xml) {
@@ -205,6 +205,17 @@ NK.functions.addWFSLayer = function(wfsUrl) {
           formats[$(this).text()] = true;
         });
       });
+      $(xml).find('AccessConstraints').each(function () {
+        constraints = $(this).text();
+      });
+      $(xml).find('Attribution').each(function () {
+        attribution = { 
+          'title': $(this).children('Title').text(),
+          'href' : $(this).children('OnlineResource')[0].getAttribute("xlink:href"),
+          'logo' : $(this).children('LogoURL').children('OnlineResource')[0].getAttribute("xlink:href")
+        }
+      });
+      if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
       $(xml).find('FeatureType').each(function () {
         var name = $(this).children('Name').text();
         if (!name) {return;}
@@ -212,7 +223,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         var visible = !!NK.visibleLayerQueue[name];
         layers.push(name);
         if (visible) {delete NK.visibleLayerQueue[name];}
-        NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible, Object.keys(formats));
+        NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible, Object.keys(formats), attribution, constraints);
       });
       NK.functions.updateHistory();
     }
@@ -251,6 +262,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
         'logo' : $(this).children('LogoURL').children('OnlineResource')[0].getAttribute("xlink:href")
       }
     });
+    if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
     $(xml).find('AccessConstraints').each(function () {
       constraints = $(this).text();
     });
