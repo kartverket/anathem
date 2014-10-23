@@ -83,7 +83,13 @@ def build_include_doc(data):
   else:
     lines += "undocumented\n"
   return lines
-    
+
+def register(breadcrumbs):
+  level = tree
+  for crumb in breadcrumbs:
+    if not crumb in level:
+      level[crumb] = {}
+    level = level[crumb]
 
 def recurse_render(data, breadcrumbs):
   """
@@ -92,11 +98,7 @@ def recurse_render(data, breadcrumbs):
   one key for every parameter the template includes
   """
 
-  level = tree
-  for crumb in breadcrumbs:
-    if not crumb in level:
-      level[crumb] = {}
-    level = level[crumb]
+  register(breadcrumbs)
 
   if "include" in data:
     # load another configuration file indicated by the include key
@@ -109,6 +111,7 @@ def recurse_render(data, breadcrumbs):
   elif "template" in data:
     # load template indicated by the template key
     template_name = data["template"]
+
     template = Template(filename=("templates/%s.html" % template_name), lookup=lookup)
 
     # for every other key in the configuration:
@@ -135,6 +138,7 @@ def recurse_render(data, breadcrumbs):
     allkeys['vars']=defaults
     try:
       if not template_name in mentioned:
+        register(breadcrumbs+[template_name])
         code   = open("templates/%s.html" % template_name, "r").read()
         mentioned[template_name]="### TEMPLATE: %s\n\n%s" % (template_name, build_template_doc(code))
      
