@@ -1,6 +1,6 @@
-## THEME %s
+## THEME index
 
-index* [base](./templates/base.md)
+* [base](./templates/base.md)
   * [mapscript](./templates/mapscript.md)
     * [styles/SLD/maritimegrenser](./includes/styles_SLD_maritimegrenser.md)
       * [styles/SLD](./templates/styles_SLD.md)

@@ -165,7 +165,7 @@ def recurse_render(data, breadcrumbs):
 recurse_render(config, [])
 
 fd = open("doc/"+tema+".md", "w")
-fd.write("## THEME %s\n\n" + tema)
+fd.write("## THEME %s\n\n" % tema)
 write_structure(fd,tree,0)
 write_docs(mentioned)
 
