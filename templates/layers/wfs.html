@@ -1,3 +1,27 @@
+<%doc>
+description: include a WFS layer in the base map
+params:
+  url: Base URL of the WMTS
+  layerGroup: include layer in this layer group (used by menus and layer selectors to display only layers belonging to the same group)
+  visible: Set visibility of the layer
+  hidefromlayerswitcher: if set, the layer will not appear in any menu or layer switcher
+  styleName: style definition to be used for this layer
+  styleNameSLD: SLD to be used as a style for this layer
+  popup: (TEMPLATE) a popup definition to be used to display metadata for this layer
+  version: WFS version parameter
+  id: short id to be used to identify this layer in the client URL
+  name: Name of the layer to be displayed in menus etc.
+  namespace: namespace of data in the WFS service
+  namespacePrefix: prefix for the namespace of data in the WFS service
+  featuretype: featuretype to be requested from the WFS service
+  todo:
+    databbox: set the maximum bounding box for displaying this layer. The map client will not attempt to load tiles outside this bounding box, comma separated. (OpenLayers parameter maxExtent)
+    dataURL: hint for the export tool where data or images from this layer can be downloaded via a supported download service (WMS/WFS)
+    dataLayers: hint for the export tool which LAYERS (WMS) or TYPE (WFS) should be used when downloading data.
+    dataType: hint for the export tool which service type to use for downloading data ["wms" or "wfs"]
+    dataFormats: hint for the export tool which data formats are supported by the data service (comma separated list of MIME types)
+
+</%doc>
 <%include file="/functions/vector.html"/>
 
 % if popup:

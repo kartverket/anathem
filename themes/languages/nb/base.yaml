@@ -1,3 +1,6 @@
+doc:
+  description: i18n for strings used in the base client script
+
 template: i18n/language
 language: nb
 translations:

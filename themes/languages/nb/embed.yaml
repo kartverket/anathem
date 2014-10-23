@@ -1,3 +1,6 @@
+doc:
+  description: i18n for the OpenLayers Embed Control
+
 template: i18n/language
 language: nb
 translations:

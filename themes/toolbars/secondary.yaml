@@ -1,3 +1,6 @@
+doc:
+  description: The right hand toolbar on norgeskart.no that includes tools and overlays 
+
 template: controls/container
 id: secondary-toolbar
 controls:

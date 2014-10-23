@@ -1,3 +1,11 @@
+<%doc>
+description: include the OpenLayers elevation profile control
+params:
+  heightProfileServiceUrl: URL of the elevation profile WPS service
+  gpxStorageUrl: where to store uploaded GPX files (web service)
+  trackStyleName: which style to use to display GPX or hand drawn tracks
+  predefinedGpxFiles: a list of GPX files to display as examples
+</%doc>
 <%inherit file="/controls/controlcontext.html" />
 
 % if heightProfileServiceUrl:

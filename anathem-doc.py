@@ -15,7 +15,12 @@ re_param = re.compile('\$\{([^\(\{]*?)\}')
 re_doc   = re.compile('<%doc>(.*?)</%doc>', re.DOTALL ^ re.MULTILINE)
 
 # single parameter: a yaml configuration filename in the themes/ folder
-nil, tema, = sys.argv
+quiet = False # only check if documentation is complete, do not print documentation
+if len(sys.argv) == 3:
+  nil, tema, quiet, = sys.argv
+else:
+  nil, tema, = sys.argv
+
 config   = yaml.load(open("themes/%s.yaml" % tema, "r"))
 defaults = yaml.load(open("default.yaml", "r"))
 lookup   = TemplateLookup(directories=['./templates/'])
@@ -25,26 +30,34 @@ def print_template_doc(code):
   doc = re_doc.search(code)
   data = doc and yaml.load(doc.group(1)) or {}
   if 'description' in data:
-    print data['description']
+    if not quiet:
+      print data['description']
     if code:
       params = re_param.findall(code)
       if len(params)>0:
         if 'params' in data:
-          print "Parameters:"
+          if not quiet:
+            print "Parameters:"
           for param in params:
-            print "* %s: %s" % (param, data['params'][param])
+            if not quiet:
+              print "* %s: %s" % (param, data['params'][param])
+            elif not param in data['params']:
+              print "parameter %s missing" % param
         else:
           print "parameter documentation missing" 
   else:
     print "undocumented"
-  print
+  if not quiet:
+    print
 
 def print_include_doc(data):
   if 'doc' in data:
-    print data['doc']['description']
+    if not quiet:
+      print data['doc']['description']
   else:
     print "undocumented"
-  print
+  if not quiet:
+    print
 
 def recurse_render(data, breadcrumbs):
   """

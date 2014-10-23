@@ -1,3 +1,9 @@
+<%doc>
+description: include i18n translation strings for a given language
+params:
+  language: language code for the translations
+  translations: (TEMPLATE) a list of translation templates, one per string
+</%doc>
 % if translations:
 (function() {
 var translations = {};

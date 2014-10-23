@@ -1,3 +1,6 @@
+doc:
+  description: Layer definition for closed WMTS norges_grunnkart 
+
 template: layers/wmts
 usetoken: true
 name: enkel 

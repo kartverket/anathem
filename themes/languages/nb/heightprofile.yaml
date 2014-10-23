@@ -1,3 +1,6 @@
+doc:
+  description: i18n for the elevation profile control
+
 template: i18n/language
 language: nb
 translations:

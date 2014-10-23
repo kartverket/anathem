@@ -1,3 +1,8 @@
+<%doc>
+description: display a logo on top of the map
+params: 
+  svgLogo: file name of the SVG to use for the logo
+</%doc>
 <%inherit file="/controls/controlcontext.html" />
 % if svgLogo:
 	options.svgLogo = '${svgLogo}';

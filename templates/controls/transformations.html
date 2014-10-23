@@ -1,3 +1,8 @@
+<%doc>
+description: include the OpenLayers transformation control
+params:
+  url: URL for the transformation web service
+</%doc>
 <%inherit file="/controls/controlcontext.html" />
 % if url:
 	options.url = "${url}";

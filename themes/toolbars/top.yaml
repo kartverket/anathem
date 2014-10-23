@@ -1,3 +1,6 @@
+doc:
+  description: definition of the top toolbar (logo, search and share)  
+
 template: controls/container
 id: top-toolbar
 controls:
