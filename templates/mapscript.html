@@ -257,6 +257,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
     var featureInfoFormat = null;
+    var version = $(xml).children()[0].getAttribute("version");
     $(xml).find('GetFeatureInfo').each(function () {
       $(this).children('Format').each(function() {
         if ($(this).text() == 'text/html') {
@@ -300,7 +301,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
                                          atts["maxx"].value, atts["maxy"].value);
         }
       }
-      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats, attribution, constraints);
+      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats, attribution, constraints, version);
     });
     NK.functions.updateHistory();
   });
@@ -321,7 +322,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, 
   wfsLayer.setVisibility(!!visible);
 } 
 
-NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats, attribution, constraints) {
+NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats, attribution, constraints, version) {
   // TODO: merge with templates/layers/wms.html 
   // TODO: put parameters into an array
   var wms = new OpenLayers.Layer.WMS(
@@ -345,7 +346,8 @@ NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visi
       dataFormats: dataFormats,
       attribution: attribution,
       constraints: constraints,
-      type: 'wms'
+      type: 'wms',
+      version: version
     }
   );
   if (!!bounds) {
