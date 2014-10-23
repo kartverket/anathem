@@ -24,40 +24,66 @@ else:
 config   = yaml.load(open("themes/%s.yaml" % tema, "r"))
 defaults = yaml.load(open("default.yaml", "r"))
 lookup   = TemplateLookup(directories=['./templates/'])
-mentioned = {}
 
-def print_template_doc(code):
+mentioned = {}
+tree      = {} 
+
+def write_structure(fd, tree, indent):
+  for key in tree:
+    fd.write(" "*indent)
+    fd.write("* ")
+    if "inc:" in key:
+      fd.write("[%s](./includes/%s.md)" % (key.replace("inc:",""), key.replace("inc:","").replace("/","_")))
+    else: 
+      fd.write("[%s](./templates/%s.md)" % (key, key.replace("/","_")))
+    fd.write("\n")
+    write_structure(fd, tree[key], indent+2)
+
+def write_docs(mentioned):
+  for key in mentioned:
+    if "inc:" in key:
+      fd = open("doc/includes/"+key.replace("inc:","").replace("/","_")+".md", "w")
+    else: 
+      fd = open("doc/templates/"+key.replace("/","_")+".md", "w")
+    fd.write(mentioned[key])
+    fd.close()
+
+def build_template_doc(code):
+  lines = ""
   doc = re_doc.search(code)
   data = doc and yaml.load(doc.group(1)) or {}
   if 'description' in data:
     if not quiet:
-      print data['description']
+      try:
+        lines += data['description'] + "\n"
+      except Exception,ex:
+        lines += data + "\n"
     if code:
       params = re_param.findall(code)
       if len(params)>0:
         if 'params' in data:
           if not quiet:
-            print "Parameters:"
+            lines += "Parameters:\n\n"
           for param in params:
             if not quiet:
-              print "* %s: %s" % (param, data['params'][param])
+              lines += "* %s: %s\n" % (param, data['params'][param])
             elif not param in data['params']:
-              print "parameter %s missing" % param
+              lines += "parameter %s missing\n" % param
         else:
-          print "parameter documentation missing" 
+          lines += "parameter documentation missing\n" 
   else:
-    print "undocumented"
-  if not quiet:
-    print
+    lines += "undocumented\n"
+  return lines
 
-def print_include_doc(data):
+def build_include_doc(data):
+  lines = ""
   if 'doc' in data:
     if not quiet:
-      print data['doc']['description']
+      lines += data['doc']['description']+"\n"
   else:
-    print "undocumented"
-  if not quiet:
-    print
+    lines += "undocumented\n"
+  return lines
+    
 
 def recurse_render(data, breadcrumbs):
   """
@@ -66,14 +92,18 @@ def recurse_render(data, breadcrumbs):
   one key for every parameter the template includes
   """
 
+  level = tree
+  for crumb in breadcrumbs:
+    if not crumb in level:
+      level[crumb] = {}
+    level = level[crumb]
+
   if "include" in data:
     # load another configuration file indicated by the include key
     include_name = data["include"]
     include = yaml.load(open("themes/%s.yaml" % include_name, "r"))
     if not "inc:"+include_name in mentioned:
-      print "# INCLUDE: %s " % include_name
-      print_include_doc(include)
-      mentioned["inc:"+include_name] = True
+      mentioned["inc:"+include_name] = "### INCLUDE: %s\n\n%s" % (include_name, build_include_doc(include))
     return recurse_render(include, breadcrumbs + ['inc:'+include_name])
 
   elif "template" in data:
@@ -105,10 +135,8 @@ def recurse_render(data, breadcrumbs):
     allkeys['vars']=defaults
     try:
       if not template_name in mentioned:
-        print "# TEMPLATE: %s " % template_name
         code   = open("templates/%s.html" % template_name, "r").read()
-        print_template_doc(code)
-        mentioned[template_name]=True
+        mentioned[template_name]="### TEMPLATE: %s\n\n%s" % (template_name, build_template_doc(code))
      
       return template.render(**allkeys)
     except NameError, er:
@@ -136,4 +164,8 @@ def recurse_render(data, breadcrumbs):
   
 recurse_render(config, [])
 
+fd = open("doc/"+tema+".md", "w")
+fd.write("## THEME %s\n\n" + tema)
+write_structure(fd,tree,0)
+write_docs(mentioned)
 

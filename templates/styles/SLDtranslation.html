@@ -1,1 +1,7 @@
+<%doc>
+description: translate a feature name in an SLD file
+params: 
+  target: name to be displayed in the client
+  featureName: name of the feature
+</%doc>
 (NK.format.SLD.featureTranslate['${target}'] = NK.format.SLD.featureTranslate['${target}'] || []).push('${featureName}');

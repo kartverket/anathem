@@ -1,3 +1,10 @@
+<%doc>
+description: include a style as defined by an SLD file
+params: 
+  translations: load i18n or label translations for the metadata
+  name: name of the style
+  url: URL to retrieve the SLD file 
+</%doc>
 % if not 'formatSLD' in vars:
 
 NK.format = NK.format || {};

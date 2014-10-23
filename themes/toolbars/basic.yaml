@@ -1,3 +1,6 @@
+doc:
+  description: a simple toolbar to be displayed as controls in the dynamic map frames
+
 template: controls/container
 id: basic-toolbar
 controls:

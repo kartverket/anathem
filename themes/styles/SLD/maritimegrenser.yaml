@@ -1,3 +1,6 @@
+doc:
+  description: SLD definition for maritime grenser, including feature translation strings
+
 template: styles/SLD
 name: maritimegrenser
 url: /xml/NMG.xml

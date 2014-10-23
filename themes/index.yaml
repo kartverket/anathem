@@ -41,7 +41,6 @@ mapscript:
 #    - template: controls/geolocation
     - template: controls/navigation
     - template: controls/scaleline
-    - template: controls/hashstate
     - include: toolbars/basic
     - include: toolbars/top
     - include: toolbars/secondary
