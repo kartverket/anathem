@@ -32,8 +32,8 @@ def write_structure(fd, tree, indent):
   for key in sorted(tree.keys()):
     fd.write(" "*indent)
     fd.write("* ")
-    if "inc:" in key:
-      fd.write("[%s](./includes/%s.md)" % (key.replace("inc:",""), key.replace("inc:","").replace("/","_")))
+    if ":inc:" in key:
+      fd.write("[%s](./includes/%s.md)" % (key.replace(":inc:",""), key.replace(":inc:","").replace("/","_")))
     else: 
       fd.write("[%s](./templates/%s.md)" % (key, key.replace("/","_")))
     fd.write("\n")
@@ -41,8 +41,8 @@ def write_structure(fd, tree, indent):
 
 def write_docs(mentioned):
   for key in mentioned:
-    if "inc:" in key:
-      fd = open("doc/includes/"+key.replace("inc:","").replace("/","_")+".md", "w")
+    if ":inc:" in key:
+      fd = open("doc/includes/"+key.replace(":inc:","").replace("/","_")+".md", "w")
     else: 
       fd = open("doc/templates/"+key.replace("/","_")+".md", "w")
     fd.write(mentioned[key])
@@ -104,9 +104,9 @@ def recurse_render(data, breadcrumbs):
     # load another configuration file indicated by the include key
     include_name = data["include"]
     include = yaml.load(open("themes/%s.yaml" % include_name, "r"))
-    if not "inc:"+include_name in mentioned:
-      mentioned["inc:"+include_name] = "### INCLUDE: %s\n\n%s" % (include_name, build_include_doc(include))
-    return recurse_render(include, breadcrumbs + ['inc:'+include_name])
+    if not include_name+":inc:" in mentioned:
+      mentioned[include_name+":inc:"] = "### INCLUDE: %s\n\n%s" % (include_name, build_include_doc(include))
+    return recurse_render(include, breadcrumbs + [include_name+":inc:"])
 
   elif "template" in data:
     # load template indicated by the template key
