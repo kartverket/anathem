@@ -29,7 +29,7 @@ mentioned = {}
 tree      = {} 
 
 def write_structure(fd, tree, indent):
-  for key in tree:
+  for key in sorted(tree.keys()):
     fd.write(" "*indent)
     fd.write("* ")
     if "inc:" in key:
