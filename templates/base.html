@@ -1,3 +1,14 @@
+<%doc>
+description: The base HTML page for norgeskart.no and geoportal clients.
+params: 
+  manifestName: a browser cache manifest (optional)
+  title: The title displayed by the website
+  mapscript: (TEMPLATE) the javascript code executed by the website
+  mapClass: a css class tag for the main map <div>
+  includeXDM: whether xdm messaging code should be included (optional)
+  splashscreen: (TEMPLATE) include code for a splashscreen (optional, deprecated)
+  finalscripts: (TEMPLATE) include code executed at the end of the page load. (optional) 
+</%doc>
 <!doctype html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en" style="height:100%"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en" style="height:100%"> <![endif]-->

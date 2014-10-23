@@ -1,3 +1,6 @@
+doc:
+  description: Layer definition for closed WMTS sjo_hovedkart2
+
 template: layers/wmts
 usetoken: true
 name: Sj&oslash; 
