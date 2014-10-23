@@ -34,6 +34,7 @@ mapscript:
   functions :
     template: functions/readURL
   controls  :
+    - template: controls/status
     - template: controls/navigation
     - template: controls/scaleline
     - include: toolbars/embed-basic-toolbar

@@ -34,6 +34,7 @@ mapscript:
   functions:
     template: functions/readURL
   controls:
+    - template: controls/status
     - template: controls/scaleline
     - template: controls/popout
   center:
