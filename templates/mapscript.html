@@ -223,10 +223,12 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         constraints = $(this).text();
       });
       $(xml).find('Attribution').each(function () {
+        var href = $(this).children('OnlineResource')[0];
+        var logo = $(this).children('LogoURL').children('OnlineResource')[0];
         attribution = { 
           'title': $(this).children('Title').text(),
-          'href' : $(this).children('OnlineResource')[0].getAttribute("xlink:href"),
-          'logo' : $(this).children('LogoURL').children('OnlineResource')[0].getAttribute("xlink:href")
+          'href' : href && href.getAttribute("xlink:href"),
+          'logo' : logo && logo.getAttribute("xlink:href")
         }
       });
       if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
@@ -270,10 +272,12 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       });
     });
     $(xml).find('Attribution').each(function () {
+      var href = $(this).children('OnlineResource')[0];
+      var logo = $(this).children('LogoURL').children('OnlineResource')[0];
       attribution = { 
-        'title': $(this).children('Title').text(),
-        'href' : $(this).children('OnlineResource')[0].getAttribute("xlink:href"),
-        'logo' : $(this).children('LogoURL').children('OnlineResource')[0].getAttribute("xlink:href")
+          'title': $(this).children('Title').text(),
+          'href' : href && href.getAttribute("xlink:href"),
+          'logo' : logo && logo.getAttribute("xlink:href")
       }
     });
     if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
