@@ -3,7 +3,7 @@ doc:
 
 template: layers/wmts
 usetoken: true
-name: Sj&oslash; 
+name: Sea
 layer: sjo_hovedkart2
 layerGroup: modus
 id: sjo

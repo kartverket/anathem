@@ -1,0 +1,18 @@
+doc:
+  description: i18n for layer names and other user content
+
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Land 
+    translation: Land
+  - template: i18n/translation
+    source: Sea
+    translation: Sj&oslash;
+ 
+
+
+
+
+ 

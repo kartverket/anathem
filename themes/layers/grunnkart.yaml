@@ -3,7 +3,7 @@ doc:
 
 template: layers/wmts
 usetoken: true
-name: enkel 
+name: Land 
 layer: norges_grunnkart 
 layerGroup: modus
 id: enkel 

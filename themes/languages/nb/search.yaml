@@ -1,0 +1,120 @@
+doc:
+  description: i18n for the OpenLayers Search Control
+
+template: i18n/language
+language: nb
+translations:
+  - template: i18n/translation
+    source: Find place, coordinates, address 
+    translation: Finn omr&aring;de, adresse, koordinat
+  - template: i18n/translation
+    source: Areas 
+    translation: Omr&aring;der
+  - template: i18n/translation
+    source: Addresses
+    translation: Adresser
+  - template: i18n/translation
+    source: Objects 
+    translation: Objekter
+  - template: i18n/translation
+    source: Search
+    translation: S&oslash;k
+  - template: i18n/translation
+    source: Searching
+    translation: S&oslash;ker
+  - template: i18n/translation
+    source: "More results"
+    translation: "Se flere >"
+  - template: i18n/translation
+    source: "Total search results: ${count}"
+    translation: "${count} treff"
+  - template: i18n/translation
+    source: "number"
+    translation: "nummer"
+  - template: i18n/translation
+    source: "no results found"
+    translation: "s&oslash;ket gav ingen treff"
+  - template: i18n/translation
+    source: Country 
+    translation: Nasjon
+  - template: i18n/translation
+    source: County
+    translation: Fylke
+  - template: i18n/translation
+    source: Municipality
+    translation: Kommune
+  - template: i18n/translation
+    source: City
+    translation: By
+  - template: i18n/translation
+    source: District
+    translation: Bydel
+  - template: i18n/translation
+    source: Adm. district
+    translation: Adm. bydel
+  - template: i18n/translation
+    source: Village
+    translation: Tettsted
+  - template: i18n/translation
+    source: Hamlet
+    translation: Grend
+  - template: i18n/translation
+    source: Settlement
+    translation: Tettbebyggelse
+  - template: i18n/translation
+    source: Mountain area
+    translation: Fjellomr&aring;de
+  - template: i18n/translation
+    source: Community
+    translation: Bygdelag
+  - template: i18n/translation
+    source: Rural district
+    translation: Tettsteddel
+  - template: i18n/translation
+    source: Address
+    translation: Adressenavn
+  - template: i18n/translation
+    source: Airport
+    translation: Flyplass
+  - template: i18n/translation
+    source: Prison
+    translation: Fengsel
+  - template: i18n/translation
+    source: Cultural highlight
+    translation: Annen kulturdetalj
+  - template: i18n/translation
+    source: Station
+    translation: Stasjon
+  - template: i18n/translation
+    source: Church
+    translation: Kirke
+  - template: i18n/translation
+    source: Bridge
+    translation: Bru
+  - template: i18n/translation
+    source: School
+    translation: Skole
+  - template: i18n/translation
+    source: Farm
+    translation: G&aring;rdsbruk 
+  - template: i18n/translation
+    source: Island 
+    translation: "&Oslash;y"
+  - template: i18n/translation
+    source: Industrial area
+    translation: "Industriomr&aring;de"
+  - template: i18n/translation
+    source: "University/college"
+    translation: "Universitet/h&oslash;gskole"
+  - template: i18n/translation
+    source: 'Search results contain properties without known borders. We cannot display these, but you can repeat your search on <a href="http://www.seeiendom.no" target="_blank" style="color:#fff">seeiendom.no</a> to retrieve more information.'
+    translation: 'S&oslash;keresultatet inneholder eiendommer uten kjente teiggrenser. Disse kan ikke vises p&aring; kartet, men du kan s&oslash;ke p&aring; <a href="http://www.seeiendom.no" target="_blank" style="color:#fff">seeiendom.no</a> for &aring; hente informasjon.'
+  - template: i18n/translation
+    source: 'Search for properties as follows:<br/>Municipality-Gardsnr/Bruksnr/Feste/Seksjon<br/>e.g.: <b>Ringerike-38/98</b></br/> or by entering an address.' 
+    translation: 'S&oslash;k etter eiendommer som f&oslash;lgt:<br/>Kommune-G&aring;rdsnr/Bruksnr/Feste/Seksjon<br/>f.eks.: <b>Ringerike-38/98</b></br/>eller ved &aring; taste inn gateadressen.'
+ 
+
+
+
+
+ 

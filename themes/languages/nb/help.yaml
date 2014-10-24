@@ -19,3 +19,26 @@ translations:
   - template: i18n/translation
     source: Function
     translation: Funksjon
+  - template: i18n/translation
+    source: Arrow keys 
+    translation: Piltaster
+  - template: i18n/translation
+    source: Full screen 
+    translation: Fullskjerm
+  - template: i18n/translation
+    source: Print 
+    translation: Skriv ut
+  - template: i18n/translation
+    source: Zoom
+    translation: Zoome
+  - template: i18n/translation
+    source: Pan
+    translation: Panorere
+  - template: i18n/translation
+    source: Fast panning
+    translation: Panorere raskt
+
+
+
+
+ 

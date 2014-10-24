@@ -9,14 +9,15 @@ from mako.lookup import TemplateLookup
 import yaml
 import sys
 import re
+from codecs import open
 
 # matches mako parameters in a template: ${...}, but not containing brackets
 re_param = re.compile('\$\{([^\(\{]*?)\}')
 
 # single parameter: a yaml configuration filename in the themes/ folder
 nil, tema, = sys.argv
-config   = yaml.load(open("themes/%s.yaml" % tema, "r"))
-defaults = yaml.load(open("default.yaml", "r"))
+config   = yaml.load(open("themes/%s.yaml" % tema, "r", "utf-8"))
+defaults = yaml.load(open("default.yaml", "r", "utf-8"))
 lookup   = TemplateLookup(directories=['./templates/'])
 
 def recurse_render(data, breadcrumbs):
@@ -29,7 +30,7 @@ def recurse_render(data, breadcrumbs):
   if "include" in data:
     # load another configuration file indicated by the include key
     include_name = data["include"]
-    include = yaml.load(open("themes/%s.yaml" % include_name, "r"))
+    include = yaml.load(open("themes/%s.yaml" % include_name, "r", "utf-8"))
     return recurse_render(include, breadcrumbs + ['inc:'+include_name])
 
   elif "template" in data:

@@ -35,6 +35,9 @@ translations:
     source: 'Next'
     translation: 'Neste'
   - template: i18n/translation
+    source: 'Previous'
+    translation: 'Forrige'
+  - template: i18n/translation
     source: 'Close'
     translation: 'Avslutt'
 

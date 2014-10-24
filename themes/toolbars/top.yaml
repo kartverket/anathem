@@ -18,6 +18,8 @@ controls:
     streetAddressesSearchUrl: http://norgeskart.no/ws/veg.py
     addressSearchUrl: http://norgeskart.no/ws/adr.py
     propertySearchUrl: http://norgeskart.no/ws/eie.py
+    i18n:
+    - include: languages/nb/search
 - template: controls/container
   id: del-panel 
   controls:

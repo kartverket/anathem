@@ -4,13 +4,14 @@ template : base
 title    : "Geonorge | Norgeskart"
 mapscript: 
   template  : mapscript
-  language  : nb
+  language  : nb 
   tokenServiceUrl: http://norgeskart.no/ws/gkt.py
   projection: 32633
   maxResolution: 21664.0
 
   i18n:
   - include: languages/nb/base
+  - include: languages/nb/layers
 
   baselayers:   
     - template: layers/europa
