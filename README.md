@@ -56,6 +56,17 @@ Each parameter may be of one of the following types:
         parameter: value2
 ```
 
+## Includes
+
+Any parameter may be replaced with an include statement, which compiles and includes another yaml configuration file:
+
+```
+    layers:  
+      - include: standard_setup
+```
+
+
+
 ## Default values 
 
 The file ```./defaults``` may contain a dictionary of default values, that are provided to every template.
