@@ -107,42 +107,7 @@ NK.functions.pauseTokenUpdate = function () {
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
 
-    popup = document.createElement('div');
-    popup.setAttribute('class', 'map-load-error');
-    innerWrapper = document.createElement('div');
-    innerWrapper.setAttribute('class', 'inner-wrapper');
-    heading = document.createElement('h1');
-    heading.innerHTML = OpenLayers.Lang.translate('Server error');
-    innerWrapper.appendChild(heading);
-    message = document.createElement('p');
-    message.innerHTML = OpenLayers.Lang.translate('An error has occured.');
-    innerWrapper.appendChild(message);
-
-    message = document.createElement('p');
-    message.innerHTML = OpenLayers.Lang.translate('Reloading maps in') + ' ';
-    timeRemaining = document.createElement('span');
-    timeRemaining.innerHTML = parseInt(NK.tokenError.PAUSE_MINUTES, 10);
-    NK.tokenError.pauseTimeRemainingElement = timeRemaining;
-    NK.tokenError.pauseTimeRemainingText = document.createTextNode(' ' + OpenLayers.Lang.translate(NK.tokenError.PAUSE_MINUTES > 1 ? 'minutes.' : 'minute.'));
-    message.appendChild(timeRemaining);
-    message.appendChild(NK.tokenError.pauseTimeRemainingText);
-    innerWrapper.appendChild(message);
-
-    statusLink = document.createElement('a');
-    statusLink.setAttribute('href', 'http://status.kartverket.no');
-    statusLink.setAttribute('class', 'external-link');
-    statusLink.innerHTML = 'Se driftsstatus';
-    OpenLayers.Event.observe(statusLink, 'click', function (evt) {
-      evt.stopPropagation();
-      evt.preventDefault();
-      window.open(evt.target.href, '_blank'); 
-      return false;
-    }, true);
-    innerWrapper.appendChild(statusLink);
-
-    popup.appendChild(innerWrapper);
-    document.body.appendChild(popup);
-    NK.tokenError.messagePopup = popup;
+    NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
 
     NK.tokenError.pauseTimer = setTimeout(function () {
       NK.tokenUpdatePaused = false;

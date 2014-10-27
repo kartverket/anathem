@@ -6,7 +6,7 @@ manifestName: index
 mapscript: 
   template  : mapscript
   language  : nb
-  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
+  tokenServiceUrl: http://norgeskart.no/ws/gkt.py
   projection: 32633
 
   i18n:
@@ -91,6 +91,7 @@ mapscript:
     - template: functions/vector
 
   controls  :
+    - template: controls/status
     - template: controls/geolocation
     - template: controls/navigation
     - template: controls/scaleline
