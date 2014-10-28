@@ -3,6 +3,7 @@
 % if group:
 options.layerGroup = "${group}";
 % endif
+options.name = "${name}";
 
 var control = new OpenLayers.Control.VectorLayerSwitcher(options);
 NK.functions.addControlToContext(control, context);

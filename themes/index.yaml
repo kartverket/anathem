@@ -2,7 +2,6 @@
 
 template : base
 title    : Norgeskart
-manifestName: index
 mapscript: 
   template  : mapscript
   language  : nb
@@ -29,8 +28,8 @@ mapscript:
     - include: layers/terreng
     - include: layers/grunnkart
     - include: layers/toporaster2
-   # - include: layers/janmayen
-   # - include: layers/svalbard
+    - include: layers/janmayen
+    - include: layers/svalbard
 
     #- include: layers/wms/kommunegrenser
     #- include: layers/wms/amtskart

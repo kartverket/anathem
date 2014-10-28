@@ -2,5 +2,5 @@ template: layers/wmts
 usetoken: true
 name: Sj&oslash; 
 layer: sjo_hovedkart2
-layerGroup: modus
+layerGroup: sjo 
 id: sjo

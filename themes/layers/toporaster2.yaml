@@ -1,8 +1,6 @@
 template: layers/wmts
 usetoken: true
-name: Papirkart 
+name: Rasterkart 
 layer: toporaster2
-layerGroup: modus 
+layerGroup: flere 
 id: toporaster
-visible: false
-hidefromlayerswitcher: true
