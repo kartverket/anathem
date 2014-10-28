@@ -46,8 +46,8 @@ controls:
     buttonText: Stedsnavn etter navnetype
   - template: controls/overlaygrouppanel
     group: tjenester.Vedtaksstatus-dato
-    title: Vedtak status
-    buttonText: Vedtak status
+    title: Nye navnevedtak
+    buttonText: Nye navnevedtak
   - template: controls/overlaygrouppanel
     group: tjenester.autoriserte_skrivemaate
     title: Autoriserte skrivem&aring;ter
