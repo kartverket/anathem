@@ -386,6 +386,21 @@ NK.init = function () {
 
   }
 
+  var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
+    url: "http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?",
+    queryVisible: true,
+    infoFormat: 'text/html',
+    eventListeners: {
+      "getfeatureinfo": function(event) {
+        if (event.text != "") {
+          window.open().document.write(event.text);
+        }
+      }
+    }
+  });
+  map.addControl(featureInfo);
+  featureInfo.activate();
+
 };
 // end init()
 
