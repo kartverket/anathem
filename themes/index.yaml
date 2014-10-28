@@ -24,6 +24,7 @@ mapscript:
   overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
+    - include: layers/wms/sjo_enc
     - include: layers/flybilder
     - include: layers/terreng
     - include: layers/grunnkart

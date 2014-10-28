@@ -2,4 +2,4 @@ visible: 0
 layerselector_visible: 0
 unit: ""
 format: "image/png"
-transparent: true
+transparent: "true"
