@@ -41,6 +41,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'shortid': id, 
       'isBaseLayer': false,
       'transitionEffect': 'resize',
+      'displayOutsideMaxExtent': false,
       'buffer': 4
     };
 
@@ -58,7 +59,6 @@ NK.addLayerType.WMTS = (function (M, MP) {
       var c = options.databbox.split(",");
       var customBounds = new OpenLayers.Bounds(c);
       layerOptions['maxExtent'] = customBounds;
-      layerOptions['displayOutsideMaxExtent'] = false;
       layerOptions['visibility'] = 1;
     }
 
