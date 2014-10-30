@@ -100,9 +100,53 @@ NK.functions.addLabeledMarker = function (params, number) {
   return feature;
 };
 
+NK.functions.verifyDataLayers = function(layer) {
+  if (!!layer.dataUrl) {return;}
+  for (var url in NK.dataLayers) {
+    var data = NK.dataLayers[url];
+    if (data.layerUrl == layer.url) {
+      layer.dataUrl = url;
+      layer.dataType = data.type;
+      layer.dataName = data.name;
+      layer.dataLayers = data.layers;
+      layer.dataFormats = data.formats;
+      layer.dataConstraints = data.constraints;
+      layer.dataAttribution = data.attribution;
+    }
+  }
+}
+
+NK.functions.setDataLayer = function(params) {
+  var type, url;
+  if (!NK.lastParsedLayer) { 
+    NK.functions.log(OpenLayers.Lang.translate("Data Layer provided without Portrayal Layer.<br/>Use /l/ before providing /d/."));
+    return;
+  } 
+  type = params[0];
+  url  = params[1];
+  if (url.indexOf("%")>-1) { // you can URL-encode or escape or both
+    url = decodeURIComponent(url);
+  }
+  switch (type) {
+    case 'wcs':
+      var last = NK.lastParsedLayer;
+      NK.functions.loadWCSLayer(url, function(wcs) {
+        NK.dataLayers[url] = {
+          "type": type,
+          "formats": wcs.formats,
+          "layers": wcs.layers,
+          "name": wcs.title,
+          "attribution": wcs.attribution,
+          "constraints": wcs.constraints,
+          "layerUrl": last
+        }
+      });
+      break;
+  }
+} 
+
 NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
-  var type,
-      url;
+  var type, url;
 
   type = params[0];
   url  = params[1];
@@ -123,8 +167,11 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
     case 'wfs':
       NK.functions.addWFSLayer(url);
       break;
+    case 'wcs':
+      NK.functions.log(OpenLayers.Lang.translate("Cannot display WCS directly. Use a Portrayal Service WMS with WCS as data layer.<br/>Syntax: /l/wms/[URL to portrayal]/d/wcs/[URL to data]"));
+      break;
   }
-
+  NK.lastParsedLayer = url;
 };
 
 NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
@@ -248,7 +295,7 @@ NK.functions.setMapState = function (params) {
     var parms = hash.split("/");
     for (p in parms) {
       if (parms[p] == SAFE_SEQUENCE) {
-        parms[p] = tokens.pop();
+        parms[p] = tokens.shift(); // pop first
       }
     }
     if (parms.length >= 3) {
@@ -385,7 +432,12 @@ NK.functions.setMapState = function (params) {
           NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 3));
           index += 2;
           break;
-        case 'w':
+        case 'd':
+          NK.functions.setDataLayer(parms.slice(index + 1, index + 3))
+          index += 2;
+          break; 
+        case 'w': 
+          NK.functions.log('/w/url=... syntax is deprecated. use /l/wms/[...] instead.');
           var url = NK.functions.urlParam('url');
           NK.functions.parseParamsAndAddDataLayerFromUrl(['wms',url,'']);
           while ((parms[index] != null) && parms[index].charAt(0) != '+') {

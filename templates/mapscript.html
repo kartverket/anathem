@@ -160,6 +160,9 @@ NK.functions.getWMSCapabilities = function (url) {
 NK.functions.getWFSCapabilities = function (url) {
   return NK.functions.corsRequest(url, {"service":"WFS", "request":"getCapabilities"});
 };
+NK.functions.getWCSCapabilities = function (url) {
+  return NK.functions.corsRequest(url, {"service":"WCS", "request":"getCapabilities"});
+};
 NK.functions.corsRequest = function (url, params) {
   if(!!url) {
     if (url.slice(-1) != '?') {url = url+'?';}
@@ -201,6 +204,42 @@ NK.functions.closePopupCallBack = function () {
   }
   this.hide();
 };
+
+NK.functions.loadWCSLayer = function(wcsUrl, whenDone) {
+  NK.dataLayers = NK.dataLayers || {};
+  if (!!NK.dataLayers[wcsUrl]) {return;}
+
+  var wcs = {}, formats = {}, layers = {}, title = "", constraints="", attribution="";
+  var resultWCS = NK.functions.getWCSCapabilities(wcsUrl);
+  resultWCS.error(function (msg) { NK.functions.log(msg.responseText); });
+  resultWCS.done(function (xml) {
+    
+    $(xml).find('formatSupported').each(function() { 
+      formats[$(this).text()] = true;
+    });
+    $(xml).find('CoverageId').each(function() {
+      layers[$(this).text()] = true;
+    });
+    $(xml).find('Title').each(function() {
+      title = $(this).text();
+    });
+    $(xml).find('AccessConstraints').each(function() {
+      constraints = $(this).text();
+    });
+    $(xml).find('Attribution').each(function() {
+      attribution = $(this).text();
+    });
+    $(xml).find('ProviderName').each(function() {
+      attribution = attribution || $(this).text();
+    });
+    wcs.formats = Object.keys(formats);
+    wcs.layers  = Object.keys(layers);
+    wcs.title   = title;
+    wcs.constraints = constraints;
+    wcs.attribution = attribution;
+    whenDone(wcs);
+  });
+}
 
 NK.functions.addWFSLayer = function(wfsUrl) {
   if (map.getLayersBy("url",wfsUrl).length) {return;}

@@ -65,6 +65,10 @@ NK.functions.updateHistory = function (evt) {
                                       uid += '/+'+id;
                                     }
                                 }
+                                NK.functions.verifyDataLayers(layer);
+                                if (!!layer.dataUrl) {
+                                  uid += '/d/'+layer.dataType+'/['+layer.dataUrl.trim()+']';
+                                }
                             }
                         }
                     }
