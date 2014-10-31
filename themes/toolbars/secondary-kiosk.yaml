@@ -1,0 +1,51 @@
+template: controls/container
+name: Verkt&oslash;y
+toggleButton: true
+svgIcon: '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="27px" height="27px" viewBox="0 0 27 27" class="icon tools" preserveAspectRatio="xMidYMid meet"><path d="M7.551,12.259c0.006,0.007,0.012,0.014,0.018,0.021l2.719,2.81l0.949-0.98l-1.024-1.056L9.75,12.574l2.373-2.452l0.313,0.036c0.08,0.009,0.162,0.014,0.243,0.014c0.164,0,0.324-0.021,0.48-0.057L11.412,8.31c-0.035-0.037-0.073-0.069-0.11-0.103c0.539-2,0.048-4.233-1.474-5.806C8.317,0.841,6.176,0.33,4.251,0.867l3.261,3.369L6.656,7.537L3.461,8.421L0.2,5.052c-0.52,1.989-0.025,4.201,1.485,5.762C3.272,12.453,5.554,12.934,7.551,12.259z M17.188,14.275c-0.054,0.242-0.067,0.494-0.041,0.748l0.035,0.324l-0.223,0.229l-1.688,1.743L14.809,17.8l-1.487-1.536l-0.949,0.979l8.609,8.894c0.529,0.549,1.227,0.822,1.922,0.822s1.391-0.273,1.921-0.822c1.062-1.096,1.062-2.873,0-3.97L17.188,14.275z M23.833,25.216l-1.365,0.378l-1.106-1.145l0.365-1.41l1.365-0.379l1.107,1.145L23.833,25.216z M13.332,15.316l1.486,1.535l1.688-1.742c-0.092-0.851,0.177-1.733,0.808-2.385c0.631-0.652,1.486-0.929,2.31-0.834l7.377-7.622L22.867,0L15.49,7.622c0.092,0.85-0.178,1.734-0.809,2.386c-0.631,0.651-1.486,0.928-2.309,0.834l-1.688,1.743l1.487,1.536l-7.29,7.531l-0.267-0.275L3.218,22.54l-2.354,3.84l0.601,0.621l3.717-2.433l1.127-1.445l-0.268-0.275L13.332,15.316z"/></svg>'
+id: secondary-toolbar
+className: minified
+controls:
+- template: controls/container
+  id: tools-panel
+  controls:
+  - template: controls/draw
+    i18n:
+    - include: languages/nb/draw
+    storageUrl: /ws/upload-json.py
+    styleName: track
+  - template: controls/heightprofile
+    heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
+    gpxStorageUrl: /ws/upload-gpx.py
+    trackStyleName: track
+    predefinedGpxFiles:
+    - template: gpx/gpxFile
+      name: Rallarvegen Haugast&oslash;l - Fl&aring;m
+      url: /xml/gpx/rallarvegen.gpx
+    - template: gpx/gpxFile
+      name: Birkebeinerrittet
+      url: /xml/gpx/birkebeinerrittet.gpx
+    - template: gpx/gpxFile
+      name: Birkebeinerrennet 2012
+      url: /xml/gpx/birkebeinerrennet-2012.gpx
+
+    i18n:
+    - include: languages/nb/heightprofile
+  - template: controls/transformations
+    url: /ws/trans.py
+- template: controls/container
+  name: Tjenester
+  id: services-panel
+  controls:
+  - template: controls/overlaygrouppanel
+    group: tjenester.fakta
+    title: Fakta
+    buttonText: Fakta
+    #groupheaders:
+    #- template: controls/overlaygroupheader
+    #  group: fakta
+    #  heading: Over&shy;skrift
+  #- template: controls/overlaygrouppanel
+  #  group: testlag.utvikling
+  #  title: Test under utvikling
+  #  buttonText: Test 
+
