@@ -47,7 +47,11 @@ OpenLayers.Util.extend(OpenLayers.Lang.nb, {
     }
 % endif
 
+% if maximized:
+  	options.maximized = true;
+% else:
   	options.maximized = false;
+% endif
   	options.maximizeTitle = OpenLayers.Lang.translate('Show big overview map');
   	options.minimizeTitle = OpenLayers.Lang.translate('Show small overview map');
     options.minRatio = 32;

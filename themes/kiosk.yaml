@@ -86,6 +86,7 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
+        maximized: "true"
 
 #splashscreen:
 #  - template: splashscreen/betainfo
