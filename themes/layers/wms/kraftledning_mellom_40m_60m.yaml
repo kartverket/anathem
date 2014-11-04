@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
+url: http://wms.geonorge.no/skwms1/wms.nrl?
 name: Kraftledning 40m-60m
 layers: kraftledning_mellom_40m_60m
 layerGroup: tjenester.kraftledninger

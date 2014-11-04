@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
+url: http://wms.geonorge.no/skwms1/wms.nrl?
 name: Andre linjer under 40 m
 layers: andre_linjer_under_40m
 layerGroup: tjenester.andre_linjethindre

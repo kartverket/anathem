@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
+url: http://wms.geonorge.no/skwms1/wms.nrl?
 name: Kraftstolpe uten hoyde
 layers: kraftstolpe_uten_hoyde
 layerGroup: tjenester.kraftledninger

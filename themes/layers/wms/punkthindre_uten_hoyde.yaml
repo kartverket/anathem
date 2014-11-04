@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
+url: http://wms.geonorge.no/skwms1/wms.nrl?
 name: Punkthindre uten hoyde
 layers: punkthindre_uten_hoyde
 layerGroup: tjenester.punkthindre

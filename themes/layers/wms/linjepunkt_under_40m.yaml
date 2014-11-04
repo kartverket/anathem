@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
+url: http://wms.geonorge.no/skwms1/wms.nrl?
 name: Linjepunkt under 40 m
 layers: linjepunkt_under_40m
 layerGroup: tjenester.andre_linjethindre

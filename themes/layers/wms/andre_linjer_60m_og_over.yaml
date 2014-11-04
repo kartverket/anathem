@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/nrl3?
+url: http://wms.geonorge.no/skwms1/wms.nrl?
 name: Andre linjer 60m og over
 layers: andre_linjer_60m_og_over
 layerGroup: tjenester.andre_linjethindre
