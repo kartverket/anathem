@@ -1,17 +1,15 @@
 % if not 'easyXDM' in vars:
-
-<script type="text/javascript" src="js/easyXDM.debug.js"></script>
+<script type="text/javascript" src="js/easyXDM.min.js"></script>
 <script type="text/javascript">
     easyXDM.DomHelper.requiresJSON("js/json2.js");
 </script>
-
 <% vars['easyXDM']=True %>
 % endif
 
 <script type="text/javascript">
 	var NK = NK || {};
+        NK.xdm = true;
 	NK.easyXDM = NK.easyXDM || {};
-
 	NK.easyXDM.socket = new easyXDM.Socket({
 		onMessage: function (data, origin) {
 			var json, 
