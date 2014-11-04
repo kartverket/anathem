@@ -285,8 +285,10 @@ NK.functions.addWFSLayer = function(wfsUrl) {
   });
 
   var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
-  geoportal.showControls(wfsUrl);
-  geoportal.displayLayerList();
+  if (!!geoportal) {
+    geoportal.showControls(wfsUrl);
+    geoportal.displayLayerList();
+  }
 };
 
 NK.functions.addWMSLayer = function(wmsUrl) {
@@ -346,8 +348,10 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   });
 
   var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
-  geoportal.showControls(wmsUrl);
-  geoportal.displayLayerList();
+  if (!!geoportal) {
+    geoportal.showControls(wmsUrl);
+    geoportal.displayLayerList();
+  }
 };
 
 NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible, dataFormats, attribution, constraints) {
