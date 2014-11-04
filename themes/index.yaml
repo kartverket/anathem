@@ -83,8 +83,8 @@ mapscript:
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
-    - template: functions/popup.html
-    
+    - template: functions/popup
+
   controls  :
     - template: controls/geolocation
     - template: controls/navigation
