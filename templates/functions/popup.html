@@ -5,24 +5,473 @@ NK.functions.popup = NK.functions.popup || {};
 
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
-    var a = feature.attributes, 
-        i,
-        l,
-        markup = '<article>';
-
-    if (conf.heading && a[conf.heading]) {
-      markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
-    }
-    if (conf.data) {
-      for (i = 0, l = conf.data.length; i < l; i += 1) {
-        if (conf.data[i].attribute && a[conf.data[i].attribute]) {
-          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</p>';
+    var a = feature, i,j,k, l, markup = '', tmpMarkup = '';
+    var test;
+    var nrlDict = {
+      'alle_linjehindre': {
+        'info': {
+          'name': '',
+          'extra': 'Linjehinder'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'alle_linjepunkthindre': {
+        'info': {
+          'name': '',
+          'extra': 'Endepunkt, knekkpunkt eller mast/stolpe tilknyttet linjehinder'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'alle_punkthindre': {
+        'info': {
+          'name': '',
+          'extra': 'Punkthinder'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'andre_linjer_60m_og_over': {
+        'info': {
+          'name': '',
+          'extra': 'Linjehinder som ikke er kraftledning, med st&oslashrste h&oslashyde over underliggende overflate 60 meter eller mer.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'andre_linjer_mellom_40m_60m': {
+        'info': {
+          'name': '',
+          'extra': 'Linjehinder som ikke er kraftledning, med st&oslashrste h&oslashyde over underliggende overflate mellom 40 og 60 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'andre_linjer_under_40m': {
+        'info': {
+          'name': '',
+          'extra': 'Linjehinder som ikke er kraftledning, med st&oslashrste h&oslashyde over underliggende overflate under 40 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'andre_linjer_uten_hoyde': {
+        'info': {
+          'name': '',
+          'extra': 'Linjehinder som ikke er kraftledning, der st&oslashrste h&oslashyde over underliggende overflate er ukjent.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftledning_60m_og_over': {
+        'info': {
+          'name': '',
+          'extra': 'Kraftledning med st&oslashrste h&oslashyde over underliggende overflate 60 meter eller mer.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftledning_mellom_40m_60m': {
+        'info': {
+          'name': '',
+          'extra': 'Kraftledning med st&oslashrste h&oslashyde over underliggende overflate mellom 40 og 60 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftledning_under_40m': {
+        'info': {
+          'name': '',
+          'extra': 'Kraftledning med st&oslashrste h&oslashyde over underliggende overflate lavere enn 40 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftledning_uten_hoyde':{
+        'info': {
+          'name': '',
+          'extra': 'Kraftledning der st&oslashrste h&oslashyde over underliggende overflate er ukjent.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftstolpe_60m_og_over':{
+        'info': {
+          'name': '',
+          'extra': 'Kraftstolpe med vertikal utstrekning 60 meter eller mer.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftstolpe_mellom_40m_60m':{
+        'info': {
+          'name': '',
+          'extra': 'Kraftstolpe med vertikal utstrekning mellom 40 og 60 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftstolpe_under_40m':{
+        'info': {
+          'name': '',
+          'extra': 'Kraftstolpe med vertikal utstrekning lavere enn 40 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'kraftstolpe_uten_hoyde':{
+        'info': {
+          'name': '',
+          'extra': 'Kraftstolpe der vertikal utstrekning er ukjent.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'linjepunkt_60m_og_over':{
+        'info': {
+          'name': '',
+          'extra': 'Endepunkt, knekkpunkt eller mast/stolpe tilknyttet et linjehinder som ikke er en kraftledning, med vertikal utstrekning 60 meter eller mer.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'linjepunkt_mellom_40m_60m':{
+        'info': {
+          'name': '',
+          'extra': 'Endepunkt, knekkpunkt eller mast/stolpe tilknyttet et linjehinder som ikke er en kraftledning, med vertikal utstrekning mellom 40 og 60 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'linjepunkt_under_40m':{
+        'info': {
+          'name': '',
+          'extra': 'Endepunkt, knekkpunkt eller mast/stolpe tilknyttet et linjehinder som ikke er en kraftledning, med vertikal utstrekning lavere enn 40 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'linjepunkt_uten_hoyde':{
+        'info': {
+          'name': '',
+          'extra': 'Endepunkt, knekkpunkt eller mast/stolpe tilknyttet et linjehinder som ikke er en kraftledning, med ukjent vertikal utstrekning.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'punkthindre_60m_og_over':{
+        'info': {
+          'name': '',
+          'extra': 'Punkthinder med vertikal utstrekning 60 meter eller mer.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'punkthindre_mellom_40m_60m':{
+        'info': {
+          'name': '',
+          'extra': 'Punkthinder med vertikal utstrekning mellom 40 og 60 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'punkthindre_under_40m':{
+        'info': {
+          'name': '',
+          'extra': 'Punkthinder med vertikal utstrekning lavere enn 40 meter.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
+        }
+      },
+      'punkthindre_uten_hoyde':{
+        'info': {
+          'name': '',
+          'extra': 'Punkthinder der vertikal utstrekning er ukjent.'
+        },
+        'content': {
+          'NRL-ID:': 'nrl-id',
+          'Navn:': 'navn',
+          'Vertikal utstrekning:': 'hoyde_over_bakken',
+          'Lyssetting:': 'lyssetting',
+          'Status:': 'status',
+          'Oppdateringsdato:': 'oppdateringsdato',
+          'Hindertype:': 'hindertype',
+          'Datafangstdato:': 'datafangstdato',
+          'Merking:': 'merking'
         }
       }
+    };
+    var statusDict = {
+      'E':'Eksisterende',
+      'P':'Planlagt',
+      'O':'Ombygd',
+      'U':'Under arbeid'
     }
+    test = a.split("\n");
+    if (test.length > 5) {
+      markup += '<article style="overflow-y: auto; height:380px" >';
+      a= feature.replace(/Layer/g,",,Layer");
+      a = a.split(",,");
+      for (i = 0; i < a.length; ++i) {
+        if (a[i].substring(0,5) == "Layer") {
+          //Layer
+          tmpMarkup = '';
+          var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
+          var nrlDictTmp = nrlDict[tmp[1].trim()];
+          var tmpResp = [];
+          var nrlDictResponse = [];
+          //markup += '<h1 class="h">' + nrlDictTmp['info']['name'] + '</h1>';
+          markup += '<h1 class="h">' + nrlDictTmp['info']['extra'] + '</h1>';
+          a[i] = a[i].replace(/Feature/g,",,Feature");
+          var f = a[i].split(",,");
+          for (l = 0; l < f.length; ++l) {
+            //feature
+            if (f[l].substring(0, 7) == "Feature") {
+              tmpMarkup += '<div>';
+              test = f[l].split("\n");
+              try {
+                for (j = 0, k = test.length - 1; j < k; j += 1) {
+                  tmp = test[j].split(" = ");
+                  if (tmp[1])
+                    tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
+                  if (!!tmp[1]) {
+                    nrlDictResponse[tmp[0].trim()] = tmp[1].replace(/'/g, "");
+                  }
+                }
+                for (var prop in nrlDictTmp['content']) {
+                  tmpMarkup += '<p>' + prop + ' ';
+                  if (!!tmpResp[nrlDictTmp['content'][prop]]) {
+                    if (!!nrlDictTmp['content'][prop]) {
+                      tmpMarkup += tmpResp[nrlDictTmp['content'][prop]] + '</p>';
+                    } else {
+                      tmpMarkup += '</p>';
+                    }
+                  } else {
+                    if (typeof nrlDictTmp['content'][prop] === 'object') {
+                      for (var internprop in nrlDictTmp['content'][prop]) {
+                        tmpMarkup += tmpResp[internprop];
+                        tmpMarkup += nrlDictTmp['content'][prop][internprop];
+                      }
+                    } else {
+                      tmpMarkup += '</p>';
+                    }
+                  }
+                }
+              } catch (e) {
+                 console.log(e);
+              }
+              tmpMarkup += '</div>';
+            }
+          }
+          markup += tmpMarkup;
+        }
+      }
+    } else {
+      markup += '<article>';
+      markup += "Ingen data for denne punkt";
+    }
+    markup += '<div class="externalToolbarLink"><a href="http://www.statkart.no/Kart/Nasjonalt-register-over-luftfartshindre/"><br>Les mer om Nasjonalt register over luftfartshindre</a></div>';
     markup += '</article>';
-    return markup;
-  };
+    return markup;  };
 };
 
 NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction, options) {
