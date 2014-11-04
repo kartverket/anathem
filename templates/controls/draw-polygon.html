@@ -1,0 +1,28 @@
+<%doc>
+description: Include the OpenLayers draw control
+params:
+  storageUrl: where to send GeoJSON drawings for storage
+  styleName: which style to use for the drawing layers 
+</%doc>
+<%include file="/styles/track.html" />
+
+<%inherit file="/controls/controlcontext.html" />
+
+options.autoActivate = true;
+options.activeDrawControl = 'point';
+
+% if storageUrl:
+options.JSONDataStorageUrl = '${storageUrl}';
+% endif
+
+% if styleName:
+	options.styleName = '${styleName}';
+	if (NK.styles && NK.styles[options.styleName]) {
+		options.styleMap = NK.styles[options.styleName];
+	}
+% endif
+
+var control = new OpenLayers.Control.Draw(options);
+NK.functions.addControlToContext(control, context);
+control.activateTool('polygon');
+
