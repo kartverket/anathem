@@ -32,7 +32,8 @@ mapscript:
     - include: layers/dekning_overseilingskart
 
   functions:
-    template: functions/readURL
+    - template: functions/readURL
+    - template: functions/popup
   controls:
     - template: controls/scaleline
     - template: controls/popout
