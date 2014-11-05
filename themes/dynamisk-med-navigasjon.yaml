@@ -28,7 +28,30 @@ mapscript:
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
-
+# NRL - Luftfartshindre
+    - include: layers/wms/alle_linjehindre 
+    - include: layers/wms/alle_linjepunkthindre 
+    - include: layers/wms/alle_punkthindre 
+    - include: layers/wms/andre_linjer_60m_og_over 
+    - include: layers/wms/andre_linjer_mellom_40m_60m 
+    - include: layers/wms/andre_linjer_under_40m 
+    - include: layers/wms/andre_linjer_uten_hoyde 
+    - include: layers/wms/kraftledning_60m_og_over 
+    - include: layers/wms/kraftledning_mellom_40m_60m 
+    - include: layers/wms/kraftledning_under_40m 
+    - include: layers/wms/kraftledning_uten_hoyde 
+    - include: layers/wms/kraftstolpe_60m_og_over 
+    - include: layers/wms/kraftstolpe_mellom_40m_60m 
+    - include: layers/wms/kraftstolpe_under_40m 
+    - include: layers/wms/kraftstolpe_uten_hoyde 
+    - include: layers/wms/linjepunkt_60m_og_over 
+    - include: layers/wms/linjepunkt_mellom_40m_60m 
+    - include: layers/wms/linjepunkt_under_40m 
+    - include: layers/wms/linjepunkt_uten_hoyde 
+    - include: layers/wms/Punkthindre_60m_og_over 
+    - include: layers/wms/punkthindre_mellom_40m_60m 
+    - include: layers/wms/punkthindre_under_40m 
+    - include: layers/wms/punkthindre_uten_hoyde 
   center:
     template: center/besseggen
   functions :
