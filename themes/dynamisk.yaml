@@ -35,7 +35,8 @@ mapscript:
   center:
     template: center/besseggen
   functions :
-    template: functions/readURL
+    - template: functions/readURL
+    - template: functions/popup
   controls  :
     - template: controls/navigation
     - template: controls/scaleline
