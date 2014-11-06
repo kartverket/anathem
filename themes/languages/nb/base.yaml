@@ -19,3 +19,9 @@ translations:
   - template: i18n/translation
     source: minute.
     translation: minutt. 
+  - template: i18n/translation
+    source: Visible overlays
+    translation: Synlige kartlag
+  - template: i18n/translation
+    source: Available overlays
+    translation: Tilgjengelige kartlag
