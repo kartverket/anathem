@@ -278,6 +278,8 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         var visible = !!NK.visibleLayerQueue[name];
         layers.push(name);
         if (visible) {delete NK.visibleLayerQueue[name];}
+        var opacity = NK.opacityQueue[name] || 1.0;
+        if (NK.opacityQueue[name] !== undefined) {delete NK.opacityQueue[name];}
         NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible, Object.keys(formats), attribution, constraints);
       });
       NK.functions.updateHistory();
@@ -331,6 +333,8 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       if (!name) {return;}
       var title = $(this).children('Title').text();
       var visible = !!NK.visibleLayerQueue[name];
+      var opacity = NK.opacityQueue[name] || 1.0;
+      if (NK.opacityQueue[name] !== undefined) {delete NK.opacityQueue[name];}
       var bbox = $(xml).find('BoundingBox');
       layers.push(name);
       if (visible) {delete NK.visibleLayerQueue[name];}
@@ -342,7 +346,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
                                          atts["maxx"].value, atts["maxy"].value);
         }
       }
-      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats, attribution, constraints, version);
+      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats, attribution, constraints, version, opacity);
     });
     NK.functions.updateHistory();
   });
@@ -354,7 +358,8 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   }
 };
 
-NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible, dataFormats, attribution, constraints) {
+NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible, dataFormats, attribution, constraints, opacity) {
+  // TODO: put parameters into an array
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET", "styleName":"track"});
   wfsLayer.type = 'wfs';
   wfsLayer.isUrlDataLayer = true;
@@ -363,9 +368,10 @@ NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, 
   wfsLayer.attribution = attribution;
   wfsLayer.constraints = constraints;
   wfsLayer.setVisibility(!!visible);
+  wfsLayer.setOpacity(opacity);
 } 
 
-NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats, attribution, constraints, version) {
+NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats, attribution, constraints, version, opacity) {
   // TODO: merge with templates/layers/wms.html 
   // TODO: put parameters into an array
   var wms = new OpenLayers.Layer.WMS(
@@ -383,6 +389,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visi
       buffer: 0,
       ratio: 1.0,
       visibility: visible,
+      opacity: opacity,
       transitionEffect: 'resize',
       singleTile: true,
       isUrlDataLayer: true,

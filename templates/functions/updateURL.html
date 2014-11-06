@@ -71,6 +71,9 @@ NK.functions.updateHistory = function (evt) {
                                 }
                             }
                         }
+                        if (layer.opacity<1.0) {
+                          uid += "/o"+layer.opacity.toFixed(2);
+                        }
                     }
                 }
             }
