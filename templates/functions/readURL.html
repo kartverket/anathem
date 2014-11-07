@@ -13,6 +13,8 @@ description: |
   * m/x/y/text adds a marker with a popup on the map
   * w/url=... adds a WMS layer to the map (deprecated)
   * l/type/[url] adds an overlay to the map. Valid types include 'wms', 'wfs', 'geojson' and 'drawing'
+  * d/type/[url] adds a data layer to the last added overlay. Valid types include 'wfs' and 'wcs'
+  * o# sets opacity to the last added overlay. # is a float value between 0.0 and 1.0.
 </%doc> 
 <%include file="/styles/labeledMarker.html" />
 
