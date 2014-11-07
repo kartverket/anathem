@@ -31,11 +31,43 @@ mapscript:
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-  functions:
-    template: functions/readURL
+    # tilgjengelighet WMS
+    - include: layers/wms/tilgjengelighet_kulturminner_flate
+    - include: layers/wms/tilgjengelighet_kulturminner_punkt
+
+    - include: layers/wms/tilgjengelighet_friluft
+    - include: layers/wms/tilgjengelighet_friluftsomrade
+    - include: layers/wms/tilgjengelighet_statlig_sikra_polygon
+    - include: layers/wms/tilgjengelighet_turvei
+    - include: layers/wms/tilgjengelighet_parkeringsomrader_friluft
+    - include: layers/wms/tilgjengelighet_hc_parkering_friluft
+    - include: layers/wms/tilgjengelighet_baderampe
+    - include: layers/wms/tilgjengelighet_fiskeplass
+    - include: layers/wms/tilgjengelighet_gapahukhytte
+    - include: layers/wms/tilgjengelighet_grillbalplass
+    - include: layers/wms/tilgjengelighet_serveringskiosk
+    - include: layers/wms/tilgjengelighet_sittegruppe
+    - include: layers/wms/tilgjengelighet_toalett
+    - include: layers/wms/tilgjengelighet_turisthytte
+
+    - include: layers/wms/tilgjengelighet_tettsted
+    - include: layers/wms/tilgjengelighet_vei
+    - include: layers/wms/tilgjengelighet_parkeringsomrader_tettsted
+    - include: layers/wms/tilgjengelighet_HC-parkeringsplasser
+    - include: layers/wms/tilgjengelighet_inngang_bygg
+
+    - include: layers/wms/tilgjengelighet_pilotfylker
+    - include: layers/wms/tilgjengelighet_ressurskommuner 
+
+    # tilgjengelighet WFS
+    #- include: layers/wfs/uu_test
+
+  center    : 
+    template: center/besseggen
+  functions :
+    - template: functions/readURL
+    - template: functions/vector
   controls:
     - template: controls/status
     - template: controls/scaleline
     - template: controls/popout
-  center:
-    template: center/besseggen
