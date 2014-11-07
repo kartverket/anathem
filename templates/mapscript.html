@@ -243,24 +243,30 @@ NK.functions.loadWCSLayer = function(wcsUrl, whenDone) {
 
 NK.functions.addWFSLayer = function(wfsUrl) {
   if (map.getLayersBy("url",wfsUrl).length) {return;}
-  var layers = [], formats={}, attribution, constraints;
+  var layers = [], formats={}, serviceParms={}, layerParms;
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
   resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWFS.done(function (xml) {
     var version = $(xml).find('ServiceTypeVersion')
     if (!!version) {version = version.text().trim();}
+    serviceParms['version'] = version;
     var exception = $(xml).find('ExceptionText').text();
     if (!!exception) {
       NK.functions.log(exception);
     } else {
+      $(xml).find('Service').each(function () {
+        serviceParms['serviceTitle'] = $(this).children('Title').text();
+      });
       $(xml).find('OutputFormats').each(function () {
         $(this).children('Format').each(function () {;
           formats[$(this).text()] = true;
         });
       });
+      serviceParms['formats'] = Object.keys(formats);
       $(xml).find('AccessConstraints').each(function () {
-        constraints = $(this).text();
+        serviceParms['constraints'] = $(this).text();
       });
+      var attribution;
       $(xml).find('Attribution').each(function () {
         var href = $(this).children('OnlineResource')[0];
         var logo = $(this).children('LogoURL').children('OnlineResource')[0];
@@ -271,16 +277,19 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         }
       });
       if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
+      serviceParms['attribution'] = attribution;
       $(xml).find('FeatureType').each(function () {
+        layerParms = {};
         var name = $(this).children('Name').text();
         if (!name) {return;}
-        var title = $(this).children('Title').text();
-        var visible = !!NK.visibleLayerQueue[name];
         layers.push(name);
-        if (visible) {delete NK.visibleLayerQueue[name];}
-        var opacity = NK.opacityQueue[name] || 1.0;
-        if (NK.opacityQueue[name] !== undefined) {delete NK.opacityQueue[name];}
-        NK.functions.createDynamicWFSLayer(title, wfsUrl, name, title, version, visible, Object.keys(formats), attribution, constraints);
+        layerParms['title'] = $(this).children('Title').text();
+        layerParms['visible'] = name in NK.visibleLayerQueue;
+        if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
+        if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
+        layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
+        layerParms['type'] = name;
+        NK.functions.createDynamicWFSLayer(layerParms['title'], wfsUrl, $.extend({},serviceParms, layerParms));
       });
       NK.functions.updateHistory();
     }
@@ -295,12 +304,16 @@ NK.functions.addWFSLayer = function(wfsUrl) {
 
 NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
-  var layers = [], formats=[], layerBounds, attribution, constraints;
+  var layers = [], formats=[], serviceParms={}, layerParms;
+
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
-    var featureInfoFormat = null;
-    var version = $(xml).children()[0].getAttribute("version");
+    serviceParms['version'] = $(xml).children()[0].getAttribute("version");
+    $(xml).find('Service').each(function () {
+      serviceParms['serviceTitle'] = $(this).children('Title').text();
+    });
+    var featureInfoFormat;
     $(xml).find('GetFeatureInfo').each(function () {
       $(this).children('Format').each(function() {
         if ($(this).text() == 'text/html') {
@@ -310,11 +323,14 @@ NK.functions.addWMSLayer = function(wmsUrl) {
         }
       });
     });
+    serviceParms['featureInfoFormat'] = featureInfoFormat;
     $(xml).find('GetMap').each(function () {
       $(this).children('Format').each(function () {;
         formats.push($(this).text());
       });
     });
+    serviceParms['formats'] = formats;
+    var attribution;
     $(xml).find('Attribution').each(function () {
       var href = $(this).children('OnlineResource')[0];
       var logo = $(this).children('LogoURL').children('OnlineResource')[0];
@@ -325,28 +341,37 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       }
     });
     if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
+    serviceParms['attribution'] = attribution;
     $(xml).find('AccessConstraints').each(function () {
-      constraints = $(this).text();
+      serviceParms['constraints'] = $(this).text();
     });
     $(xml).find('Layer').each(function () {
+      layerParms={};
       var name = $(this).children('Name').text();
       if (!name) {return;}
-      var title = $(this).children('Title').text();
-      var visible = !!NK.visibleLayerQueue[name];
-      var opacity = NK.opacityQueue[name] || 1.0;
-      if (NK.opacityQueue[name] !== undefined) {delete NK.opacityQueue[name];}
-      var bbox = $(xml).find('BoundingBox');
+
+      /* if this layer is a child layer, identify parent */
+      if ($(this).parent()[0].nodeName=="Layer") {
+        layerParms['parent'] = $(this).parent().children('Name').text();
+      }
+
+      layerParms['title'] = $(this).children('Title').text();
+      layerParms['visible'] = name in NK.visibleLayerQueue;
+      layerParms['opacity'] = (name in NK.opacityQueue) || 1.0;
+      if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
+      if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
       layers.push(name);
-      if (visible) {delete NK.visibleLayerQueue[name];}
+      var bbox = $(xml).find('BoundingBox');
       if (!!bbox) {
         var atts = bbox[0].attributes;
         var srs = atts['CRS'] || atts['SRS'];
         if (srs && (srs.value == map.projection.projCode)) { //TODO: convert from atts["srs"].value to map.projection for anything else
-          layerBounds = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
-                                         atts["maxx"].value, atts["maxy"].value);
+          layerParms['layerBounds'] = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
+                                                            atts["maxx"].value, atts["maxy"].value);
         }
       }
-      NK.functions.createDynamicWMSLayer(title, wmsUrl, name, title, visible, featureInfoFormat, layerBounds, formats, attribution, constraints, version, opacity);
+      layerParms['layerText']=name;
+      NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms));
     });
     NK.functions.updateHistory();
   });
@@ -358,64 +383,65 @@ NK.functions.addWMSLayer = function(wmsUrl) {
   }
 };
 
-NK.functions.createDynamicWFSLayer = function (name, url, type, title, version, visible, dataFormats, attribution, constraints, opacity) {
-  // TODO: put parameters into an array
-  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", type, {"version":version, "method":"GET", "styleName":"track"});
+NK.functions.createDynamicWFSLayer = function (name, url, parms) {
+  //, type, title, version, visible, dataFormats, attribution, constraints, opacity) {
+  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track"});
   wfsLayer.type = 'wfs';
   wfsLayer.isUrlDataLayer = true;
   wfsLayer.url = url;
-  wfsLayer.dataFormats = dataFormats;
-  wfsLayer.attribution = attribution;
-  wfsLayer.constraints = constraints;
-  wfsLayer.setVisibility(!!visible);
-  wfsLayer.setOpacity(opacity);
+  wfsLayer.dataFormats = parms['formats'];
+  wfsLayer.attribution = parms['attribution'];
+  wfsLayer.constraints = parms['constraints'];
+  wfsLayer.setVisibility(!!parms['visible']);
+  wfsLayer.setOpacity(parms['opacity']);
 } 
 
-NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visible, featureInfoFormat, bounds, dataFormats, attribution, constraints, version, opacity) {
+NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   // TODO: merge with templates/layers/wms.html 
-  // TODO: put parameters into an array
   var wms = new OpenLayers.Layer.WMS(
     name,
     url,
     {
       gkt: NK.gkToken,
-      layers: layerText,
+      layers: parms['layerText'],
       transparent: true,
       format: 'image/png'
     },
     {
-      title: title,
+      title: parms['title'],
+      serviceTitle: parms['serviceTitle'],
+      parent: parms['parent'] || null,
       isBaseLayer: false,
       buffer: 0,
       ratio: 1.0,
-      visibility: visible,
-      opacity: opacity,
+      visibility: parms['visible'],
+      opacity: parms['opacity'] || 1.0,
       transitionEffect: 'resize',
       singleTile: true,
       isUrlDataLayer: true,
-      dataFormats: dataFormats,
-      attribution: attribution,
-      constraints: constraints,
+      dataFormats: parms['formats'],
+      attribution: parms['attribution'],
+      constraints: parms['constraints'],
       type: 'wms',
-      version: version
+      version: parms['version']
     }
   );
-  if (!!bounds) {
-    wms.maxExtent = bounds;
+  if (!!parms['bounds']) {
+    wms.maxExtent = parms['bounds'];
     wms.displayOutsideMaxExtent = false;
   }
   if (wms.params.GKT) {
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT;
   }
-  if (!!featureInfoFormat) {
+  if (!!parms['featureInfoFormat']) {
     var popupFn = NK.functions.popup.wmsFeatureInfoPopup;
     var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
       url: url,
       proxyUrl: "/ws/px.py?"+url,
-      title: title,
+      title: parms['topitle'],
       queryVisible: true,
-      infoFormat: featureInfoFormat,
+      infoFormat: parms['featureInfoFormat'],
       eventListeners: {
         "getfeatureinfo": function(event) {
           var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event), null, true,
@@ -444,7 +470,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, layerText, title, visi
       }
     });
     map.addControl(featureInfo);
-    if (visible) {
+    if (parms['visible']) {
       featureInfo.activate();
     }
   }
