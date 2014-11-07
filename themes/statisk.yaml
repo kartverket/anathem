@@ -30,9 +30,19 @@ mapscript:
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
+    # Fastmerker
+    - include: layers/wms/Niv_fastmerker
+    - include: layers/wms/Trekantpunkt
+    - include: layers/wms/Stamnettpunkt
+    - include: layers/wms/Landsnettpunkt
+    - include: layers/wms/PGS_stasjoner
+    - include: layers/wms/Svenske_finske_stasjoner
+    - include: layers/wms/PGS_stasjoner_planlagt
 
   functions:
-    template: functions/readURL
+    - template: functions/readURL
+    - template: functions/popup
+    
   controls:
     - template: controls/scaleline
     - template: controls/popout
