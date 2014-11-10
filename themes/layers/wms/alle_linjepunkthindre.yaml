@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.nrl?
 name: Alle linjepunkthindre
-layers: alle_linjepunkthindre
+layers: alle_linjepunkt
 layerGroup: tjenester.alle_hindre
-id: alle_linjepunkthindre
+id: alle_linjepunkt
 usetoken: true
 singleTile: true
