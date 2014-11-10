@@ -20,17 +20,22 @@ mapscript:
   overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
+    - include: layers/wms/sjo_enc
     - include: layers/flybilder
     - include: layers/terreng
     - include: layers/grunnkart
     - include: layers/toporaster2
+    - include: layers/janmayen
+    - include: layers/svalbard
 
     - include: layers/dekning_n50_plast
-    #- include: layers/dekning_n50_papir
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
+
+    # fakta layers
+    - include: layers/geoJSON/kommunefjell
 
   center:
     template: center/besseggen
