@@ -437,6 +437,9 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                     nrlDictResponse[tmp[0].trim()] = tmp[1].replace(/'/g, "");
                   }
                 }
+                if (!!tmpResp["status"]) {
+                  tmpResp["status"] = statusDict[tmpResp["status"]];
+                }
                 for (var prop in nrlDictTmp['content']) {
                   tmpMarkup += '<p>' + prop + ' ';
                   if (!!tmpResp[nrlDictTmp['content'][prop]]) {
@@ -457,7 +460,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                   }
                 }
               } catch (e) {
-                 console.log(e);
+                 //console.log(e);
               }
               tmpMarkup += '</div>';
             }
@@ -469,7 +472,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
       markup += '<article>';
       markup += "Ingen data for denne punkt";
     }
-    markup += '<div class="externalToolbarLink"><a href="http://www.statkart.no/Kart/Nasjonalt-register-over-luftfartshindre/"><br>Les mer om Nasjonalt register over luftfartshindre</a></div>';
+    markup += '<div class="externalToolbarLink"><a href="http://www.statkart.no/Kart/Nasjonalt-register-over-luftfartshindre/" target="_blank"><br>Les mer om Nasjonalt register over luftfartshindre</a></div>';
     markup += '</article>';
     return markup;  };
 };
