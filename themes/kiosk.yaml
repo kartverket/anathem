@@ -32,33 +32,36 @@ mapscript:
     - include: layers/janmayen
     - include: layers/svalbard
 
-    - include: layers/wms/kommunegrenser
-    - include: layers/wms/amtskart
-    - include: layers/wms/dybdedata
-    - include: layers/wms/dybdelag
-    - include: layers/wms/havbunnraster
-    - include: layers/wms/dekning_sjomaaling
-    - include: layers/wms/dybdekontur
-    - include: layers/wms/dybdekurver_havomraader
-    - include: layers/wms/kystkontur
-    - include: layers/wms/sjogrenser
+    #- include: layers/wms/kommunegrenser
+    #- include: layers/wms/amtskart
+    #- include: layers/wms/dybdedata
+    #- include: layers/wms/dybdelag
+    #- include: layers/wms/havbunnraster
+    #- include: layers/wms/dekning_sjomaaling
+    #- include: layers/wms/dybdekontur
+    #- include: layers/wms/dybdekurver_havomraader
+    #- include: layers/wms/kystkontur
+    #- include: layers/wms/sjogrenser
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
+#    - include: layers/omriss_norge_1000m
+#    - include: layers/omriss_norge_500m
 
-    # Fastmerker
-    - include: layers/wms/Niv_fastmerker
-    - include: layers/wms/Trekantpunkt
-    - include: layers/wms/Stamnettpunkt
-    - include: layers/wms/Landsnettpunkt
-    - include: layers/wms/PGS_stasjoner
-    - include: layers/wms/Svenske_finske_stasjoner
-    - include: layers/wms/PGS_stasjoner_planlagt
+    # fakta layers
+    - include: layers/geoJSON/kommunefjell
+    # test layers
+    #- include: layers/geoJSON/maritimegrenser
+    #- include: layers/geoJSON/clustertestdatafromfile
+    #- include: layers/geoJSON/unclusteredtestdatafromfile
+    #- include: layers/SOSI/kautokeino
+    #- include: layers/wfsTest
+    #- include: layers/ssr
 
-  center    :
+  center    : 
     template: center/besseggen
 
   functions :
@@ -73,8 +76,8 @@ mapscript:
     - template: controls/scaleline
     - template: controls/hashstate
     - include: toolbars/basic
-    - include: toolbars/top
-    - include: toolbars/secondary
+    - include: toolbars/top-kiosk
+    - include: toolbars/secondary-kiosk
     - template: controls/container
       id: overview-container-panel
       controls:
@@ -83,3 +86,7 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
+        maximized: "true"
+
+#splashscreen:
+#  - template: splashscreen/betainfo

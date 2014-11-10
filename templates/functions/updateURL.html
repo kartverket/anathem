@@ -68,11 +68,23 @@ NK.functions.updateHistory = function (evt) {
     searchInput = document.getElementById('searchInput');
     if (!!searchInput) {
       search = searchInput.value;
-      if (history.pushState) {
+      if (history.replaceState) {
         if (!!search) {
-          history.pushState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+          if (!!history.state) {
+            if (history.state.hash != uid) {
+              history.replaceState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+            }
+          } else {
+            history.replaceState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+          }
         } else {
-          history.pushState({'hash': uid}, document.title, '#' + uid);        
+          if (!!history.state) {
+            if (history.state.hash != uid) {
+              history.replaceState({'hash': uid}, document.title, '#' + uid);
+            }
+          } else {
+            history.replaceState({'hash': uid}, document.title, '#' + uid);
+          }
         }
       } else {
         window.location.hash = uid;
