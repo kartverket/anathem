@@ -290,6 +290,9 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
         layerParms['type'] = name;
         NK.functions.createDynamicWFSLayer(layerParms['title'], wfsUrl, $.extend({},serviceParms, layerParms));
+        if (!!NK.xdm) {
+          NK.functions.postMessage({"type":"layerLoaded", "title":layerParms['title'], "url":wfsUrl}); 
+        }
       });
       NK.functions.updateHistory();
     }
@@ -372,6 +375,9 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       }
       layerParms['layerText']=name;
       NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms));
+      if (!!NK.xdm) {
+        NK.functions.postMessage({"type":"layerLoaded", "title":layerParms['title'], "parent":layerParms['parent'],"url":wmsUrl}); 
+      }
     });
     NK.functions.updateHistory();
   });

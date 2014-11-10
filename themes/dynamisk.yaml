@@ -3,6 +3,7 @@
 template : base
 title    : "Geonorge | Norgeskart"
 mapClass: embedded-map
+includeXDM: "true"
 
 mapscript:
   template  : mapscript

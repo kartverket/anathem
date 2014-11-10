@@ -2,6 +2,8 @@
 
 template : base
 title    : "Geonorge | Norgeskart"
+includeXDM: "true"
+
 mapscript: 
   template  : mapscript
   language  : nb 

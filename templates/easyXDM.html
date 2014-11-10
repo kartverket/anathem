@@ -66,7 +66,26 @@
 				if (json) {
 					if (json.cmd === 'setCenter') {
 						map.setCenter(new OpenLayers.LonLat(json.x, json.y), json.zoom);
-
+					} else if ((json.cmd === 'setVisible') || (json.cmd === 'setBasemap')) {
+                                                if (json.cmd === 'setBasemap') {
+                                                  for (var m in map.layers) {
+                                                    if (map.layers[m].isUrlDataLayer) continue;
+                                                    if (map.layers[m].isBasemap) continue; // europe base map is actually always on
+                                                    map.layers[m].setVisibility(false);
+                                                  }
+                                                }
+                                                var candidates = map.getLayersByName(json.id);
+                                                if (candidates.length>0) {
+                                                  candidates[0].setVisibility(true);
+                                                } else {
+                                                  candidates = map.getLayersBy("shortid",json.id);
+                                                  if (candidates.length>0) {
+                                                    candidates[0].setVisibility(true);
+                                                  }
+                                                }
+                                                NK.functions.postMessage({"type":"result","cmd":json.cmd,"affected":candidates.length});
+					} else if (json.cmd === 'addDataSource') {
+                                           NK.functions.parseParamsAndAddDataLayerFromUrl([json.type, json.url]);
 					} else if (json.cmd === 'setVisibleVectorLayer') {
 						vectorLayers  = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
 
