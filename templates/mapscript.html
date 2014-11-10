@@ -352,7 +352,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
 
       /* if this layer is a child layer, identify parent */
       if ($(this).parent()[0].nodeName=="Layer") {
-        layerParms['parent'] = $(this).parent().children('Name').text();
+        layerParms['parent'] = $(this).parent().children('Title').text() || $(this).parent().children('Name').text();
       }
 
       layerParms['title'] = $(this).children('Title').text();
