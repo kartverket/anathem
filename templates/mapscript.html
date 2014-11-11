@@ -437,7 +437,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   }
   if (!!parms['featureInfoFormats']) {
     var formats = parms['featureInfoFormats'];
-    var preferredFormats = ['text/xml', 'text/plain', 'text/html'];
+    var preferredFormats = ['application/vnd.ogc.wms_xml', 'text/xml', 'text/plain', 'text/html'];
     var preferredFormat  = 'x';
 
     while (preferredFormat && formats.indexOf(preferredFormat)==-1) {
