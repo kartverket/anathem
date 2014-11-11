@@ -41,6 +41,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'shortid': id, 
       'isBaseLayer': false,
       'transitionEffect': 'resize',
+      'displayOutsideMaxExtent': false,
       'buffer': 1
     };
 
@@ -58,7 +59,6 @@ NK.addLayerType.WMTS = (function (M, MP) {
       var c = options.databbox.split(",");
       var customBounds = new OpenLayers.Bounds(c);
       layerOptions['maxExtent'] = customBounds;
-      layerOptions['displayOutsideMaxExtent'] = false;
       layerOptions['visibility'] = 1;
     }
 
@@ -92,6 +92,8 @@ NK.addLayerType.WMTS = (function (M, MP) {
     });
 
     M.addLayers([layer]);
+
+    return layer;
   };
 }(map, mapProj));
 
@@ -146,5 +148,9 @@ NK.addLayerType.WMTS = (function (M, MP) {
     options.tileorigin = "${tileorigin}"
   % endif
 
-  NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
+  var layer = NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
+
+  % if onZoom:
+    ${onZoom}
+  % endif
 }());

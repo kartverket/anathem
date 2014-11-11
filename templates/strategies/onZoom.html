@@ -1,0 +1,16 @@
+    map.events.register("zoomstart", map, function(viewport) {
+      var alt  = map.getLayersBy("shortid", "${altLayer}")[0];
+      var orig = layer.getVisibility() || alt.getVisibility();
+      if (!orig) return; 
+
+      //var zoom = map.getZoom();
+      var zoom = viewport.zoom;
+% if minZoom:
+      if (zoom < ${minZoom}) {orig = false;}
+% endif
+% if maxZoom:
+      if (zoom > ${maxZoom}) {orig = false;}
+% endif
+      layer.setVisibility(!!orig);
+      alt.setVisibility(!orig);
+   });

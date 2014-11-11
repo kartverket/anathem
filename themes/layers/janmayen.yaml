@@ -1,0 +1,12 @@
+template: layers/wmts
+usetoken: false 
+name: janmayen 
+url: http://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?
+layer: Basisdata_NP_Basiskart_JanMayen_WMTS_25833
+epsg: "EPSG:25833"
+databbox: "-393783.2540000008,7978220.98008712,-276963.7430000013,8084965.524000007"
+#extent: "-5120900.0,4449374.235882,5976551.52823,9998100.0"
+tileorigin: "-5120900.0,9998100.0" 
+shortMatrixIds: true
+layerGroup: flere 
+id: janmayen 

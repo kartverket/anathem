@@ -10,10 +10,6 @@ controls:
   controls:
   - template: controls/zoom
   - template: controls/zoomtoselection
-#- template: controls/container
-#  id: magnifier-panel
-#  controls:
-#    - template: controls/magnifier
 - template: controls/container
   id: pan-panel
   controls:
@@ -33,15 +29,15 @@ controls:
   id: layerselector-panel
   controls:
   - template: controls/rasterlayerselector
-    group: modus
-- template: controls/container
-  id: layerselector-panel-vector
-  controls:
+    group: modus1
+  - template: controls/rasterlayerselector-popup
+    title: "Sj&oslash;"
+    group: sjo
+  - template: controls/rasterlayerselector
+    group: modus2
+  - template: controls/rasterlayerselector-popup
+    title: "Flere"
+    group: flere
   - template: controls/vectorlayerselector
     group: dekning
-#- template: controls/container
-#  id: layerselector-panel
-#  controls:
-#  - template: controls/rasterlayerselector-popup
-#    title: "Flere"
-#    group: flere
+    name: "Kart- inndeling"

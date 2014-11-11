@@ -1,7 +1,7 @@
 template: layers/dekning/sjo/overseilingskart
-name: Fiskeri&shy;kart
+name: Overseilingskart
 id: dekning.sjo.fi
-url: /json/dekning/sjo/fiskerikart.json
+url: /json/dekning/sjo/overseilingskart_ny.json
 mapTypeId: fiskkart
 layerGroup: dekning
 preferredBackground: sjo
