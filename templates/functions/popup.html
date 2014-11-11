@@ -50,7 +50,7 @@ NK.functions.popup.wmsFeatureInfoPopup = function (event, formats) {
     html = '<div style="width:100%; max-height:300px; overflow-y:scroll background-color:#555">'+event.text+'</div>';
   }
   else if (event.object.infoFormat == "text/html") {
-    html = '<div style="width:100%; max-height:300px; overflow:hidden; background-color:#fff; color:#000">'+event.text+'</div>';
+    html = '<div style="width:100%; max-height:300px; overflow:scroll; background-color:#fff; color:#000">'+event.text+'</div>';
   }
   else if (event.object.infoFormat == "text/plain") {
     html = '<div style="max-height:300px; overflow-y:scroll; background-color:#555"><pre>'+event.text+'</pre></div>';
@@ -58,7 +58,7 @@ NK.functions.popup.wmsFeatureInfoPopup = function (event, formats) {
   var request = decodeURIComponent(event.request._object.responseURL);
   for (var f in formats) {
     var url = request.replace(event.object.infoFormat, formats[f]);
-    html += '<a href="'+url+'" target="_blank">'+formats[f]+'</a>&nbsp;';
+    html += '<a href="'+url+'" target="_blank">'+formats[f]+'</a> ';
   }
   return html;
 };
