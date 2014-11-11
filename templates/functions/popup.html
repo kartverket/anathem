@@ -47,7 +47,24 @@ NK.functions.popup.wmsFeatureInfoPopup = function (event, formats) {
   }
   var html;
   if (event.object.infoFormat == "text/xml") {
-    html = '<div style="width:100%; max-height:300px; overflow-y:scroll background-color:#555">'+event.text+'</div>';
+    var data = [];
+    $(event.text).find("FIELDS").each(function() {
+      var attributes = $(this)[0].attributes;
+      var fields = {};
+      for (var a=0;a<attributes.length;a++) {
+        fields[attributes[a].localName] = attributes[a].value;
+      }
+      data.push(fields);
+    });
+    var content = '<ul>';
+    for (var x in data) { 
+      content += '<li>';
+      for (var key in data[x]) {
+        content += key + ': ' + data[x][key] + '<br/>';
+      }
+      content += '</li>';
+    }
+    html = '<div style="width:100%; max-height:300px; overflow-y:scroll background-color:#555; margin-left:10px">'+content+'</div>';
   }
   else if (event.object.infoFormat == "text/html") {
     html = '<div style="width:100%; max-height:300px; overflow:scroll; background-color:#fff; color:#000">'+event.text+'</div>';
