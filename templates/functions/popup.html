@@ -41,16 +41,26 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     }
   };
 };
-NK.functions.popup.wmsFeatureInfoPopup = function (event) {
+NK.functions.popup.wmsFeatureInfoPopup = function (event, formats) {
   if (!event.text || !event.text.trim().length) {
     return "Ingen informasjon.";
   }
-  if (event.object.infoFormat == "text/html") {
-    return '<div style="width:100%; height:300px; overflow:scroll; background-color:#fff; color:#000">'+event.text+'</div>';
+  var html;
+  if (event.object.infoFormat == "text/xml") {
+    html = '<div style="width:100%; max-height:300px; overflow-y:scroll background-color:#555">'+event.text+'</div>';
   }
-  if (event.object.infoFormat == "text/plain") {
-    return event.text;
+  else if (event.object.infoFormat == "text/html") {
+    html = '<div style="width:100%; max-height:300px; overflow:hidden; background-color:#fff; color:#000">'+event.text+'</div>';
   }
+  else if (event.object.infoFormat == "text/plain") {
+    html = '<div style="max-height:300px; overflow-y:scroll; background-color:#555"><pre>'+event.text+'</pre></div>';
+  }
+  var request = decodeURIComponent(event.request._object.responseURL);
+  for (var f in formats) {
+    var url = request.replace(event.object.infoFormat, formats[f]);
+    html += '<a href="'+url+'" target="_blank">'+formats[f]+'</a>&nbsp;';
+  }
+  return html;
 };
 NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction, options) {
   var featureSelector = options.selectControl;
@@ -163,14 +173,14 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
       }
   };
 
-  selectControl = new OpenLayers.Control.SelectFeature(layer, {
+/*  selectControl = new OpenLayers.Control.SelectFeature(layer, {
       onUnselect: onFeatureUnselect,
       highlightOnly: true,
       autoActivate: true
   });
-  selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl);
+  selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl); 
 
-  M.addControl(selectControl);
+  M.addControl(selectControl); */
 
 };
 

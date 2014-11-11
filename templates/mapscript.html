@@ -307,7 +307,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
 
 NK.functions.addWMSLayer = function(wmsUrl) {
   if (map.getLayersBy("url",wmsUrl).length) {return;}
-  var layers = [], formats=[], serviceParms={}, layerParms;
+  var layers = [], formats=[], fiFormats=[], serviceParms={}, layerParms;
 
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
@@ -316,19 +316,12 @@ NK.functions.addWMSLayer = function(wmsUrl) {
     $(xml).find('Service').each(function () {
       serviceParms['serviceTitle'] = $(this).children('Title').text();
     });
-    var featureInfoFormat;
     $(xml).find('GetFeatureInfo').each(function () {
       $(this).children('Format').each(function() {
-        if ($(this).text() == 'text/xml') {
-          featureInfoFormat = 'text/xml';
-        } else if ($(this).text() == 'text/plain') {
-          featureInfoFormat = 'text/plain';
-        } else if ($(this).text() == 'text/html') {
-          featureInfoFormat = featureInfoFormat || 'text/plain';
-        }
+        fiFormats.push($(this).text());
       });
     });
-    serviceParms['featureInfoFormat'] = featureInfoFormat;
+    serviceParms['featureInfoFormats'] = fiFormats;
     $(xml).find('GetMap').each(function () {
       $(this).children('Format').each(function () {;
         formats.push($(this).text());
@@ -442,44 +435,54 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT;
   }
-  if (!!parms['featureInfoFormat']) {
-    var popupFn = NK.functions.popup.wmsFeatureInfoPopup;
-    var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
-      url: url,
-      proxyUrl: "/ws/px.py?"+url,
-      title: parms['topitle'],
-      queryVisible: true,
-      infoFormat: parms['featureInfoFormat'],
-      eventListeners: {
-        "getfeatureinfo": function(event) {
-          var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event), null, true,
-                            NK.functions.closePopupCallBack, {x: 10, y: -65}, 'selected-feature-popup, user-marker')
-          map.addPopup(popup, true);
-          if (!event.features.length && (!event.text || !event.text.trim().length)) {
-            setTimeout(function() {
-              map.removePopup(popup);
-            }, 3000);
+  if (!!parms['featureInfoFormats']) {
+    var formats = parms['featureInfoFormats'];
+    var preferredFormats = ['text/xml', 'text/plain', 'text/html'];
+    var preferredFormat  = 'x';
+
+    while (preferredFormat && formats.indexOf(preferredFormat)==-1) {
+      preferredFormat = preferredFormats.shift();
+    }
+
+    if (!!preferredFormat) {
+      var popupFn = NK.functions.popup.wmsFeatureInfoPopup;
+      var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
+        url: url,
+        proxyUrl: "/ws/px.py?"+url,
+        title: parms['title'],
+        queryVisible: true,
+        infoFormat: preferredFormat,
+        eventListeners: {
+          "getfeatureinfo": function(event) {
+            var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event, formats), null, true,
+                              NK.functions.closePopupCallBack, {x: 10, y: -65}, 'selected-feature-popup, user-marker')
+            map.addPopup(popup, true);
+            if (!event.features.length && (!event.text || !event.text.trim().length)) {
+              setTimeout(function() {
+                map.removePopup(popup);
+              }, 3000);
+            }
           }
         }
-      }
-    });
-    wms.featureInfoControl = featureInfo;
-    wms.events.register('visibilitychanged', wms, function() {
-      if(this.getVisibility()) {
+      });
+      wms.featureInfoControl = featureInfo;
+      wms.events.register('visibilitychanged', wms, function() {
+        if(this.getVisibility()) {
+          featureInfo.activate();
+          if (!!this.maxExtent) {
+            var extent = this.maxExtent;
+            if (!extent.containsLonLat(map.getCenter())) {
+              map.zoomToExtent(extent);
+            }
+          }
+        } else {
+          featureInfo.deactivate();
+        }
+      });
+      map.addControl(featureInfo);
+      if (parms['visible']) {
         featureInfo.activate();
-        if (!!this.maxExtent) {
-          var extent = this.maxExtent;
-          if (!extent.containsLonLat(map.getCenter())) {
-            map.zoomToExtent(extent);
-          }
-        }
-      } else {
-        featureInfo.deactivate();
       }
-    });
-    map.addControl(featureInfo);
-    if (parms['visible']) {
-      featureInfo.activate();
     }
   }
   map.addLayers([wms]);
