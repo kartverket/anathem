@@ -18,4 +18,5 @@ controls:
     - include: languages/nb/heightprofile
   - template: controls/transformations
     url: /ws/trans.py
+  - template: controls/lang
 
