@@ -46,7 +46,7 @@ NK.functions.popup.wmsFeatureInfoPopup = function (event, formats) {
     return "Ingen informasjon.";
   }
   var html;
-  if (event.object.infoFormat == "text/xml") {
+  if ((event.object.infoFormat == "text/xml") || (event.object.infoFormat == "application/vnd.ogc.wms_xml")) {
     var data = [];
     $(event.text).find("FIELDS").each(function() {
       var attributes = $(this)[0].attributes;
@@ -190,14 +190,14 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
       }
   };
 
-/*  selectControl = new OpenLayers.Control.SelectFeature(layer, {
+  selectControl = new OpenLayers.Control.SelectFeature(layer, {
       onUnselect: onFeatureUnselect,
       highlightOnly: true,
       autoActivate: true
   });
   selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl); 
 
-  M.addControl(selectControl); */
+  M.addControl(selectControl); 
 
 };
 
