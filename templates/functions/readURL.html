@@ -9,7 +9,8 @@ description: |
   optional parameters map include
   * +layer sets a layer visibility
   * -layer removes a layer visibility if it is turned on by the default configuration
-  * !feature highlights a feature on the map 
+  * !layer!feature highlights a named feature on the map in the given layer (deprecated) 
+  * !layer@x,y highlights a feature on the map at the given location 
   * m/x/y/text adds a marker with a popup on the map
   * w/url=... adds a WMS layer to the map (deprecated)
   * l/type/[url] adds an overlay to the map. Valid types include 'wms', 'wfs', 'geojson' and 'drawing'
@@ -21,6 +22,7 @@ description: |
 // parameters for layers that are loaded asynchronously
 NK.visibleLayerQueue = NK.visibleLayerQueue || {}; 
 NK.opacityQueue = NK.opacityQueue || {}; 
+NK.highlightQueue = NK.highlightQueue || {}; 
 
 NK.functions.storeInitialLayerVisibility = function () {
   // store the initial layer visibility configuration
@@ -237,6 +239,52 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   map.addLayers([layer]);
 };
 
+NK.functions.highlightFeature = function(layer, fid, coords) { 
+   var filter; 
+
+   if (!!coords) {
+     filter = new OpenLayers.Filter.Spatial({ type:  OpenLayers.Filter.Spatial.INTERSECTS, 
+                                              value: new OpenLayers.Geometry.Point(coords[0], coords[1])
+                                            });
+   } else {
+     filter = new OpenLayers.Filter.FeatureId({ fids: fid });
+   }
+   /* set a new renderer rule to highlight elements with the given name */
+   layer.styleMap.styles['default'].addRules([
+          new OpenLayers.Rule({
+            filter: filter,
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor : "orange",
+              graphicZIndex: 2,
+              fillColor : "orange",
+              fillOpacity: 0.1
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+    ]);
+
+    layer.styleMap.styles.temporary.addRules([
+          new OpenLayers.Rule({
+            filter: filter,
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor: "yellow",
+              fillColor  : "orange",
+              fillOpacity: 0.2,
+              graphicZIndex: 100
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+    ]);
+};
+
 NK.functions.urlDataLayerCounter = 0;
 NK.functions.setMapState = function (params) {
   var parms,
@@ -380,47 +428,19 @@ NK.functions.setMapState = function (params) {
 
       if (layers.length === 1) {
         layer = layers[0];
-
-        /* set a new renderer rule to highlight elements with the given name */
-        layer.styleMap.styles['default'].addRules([
-          new OpenLayers.Rule({
-            filter: new OpenLayers.Filter.FeatureId({
-              fids: [select[1]]
-            }),
-            symbolizer: {
-              strokeWidth: 3,
-              strokeColor : "orange",
-              graphicZIndex: 2,
-              fillColor : "orange",
-              fillOpacity: 0.1
-            }
-          }),
-          new OpenLayers.Rule({
-            elseFilter: true,
-            symbolizer: {}
-          })
-        ]);
-
-        layer.styleMap.styles.temporary.addRules([
-          new OpenLayers.Rule({
-            filter: new OpenLayers.Filter.FeatureId({
-              fids: [select[1]]
-            }),
-            symbolizer: {
-              strokeWidth: 3,
-              strokeColor: "yellow",
-              fillColor  : "orange",
-              fillOpacity: 0.2,
-              graphicZIndex: 100
-            }
-          }),
-          new OpenLayers.Rule({
-            elseFilter: true,
-            symbolizer: {}
-          })
-        ]); 
+        //TODO: handle coordinates
+        NK.functions.highlightFeature(layer, select[1]);
+      } else {
+        var q = NK.highlightQueue[select[0]] || [];
+        if (select[1].indexOf(",")>-1) {
+          q.push([select[0], null, select[1].split(",")]);
+        } else {
+          q.push([select[0], select[1], null]);
+        }
+        NK.highlightQueue[select[0]] = q;
       }
-    };
+    }
+
 
     for (index = 3; index < parms.length; index += 1) {
       extra = parms[index];

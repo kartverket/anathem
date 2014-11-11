@@ -385,7 +385,6 @@ NK.functions.addWMSLayer = function(wmsUrl) {
 };
 
 NK.functions.createDynamicWFSLayer = function (name, url, parms) {
-  //, type, title, version, visible, dataFormats, attribution, constraints, opacity) {
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track"});
   wfsLayer.type = 'wfs';
   wfsLayer.isUrlDataLayer = true;
@@ -395,6 +394,15 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   wfsLayer.constraints = parms['constraints'];
   wfsLayer.setVisibility(!!parms['visible']);
   wfsLayer.setOpacity(parms['opacity']);
+
+  var type = parms['type'];
+  if (type in NK.highlightQueue) {
+    var highlights = NK.highlightQueue[type];
+    for (var h in highlights) { 
+      NK.functions.highlightFeature(wfsLayer, highlights[h][1], highlights[h][2]);
+    }
+    delete NK.highlightQueue[type];
+  }
 } 
 
 NK.functions.createDynamicWMSLayer = function (name, url, parms) {

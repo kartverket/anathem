@@ -64,6 +64,10 @@ NK.functions.updateHistory = function (evt) {
                                     } else { 
                                       uid += '/+'+id;
                                     }
+                                    for (var f in layer.selectedFeatures) {
+                                      var centroid = layer.selectedFeatures[f].geometry.getCentroid();
+                                      uid += "/!"+id+"!"+Math.round(centroid.x)+","+Math.round(centroid.y);
+                                    }
                                 }
                                 NK.functions.verifyDataLayers(layer);
                                 if (!!layer.dataUrl) {
