@@ -617,6 +617,10 @@ NK.init = function () {
 % if language:
   OpenLayers.Lang.setCode('${language}');
 % endif
+  if (!!$.localStorage.get('lang')) {
+    OpenLayers.Lang.setCode($.localStorage.get('lang'));
+  }
+  $.localStorage.set('lang', OpenLayers.Lang.getCode());
 
   // extract URL parameters into dictionary
   prmstr = window.location.search.substr(1);
