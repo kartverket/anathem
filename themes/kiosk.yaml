@@ -21,7 +21,7 @@ mapscript:
     - template: styles/track
     #- include: styles/SLD/maritimegrenser
 
-  overlays  :
+  overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
     - include: layers/wms/sjo_enc
@@ -51,31 +51,16 @@ mapscript:
 #    - include: layers/omriss_norge_1000m
 #    - include: layers/omriss_norge_500m
 
-    # NRL - Luftfartshindre
-    - include: layers/wms/alle_linjehindre 
-    - include: layers/wms/alle_linjepunkthindre 
-    - include: layers/wms/alle_punkthindre 
-    - include: layers/wms/andre_linjer_60m_og_over 
-    - include: layers/wms/andre_linjer_mellom_40m_60m 
-    - include: layers/wms/andre_linjer_under_40m 
-    - include: layers/wms/andre_linjer_uten_hoyde 
-    - include: layers/wms/kraftledning_60m_og_over 
-    - include: layers/wms/kraftledning_mellom_40m_60m 
-    - include: layers/wms/kraftledning_under_40m 
-    - include: layers/wms/kraftledning_uten_hoyde 
-    - include: layers/wms/kraftstolpe_60m_og_over 
-    - include: layers/wms/kraftstolpe_mellom_40m_60m 
-    - include: layers/wms/kraftstolpe_under_40m 
-    - include: layers/wms/kraftstolpe_uten_hoyde 
-    - include: layers/wms/linjepunkt_60m_og_over 
-    - include: layers/wms/linjepunkt_mellom_40m_60m 
-    - include: layers/wms/linjepunkt_under_40m 
-    - include: layers/wms/linjepunkt_uten_hoyde 
-    - include: layers/wms/Punkthindre_60m_og_over 
-    - include: layers/wms/punkthindre_mellom_40m_60m 
-    - include: layers/wms/punkthindre_under_40m 
-    - include: layers/wms/punkthindre_uten_hoyde 
-    
+    # fakta layers
+    - include: layers/geoJSON/kommunefjell
+    # test layers
+    #- include: layers/geoJSON/maritimegrenser
+    #- include: layers/geoJSON/clustertestdatafromfile
+    #- include: layers/geoJSON/unclusteredtestdatafromfile
+    #- include: layers/SOSI/kautokeino
+    #- include: layers/wfsTest
+    #- include: layers/ssr
+
   center    : 
     template: center/besseggen
 
@@ -83,7 +68,6 @@ mapscript:
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
-    - template: functions/popup
 
   controls  :
     - template: controls/status
@@ -92,8 +76,8 @@ mapscript:
     - template: controls/scaleline
     - template: controls/hashstate
     - include: toolbars/basic
-    - include: toolbars/top
-    - include: toolbars/secondary
+    - include: toolbars/top-kiosk
+    - include: toolbars/secondary-kiosk
     - template: controls/container
       id: overview-container-panel
       controls:
@@ -102,6 +86,7 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
+        maximized: "true"
 
 #splashscreen:
 #  - template: splashscreen/betainfo

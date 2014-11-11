@@ -8,25 +8,37 @@
       % endif    
       layers: "${layers}", 
       transparent: ${transparent}, 
+  % if styles:
+      styles: "${styles}",
+  % endif
       format: '${format}'
     },
     {
       shortid: "${id}", 
       isBaseLayer: false,
-      buffer: 4,
+      buffer: 0,
+      ratio: 1, 
       visibility: ${visible}, 
-      transitionEffect: 'resize',
   % if singleTile:
-      singleTile: true
+      singleTile: true,
   % else:
-      singleTile: false
+      singleTile: false,
   % endif
+  % if minZoom:
+      minZoom: ${minZoom},
+  % endif
+      transitionEffect: 'resize'
     }
   );
 
   % if layerGroup:
     wms = OpenLayers.Util.extend(wms, { layerGroup: '${layerGroup}' });
   % endif
+
+  % if hidefromlayerswitcher:
+    wms["displayInLayerSwitcher"] = false;
+  % endif
+
 
   if (wms.params.GKT) {
     wms.params.gkt = wms.params.GKT;

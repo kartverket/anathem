@@ -1,0 +1,11 @@
+template: layers/wms
+usetoken: true
+url: http://wms.geonorge.no/skwms1/wms.ecc_enc
+name: "Elektron. Sj&oslash;kart"
+layers: "cells"
+styles: "style-id-262"
+layerGroup: sjo 
+id: sjo_enc
+singleTile: true
+visible: "false"
+minZoom: 10

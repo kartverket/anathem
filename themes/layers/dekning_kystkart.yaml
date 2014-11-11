@@ -1,7 +1,7 @@
 template: layers/dekning/sjo/kystkart
 name: Kyst&shy;kart
 id: dekning.sjo.ky
-url: /json/dekning/sjo/kystkart.json
+url: /json/dekning/sjo/kystkart_ny.json
 mapTypeId: kystkart
 layerGroup: dekning
 preferredBackground: sjo
