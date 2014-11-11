@@ -23,7 +23,6 @@ mapscript:
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-    - include: styles/SLD/maritimegrenser
 
   overlays  : 
     - include: layers/grunnkart
