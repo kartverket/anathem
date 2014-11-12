@@ -358,6 +358,7 @@ NK.init = function () {
     }());
 
   }
+%if not statisk:
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup();
   var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
     url: "http://wms.geonorge.no/skwms1/wms.nrl?",
@@ -384,6 +385,7 @@ NK.init = function () {
   });
   map.addControl(featureInfo);
   featureInfo.activate();
+%endif
 
 };
 // end init()
