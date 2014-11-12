@@ -419,14 +419,13 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           var nrlDictTmp = nrlDict[tmp[1].trim()];
           var tmpResp = [];
           var nrlDictResponse = [];
-          //markup += '<h1 class="h">' + nrlDictTmp['info']['name'] + '</h1>';
           markup += '<h1 class="h">' + nrlDictTmp['info']['extra'] + '</h1>';
           a[i] = a[i].replace(/Feature/g,",,Feature");
           var f = a[i].split(",,");
           for (l = 0; l < f.length; ++l) {
             //feature
             if (f[l].substring(0, 7) == "Feature") {
-              tmpMarkup += '<div>';
+              tmpMarkup += '<div class="featureInfo" style="display: table">';
               test = f[l].split("\n");
               try {
                 for (j = 0, k = test.length - 1; j < k; j += 1) {
@@ -441,12 +440,12 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                   tmpResp["status"] = statusDict[tmpResp["status"]];
                 }
                 for (var prop in nrlDictTmp['content']) {
-                  tmpMarkup += '<p>' + prop + ' ';
+                  tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell">' + prop + '</span><span class="value" style="display: table-cell">';
                   if (!!tmpResp[nrlDictTmp['content'][prop]]) {
                     if (!!nrlDictTmp['content'][prop]) {
-                      tmpMarkup += tmpResp[nrlDictTmp['content'][prop]] + '</p>';
+                      tmpMarkup += tmpResp[nrlDictTmp['content'][prop]] + '</span></p>';
                     } else {
-                      tmpMarkup += '</p>';
+                      tmpMarkup += '</span></p>';
                     }
                   } else {
                     if (typeof nrlDictTmp['content'][prop] === 'object') {
