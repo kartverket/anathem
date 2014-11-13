@@ -240,11 +240,13 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
 };
 
 NK.functions.highlightFeature = function(layer, fid, coords) { 
+   // works for fid, does not work for spatial
    var filter; 
 
    if (!!coords) {
-     filter = new OpenLayers.Filter.Spatial({ type:  OpenLayers.Filter.Spatial.INTERSECTS, 
-                                              value: new OpenLayers.Geometry.Point(coords[0], coords[1])
+     var delta = 1;
+     filter = new OpenLayers.Filter.Spatial({ type:  OpenLayers.Filter.Spatial.BBOX, 
+                                              value: new OpenLayers.Bounds(coords[0]-delta, coords[1]-delta, (coords[0]-1)+delta, (coords[1]-1)+delta)
                                             });
    } else {
      filter = new OpenLayers.Filter.FeatureId({ fids: fid });
@@ -412,9 +414,9 @@ NK.functions.setMapState = function (params) {
     setOpacity = function(value) {
       if (!NK.lastAddedLayer) return;
       if (map.getLayersBy("shortid", NK.lastAddedLayer).length) {
-        return setLayerVisibility(NK.lastAddedLayer, true, parseFloat(value));
+        return setLayerVisibility(NK.lastAddedLayer, true, parseInt(value)/100.0);
       } else {
-        NK.opacityQueue[NK.lastAddedLayer]=parseFloat(value);
+        NK.opacityQueue[NK.lastAddedLayer]=parseInt(value)/100.0;
       }
     }
 
