@@ -16,7 +16,12 @@ from subprocess import call
 re_param = re.compile('\$\{([^\(\{]*?)\}')
 
 # parameter: a yaml configuration filename in the themes/ folder, a destination directory
-nil, tema, destdir = sys.argv
+nil, tema, destdir = sys.argv[0:3]
+options=[]
+if len(sys.argv) > 3:
+  options = sys.argv[3:]
+
+compress   = not "no-compression" in options
 defaults   = yaml.load(open("default.yaml", "r"))
 lookup     = TemplateLookup(directories=['./templates/'])
 
@@ -117,13 +122,17 @@ def output_file(name, payload):
     os.rename("tmp/tmp.js", "tmp/"+file+".js")
     os.unlink("tmp/tmp.ls")
   elif ext == "js":
-    fd = open("tmp/tmp.js", "w")
-    fd.write(payload);
-    fd.close()
-    if call(["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/"+name]):
-      print "Error compressing javascript."
-      sys.exit(1)
-    os.unlink("tmp/tmp.js")
+    if compress:
+      fd = open("tmp/tmp.js", "w")
+      fd.write(payload);
+      fd.close()
+      if call(["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/"+name]):
+        print "Error compressing javascript."
+        sys.exit(1)
+      os.unlink("tmp/tmp.js")
+    else:
+      fd = open("tmp/"+name, "w")
+      fd.write(payload);
   else:
     fd = open("tmp/"+name, "w")
     fd.write(payload);
