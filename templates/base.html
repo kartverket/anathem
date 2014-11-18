@@ -57,11 +57,8 @@
 % if includeXDM:
     <%include file="/easyXDM.html" />
 % endif
+    <script src="${mapscript}"></script>
 
-    <script>
-      ${mapscript}
-      // end mapscript
-    </script>
     <!--[if lt IE 9]>
         <script>
             $(window).on('resize', function(evt) {

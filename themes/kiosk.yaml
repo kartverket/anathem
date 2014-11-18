@@ -1,27 +1,27 @@
-# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
-
 template : base
+filename : kiosk.html
 title    : Norgeskart
-mapscript: 
-  template  : mapscript
-  language  : nb
-  tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-  projection: 32633
+mapscript: clients/kiosk.min.js
+---
+template : mapscript
+filename : clients/kiosk.min.js
+language  : nb
+tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+projection: 32633
 
-  i18n:
+i18n:
   - include: languages/nb/base
 
-  baselayers:   
+baselayers:   
     - template: layers/europa
 
-  styles    :
+styles    :
     - template: styles/unlabeledMarker
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-    #- include: styles/SLD/maritimegrenser
 
-  overlays  : 
+overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
     - include: layers/wms/sjo_enc
@@ -32,44 +32,24 @@ mapscript:
     - include: layers/janmayen
     - include: layers/svalbard
 
-    #- include: layers/wms/kommunegrenser
-    #- include: layers/wms/amtskart
-    #- include: layers/wms/dybdedata
-    #- include: layers/wms/dybdelag
-    #- include: layers/wms/havbunnraster
-    #- include: layers/wms/dekning_sjomaaling
-    #- include: layers/wms/dybdekontur
-    #- include: layers/wms/dybdekurver_havomraader
-    #- include: layers/wms/kystkontur
-    #- include: layers/wms/sjogrenser
-
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
-#    - include: layers/omriss_norge_1000m
-#    - include: layers/omriss_norge_500m
 
     # fakta layers
     - include: layers/geoJSON/kommunefjell
-    # test layers
-    #- include: layers/geoJSON/maritimegrenser
-    #- include: layers/geoJSON/clustertestdatafromfile
-    #- include: layers/geoJSON/unclusteredtestdatafromfile
-    #- include: layers/SOSI/kautokeino
-    #- include: layers/wfsTest
-    #- include: layers/ssr
 
-  center    : 
+center    : 
     template: center/besseggen
 
-  functions :
+functions :
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
 
-  controls  :
+controls  :
     - template: controls/status
     - template: controls/geolocation
     - template: controls/navigation
@@ -88,5 +68,3 @@ mapscript:
         detailedLayer: enkel
         maximized: "true"
 
-#splashscreen:
-#  - template: splashscreen/betainfo

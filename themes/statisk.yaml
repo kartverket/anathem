@@ -1,22 +1,24 @@
-# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
-
 template : base
+filename : statisk.html
 title    : Norgeskart
 mapClass: embedded-map
+mapscript: clients/norgeskart-statisk.min.js
+---
+template : mapscript
+filename : clients/norgeskart-statisk.min.js
+language  : nb
+tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+projection: 32633
 
-mapscript: 
-  template  : mapscript
-  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
-
-  styles    :
+styles    :
     - template: styles/unlabeledMarker
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
   
-  baselayers:   
+baselayers:   
     - template: layers/europa
-  overlays  : 
+overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
     - include: layers/wms/sjo_enc
@@ -36,11 +38,11 @@ mapscript:
     # fakta layers
     - include: layers/geoJSON/kommunefjell
 
-  functions:
+functions:
     template: functions/readURL
-  controls:
+controls:
     - template: controls/status
     - template: controls/scaleline
     - template: controls/popout
-  center:
+center:
     template: center/besseggen
