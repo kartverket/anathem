@@ -1,0 +1,6 @@
+template: 3/layers/dekning/land/n50
+name: "Norge 1:50000"
+id: dekning.land 
+layerGroup: dekning
+url: /json/dekning/land/n50/plast.json
+preferredBackground: toporaster

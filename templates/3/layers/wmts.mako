@@ -27,6 +27,8 @@ NK.addLayerType.WMTS = (function (M, MP) {
         myMatrixIds.push( ""+i);
       }
     }
+   
+     
     if (options.tileOrigin) {
       customOrigin = options.tileOrigin.split(",");
     }
@@ -37,7 +39,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
     var sourceOptions ={
         layer: layer,
         matrixSet: options.customProj || MP.getCode(),
-        projection: options.customProj || MP.getCode(),
+        projection: MP,
         format: "image/png",
         tileGrid: new ol.tilegrid.WMTS({ 
           origin: customOrigin || ol.extent.getTopLeft(extent),
@@ -130,7 +132,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
   % endif
 
   % if tileorigin:
-    options.tileorigin = "${tileorigin}"
+    options.tileOrigin = "${tileorigin}"
   % endif
 
   var layer = NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);

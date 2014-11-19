@@ -7,7 +7,7 @@ template : 3/mapscript
 filename : clients/norgeskart-statisk.min.js
 language  : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-projection: 32633
+projection: 25833
 
 #styles    :
 #    - template: styles/unlabeledMarker
@@ -25,14 +25,15 @@ overlays  :
     - include: 3/layers/terreng
     - include: 3/layers/grunnkart
     - include: 3/layers/toporaster
-#    - include: layers/janmayen
-#    - include: 3/layers/svalbard
+# currently broken
+    - include: 3/layers/janmayen
+    - include: 3/layers/svalbard
 #
-#    - include: layers/dekning_n50_plast
-#    - include: layers/dekning_sjo_hovedkart
-#    - include: layers/dekning_havnekart
-#    - include: layers/dekning_kystkart
-#    - include: layers/dekning_overseilingskart
+    - include: 3/layers/dekning/n50
+    - include: 3/layers/dekning/sjo/hovedkart
+#    - include: 3/layers/dekning/havnekart
+#    - include: 3/layers/dekning/kystkart
+#    - include: 3/layers/dekning/overseilingskart
 #
 #    # fakta layers
  #   - include: layers/geoJSON/kommunefjell

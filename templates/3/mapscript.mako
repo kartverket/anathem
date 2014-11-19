@@ -22,7 +22,7 @@ NK.gkToken = "unInitialized";
 NK.tokenService = "${tokenServiceUrl}";
 % endif
 
-NK.baseProjection = "32633";
+NK.baseProjection = "25833";
 % if projection:
 NK.baseProjection = "${projection}";
 % endif
@@ -151,21 +151,25 @@ NK.init = function () {
   var prmstr, prmarr, params, tmparr, 
       i, j;
 
-  if (!ol) {
+  if ((!ol) || (!proj4)) {
     setTimeout(NK.init, 100);
     return;
   }
 
+  // TODO: cleanup projection loading
   var extents = {
-      'EPSG:32633': [-2500000, 3500000, 3045984, 9045984]
+      'EPSG:25833': [-2500000, 3500000, 3045984, 9045984]
   };
+  proj4.defs("EPSG:25833","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
   NK.projections = proj = {  
     //pregenerated projection objects
-    "32633": new ol.proj.Projection({ code:"EPSG:32633", extent:extents["EPSG:32633"] })
+    "25833": new ol.proj.Projection({ code:"EPSG:25833", extent:extents["EPSG:25833"] })
   };
 
   mapProj = proj[NK.baseProjection];
   ol.proj.addProjection(mapProj);
+  ol.proj.addCoordinateTransforms('EPSG:4326', 'EPSG:25833', proj4('EPSG:4326', 'EPSG:25833').forward);
 
 % if language:
   // TODO
@@ -195,15 +199,16 @@ NK.init = function () {
 
   NK.view = new ol.View({
     projection: mapProj,
+    extent:     mapProj.getExtent(),
     center:     NK.defaultCenter,
     zoom:       NK.defaultZoom
   });
 
   NK.mapOptions = {
     target: 'map',
-    view  : NK.view,
-    interactions: [], // static map 
-    controls: []     // static map 
+    view  : NK.view
+    //interactions: [], // static map 
+    //controls: []     // static map 
   };
   map = new ol.Map(NK.mapOptions);
 
