@@ -161,7 +161,7 @@ NK.init = function () {
   };
   NK.projections = proj = {  
     //pregenerated projection objects
-    "32633": new ol.proj.Projection({ code:"EPSG:32633", extent:extents["EPSG:32633"] }),
+    "32633": new ol.proj.Projection({ code:"EPSG:32633", extent:extents["EPSG:32633"] })
   };
 
   mapProj = proj[NK.baseProjection];

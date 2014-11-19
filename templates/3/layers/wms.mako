@@ -24,7 +24,7 @@
 % if hidefromlayerswitcher:
     displayInLayerSwitcher: false;
 % endif
-    visible: ${visible}, 
+    visible: ${visible}
   });
 
 // TODO: minZoom - create a trigger that zooms in when layer becomes visible (manually)

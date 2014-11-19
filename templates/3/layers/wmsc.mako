@@ -24,7 +24,7 @@
 % if hidefromlayerswitcher:
     displayInLayerSwitcher: false;
 % endif
-    visible: ${visible}, 
+    visible: ${visible} 
   });
 
   map.addLayer(wms);
