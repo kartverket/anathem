@@ -6,3 +6,4 @@ layerGroup: tjenester.alle_hindre
 id: alle_punkthindre
 usetoken: true
 singleTile: true
+minZoom: 10

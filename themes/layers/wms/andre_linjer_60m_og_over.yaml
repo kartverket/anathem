@@ -6,5 +6,5 @@ layerGroup: tjenester.andre_linjethindre
 id: andre_linjer_60m_og_over
 usetoken: true
 singleTile: true
-
+minZoom: 9
 

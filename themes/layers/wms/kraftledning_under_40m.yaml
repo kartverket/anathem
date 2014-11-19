@@ -6,4 +6,4 @@ layerGroup: tjenester.kraftledninger
 id: kraftledning_under_40m
 usetoken: true
 singleTile: true
-
+minZoom: 10

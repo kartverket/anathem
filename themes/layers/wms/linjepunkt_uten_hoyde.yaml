@@ -6,5 +6,5 @@ layerGroup: tjenester.andre_linjethindre
 id: linjepunkt_uten_hoyde
 usetoken: true
 singleTile: true
-
+minZoom: 10
 

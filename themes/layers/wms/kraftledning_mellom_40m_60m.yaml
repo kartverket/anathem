@@ -6,5 +6,5 @@ layerGroup: tjenester.kraftledninger
 id: kraftledning_mellom_40m_60m
 usetoken: true
 singleTile: true
-
+minZoom: 9
 

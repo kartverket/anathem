@@ -6,5 +6,5 @@ layerGroup: tjenester.punkthindre
 id: Punkthindre_60m_og_over
 usetoken: true
 singleTile: true
-
+minZoom: 9
 
