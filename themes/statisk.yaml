@@ -1,48 +1,48 @@
-template : base
-filename : statisk.html
+template : 3/base
+filename : statisk_.html
 title    : Norgeskart
-mapClass: embedded-map
-mapscript: clients/norgeskart-statisk.min.js
+mapscript: clients/norgeskart-statisk_.min.js
 ---
-template : mapscript
-filename : clients/norgeskart-statisk.min.js
+template : 3/mapscript
+filename : clients/norgeskart-statisk_.min.js
 language  : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
 projection: 32633
 
-styles    :
-    - template: styles/unlabeledMarker
-    - template: styles/labeledMarker
-    - template: styles/omriss
-    - template: styles/track
-  
+#styles    :
+#    - template: styles/unlabeledMarker
+#    - template: styles/labeledMarker
+#    - template: styles/omriss
+#    - template: styles/track
+#  
 baselayers:   
-    - template: layers/europa
+    - include: 3/layers/europa
 overlays  : 
-    - include: layers/topo2
-    - include: layers/sjo_hovedkart2
-    - include: layers/wms/sjo_enc
-    - include: layers/flybilder
-    - include: layers/terreng
-    - include: layers/grunnkart
-    - include: layers/toporaster2
-    - include: layers/janmayen
-    - include: layers/svalbard
-
-    - include: layers/dekning_n50_plast
-    - include: layers/dekning_sjo_hovedkart
-    - include: layers/dekning_havnekart
-    - include: layers/dekning_kystkart
-    - include: layers/dekning_overseilingskart
-
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
-
-functions:
-    template: functions/readURL
-controls:
-    - template: controls/status
-    - template: controls/scaleline
-    - template: controls/popout
+    - include: 3/layers/land
+    - include: 3/layers/sjo
+    - include: 3/layers/sjo_enc
+    - include: 3/layers/flybilder
+    - include: 3/layers/terreng
+    - include: 3/layers/grunnkart
+    - include: 3/layers/toporaster
+#    - include: layers/janmayen
+#    - include: 3/layers/svalbard
+#
+#    - include: layers/dekning_n50_plast
+#    - include: layers/dekning_sjo_hovedkart
+#    - include: layers/dekning_havnekart
+#    - include: layers/dekning_kystkart
+#    - include: layers/dekning_overseilingskart
+#
+#    # fakta layers
+ #   - include: layers/geoJSON/kommunefjell
+#
+#functions:
+#    template: functions/readURL
+#controls:
+#    - template: controls/status
+#    - template: controls/scaleline
+#    - template: controls/popout
 center:
-    template: center/besseggen
+    template: 3/center/besseggen
+#    template: 3/center/svalbard
