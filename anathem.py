@@ -138,7 +138,11 @@ def output_file(name, payload):
     fd.write(payload);
     fd.close()
   print "%s/%s.%s" % (destdir, file, ext)
-  os.rename("tmp/%s.%s" % (file, ext), "%s/%s.%s" % (destdir, file, ext)) # move to output directory
+  try:
+    os.rename("tmp/%s.%s" % (file, ext), "%s/%s.%s" % (destdir, file, ext)) # move to output directory
+  except OSError,er:
+    print "Could not find target: %s/%s.%s " % (destdir, file, ext)
+    sys.exit(1)
 
 [output_file(c["filename"], recurse_render(c)) for c in config]
 
