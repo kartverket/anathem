@@ -1,10 +1,10 @@
 template : 3/base
-filename : statisk_.html
+filename : statisk.html
 title    : Norgeskart
-mapscript: clients/norgeskart-statisk_.min.js
+mapscript: clients/norgeskart-statisk.min.js
 ---
 template : 3/mapscript
-filename : clients/norgeskart-statisk_.min.js
+filename : clients/norgeskart-statisk.min.js
 language  : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
 projection: 32633
