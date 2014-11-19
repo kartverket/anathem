@@ -160,6 +160,7 @@ NK.init = function () {
   var extents = {
       'EPSG:25833': [-2500000, 3500000, 3045984, 9045984]
   };
+  
   proj4.defs("EPSG:25833","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 
   NK.projections = proj = {  
@@ -170,6 +171,7 @@ NK.init = function () {
   mapProj = proj[NK.baseProjection];
   ol.proj.addProjection(mapProj);
   ol.proj.addCoordinateTransforms('EPSG:4326', 'EPSG:25833', proj4('EPSG:4326', 'EPSG:25833').forward);
+  ol.proj.addCoordinateTransforms('EPSG:3857', 'EPSG:25833', proj4('EPSG:3857', 'EPSG:25833').forward);
 
 % if language:
   // TODO

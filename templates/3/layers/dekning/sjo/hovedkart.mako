@@ -22,6 +22,7 @@
 
     source: new ol.source.GeoJSON({ 
       url: "${url}",
+      projection: "EPSG:4326"
     }) 
   });
 
