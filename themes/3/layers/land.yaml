@@ -1,0 +1,6 @@
+template: 3/layers/wmts
+name: Land
+layer: topo2 
+layerGroup: modus1
+id: land
+visible: true

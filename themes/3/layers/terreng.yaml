@@ -1,0 +1,5 @@
+template: 3/layers/wmts
+name: terreng
+layer: terreng_norgeskart 
+layerGroup: modus2
+id: terreng

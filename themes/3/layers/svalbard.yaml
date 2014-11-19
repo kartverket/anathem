@@ -1,0 +1,12 @@
+template: 3/layers/wmts
+name: svalbard 
+url: "http://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS"
+layer: Basisdata_NP_Basiskart_Svalbard_WMTS_25833
+epsg: "EPSG:25833"
+databbox: "369976.3899489096,8221306.539890718,878234.7199568129,9010718.76990194"
+tileorigin: "-5120900.0,9998100.0" 
+shortMatrixIds: true
+visible: true 
+layerGroup: flere 
+id: svalbard 
+

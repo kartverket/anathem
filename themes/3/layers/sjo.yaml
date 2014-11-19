@@ -1,0 +1,5 @@
+template: 3/layers/wmts
+name: Hovedkart 
+layer: sjo_hovedkart2
+layerGroup: sjo
+id: sjo

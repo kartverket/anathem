@@ -1,0 +1,9 @@
+template: 3/layers/wmsc
+usetoken: true
+url: http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nibcache
+format: image/jpeg
+transparent: 0 
+name: Fly&shy;bilder 
+layers: NiB
+layerGroup: modus2
+id: flybilder

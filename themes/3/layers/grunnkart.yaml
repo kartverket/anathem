@@ -1,0 +1,5 @@
+template: 3/layers/wmts
+name: enkel 
+layer: norges_grunnkart
+layerGroup: flere
+id: enkel

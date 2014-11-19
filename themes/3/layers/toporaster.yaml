@@ -1,0 +1,5 @@
+template: 3/layers/wmts
+name: Rasterkart 
+layer: toporaster2
+layerGroup: flere
+id: toporaster

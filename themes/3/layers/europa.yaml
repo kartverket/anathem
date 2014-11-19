@@ -1,0 +1,7 @@
+template: 3/layers/wmts
+name: Europa
+layer: egk
+layerGroup: modus1
+id: europa
+visible: true
+minResolution: 150
