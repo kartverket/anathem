@@ -53,7 +53,7 @@ mapscript:
     - include: layers/wms/ssrNavnetypeVannkontur
     - include: layers/wms/ssrNavnetypeKystdata
     - include: layers/wms/ssrNavnetypeMarkslag
-    - include: layers/wms/ssrVedtatt_og_godkjent
+    - include: layers/wms/ssrNavnetypeAndre_navnetyper
 
     #- include: layers/wms/ssrVedtaksstatus_dato
     - include: layers/wms/ssrVedtatt_siste_24md
@@ -62,6 +62,7 @@ mapscript:
     - include: layers/wms/ssrVedtatt_siste_3md
     - include: layers/wms/ssrVedtatt_siste_md
 
+    - include: layers/wms/ssrVedtatt_og_godkjent
     - include: layers/wms/ssrVedtatt
     - include: layers/wms/ssrGodkjent
     - include: layers/wms/ssrSamlevedtak
