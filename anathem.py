@@ -7,7 +7,7 @@ Use YAML configuration files to combine mako templates.
 from mako.template import *
 from mako.lookup import TemplateLookup
 import yaml
-import sys
+import sys, os
 import re
 import closure
 from subprocess import call
@@ -46,8 +46,13 @@ def recurse_render(data):
     template_name = data["template"]
     try:
       template = Template(filename=("templates/%s.mako" % template_name), lookup=lookup)
-    except:
-      template = Template(filename=("templates/%s.html" % template_name), lookup=lookup)
+    except IOError:
+      try:
+        template = Template(filename=("templates/%s.html" % template_name), lookup=lookup)
+      except Exception,ex:
+        print "Could not open either templates/%s.mako or .html in %s" % (template_name, os.getcwd())
+        print ex
+        sys.exit(1)
     # for every other key in the configuration:
     # if it is a dict, render a subtemplate
     # if it is a list, render an array of subtemplates
@@ -59,6 +64,7 @@ def recurse_render(data):
           data[key] = "\n".join([recurse_render(x) for x in value])
       except IOError, er:
         print "Template specified in configuration %s was not found:" % template_name
+        print data
         print er
         sys.exit(1)
     # then render the main template
@@ -72,7 +78,10 @@ def recurse_render(data):
       print "\nMissing parameter while parsing template '%s'." % template_name
        
       try: 
-        code   = open("templates/%s.html" % template_name, "r").read()
+        try: 
+          code   = open("templates/%s.html" % template_name, "r").read()
+        except:
+          code   = open("templates/%s.mako" % template_name, "r").read()
         params = re_param.findall(code)
         print "The template supports *and* requires the following parameters:"
         print "Provide it with an empty string if it is not to be included.\n"
