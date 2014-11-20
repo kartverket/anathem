@@ -41,7 +41,7 @@ overlays  :
 functions:
     - template: 3/functions/readURL
 controls:
-#    - template: controls/status
+    - template: 3/controls/status
     - template: 3/controls/scaleline
     - template: 3/controls/popout
 center:

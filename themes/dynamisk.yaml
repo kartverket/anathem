@@ -43,7 +43,7 @@ functions:
     - template: 3/functions/updateURL
 controls:
     - template: 3/controls/default
-#    - template: controls/status
+    - template: 3/controls/status
     - template: 3/controls/popout
 center:
     template: 3/center/besseggen
