@@ -1,0 +1,7 @@
+template: 3/layers/dekning/sjo/hovedkart
+name: Kyst&shy;kart
+id: dekning.sjo.ky
+url: /json/dekning/sjo/kystkart_ny.json
+mapTypeId: kystkart
+layerGroup: dekning
+preferredBackground: sjo

@@ -221,6 +221,9 @@ NK.init = function () {
   ${overlays}
 % endif
 
+var controlContext = map;
+var container = null;
+
 % if controls:
   ${controls}
 % endif

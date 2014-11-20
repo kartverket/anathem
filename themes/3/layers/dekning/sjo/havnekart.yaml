@@ -1,0 +1,7 @@
+template: 3/layers/dekning/sjo/hovedkart
+name: Havne&shy;kart
+id: dekning.sjo.hv
+url: /json/dekning/sjo/havnekart_ny.json
+mapTypeId: havnekart
+layerGroup: dekning
+preferredBackground: sjo

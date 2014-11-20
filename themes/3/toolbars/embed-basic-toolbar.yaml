@@ -1,0 +1,15 @@
+template: 3/controls/container
+id: embed-basic-toolbar
+controls:
+- template: 3/controls/container
+  id: zoom-panel
+  controls:
+  - template: 3/controls/zoom
+- template: 3/controls/container
+  id: pan-panel
+  controls:
+    - template: 3/controls/pan
+- template: 3/controls/container
+  id: collapse-toolbar-panel
+  controls:
+  - template: 3/controls/collapse-toolbar
