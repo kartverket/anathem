@@ -22,7 +22,7 @@
 
     source: new ol.source.GeoJSON({ 
       url: "${url}",
-      projection: "EPSG:4326"
+      projection: "EPSG:25833"
     }) 
   });
 
@@ -33,19 +33,31 @@
     style: NK.styles.dekning.sjo.highlight
   });
 
-  var highlight;
+  var highlight=[];
   var displayFeatureInfo = function(pixel) {
-    var feature = M.forEachFeatureAtPixel(pixel, function(feature, layer) {
-      return feature;
-    });
-    if (feature !== highlight) {
-      if (!!highlight) {
-        featureOverlay.removeFeature(highlight);
+    var feature;
+    M.forEachFeatureAtPixel(pixel, function(f, layer) {
+      if ((!feature) || (feature.getGeometry().getArea() > f.getGeometry().getArea())) {
+        feature = f;
+      }
+    });    
+    var group = feature && feature.getId().split("_")[0];
+    var check = highlight.length && highlight[0].getId().split("_")[0];
+    if (group != check) {
+      if (highlight.length) {
+        for (var h in highlight) {
+          featureOverlay.removeFeature(highlight[h]);
+        }
+        highlight = [];
       } 
       if (!!feature) {
-        featureOverlay.addFeature(feature);
+        highlight = $.grep(layer.getSource().getFeatures(), function(feature) {
+          return feature.getId().split("_")[0] == group;
+        });
+        for (var h in highlight) {
+          featureOverlay.addFeature(highlight[h]);
+        }
       }
-      highlight = feature;
     }
   };
 

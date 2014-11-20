@@ -37,7 +37,7 @@ var greenHighlight = [new ol.style.Style({
 
 NK.styles.dekning.sjo = {
   "default": function(feature, resolution) { 
-    if (resolution > 2000) {
+    if ((resolution > 2000) || (feature.getId().indexOf("_")>-1)) {
       return unlabeled;
     } else {
       return greenStyle(feature.getId()); 
