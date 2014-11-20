@@ -44,8 +44,7 @@ functions:
 controls:
     - template: 3/controls/default
 #    - template: controls/status
-#    - template: controls/scaleline
-#    - template: controls/popout
+    - template: 3/controls/popout
 center:
     template: 3/center/besseggen
 #    template: 3/center/svalbard
