@@ -15,7 +15,7 @@
   layer = new ol.layer.Vector({
     title: "${name}",
     shortid: "${id}", 
-    style: NK.styles.dekning.sjo.default,
+    style: NK.styles.dekning.sjo["default"],
     visible: ${visible},
     layerGroup: "${layerGroup}",
     preferredBackground: "${preferredBackground}",

@@ -15,13 +15,13 @@
   layer = new ol.layer.Vector({
     title: "${name}",
     shortid: "${id}", 
-    style: NK.styles.dekning.land.default,
+    style: NK.styles.dekning.land["default"],
     visible: ${visible},
     layerGroup: "${layerGroup}",
     preferredBackground: "${preferredBackground}",
 
     source: new ol.source.GeoJSON({ 
-      url: "${url}",
+      url: "${url}"
     }) 
   });
 

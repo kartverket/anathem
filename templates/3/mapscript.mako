@@ -208,9 +208,9 @@ NK.init = function () {
 
   NK.mapOptions = {
     target: 'map',
-    view  : NK.view
-    //interactions: [], // static map 
-    //controls: []     // static map 
+    view  : NK.view,
+    interactions: [], 
+    controls: []     
   };
   map = new ol.Map(NK.mapOptions);
 

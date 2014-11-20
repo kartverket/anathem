@@ -6,7 +6,7 @@ var greenStyle = function(text) {
   return [new ol.style.Style({
     stroke: new ol.style.Stroke({
       color: "#484",
-      width: 2,
+      width: 2
     }),
     /* opacity is broken */
     //fill: new ol.style.Fill({
@@ -31,19 +31,21 @@ var unlabeled = greenStyle("");
 var greenHighlight = [new ol.style.Style({
   stroke: new ol.style.Stroke({
     color: "#ada",
-    width: 2,
+    width: 2
   })
 })]; 
 
 NK.styles.dekning.land = {
-  default: function(feature, resolution) { 
+  "default": function(feature, resolution) { 
     if (resolution > 2000) {
       return unlabeled;
     } else {
       return greenStyle(feature.getId()); 
     }
   },
-  highlight: function(feature, resolution) { return greenHighlight; },
+  "highlight": function(feature, resolution) { 
+    return greenHighlight; 
+  }
 };
 
 <% vars['styles.dekning.land']=True %>
