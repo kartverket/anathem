@@ -7,6 +7,11 @@ A simple template processor to build modular OpenLayers clients, using mako temp
 
 runs the processor on the configuration file "theme.yaml" in the themes subdirectory. The theme determines how to assemble the templates in the templates subdirectory.
 
+# Requirements
+
+* Python 2.6 ( might work on others, but not testet yet) with Mako template, yaml and closure installed
+* Java 7 (closure, the compression tool, needs this)
+ 
 
 # Templates 
 
