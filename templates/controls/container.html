@@ -41,7 +41,7 @@ params:
 
 		header.className = "panel-name";
 		var name = document.createElement('span');
-		name.innerHTML = "${name}";
+		name.innerHTML = OpenLayers.Lang.translate("${name}");
 
 		% if svgIcon:
 			header.innerHTML = OpenLayers.Util.hideFromOldIE('${svgIcon}');

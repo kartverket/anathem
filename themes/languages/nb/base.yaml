@@ -25,3 +25,6 @@ translations:
   - template: i18n/translation
     source: Available overlays
     translation: Tilgjengelige kartlag
+  - template: i18n/translation
+    source: Tools 
+    translation: Verkt&oslash;y

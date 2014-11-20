@@ -6,7 +6,7 @@ language: nb
 translations:
   - template: i18n/translation
     source: Find place, coordinates, address 
-    translation: Finn omr&aring;de, adresse, koordinat
+    translation: Finn sted, adresse, koordinat
   - template: i18n/translation
     source: Areas 
     translation: Omr&aring;der

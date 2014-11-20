@@ -5,7 +5,7 @@ template: controls/container
 id: secondary-toolbar
 controls:
 - template: controls/container
-  name: Verkt&oslash;y
+  name: Tools 
   id: tools-panel
   controls:
   - template: controls/draw
