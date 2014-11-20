@@ -162,16 +162,13 @@ NK.init = function () {
   };
   
   proj4.defs("EPSG:25833","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
-
+  
   NK.projections = proj = {  
     //pregenerated projection objects
-    "25833": new ol.proj.Projection({ code:"EPSG:25833", extent:extents["EPSG:25833"] })
+    "25833": new ol.proj.Projection({ code:"EPSG:25833", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
   };
 
   mapProj = proj[NK.baseProjection];
-  ol.proj.addProjection(mapProj);
-  ol.proj.addCoordinateTransforms('EPSG:4326', 'EPSG:25833', proj4('EPSG:4326', 'EPSG:25833').forward);
-  ol.proj.addCoordinateTransforms('EPSG:3857', 'EPSG:25833', proj4('EPSG:3857', 'EPSG:25833').forward);
 
 % if language:
   // TODO
@@ -210,7 +207,7 @@ NK.init = function () {
     target: 'map',
     view  : NK.view,
     interactions: [], 
-    controls: []     
+    controls: []
   };
   map = new ol.Map(NK.mapOptions);
 
