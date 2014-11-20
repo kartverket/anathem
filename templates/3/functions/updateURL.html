@@ -24,13 +24,8 @@ NK.functions.updateHistory = function (evt) {
                           if (!layer.get('isBaseLayer')) {
                             if (!layer.get('isUrlDataLayer')) {
                                 if (layer.getVisible()) {
-                                    if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
-                                        uid += "/+" + layer.shortid;
-                                    }
-                                } else {
-                                    if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
-                                        uid += "/-" + layer.shortid;
-                                    }
+                                  var id = layer.get('shortid');
+                                        uid += "/+" + id;
                                 }
                             } else if (layer.getVisible()) {
                                 if (layer.type == 'drawing') {
@@ -67,8 +62,8 @@ NK.functions.updateHistory = function (evt) {
                                   uid += '/d/'+layer.dataType+'/['+layer.dataUrl.trim()+']';
                                 }
                             }
-                          if (layer.opacity<1.0) {
-                            uid += "/o"+Math.floor(layer.opacity * 100);
+                          if (layer.getOpacity()<1.0) {
+                            uid += "/o"+Math.floor(layer.getOpacity() * 100);
                           }
                         }
             });

@@ -370,57 +370,42 @@ NK.functions.setMapState = function (params) {
       }
     }
 
-    setLayerVisibility = function (layerName, visibility, opacity) {
+    setLayerVisibility = function (layer, visibility, opacity) {
       var i, 
           j,
           layer,
           layerSwitcherPresent;
 
       if (opacity === undefined) {opacity=1.0;}
-      layerSwitcherPresent =  map.getControlsByClass('OpenLayers.Control.RasterOverlayLayerSwitcher').length > 0;
+      //layerSwitcherPresent =  map.getControlsByClass('OpenLayers.Control.RasterOverlayLayerSwitcher').length > 0;
 
-      for (i = 0, j = map.layers.length; i < j; i += 1) {
-        layer = map.layers[i];
-        layer.setOpacity(opacity);
-        if (layer.shortid === layerName) {
-          if (layerSwitcherPresent && visibility && layer.displayInLayerSwitcher && !layer.isBaseLayer && (layer.CLASS_NAME === "OpenLayers.Layer.WMTS" || layer.CLASS_NAME === "OpenLayers.Layer.WMS")) {
-              map.events.triggerEvent('rasterLayerChangeRequest', {'shortId': layerName});
-          } else {
-            layer.setVisibility(visibility);
-          }
-        }
-      }         
+      layer.setOpacity(opacity);
+      //if (layerSwitcherPresent && visibility && layer.displayInLayerSwitcher && !layer.isBaseLayer && (layer.CLASS_NAME === "OpenLayers.Layer.WMTS" || layer.CLASS_NAME === "OpenLayers.Layer.WMS")) {
+      //  map.events.triggerEvent('rasterLayerChangeRequest', {'shortId': layerName});
+      //} else {
+        layer.setVisible(visibility);
+      //}
     };
 
     showLayerNamed = function (layerName) {
       NK.lastAddedLayer = layerName;
-      if (map.getLayersByName(layerName).length) {
-        return setLayerVisibility(layerName, true);
-      } else {
-        var found = false;
-        for (var l in map.layers) {
-          if (map.layers[l].params && map.layers[l].params.LAYERS == layerName) { 
-            return setLayerVisibility(map.layers[l].name, true);
-            found = true;
-          }
-        }
-        if (!found) {
-          NK.visibleLayerQueue[layerName]=true;
-        }
-      }
+      $(map.getLayers().getArray()).filter(function(i,l) {
+        return (l.get('shortid') == layerName) || (l.get('title') == layerName); // TODO: or layer id for WMS
+      }).each(function(i,l) {
+        return setLayerVisibility(l, true);
+      });
+
+      NK.visibleLayerQueue[layerName]=true;
     };
     
-    hideLayerNamed = function (layerName) {
-      return setLayerVisibility(layerName, false);
-    };
-
     setOpacity = function(value) {
       if (!NK.lastAddedLayer) return;
-      if (map.getLayersBy("shortid", NK.lastAddedLayer).length) {
-        return setLayerVisibility(NK.lastAddedLayer, true, parseInt(value)/100.0);
-      } else {
-        NK.opacityQueue[NK.lastAddedLayer]=parseInt(value)/100.0;
-      }
+      $(map.getLayers().getArray()).filter(function(i,l) {
+        return l.get('shortid') == NK.lastAddedLayer;
+      }).each(function(i,l) {
+        return setLayerVisibility(l, true, parseInt(value)/100.0);
+      }); 
+      NK.opacityQueue[NK.lastAddedLayer]=parseInt(value)/100.0;
     }
 
     highlight = function (highlightParam) {

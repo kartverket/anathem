@@ -62,7 +62,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
       title: name,
       source: source,
       shortid: id, 
-      isBaseLayer: false,
+      isBaseLayer: !!options.isBaseLayer,
       visible: !!options.visible
     };
 
@@ -109,6 +109,10 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if usetoken:
     options.params = { 'gkt': NK.gkToken };
+  % endif
+
+  % if isBaseLayer:
+    options.isBaseLayer = true;
   % endif
 
   % if minResolution:
