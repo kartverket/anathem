@@ -47,7 +47,23 @@ NK.addLayerType.WFS = (function (M, MP) {
 			layer,
 			layerOptions;
 
-		protocolParameters = {
+                if (!!options.method && options.method=="GET") {
+                  protocolParameters = {
+                        url: '/ws/px.py?'+url,
+                        origUrl: url,
+			featureType: featureType,
+                        params: {
+                          request: "GetFeature",
+                          service: "WFS",
+                          typename: featureType, 
+                          srsName: options.epsg || "EPSG:"+NK.baseProjection, 
+                          version: options.version || '1.1.0',
+                        },
+                        format: new OpenLayers.Format.GML.v3()
+                  };
+		  protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
+                } else {
+		  protocolParameters = {
 			version: options.version || '1.1.0',
 			url: '/ws/px.py?'+url,
 			proxyUrl: '/ws/px.py?'+url,
@@ -57,24 +73,7 @@ NK.addLayerType.WFS = (function (M, MP) {
 			featureType: featureType,
 			outputFormat: options.outputFormat || 'text/xml; subtype=gml/3.2.1',
 			readFormat: new OpenLayers.Format.GML.v3()
-		};
-
-                if (!!options.method && options.method=="GET") {
-                  protocolParameters = {
-                        url: '/ws/px.py?'+url,
-                        origUrl: url,
-			featureType: featureType,
-                        params: {
-                          request: "GetFeature",
-                          service: "wfs",
-                          typename: featureType, 
-                          srsName: options.epsg || "EPSG:"+NK.baseProjection, 
-                          version: options.version || '1.1.0'
-                        },
-                        format: new OpenLayers.Format.GML.v3()
-                  };
-		  protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
-                } else {
+		  };
   		  protocol = new OpenLayers.Protocol.WFS(protocolParameters);
                 }
 
@@ -96,18 +95,20 @@ NK.addLayerType.WFS = (function (M, MP) {
 			layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD];
 		}
 
-	    if (options.cluster && NK.strategies.cluster) {
-	      layerOptions.strategies.push(NK.strategies.cluster);
-	    }
+                if (options.cluster && NK.strategies.cluster) {
+	          layerOptions.strategies.push(NK.strategies.cluster);
+	        }
 
 		layer = new OpenLayers.Layer.Vector(
 			name,
 			layerOptions
 		);
                 layer.events.register("loadend", layer, function(evt) {
-                  var root = evt.response.priv.responseXML.firstChild;
-                  if (root.localName == "ExceptionReport") {
-                    NK.functions.log(root.textContent.trim());
+                  if (evt.response && evt.response.priv) {
+                    var root = evt.response.priv.responseXML.firstChild;
+                    if (root.localName == "ExceptionReport") {
+                      NK.functions.log(root.textContent.trim());
+                    }
                   }
                 });
 
