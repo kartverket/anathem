@@ -236,8 +236,8 @@ NK.init = function () {
     NK.view.on("change:center", NK.functions.updateHistory);
     NK.view.on("change:resolution", NK.functions.updateHistory);
     NK.view.on("change:rotation", NK.functions.updateHistory);
+    NK.functions.updateHistory();
   }
-  NK.functions.updateHistory();
 
 
 };
