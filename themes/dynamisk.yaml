@@ -31,9 +31,9 @@ overlays  :
 #
     - include: 3/layers/dekning/n50
     - include: 3/layers/dekning/sjo/hovedkart
-#    - include: 3/layers/dekning/havnekart
-#    - include: 3/layers/dekning/kystkart
-#    - include: 3/layers/dekning/overseilingskart
+    - include: 3/layers/dekning/sjo/havnekart
+    - include: 3/layers/dekning/sjo/kystkart
+    - include: 3/layers/dekning/sjo/overseilingskart
 #
 #    # fakta layers
  #   - include: layers/geoJSON/kommunefjell

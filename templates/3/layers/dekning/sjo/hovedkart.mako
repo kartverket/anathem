@@ -1,4 +1,3 @@
-
 <%include file="/3/functions/vector.mako" />
 <%include file="/3/styles/dekning/sjo.mako" />
 
