@@ -13,23 +13,19 @@ buttons.off.setAttribute('class', 'collapse-toolbar-toggle off');
 
 	collapseToolbar = function (evt) {
 		var element = this;
-                /* TODO
-		while (!OpenLayers.Element.hasClass(element, 'toolbar')) {
-			element = element.parentNode;
-		}
-		OpenLayers.Element.addClass(element, 'collapsed');
-                */
+                while (!$(element).hasClass('toolbar')) {
+                  element = element.parentNode;
+                }
+		$(element).addClass('collapsed');
 		return false;
 	};
 
 	showCollapsedToolbar = function (evt) {
 		var element = this;
-                /* TODO 
-		while (!OpenLayers.Element.hasClass(element, 'toolbar')) {
-			element = element.parentNode;
-		}
-		OpenLayers.Element.removeClass(element, 'collapsed');
-                */
+                while (!$(element).hasClass('toolbar')) {
+                  element = element.parentNode;
+                }
+		$(element).removeClass('collapsed');
 		return false;
 	};
 
