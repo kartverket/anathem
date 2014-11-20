@@ -1,6 +1,6 @@
 NK.controls = NK.controls || {};
 NK.controls.Popout = function(options) {
-  var wrapper, img, link, testHash;
+  var wrapper, img, link;
 
   options = options || {};
   
@@ -15,25 +15,40 @@ NK.controls.Popout = function(options) {
   });
 
   wrapper = document.createElement('div');
-  link = document.createElement('a');
-  testHash = window.location.href.split("#")[0].split('/');
-  if (testHash.length > 4) {
-     link.href = "http://www.norgeskart.no/" + testHash[3] + "/#" + window.location.href.split("#")[1];
-  } else {
-     link.href = "http://www.norgeskart.no/#" + window.location.href.split("#")[1];
-  }
-  link.target = "_blank";
-  self.link = link;
 
+  link = document.createElement('a');
+  link.target = "_blank";
+  link.href   = "#";
   link.appendChild(img);
+
   wrapper.appendChild(link);
-  wrapper.className += " logoDiv";
+  wrapper.className += " popoutDiv";
+
+  this.link_ = link;
 
   ol.control.Control.call(this, {
     element: wrapper,
     target: options.target
   });
+
 }
 ol.inherits(NK.controls.Popout, ol.control.Control);
 
-map.addControl(new NK.controls.Popout());
+NK.controls.Popout.prototype.updateLink = function() {
+  var testHash = window.location.href.split("#")[0].split('/');
+  if (testHash.length > 4) {
+    this.link_.href = "http://www.norgeskart.no/" + testHash[3] + "/#" + window.location.href.split("#")[1];
+  } else {
+    this.link_.href = "http://www.norgeskart.no/#" + window.location.href.split("#")[1];
+  }
+}
+
+var popout = new NK.controls.Popout();
+map.addControl(popout);
+
+function poll() {
+  popout.updateLink();
+  setTimeout(poll, 100);
+}
+setTimeout(poll, 10);
+  
