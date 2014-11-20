@@ -1,7 +1,6 @@
 <%include file="/3/functions/addControlToContext.mako" />
 
 (function (context, container) {
-
 % if i18n:
 	${i18n}
 % endif
