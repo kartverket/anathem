@@ -1,0 +1,90 @@
+<%doc>
+description: utility function to set the hashstate according to the definition in template readURL
+</%doc>
+var NK = NK || {};
+NK.functions = NK.functions || {};
+
+NK.functions.updateHistory = function (evt) {
+    var center,
+        zoom,
+        i,
+        layer,
+        uid,
+        search,
+        searchInput;
+
+    if (!!map) {
+        center = map.getView().getCenter();
+        zoom = map.getView().getZoom();
+
+        if (!!center && !!zoom) {
+            uid = zoom + "/" + Math.round(center[0]) + "/" + Math.round(center[1]);
+
+            map.getLayers().forEach(function(layer) {
+                          if (!layer.get('isBaseLayer')) {
+                            if (!layer.get('isUrlDataLayer')) {
+                                if (layer.getVisible()) {
+                                    if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
+                                        uid += "/+" + layer.shortid;
+                                    }
+                                } else {
+                                    if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
+                                        uid += "/-" + layer.shortid;
+                                    }
+                                }
+                            } else if (layer.getVisible()) {
+                                if (layer.type == 'drawing') {
+                                    uid += '/l/drawing/['+ layer.url.trim() +']';
+                                } else if (layer.type == 'geojson') {
+                                    uid += '/l/geojson/['+ layer.url.trim() +']';
+                                } else if (layer.type == 'wms') {
+                                    if (uid.indexOf(layer.url.trim())==-1) {
+                                      uid += '/l/wms/[' + layer.url.trim() + ']';
+                                    }
+                                    var id = layer.params.LAYERS;
+                                    if (id.indexOf("/")>-1) {
+                                      uid += '/[+'+id+']';
+                                    } else { 
+                                      uid += '/+'+id;
+                                    }
+                                } else if (layer.type == 'wfs') {
+                                    if (uid.indexOf(layer.protocol.origUrl.trim())==-1) {
+                                      uid += '/l/wfs/[' + layer.protocol.origUrl.trim() + ']';
+                                    }
+                                    var id = layer.protocol.featureType;
+                                    if (id.indexOf("/")>-1) {
+                                      uid += '/[+'+id+']';
+                                    } else { 
+                                      uid += '/+'+id;
+                                    }
+                                    for (var f in layer.selectedFeatures) {
+                                      var centroid = layer.selectedFeatures[f].geometry.getCentroid();
+                                      uid += "/!"+id+"!"+Math.round(centroid.x)+","+Math.round(centroid.y);
+                                    }
+                                }
+                                NK.functions.verifyDataLayers(layer);
+                                if (!!layer.dataUrl) {
+                                  uid += '/d/'+layer.dataType+'/['+layer.dataUrl.trim()+']';
+                                }
+                            }
+                          if (layer.opacity<1.0) {
+                            uid += "/o"+Math.floor(layer.opacity * 100);
+                          }
+                        }
+            });
+        }
+        searchInput = document.getElementById('searchInput');
+        if (!!searchInput) {
+            search = searchInput.value;
+        }
+        if (history.replaceState) {
+           if (!!search) {
+              history.replaceState({'search': 'sok=' + search, 'hash': uid}, document.title, '?sok=' + encodeURIComponent(search) + '#' + uid);
+           } else {
+              history.replaceState({'hash': uid}, document.title, '#' + uid);
+           }
+        } else {
+           window.location.hash = uid;
+        }
+    }
+};

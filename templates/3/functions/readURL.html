@@ -1,0 +1,512 @@
+<%doc>
+description: |
+  this utility function reads the hash state from the URL and loads/enables map layers accordingly. 
+  current URL syntax is:
+     #zoom/x/y/parameter/parameter
+  * zoom is the map zoom level 
+  * x is the x coordinate of the map
+  * y is the y coordinate of the map
+  optional parameters map include
+  * +layer sets a layer visibility
+  * -layer removes a layer visibility if it is turned on by the default configuration
+  * !layer!feature highlights a named feature on the map in the given layer (deprecated) 
+  * !layer@x,y highlights a feature on the map at the given location 
+  * m/x/y/text adds a marker with a popup on the map
+  * w/url=... adds a WMS layer to the map (deprecated)
+  * l/type/[url] adds an overlay to the map. Valid types include 'wms', 'wfs', 'geojson' and 'drawing'
+  * d/type/[url] adds a data layer to the last added overlay. Valid types include 'wfs' and 'wcs'
+  * o# sets opacity to the last added overlay. # is a float value between 0.0 and 1.0.
+</%doc> 
+// parameters for layers that are loaded asynchronously
+NK.visibleLayerQueue = NK.visibleLayerQueue || {}; 
+NK.opacityQueue = NK.opacityQueue || {}; 
+NK.highlightQueue = NK.highlightQueue || {}; 
+
+NK.functions.storeInitialLayerVisibility = function () {
+  // store the initial layer visibility configuration
+  var i, 
+      layer;
+
+  NK.initLayers = [];
+
+  for (i in map.layers) {
+    if (map.layers.hasOwnProperty(i)) {
+      layer = map.layers[i];
+      if (layer.visibility) {
+        if ((!NK.defaultVisibleLayers || !$.inArray(layer.shortid, NK.defaultVisibleLayers)) && !layer.isUrlDataLayer) {
+          NK.initLayers.push(layer.shortid);
+        }
+      }
+    }
+  }
+};
+
+NK.functions.setMapStateFromPopState = function (evt) {
+  if (evt && evt.originalEvent && evt.originalEvent.state) {
+    NK.functions.setMapState({'search': evt.originalEvent.state.search, 'hash': evt.originalEvent.state.hash});
+  }
+};
+
+$(window).on('popstate', NK.functions.setMapStateFromPopState);
+
+NK.functions.addLabeledMarker = function (params, number) {
+  alert("TODO: NK.functions.addLabeledMarker");
+/* TODO ***
+
+  var layers, 
+      layer, 
+      x, 
+      y, 
+      label,
+      feature,
+      popup,
+      properties;
+
+  layers = map.getLayersBy('shortid', 'pekere');
+  if (layers.length > 0) {
+    layer = layers[0];
+  } else {
+    layer = new OpenLayers.Layer.Vector("Mark&oslash;rer", {shortid: 'pekere', styleMap: NK.styles.labeledMarker});
+    map.addLayer(layer);
+  }
+
+  x = parseInt(params[0], 10);
+  y = parseInt(params[1], 10);
+  properties = {};
+
+  if (params.length > 2) {
+    properties.popupText = decodeURIComponent(params[2]);
+  }  
+  if (number) {
+    properties.nr = number;
+  } else {
+    properties.nr = '';
+  }
+
+  feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(x, y), properties);
+
+  popup = new OpenLayers.Popup.FramedSideAnchored(
+    "nk-user-marker" + (number ? '-' + number : ''), 
+    feature.geometry.getBounds().getCenterLonLat(),
+    null,
+    '<span class="label-text">' + feature.data.popupText + '</span>', //generatePopupMarkup(feature),
+    null, 
+    false, 
+    null, //onPopupClose
+    {x: 10, y: -65},
+    'user-marker'
+  );
+
+  popup.autoSize = true;
+  popup.panMapIfOutOfView = false;
+  feature.popup = popup;
+  map.addPopup(popup);
+  popup.show();
+
+  layer.addFeatures([feature]);
+  return feature;
+
+*/
+};
+
+NK.functions.verifyDataLayers = function(layer) {
+  if (!!layer.dataUrl) {return;}
+  for (var url in NK.dataLayers) {
+    var data = NK.dataLayers[url];
+    if (data.layerUrl == layer.url) {
+      layer.dataUrl = url;
+      layer.dataType = data.type;
+      layer.dataName = data.name;
+      layer.dataLayers = data.layers;
+      layer.dataFormats = data.formats;
+      layer.dataConstraints = data.constraints;
+      layer.dataAttribution = data.attribution;
+    }
+  }
+}
+
+NK.functions.setDataLayer = function(params) {
+  var type, url;
+  if (!NK.lastParsedLayer) { 
+    NK.functions.log(OpenLayers.Lang.translate("Data Layer provided without Portrayal Layer.<br/>Use /l/ before providing /d/."));
+    return;
+  } 
+  type = params[0];
+  url  = params[1];
+  if (url.indexOf("%")>-1) { // you can URL-encode or escape or both
+    url = decodeURIComponent(url);
+  }
+  switch (type) {
+    case 'wcs':
+      var last = NK.lastParsedLayer;
+      NK.functions.loadWCSLayer(url, function(wcs) {
+        NK.dataLayers[url] = {
+          "type": type,
+          "formats": wcs.formats,
+          "layers": wcs.layers,
+          "name": wcs.title,
+          "attribution": wcs.attribution,
+          "constraints": wcs.constraints,
+          "layerUrl": last
+        }
+      });
+      break;
+  }
+} 
+
+NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
+  var type, url;
+
+  type = params[0];
+  url  = params[1];
+  if (url.indexOf("%")>-1) { // you can URL-encode or escape or both
+    url = decodeURIComponent(url);
+  }
+
+  switch (type) {
+    case 'geojson':
+      NK.functions.addGeoJsonLayer(url, "32633"); //FIXME: hardcoding EPSG code, should move to all WGS as per the latest GeoJSON memorandum
+      break;
+    case 'drawing':
+      NK.functions.addGeoJsonLayer(url, "32633", {'isDrawing': true});
+      break;
+    case 'wms':
+      NK.functions.addWMSLayer(url);
+      break;
+    case 'wfs':
+      NK.functions.addWFSLayer(url);
+      break;
+    case 'wcs':
+      NK.functions.log(OpenLayers.Lang.translate("Cannot display WCS directly. Use a Portrayal Service WMS with WCS as data layer.<br/>Syntax: /l/wms/[URL to portrayal]/d/wcs/[URL to data]"));
+      break;
+  }
+  NK.lastParsedLayer = url;
+};
+
+NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
+  var mapProjection,
+      formatOptions,
+      geoJSONFormat,
+      layerOptions,
+      layer,
+      correctEpsgCode,
+      layerExtensions;
+
+  formatOptions = {
+    'internalProjection': map.getProjection(),
+    'externalProjection': map.getProjection()
+  };
+
+  /* set external projection, if provided  */
+
+  if (epsgCode && NK.projections[epsgCode]) {
+    formatOptions.externalProjection = NK.projections[epsgCode];
+    correctEpsgCode = epsgCode;
+  } else {
+    correctEpsgCode = NK.baseProjection;
+  }
+
+  geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
+
+  layerOptions = {
+    shortid: 'urlDataLayer_' + NK.functions.urlDataLayerCounter, 
+    protocol: new OpenLayers.Protocol.HTTP({
+      'url': url,
+      'format': geoJSONFormat
+    }),
+    strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
+    styleMap: NK.styles.track,
+    projection: mapProjection,
+    displayInLayerSwitcher: false,
+    visibility: true
+  };
+
+  layer = new OpenLayers.Layer.Vector(
+    'urlDataLayer_' + NK.functions.urlDataLayerCounter++,
+    layerOptions
+  );
+
+  layerExtensions = {
+    'isUrlDataLayer': true,
+    'type': 'geojson',
+    'epsgCode': correctEpsgCode,
+    'url': url
+  };
+
+  if (extensionProperties) {
+    layerExtensions = OpenLayers.Util.extend(layerExtensions, extensionProperties); 
+  }
+
+  layer = OpenLayers.Util.extend(layer, layerExtensions);
+
+  map.addLayers([layer]);
+};
+
+NK.functions.highlightFeature = function(layer, fid, coords) { 
+   // works for fid, does not work for spatial
+   var filter; 
+
+   if (!!coords) {
+     var delta = 1;
+     filter = new OpenLayers.Filter.Spatial({ type:  OpenLayers.Filter.Spatial.BBOX, 
+                                              value: new OpenLayers.Bounds(coords[0]-delta, coords[1]-delta, (coords[0]-1)+delta, (coords[1]-1)+delta)
+                                            });
+   } else {
+     filter = new OpenLayers.Filter.FeatureId({ fids: fid });
+   }
+   /* set a new renderer rule to highlight elements with the given name */
+   layer.styleMap.styles['default'].addRules([
+          new OpenLayers.Rule({
+            filter: filter,
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor : "orange",
+              graphicZIndex: 2,
+              fillColor : "orange",
+              fillOpacity: 0.1
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+    ]);
+
+    layer.styleMap.styles.temporary.addRules([
+          new OpenLayers.Rule({
+            filter: filter,
+            symbolizer: {
+              strokeWidth: 3,
+              strokeColor: "yellow",
+              fillColor  : "orange",
+              fillOpacity: 0.2,
+              graphicZIndex: 100
+            }
+          }),
+          new OpenLayers.Rule({
+            elseFilter: true,
+            symbolizer: {}
+          })
+    ]);
+};
+
+NK.functions.urlDataLayerCounter = 0;
+NK.functions.setMapState = function (params) {
+  var parms,
+      zoom,
+      mapx,
+      mapy,
+      xy,
+      index,
+      extra,
+      setLayerVisibility,
+      setOpacity,
+      showLayerNamed,
+      hideLayerNamed,
+      highlight,
+      search,
+      searchArray,
+      searchInputField,
+      i, j, p,
+      hash,
+      labeledMarkerCount = 0,
+      pWSG84,
+      pUTM33;
+
+  var SAFE_SEQUENCE = "\n\n"; // a separator that cannot occur in URL
+
+  search = params.search;
+  hash = params.hash;
+
+
+  if (params.search) {
+    search = search.replace('?', '');
+    searchArray = search.split('&');
+    for (i = 0, j = searchArray.length; i < j; i += 1) {
+      p = searchArray[i].split('=');
+      if (p[0] === 'sok') {
+        p[1] = decodeURIComponent(p[1]);
+        searchInputField = document.getElementById('searchInput');
+        if (searchInputField) {
+          searchInputField.value = p[1];
+        }
+        map.events.triggerEvent('searchForPhrase', {'phrase': p[1]});
+      }
+    }
+  }
+
+  if (!!hash) {
+    var tokens = [], match;
+    if (hash.indexOf("[") > -1) {
+      var tokenRE = /\[.*?\]/g ;
+      while(!!(match = tokenRE.exec(hash))) {
+        tokens.push(match[0].slice(1,-1)); 
+      }
+      hash = hash.replace(tokenRE, SAFE_SEQUENCE);
+    } else if (hash.indexOf("%5B") > -1) {
+      var tokenRE = /\%5B.*?\%5D/g ;
+      while(!!(match = tokenRE.exec(hash))) { 
+        tokens.push(match[0].slice(3,-3)); 
+      }
+      hash = hash.replace(tokenRE, SAFE_SEQUENCE);
+    }
+    var parms = hash.split("/");
+    for (p in parms) {
+      if (parms[p] == SAFE_SEQUENCE) {
+        parms[p] = tokens.shift(); // pop first
+      }
+    }
+    if (parms.length >= 3) {
+      zoom = parms[0];
+      mapx = parms[1];
+      mapy = parms[2];
+
+      if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
+        pWSG84 = new Proj4js.Proj('EPSG:4326');   
+        pUTM = new Proj4js.Proj('EPSG:'+NK.baseProjection);   
+        xy = Proj4js.transform(pWSG84, pUTM, new Proj4js.Point(mapy, mapx));
+        mapx = xy.x;
+        mapy = xy.y;
+      }
+    }
+
+    setLayerVisibility = function (layerName, visibility, opacity) {
+      var i, 
+          j,
+          layer,
+          layerSwitcherPresent;
+
+      if (opacity === undefined) {opacity=1.0;}
+      layerSwitcherPresent =  map.getControlsByClass('OpenLayers.Control.RasterOverlayLayerSwitcher').length > 0;
+
+      for (i = 0, j = map.layers.length; i < j; i += 1) {
+        layer = map.layers[i];
+        layer.setOpacity(opacity);
+        if (layer.shortid === layerName) {
+          if (layerSwitcherPresent && visibility && layer.displayInLayerSwitcher && !layer.isBaseLayer && (layer.CLASS_NAME === "OpenLayers.Layer.WMTS" || layer.CLASS_NAME === "OpenLayers.Layer.WMS")) {
+              map.events.triggerEvent('rasterLayerChangeRequest', {'shortId': layerName});
+          } else {
+            layer.setVisibility(visibility);
+          }
+        }
+      }         
+    };
+
+    showLayerNamed = function (layerName) {
+      NK.lastAddedLayer = layerName;
+      if (map.getLayersByName(layerName).length) {
+        return setLayerVisibility(layerName, true);
+      } else {
+        var found = false;
+        for (var l in map.layers) {
+          if (map.layers[l].params && map.layers[l].params.LAYERS == layerName) { 
+            return setLayerVisibility(map.layers[l].name, true);
+            found = true;
+          }
+        }
+        if (!found) {
+          NK.visibleLayerQueue[layerName]=true;
+        }
+      }
+    };
+    
+    hideLayerNamed = function (layerName) {
+      return setLayerVisibility(layerName, false);
+    };
+
+    setOpacity = function(value) {
+      if (!NK.lastAddedLayer) return;
+      if (map.getLayersBy("shortid", NK.lastAddedLayer).length) {
+        return setLayerVisibility(NK.lastAddedLayer, true, parseInt(value)/100.0);
+      } else {
+        NK.opacityQueue[NK.lastAddedLayer]=parseInt(value)/100.0;
+      }
+    }
+
+    highlight = function (highlightParam) {
+      var select, 
+          layers,
+          layer;
+
+      select = highlightParam.slice(1).split("!");
+      layers = map.getBy("layers", "shortid", select[0]);
+
+      if (layers.length === 1) {
+        layer = layers[0];
+        //TODO: handle coordinates
+        NK.functions.highlightFeature(layer, select[1]);
+      } else {
+        var q = NK.highlightQueue[select[0]] || [];
+        if (select[1].indexOf(",")>-1) {
+          q.push([select[0], null, select[1].split(",")]);
+        } else {
+          q.push([select[0], select[1], null]);
+        }
+        NK.highlightQueue[select[0]] = q;
+      }
+    }
+
+
+    for (index = 3; index < parms.length; index += 1) {
+      extra = parms[index];
+      switch (extra.charAt(0)) {
+        case '+':
+          showLayerNamed(extra.slice(1));
+          break;
+        case '-':
+          hideLayerNamed(extra.slice(1));
+          break;
+        case '!':
+          highlight(extra);
+          break;
+        case 'o':
+          setOpacity(extra.slice(1));
+          break;
+        case 'm':
+          setTimeout(
+            (function (boundParameters, boundCounter){
+              return function () {
+                NK.functions.addLabeledMarker(boundParameters, boundCounter);  
+              };
+            }(parms.slice(index + 1, index + 4), ++labeledMarkerCount)),
+            500
+          );
+          index += 3;
+          break;
+        case 'l':
+          NK.functions.parseParamsAndAddDataLayerFromUrl(parms.slice(index + 1, index + 3));
+          index += 2;
+          break;
+        case 'd':
+          NK.functions.setDataLayer(parms.slice(index + 1, index + 3))
+          index += 2;
+          break; 
+        case 'w': 
+          NK.functions.log('/w/url=... syntax is deprecated. use /l/wms/[...] instead.');
+          var url = NK.functions.urlParam('url');
+          NK.functions.parseParamsAndAddDataLayerFromUrl(['wms',url,'']);
+          while ((parms[index] != null) && parms[index].charAt(0) != '+') {
+            index += 1;
+          }
+          index -= 1;
+      }
+    }
+    if (mapx && mapy && zoom) {
+      map.getView().setCenter([parseInt(mapx), parseInt(mapy)]);
+      map.getView().setZoom(zoom);
+    }
+  }
+};
+
+NK.functions.setMapStateFromURL = function () {
+  // adjust layer visibility and pan/zoom based on hash, if available
+
+  var hash,
+      search;
+
+  search = window.location.search;
+  hash = window.location.href.split("#")[1]; // avoids window.location.hash because Firefox automatically decodes URI encoded hashes
+
+
+  NK.functions.setMapState({'search': search, 'hash': hash});
+};

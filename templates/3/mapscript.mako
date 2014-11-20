@@ -228,6 +228,18 @@ NK.init = function () {
   ${controls}
 % endif
 
+  if (!!NK.functions.setMapStateFromURL) {
+    NK.functions.setMapStateFromURL();
+  }
+
+  if (!!NK.functions.updateHistory) {
+    NK.view.on("change:center", NK.functions.updateHistory);
+    NK.view.on("change:resolution", NK.functions.updateHistory);
+    NK.view.on("change:rotation", NK.functions.updateHistory);
+  }
+  NK.functions.updateHistory();
+
+
 };
 // end init()
 

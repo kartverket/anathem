@@ -38,8 +38,9 @@ overlays  :
 #    # fakta layers
  #   - include: layers/geoJSON/kommunefjell
 #
-#functions:
-#    template: functions/readURL
+functions:
+    - template: 3/functions/readURL
+    - template: 3/functions/updateURL
 controls:
     - template: 3/controls/default
 #    - template: controls/status
