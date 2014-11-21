@@ -48,12 +48,17 @@
     }
   };
 
-  layer.on('visible', function(evt) {
-    featureOverlay.setVisible(layer.getVisible());
-  });
-
-  $(M.getViewport()).on('mousemove', function(evt) {
+  var mousemoveFn = function(evt) {
     displayFeatureInfo(M.getEventPixel(evt.originalEvent));
+  };
+
+  layer.on('change:visible', function(evt) {
+    if (layer.getVisible()) {
+      $(M.getViewport()).on('mousemove', mousemoveFn);
+    } else {
+      $(M.getViewport()).off('mousemove', mousemoveFn);
+    }
+    listenFn();
   });
 
   /* TODO ********
