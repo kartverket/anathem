@@ -66,7 +66,8 @@ NK.functions.addLabeledMarker = function (params, number) {
     layer = layer[0];
   } else {
     layer = new ol.layer.Vector({
-      title: 'mark&oslash;rer',
+      title: 'pekere',
+      isHelper: true,
       source: new ol.source.Vector()
     });
     map.addLayer(layer);
@@ -86,7 +87,7 @@ NK.functions.addLabeledMarker = function (params, number) {
     properties.nr = '';
   }
 
-  feature = new ol.Feature($(properties).extend({
+  feature = new ol.Feature($.extend(properties,{
     geometry: new ol.geom.Point([x, y])
   }));
   feature.setStyle(markerStyle);

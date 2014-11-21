@@ -21,7 +21,7 @@ NK.functions.updateHistory = function (evt) {
             uid = zoom + "/" + Math.round(center[0]) + "/" + Math.round(center[1]);
 
             map.getLayers().forEach(function(layer) {
-                          if (!layer.get('isBaseLayer')) {
+                          if (!(layer.get('isBaseLayer') || layer.get('isHelper'))) {
                             if (!layer.get('isUrlDataLayer')) {
                                 if (layer.getVisible()) {
                                   var id = layer.get('shortid');
@@ -66,6 +66,12 @@ NK.functions.updateHistory = function (evt) {
                             uid += "/o"+Math.floor(layer.getOpacity() * 100);
                           }
                         }
+            });
+            $.each(NK.util.getLayersBy('title','pekere'), function(i,layer) {
+              $.each(layer.getSource().getFeatures(), function(i,marker) {
+                var xy = marker.getGeometry().getCoordinates();
+                uid += "/m/"+xy[0]+"/"+xy[1]+"/"+marker.get('name');
+              });
             });
         }
         searchInput = document.getElementById('searchInput');
