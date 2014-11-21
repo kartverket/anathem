@@ -56,7 +56,7 @@ NK.zoomLevels = 18;
 NK.functions = NK.functions || {};
 
 <%include file="/3/functions/util.mako" />
-
+<%include file="/3/functions/dataLayers.mako" />
 
 NK.functions.resetTokenError = function () {
   if (NK.tokenError.pauseTimeRemainingElement) {
@@ -161,14 +161,17 @@ NK.init = function () {
 
   // TODO: cleanup projection loading
   var extents = {
-      'EPSG:25833': [-2500000, 3500000, 3045984, 9045984]
+      'EPSG:25833': [-2500000, 3500000, 3045984, 9045984],
+      'EPSG:32633': [-2500000, 3500000, 3045984, 9045984]
   };
   
   proj4.defs("EPSG:25833","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+  proj4.defs("EPSG:32633","+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs");
   
   NK.projections = proj = {  
     //pregenerated projection objects
-    "25833": new ol.proj.Projection({ code:"EPSG:25833", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
+    "25833": new ol.proj.Projection({ code:"EPSG:25833", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS }),
+    "32633": new ol.proj.Projection({ code:"EPSG:32633", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
   };
 
   mapProj = proj[NK.baseProjection];

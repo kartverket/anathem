@@ -4,4 +4,10 @@ NK.util.getLayersBy = function(key, value) {
   return $.grep(map.getLayers().getArray(), function(l) {
     return l.get(key) == value;
   })
-}
+};
+
+NK.util.getControlsByClass = function(cla) {
+  return $.grep(map.getControls().getArrap(), function(c) {
+    return c instanceof cla;
+  });
+};
