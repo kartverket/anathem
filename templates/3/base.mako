@@ -23,6 +23,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
     <link rel="stylesheet" type="text/css" href="/css/ol.css" />
+    <link rel="stylesheet" type="text/css" href="/css/ol-extra.css" /> 
     <link rel="stylesheet" type="text/css" href="/css/norgeskart-legacy.css" />
   </head>
   <body style="height: 100%; overflow: hidden;">
@@ -38,6 +39,7 @@
     <script src="js/modernizr.min.js"></script>
     <script src="js/proj4.js"></script>
     <script src="js/ol-debug.js"></script>
+    <script src="js/overviewmapcontrol.js"></script>
     <script src="js/jquery.js"></script>
     <!--[if IE]>
     <script src="js/xdr.js"></script>

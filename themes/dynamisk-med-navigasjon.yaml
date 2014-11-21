@@ -46,6 +46,7 @@ controls:
     - template: 3/controls/default
     - template: 3/controls/status
     - template: 3/controls/popout
+#    - template: 3/controls/overview
 
     - include: 3/toolbars/embed-basic-toolbar
 
