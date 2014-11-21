@@ -28,21 +28,21 @@ NK.functions.updateHistory = function (evt) {
                                         uid += "/+" + id;
                                 }
                             } else if (layer.getVisible()) {
-                                if (layer.type == 'drawing') {
-                                    uid += '/l/drawing/['+ layer.url.trim() +']';
-                                } else if (layer.type == 'geojson') {
-                                    uid += '/l/geojson/['+ layer.url.trim() +']';
-                                } else if (layer.type == 'wms') {
-                                    if (uid.indexOf(layer.url.trim())==-1) {
-                                      uid += '/l/wms/[' + layer.url.trim() + ']';
+                                if (layer.get('type') == 'drawing') {
+                                    uid += '/l/drawing/['+ layer.getSource().getUrl() +']';
+                                } else if (layer.get('type') == 'geojson') {
+                                    uid += '/l/geojson/['+ layer.getSource().getUrl() +']';
+                                } else if (layer.get('type') == 'wms') {
+                                    if (uid.indexOf(layer.getSource().getUrl())==-1) {
+                                      uid += '/l/wms/[' + layer.getSource().getUrl() + ']';
                                     }
-                                    var id = layer.params.LAYERS;
+                                    var id = layer.getSource().getParams().LAYERS;
                                     if (id.indexOf("/")>-1) {
                                       uid += '/[+'+id+']';
                                     } else { 
                                       uid += '/+'+id;
                                     }
-                                } else if (layer.type == 'wfs') {
+                                } else if (layer.get('type') == 'wfs') {
                                     if (uid.indexOf(layer.protocol.origUrl.trim())==-1) {
                                       uid += '/l/wfs/[' + layer.protocol.origUrl.trim() + ']';
                                     }
