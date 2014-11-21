@@ -22,6 +22,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#333333" />
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/ol.css" />
     <link rel="stylesheet" type="text/css" href="css/ol-extra.css" /> 
     <link rel="stylesheet" type="text/css" href="css/norgeskart-legacy.css" />
@@ -41,6 +42,7 @@
     <script src="js/ol-debug.js"></script>
     <script src="js/overviewmapcontrol.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <!--[if IE]>
     <script src="js/xdr.js"></script>
     <![endif]-->
