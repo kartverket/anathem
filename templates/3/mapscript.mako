@@ -55,6 +55,9 @@ NK.zoomLevels = 18;
 
 NK.functions = NK.functions || {};
 
+<%include file="/3/functions/util.mako" />
+
+
 NK.functions.resetTokenError = function () {
   if (NK.tokenError.pauseTimeRemainingElement) {
     NK.tokenError.pauseTimeRemainingElement.parentNode.removeChild(NK.tokenError.pauseTimeRemainingElement);
