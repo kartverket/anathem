@@ -474,14 +474,6 @@ NK.functions.setMapState = function (params) {
           NK.functions.setDataLayer(parms.slice(index + 1, index + 3))
           index += 2;
           break; 
-        case 'w': 
-          NK.functions.log('/w/url=... syntax is deprecated. use /l/wms/[...] instead.');
-          var url = NK.functions.urlParam('url');
-          NK.functions.parseParamsAndAddDataLayerFromUrl(['wms',url,'']);
-          while ((parms[index] != null) && parms[index].charAt(0) != '+') {
-            index += 1;
-          }
-          index -= 1;
       }
     }
     if (mapx && mapy && zoom) {
