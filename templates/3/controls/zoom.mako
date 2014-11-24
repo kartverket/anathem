@@ -48,7 +48,7 @@ NK.controls.ZoomPanel.prototype.zoom = function(dir) {
   return function() {
     var view = map.getView();
     var zoom = ol.animation.zoom({
-      duration: 250,
+      duration: 100,
       resolution: view.getResolution()
     });
     map.beforeRender(zoom);
