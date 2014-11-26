@@ -3,61 +3,51 @@
 NK.functions = NK.functions || {};
 NK.functions.vector = NK.functions.vector || {};
 
-NK.functions.vector.markAllById = function (layer, intent, preserveIntent) {
-  return function(element, evt) {
-    if (preserveIntent && element.feature.renderIntent === preserveIntent) {
-      return false;
-    }
-    // highlight all elements with the same element.feature.fid
-    var ident = layer.getFeaturesByFid(element.feature.fid);
-    $.each(ident, function (i, feature) {
+NK.functions.vector.addHoverControls = function (map, layer, style, featureIdentity) {
 
-      if (preserveIntent && feature.renderIntent === preserveIntent) {
-        return false;
-      } else {
-        feature.renderIntent = intent;
-        layer.drawFeature(feature);
+  var featureOverlay = new ol.FeatureOverlay({
+    map: map,
+    style: style
+  });
+
+  var highlight=[];
+  var displayFeatureInfo = function(pixel) {
+    var feature;
+    map.forEachFeatureAtPixel(pixel, function(f, layer) {
+      if ((!feature) || (feature.getGeometry().getArea() > f.getGeometry().getArea())) {
+        feature = f;
       }
     });
+    if (!(highlight.length && featureIdentity(feature, highlight[0]))) {
+      if (highlight.length) {
+        for (var h in highlight) {
+          featureOverlay.removeFeature(highlight[h]);
+        }
+        highlight = [];
+      }
+      if (!!feature) {
+        highlight = $.grep(layer.getSource().getFeatures(), function(f) {
+          return featureIdentity(feature, f);
+        });
+        for (var h in highlight) {
+          featureOverlay.addFeature(highlight[h]);
+        }
+      }
+    }
   };
-};
 
-NK.functions.vector.addVectorHoverControls = function (map, layer, options) {
-  var hoverCtrl,
-      selectFeatureProperties;
-
-  selectFeatureProperties = {
-      hover: true,
-      highlightOnly: true,
-      renderIntent: "temporary"
+  var mousemoveFn = function(evt) {
+    displayFeatureInfo(map.getEventPixel(evt.originalEvent));
   };
 
-  if (options && options.groupByFid) {
-    selectFeatureProperties.eventListeners = {
-        beforefeaturehighlighted: NK.functions.vector.markAllById(layer, "temporary", options.preserveIntent),
-        featureunhighlighted: NK.functions.vector.markAllById(layer, "default", options.preserveIntent)
-    };
-  }
+  layer.on('change:visible', function(evt) {
+    if (layer.getVisible()) {
+      $(map.getViewport()).on('mousemove', mousemoveFn);
+    } else {
+      $(map.getViewport()).off('mousemove', mousemoveFn);
+    }
+  });
 
-  /* TODO ****
-  hoverCtrl = new OpenLayers.Control.SelectFeature(
-    layer,
-    selectFeatureProperties
-  );
-
-
-  map.addControl(hoverCtrl);
-  hoverCtrl.activate();
-  return hoverCtrl;
-  ***/ 
-};
-
-NK.functions.vector.addVectorControls = function (map, layer, options) {
-  var controls = {};
-
-  controls.hover = NK.functions.vector.addVectorHoverControls(map, layer, options);
-
-  return controls;
 };
 
 

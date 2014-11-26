@@ -27,48 +27,8 @@
 
   M.addLayer(layer);
 
-  var featureOverlay = new ol.FeatureOverlay({
-    map: M,
-    style: NK.styles.dekning.sjo.highlight
-  });
-
-  var highlight=[];
-  var displayFeatureInfo = function(pixel) {
-    var feature;
-    M.forEachFeatureAtPixel(pixel, function(f, layer) {
-      if ((!feature) || (feature.getGeometry().getArea() > f.getGeometry().getArea())) {
-        feature = f;
-      }
-    });    
-    var group = feature && feature.getId().split("_")[0];
-    var check = highlight.length && highlight[0].getId().split("_")[0];
-    if (group != check) {
-      if (highlight.length) {
-        for (var h in highlight) {
-          featureOverlay.removeFeature(highlight[h]);
-        }
-        highlight = [];
-      } 
-      if (!!feature) {
-        highlight = $.grep(layer.getSource().getFeatures(), function(feature) {
-          return feature.getId().split("_")[0] == group;
-        });
-        for (var h in highlight) {
-          featureOverlay.addFeature(highlight[h]);
-        }
-      }
-    }
-  };
-
-  var mousemoveFn = function(evt) {
-    displayFeatureInfo(M.getEventPixel(evt.originalEvent));
-  };
-
-  layer.on('change:visible', function(evt) {
-    if (layer.getVisible()) {
-      $(M.getViewport()).on('mousemove', mousemoveFn); 
-    } else {
-      $(M.getViewport()).off('mousemove', mousemoveFn);
-    }
+  NK.functions.vector.addHoverControls(map, layer, NK.styles.dekning.sjo.highlight, function(a,b) {
+    if ((!a)||(!b)) {return false;}
+    return a.getId().split("_")[0] == b.getId().split("_")[0];
   });
 }(map, mapProj, proj));

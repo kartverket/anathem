@@ -27,39 +27,7 @@
 
   M.addLayer(layer);
 
-  var featureOverlay = new ol.FeatureOverlay({
-    map: M,
-    style: NK.styles.dekning.land.highlight
-  });
-
-  var highlight;
-  var displayFeatureInfo = function(pixel) {
-    var feature = M.forEachFeatureAtPixel(pixel, function(feature, layer) {
-      return feature;
-    });
-    if (feature !== highlight) {
-      if (!!highlight) {
-        featureOverlay.removeFeature(highlight);
-      } 
-      if (!!feature) {
-        featureOverlay.addFeature(feature);
-      }
-      highlight = feature;
-    }
-  };
-
-  var mousemoveFn = function(evt) {
-    displayFeatureInfo(M.getEventPixel(evt.originalEvent));
-  };
-
-  layer.on('change:visible', function(evt) {
-    if (layer.getVisible()) {
-      $(M.getViewport()).on('mousemove', mousemoveFn);
-    } else {
-      $(M.getViewport()).off('mousemove', mousemoveFn);
-    }
-    listenFn();
-  });
+  NK.functions.vector.addHoverControls(map, layer, NK.styles.dekning.land.highlight, Object.is);
 
   /* TODO ********
   onPopupClose = function (evt) {
