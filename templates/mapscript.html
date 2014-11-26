@@ -463,7 +463,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
         eventListeners: {
           "getfeatureinfo": function(event) {
             var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event, formats), null, true,
-                              NK.functions.closePopupCallBack, {x: 10, y: -65}, 'selected-feature-popup, user-marker')
+                              NK.functions.closePopupCallBack, {x: 0, y: -15}, 'selected-feature-popup, user-marker')
             map.addPopup(popup, true);
             if (!event.features.length && (!event.text || !event.text.trim().length)) {
               setTimeout(function() {
@@ -661,7 +661,8 @@ NK.init = function () {
     OpenLayers.Util.extend(NK.mapOptions, {
       controls: [], //defined later
       //numZoomLevels: NK.zoomLevels,
-      eventListeners: NK.mapEventListeners
+      eventListeners: NK.mapEventListeners,
+      paddingForPopups: new OpenLayers.Bounds(85,15,85,75)
     })
   );
 
