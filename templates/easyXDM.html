@@ -193,11 +193,23 @@
 							NK.functions.postMessage({"type": "error", "message": "no such layer or feature"});
 						}
 					} else if (json.cmd === 'setBoundingBox') {
-						var draw = map.getControlsByName('OpenLayers.Control.Draw')[0];
+						var draw = map.getControlsByClass('OpenLayers.Control.Draw')[0];
                                                 if (!!draw) {
-                                                  var bounds = new OpenLayers.Bounds(json.bounds);
-                                                  feature    = new OpenLayers.Feature.Vector(bounds);
-                                                  draw.sketchComplete({feature: feature}); 
+                                                  var l=json.bounds[0], 
+                                                      b=json.bounds[1],
+                                                      r=json.bounds[2],
+                                                      t=json.bounds[3];
+                                                  var polygon = new OpenLayers.Geometry.Polygon([
+                                                                  new OpenLayers.Geometry.LinearRing([
+                                                                    new OpenLayers.Geometry.Point(l,b),
+                                                                    new OpenLayers.Geometry.Point(r,b),
+                                                                    new OpenLayers.Geometry.Point(r,t),
+                                                                    new OpenLayers.Geometry.Point(l,t),
+                                                                    new OpenLayers.Geometry.Point(l,b)
+                                                                  ])
+                                                                ]);
+                                                  feature    = new OpenLayers.Feature.Vector(polygon);
+                                                  draw.displayBBoxFeature(feature); 
                                                 }
 					}
 				}
