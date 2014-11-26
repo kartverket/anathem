@@ -1,0 +1,11 @@
+
+$dark-color: #000;
+
+.ol-scale-line {
+  background: none;
+}
+.ol-scale-line-inner {
+  border: 2px solid $dark-color;
+  border-top-style: none;
+  color: $dark-color;
+}
