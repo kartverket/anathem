@@ -43,19 +43,19 @@ NK.functions.updateHistory = function (evt) {
                                       uid += '/+'+id;
                                     }
                                 } else if (layer.get('type') == 'wfs') {
-                                    if (uid.indexOf(layer.protocol.origUrl.trim())==-1) {
-                                      uid += '/l/wfs/[' + layer.protocol.origUrl.trim() + ']';
+                                    if (uid.indexOf(layer.get('url'))==-1) {
+                                      uid += '/l/wfs/[' + layer.get('url') + ']';
                                     }
-                                    var id = layer.protocol.featureType;
+                                    var id = layer.get('featureType');
                                     if (id.indexOf("/")>-1) {
                                       uid += '/[+'+id+']';
                                     } else { 
                                       uid += '/+'+id;
                                     }
-                                    for (var f in layer.selectedFeatures) {
-                                      var centroid = layer.selectedFeatures[f].geometry.getCentroid();
-                                      uid += "/!"+id+"!"+Math.round(centroid.x)+","+Math.round(centroid.y);
-                                    }
+                                    //for (var f in layer.selectedFeatures) {
+                                    //  var centroid = layer.selectedFeatures[f].geometry.getCentroid();
+                                    //  uid += "/!"+id+"!"+Math.round(centroid.x)+","+Math.round(centroid.y);
+                                    //}
                                 }
                                 NK.functions.verifyDataLayers(layer);
                                 if (!!layer.dataUrl) {

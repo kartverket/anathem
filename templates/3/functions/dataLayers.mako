@@ -116,6 +116,7 @@ ol.source.ImageWMS.prototype.getRequestUrl_ = function(extent, size, pixelRatio,
   return this.getRequestUrl_orig(extent, size, pixelRatio, projection, params);
 };
 
+
 NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   var crs = $.grep(parms['crs'], function(s) {
     return ($.inArray(s, NK.supportedCRS)>-1)
@@ -204,3 +205,128 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   map.addLayer(wms);
   // NK.functions.createLegend();
 };
+
+NK.functions.addWFSLayer = function(wfsUrl) {
+  if (NK.util.getLayersBy("url",wfsUrl).length) {return;}
+  var layers = [], crs=[], formats={}, serviceParms={}, layerParms;
+  var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
+  resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
+  resultWFS.done(function (xml) {
+    var version = $(xml).find('ServiceTypeVersion')
+    if (!!version) {version = version.text().trim();}
+    serviceParms['version'] = version;
+    var exception = $(xml).find('ExceptionText').text();
+    if (!!exception) {
+      NK.functions.log(exception);
+    } else {
+      $(xml).find('Service').each(function () {
+        serviceParms['serviceTitle'] = $(this).children('Title').text();
+      });
+      $(xml).find('OutputFormats').each(function () {
+        $(this).children('Format').each(function () {;
+          formats[$(this).text()] = true;
+        });
+      });
+      serviceParms['formats'] = Object.keys(formats);
+      $(xml).find('AccessConstraints').each(function () {
+        serviceParms['constraints'] = $(this).text();
+      });
+      var attribution;
+      $(xml).find('Attribution').each(function () {
+        var href = $(this).children('OnlineResource')[0];
+        var logo = $(this).children('LogoURL').children('OnlineResource')[0];
+        attribution = { 
+          'title': $(this).children('Title').text(),
+          'href' : href && href.getAttribute("xlink:href"),
+          'logo' : logo && logo.getAttribute("xlink:href")
+        }
+      });
+      if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
+      serviceParms['attribution'] = attribution;
+      $(xml).find('DefaultSRS').each(function () {
+        crs.push($(this).text());
+      });
+      serviceParms['crs'] = crs;
+      $(xml).find('FeatureType').each(function () {
+        layerParms = {};
+        var name = $(this).children('Name').text();
+        if (!name) {return;}
+        layers.push(name);
+        layerParms['title'] = $(this).children('Title').text();
+        layerParms['visible'] = name in NK.visibleLayerQueue;
+        if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
+        if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
+        layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
+        layerParms['type'] = name;
+        NK.functions.createDynamicWFSLayer(layerParms['title'], wfsUrl, $.extend({},serviceParms, layerParms));
+        if (!!NK.xdm) {
+          NK.functions.postMessage({"type":"layerLoaded", "title":layerParms['title'], "url":wfsUrl}); 
+        }
+      });
+      NK.functions.updateHistory();
+    }
+  });
+
+  if (NK.controls.Geoportal) {
+    //var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+    geoportal.showControls(wfsUrl);
+    geoportal.displayLayerList();
+  }
+};
+
+/** monkey patch to accept any name space in ol.xml.parse ***/
+ol.xml.parse_orig = ol.xml.parse;
+ol.xml.parse = function(parsersNS, node, objectStack, opt_this) {
+  if (!!parsersNS["*"]) {
+    parsersNS[node.firstElementChild.namespaceURI] = parsersNS["*"];
+  } 
+  return ol.xml.parse_orig(parsersNS, node, objectStack, opt_this);
+} 
+/************************************************************/
+
+NK.functions.createDynamicWFSLayer = function (name, url, parms) {
+  // TODO: read GeoJSON if supported  
+  // var format = new ol.format.GeoJSON();
+
+  var crs = $.grep(parms['crs'], function(s) {
+    return ($.inArray(s, NK.supportedCRS)>-1)
+  })[0];
+  var format = new ol.format.WFS({
+    featureNS:   '*', //see monkey patch above,
+    //featureNS:   'http://mapserver.gis.umn.edu/mapserver', //FIXME: parms['namespace'],
+    featureType: parms['type']
+  });
+  var source = new ol.source.ServerVector({
+    format: format,
+    loader: function(extent, resolution, projection) {
+      var request = "/ws/px.py?" + url + "?service=WFS&version=1.1.0&request=GetFeature";
+      request += "&typename=" + parms['type'];
+      request += "&srsName=" + crs; //TODO
+      request += "&bbox="+extent.join(",");
+      $.ajax({url:request}).done(function(response) {
+        var features = source.readFeatures(response);
+        source.addFeatures(features);
+      });
+    }
+  });
+  var wfs = new ol.layer.Vector({
+    source: source,
+    style: new ol.style.Style({
+      stroke: new ol.style.Stroke({ 
+        color:"green", 
+        width: 2
+      })
+    }),
+    type: 'wfs',
+    url:  url,
+    featureType: parms['type'],
+    dataFormats: parms['formats'],
+    attribution: parms['attribution'],
+    constraints: parms['constraints'],
+    visible:     parms['visible'],
+    opacity:     parms['opacity'], 
+    isUrlDataLayer: true
+  });
+
+  map.addLayer(wfs);
+} 

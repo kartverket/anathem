@@ -174,6 +174,8 @@ NK.init = function () {
     "32633": new ol.proj.Projection({ code:"EPSG:32633", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
   };
 
+  ol.proj.addEquivalentProjections([NK.projections["25833"], NK.projections["32633"]]);
+
   mapProj = proj[NK.baseProjection];
 
 % if language:
