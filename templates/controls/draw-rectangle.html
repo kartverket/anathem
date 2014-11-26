@@ -9,7 +9,7 @@ params:
 <%inherit file="/controls/controlcontext.html" />
 
 options.autoActivate = true;
-options.activeDrawControl = 'point';
+options.activeDrawControl = 'rectangle';
 
 % if storageUrl:
 options.JSONDataStorageUrl = '${storageUrl}';
@@ -22,7 +22,6 @@ options.JSONDataStorageUrl = '${storageUrl}';
 	}
 % endif
 
-var control = new OpenLayers.Control.Draw(options);
-NK.functions.addControlToContext(control, context);
-control.activateTool('rectangle');
-
+var drawControl = new OpenLayers.Control.Draw(options);
+NK.functions.addControlToContext(drawControl, context);
+drawControl.activateTool('rectangle');

@@ -192,6 +192,13 @@
 						} else {
 							NK.functions.postMessage({"type": "error", "message": "no such layer or feature"});
 						}
+					} else if (json.cmd === 'setBoundingBox') {
+						var draw = map.getControlsByName('OpenLayers.Control.Draw')[0];
+                                                if (!!draw) {
+                                                  var bounds = new OpenLayers.Bounds(json.bounds);
+                                                  feature    = new OpenLayers.Feature.Vector(bounds);
+                                                  draw.sketchComplete({feature: feature}); 
+                                                }
 					}
 				}
 			}
