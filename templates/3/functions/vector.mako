@@ -58,7 +58,7 @@ NK.functions.vector.addHoverControls = function (map, layer, style, featureIdent
       mouseHint.innerHTML = NK.functions.popup.ify(feature.values_);
       $.extend(mouseHint.style, {
         left: pixel[0]+10+"px",
-        top: pixel[1]+15+"px",
+        top: pixel[1]+15+"px"
       });
     };
   };

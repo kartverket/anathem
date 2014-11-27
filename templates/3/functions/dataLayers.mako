@@ -314,7 +314,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   });
   var wfs = new ol.layer.Vector({
     source: source,
-    style: NK.styles.wfs.default,
+    style: NK.styles.wfs['default'],
     type: 'wfs',
     url:  url,
     featureType: parms['type'],
