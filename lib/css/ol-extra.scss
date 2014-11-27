@@ -1,5 +1,5 @@
-
 $dark-color: #000;
+$light-bg  : rgba(255,255,220,0.9);
 
 .ol-scale-line {
   background: none;
@@ -9,3 +9,11 @@ $dark-color: #000;
   border-top-style: none;
   color: $dark-color;
 }
+.ol-mouse-hint {
+  font-size: smaller;
+  position: absolute;
+  background-color: $light-bg;
+  padding: 5px;
+  border: 1px dotted $dark-color;
+}
+
