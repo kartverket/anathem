@@ -9,12 +9,6 @@ language  : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
 projection: 25833
 
-#styles    :
-#    - template: styles/unlabeledMarker
-#    - template: styles/labeledMarker
-#    - template: styles/omriss
-#    - template: styles/track
-#  
 baselayers:   
     - include: 3/layers/europa
 overlays  : 
@@ -38,6 +32,8 @@ overlays  :
 #    # fakta layers
  #   - include: layers/geoJSON/kommunefjell
 #
+styles:
+    - template: 3/styles/wfs 
 functions:
     - template: 3/functions/readURL
     - template: 3/functions/updateURL

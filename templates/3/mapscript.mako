@@ -58,6 +58,11 @@ NK.functions = NK.functions || {};
 <%include file="/3/functions/util.mako" />
 <%include file="/3/functions/dataLayers.mako" />
 
+% if styles :
+// styles
+  ${styles}
+% endif
+
 NK.functions.resetTokenError = function () {
   if (NK.tokenError.pauseTimeRemainingElement) {
     NK.tokenError.pauseTimeRemainingElement.parentNode.removeChild(NK.tokenError.pauseTimeRemainingElement);

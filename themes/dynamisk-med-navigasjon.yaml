@@ -5,16 +5,10 @@ mapscript: clients/norgeskart-dynamisk-med-navigasjon.min.js
 ---
 template : 3/mapscript
 filename : clients/norgeskart-dynamisk-med-navigasjon.min.js
-language  : nb
+language : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
 projection: 25833
 
-#styles    :
-#    - template: styles/unlabeledMarker
-#    - template: styles/labeledMarker
-#    - template: styles/omriss
-#    - template: styles/track
-#  
 baselayers:   
     - include: 3/layers/europa
 overlays  : 
@@ -34,10 +28,8 @@ overlays  :
     - include: 3/layers/dekning/sjo/havnekart
     - include: 3/layers/dekning/sjo/kystkart
     - include: 3/layers/dekning/sjo/overseilingskart
-#
-#    # fakta layers
- #   - include: layers/geoJSON/kommunefjell
-#
+styles :
+    - template: 3/styles/wfs
 functions:
     - template: 3/functions/readURL
     - template: 3/functions/updateURL
@@ -47,7 +39,6 @@ controls:
     - template: 3/controls/status
     - template: 3/controls/popout
 #    - template: 3/controls/overview
-
     - include: 3/toolbars/embed-basic-toolbar
 
 center:

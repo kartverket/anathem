@@ -1,4 +1,4 @@
-NK.supportedCRS = ['EPSG:32633','EPSG:25833'];
+NK.supportedCRS = ['EPSG:32633','EPSG:25833','urn:ogc:def:crs:EPSG::32633','urn:ogc:def:crs:EPSG::25833'];
 
 NK.functions.getWMSCapabilities = function (url) {
   return NK.functions.corsRequest(url, {"service":"WMS", "request":"GetCapabilities"});
@@ -246,6 +246,9 @@ NK.functions.addWFSLayer = function(wfsUrl) {
       $(xml).find('DefaultSRS').each(function () {
         crs.push($(this).text());
       });
+      $(xml).find('OtherSRS').each(function () {
+        crs.push($(this).text());
+      });
       serviceParms['crs'] = crs;
       $(xml).find('FeatureType').each(function () {
         layerParms = {};
@@ -311,12 +314,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   });
   var wfs = new ol.layer.Vector({
     source: source,
-    style: new ol.style.Style({
-      stroke: new ol.style.Stroke({ 
-        color:"green", 
-        width: 2
-      })
-    }),
+    style: NK.styles.wfs.default,
     type: 'wfs',
     url:  url,
     featureType: parms['type'],
@@ -329,4 +327,5 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   });
 
   map.addLayer(wfs);
+  NK.functions.vector.addHoverControls(map, wfs, NK.styles.wfs.highlight); 
 } 
