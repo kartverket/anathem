@@ -17,9 +17,10 @@ NK.functions.corsRequest = function (url, params) {
       url += k+"="+params[k]+"&";
     }
     return $.ajax({
-      url: '/ws/px.py',
+      //url: '/ws/px.py',
+      url: url,
       type: 'GET',
-      data: url,
+      //data: url,
       dataType: 'xml'
     });
   }
@@ -390,7 +391,8 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   var source = new ol.source.ServerVector({
     format: format,
     loader: function(extent, resolution, projection) {
-      var request = "/ws/px.py?" + url + "?service=WFS&version=1.1.0&request=GetFeature";
+      //var request = "/ws/px.py?" + url + "?service=WFS&version=1.1.0&request=GetFeature";
+      var request = url + "?service=WFS&version=1.1.0&request=GetFeature";
       request += "&typename=" + parms['type'];
       request += "&srsName=" + crs; 
       request += "&outputFormat=" + mimeFormat;
