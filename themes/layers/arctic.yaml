@@ -1,7 +1,7 @@
 template: layers/wmts
 usetoken: true
-name: arctic 
-layer: arctic_test
+name: arctic
+layer: arcticsdi_wmts
 layerGroup: modus
 isBaseLayer: true
 id: arctic 
