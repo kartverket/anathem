@@ -48,11 +48,20 @@ NK.functions.vector.addHoverControls = function (map, layer, style, featureIdent
   mouseHint.style.visibility = false;
 
   var displayFeatureInfo = function(pixel) {
-    var feature;
+    var feature, geom;
     map.forEachFeatureAtPixel(pixel, function(f, layer) {
-      if ((!feature) || (feature.getGeometry().getArea() > f.getGeometry().getArea())) {
-        feature = f;
+      if (!!feature) { 
+        geom = f.getGeometry(); 
+        // TODO: mixed geometries?
+        if ((geom instanceof ol.geom.LineString) && 
+                   (feature.getGeometry().getLength() <= f.getGeometry().getLength())) {
+          return;
+        } else if ((geom instanceof ol.geom.Polygon) &&
+                   (feature.getGeometry().getArea() <= f.getGeometry().getArea())) {
+          return; 
+        }
       }
+      feature = f; 
     });
     if (!(highlight.length && featureIdentity(feature, highlight[0]))) {
       if (highlight.length) {

@@ -1,5 +1,5 @@
 NK.supportedCRS = ['EPSG:32633','EPSG:25833','urn:ogc:def:crs:EPSG::32633','urn:ogc:def:crs:EPSG::25833'];
-NK.supportedWFSFormats = ['application/json; subtype=geojson','text/xml; subtype=gml/3.1.1'];
+NK.supportedWFSFormats = ['application/json; subtype=geojson','text/xml; subtype=gml/3.1.1', 'text/xml; subtype=gml/3.2.1'];
 
 NK.functions.getWMSCapabilities = function (url) {
   return NK.functions.corsRequest(url, {"service":"WMS", "request":"GetCapabilities"});
@@ -248,6 +248,13 @@ NK.functions.addWFSLayer = function(wfsUrl) {
       $(xml).find('OtherSRS').each(function () {
         crs.push($(this).text());
       });
+      $(xml).find('SpatialOperator[name="BBOX"]').each(function () {
+        $(xml).find('GeometryOperand').each(function () {
+          if ($(this).text() == "gml:Envelope") {
+            serviceParms['bboxFilter'] = true;
+          }
+        });
+      });
       serviceParms['crs'] = crs;
       $(xml).find('FeatureType').each(function () {
         layerParms = {};
@@ -364,12 +371,12 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   })[0];
   var mimeFormat = 'text/xml; subtype=gml/3.2.1',
       format;
-  //for (var f in NK.supportedWFSFormats) {
-  //  if (NK.supportedWFSFormats[f] in parms['formats']) {
-  //    mimeFormat = NK.supportedWFSFormats[f];
-  //    break;
-  //  }
-  //}
+  for (var f in NK.supportedWFSFormats) {
+    if (parms.formats.indexOf(NK.supportedWFSFormats[f])>-1) {
+      mimeFormat = NK.supportedWFSFormats[f];
+      break;
+    }
+  }
   if (mimeFormat.indexOf('gml')>-1) {
     format = new ol.format.WFS({
       featureNS:   '*', //see monkey patch above,
@@ -386,8 +393,11 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
       request += "&typename=" + parms['type'];
       request += "&srsName=" + crs; 
       request += "&outputFormat=" + mimeFormat;
-      request += '&filter=<Filter%20xmlns="http://www.opengis.net/ogc"><BBOX><Envelope%20srsName="'+ crs +'"%20xmlns="http://www.opengis.net/gml"><lowerCorner>'+extent[0]+' '+extent[1]+'</lowerCorner><upperCorner>'+extent[2]+' '+extent[3]+'</upperCorner></Envelope></BBOX></Filter>';
-      //request += "&bbox="+extent.join(",");
+      //if (parms['bboxFilter']) {
+      //  request += '&filter=<Filter%20xmlns="http://www.opengis.net/ogc"><BBOX><Envelope%20srsName="'+ crs +'"%20xmlns="http://www.opengis.net/gml"><lowerCorner>'+extent[0]+' '+extent[1]+'</lowerCorner><upperCorner>'+extent[2]+' '+extent[3]+'</upperCorner></Envelope></BBOX></Filter>';
+      //} else {
+        request += "&bbox="+extent.join(",");
+      //}
       //request += "&bbox="+extent.join(",") + "," + crs;
       $.ajax({url:request}).done(function(response) {
         var features = source.readFeatures(response);
