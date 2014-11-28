@@ -1,5 +1,5 @@
 NK.supportedCRS = ['EPSG:32633','EPSG:25833','urn:ogc:def:crs:EPSG::32633','urn:ogc:def:crs:EPSG::25833'];
-NK.supportedWFSFormats = ['application/json; subtype=geojson','text/xml; subtype=gml/3.1.1', 'text/xml; subtype=gml/3.2.1'];
+NK.supportedWFSFormats = ['application/json; subtype=geojson','application/json','text/xml; subtype=gml/3.1.1', 'text/xml; subtype=gml/3.2.1'];
 
 NK.functions.getWMSCapabilities = function (url) {
   return NK.functions.corsRequest(url, {"service":"WMS", "request":"GetCapabilities"});
@@ -283,6 +283,11 @@ NK.functions.addWFSLayer = function(wfsUrl) {
   }
 };
 
+/** monkey patch to read GML Point with coordinates child *************/
+ol.format.GML.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['coordinates'] = function(node, objectStack) {
+  node.textContent = node.textContent.replace(","," ");
+  return ol.format.GML.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['pos'](node, objectStack);
+}
 /*********** monkey patch to support more GML name spaces ***/
 for (var i in ol.format.GML) {
   if (!!ol.format.GML[i]['http://www.opengis.net/gml']) {
@@ -361,11 +366,7 @@ ol.xml.getStructuredTextContent = function(node, normalizeWhitespace) {
 };
 
 
-
 NK.functions.createDynamicWFSLayer = function (name, url, parms) {
-  // TODO: read GeoJSON if supported  
-  // var format = new ol.format.GeoJSON();
-
   var crs = $.grep(parms['crs'], function(s) {
     return ($.inArray(s, NK.supportedCRS)>-1)
   })[0];
@@ -384,7 +385,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
       featureType: parms['type']
     });
   } else { 
-    format = ol.format.GeoJSON();
+    format = new ol.format.GeoJSON();
   }
   var source = new ol.source.ServerVector({
     format: format,

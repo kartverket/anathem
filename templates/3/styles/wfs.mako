@@ -28,9 +28,19 @@ var blueHighlight = [new ol.style.Style({
     width: 2
   })
 })]; 
+var pointStyle = [new ol.style.Circle({
+  radius: 10,
+  stroke: new ol.style.Stroke({
+    color: "#aae",
+    width: 2
+  })
+})]; 
 
 NK.styles.wfs = {
   "default": function(feature, resolution) { 
+    if (feature.getGeometry().getType() == ol.geom.GeometryType.Point) {
+      return pointStyle;
+    } 
     if (resolution > 2000) {
       return unlabeled;
     } else {
