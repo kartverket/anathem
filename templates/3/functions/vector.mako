@@ -69,8 +69,8 @@ NK.functions.vector.addHoverControls = function (map, layer, style, featureIdent
           featureOverlay.removeFeature(highlight[h]);
         }
         highlight = [];
-        mouseHint.style.visibility = false;
       }
+      mouseHint.style.visibility = 'hidden';
       if (!!feature) {
         highlight = $.grep(layer.getSource().getFeatures(), function(f) {
           return featureIdentity(feature, f);
@@ -78,7 +78,7 @@ NK.functions.vector.addHoverControls = function (map, layer, style, featureIdent
         for (var h in highlight) {
           featureOverlay.addFeature(highlight[h]);
         }
-        mouseHint.style.visibility = true;
+        mouseHint.style.visibility = 'visible';
       }
     }
     if (!!feature) {
@@ -87,7 +87,7 @@ NK.functions.vector.addHoverControls = function (map, layer, style, featureIdent
         left: pixel[0]+10+"px",
         top: pixel[1]+15+"px"
       });
-    };
+    }
   };
 
   var mousemoveFn = function(evt) {
