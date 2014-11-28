@@ -6,10 +6,28 @@ NK.functions.popup = NK.functions.popup || {};
 
 var skipKeys = ["boundedBy", "geometry", "msGeometry"];
 NK.functions.popup.ify = function(object) {
-  var str="<table>"
+  if (object === undefined) {
+    return "-";
+  }
+  if (goog.isString(object)) {
+    if (object.indexOf("://")>-1) {
+      return "<a href='"+object+"'>"+object+"</a>";
+    }
+    return object;
+  }
+  var keys = Object.keys(object);
+  if ((keys.length == 1) && (keys[0] == "text_")) {
+    if (object.text_.indexOf("://")>-1) {
+      return "<a href='"+object.text_+"'>"+object.text_+"</a>";
+    }
+    return object.text_;
+  }
+  var str="<table>", value;
   for (var k in object) {
     if (skipKeys.indexOf(k)>-1) { continue; }
-    str += "<tr><td>"+k+":</td><td>"+object[k]+"</td></tr>";
+    if ((k == "text_") && (object[k].trim() == "")) { continue; }
+    value = NK.functions.popup.ify(object[k]);
+    str += "<tr><td>"+k+":</td><td>"+value+"</td></tr>";
   }
   str += "</tr></table>";
   return str;

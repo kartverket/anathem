@@ -1,6 +1,9 @@
 $dark-color: #000;
 $light-bg  : rgba(255,255,220,0.9);
 
+td {
+  vertical-align: top;
+}
 .ol-scale-line {
   background: none;
 }

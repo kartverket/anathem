@@ -172,12 +172,21 @@ NK.init = function () {
   
   proj4.defs("EPSG:25833","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
   proj4.defs("EPSG:32633","+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs");
+  proj4.defs("urn:ogc:def:crs:EPSG::25833","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+  proj4.defs("urn:ogc:def:crs:EPSG::32633","+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs");
   
   NK.projections = proj = {  
     //pregenerated projection objects
     "25833": new ol.proj.Projection({ code:"EPSG:25833", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS }),
-    "32633": new ol.proj.Projection({ code:"EPSG:32633", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
+    "32633": new ol.proj.Projection({ code:"EPSG:32633", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS }),
+    "ogc25833": new ol.proj.Projection({ code:"urn:ogc:def:crs:EPSG::25833", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS }),
+    "ogc32633": new ol.proj.Projection({ code:"urn:ogc:def:crs:EPSG::32633", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
   };
+
+  for (var p in proj) {
+    ol.proj.addProjection(proj[p]);
+    ol.proj.addCoordinateTransforms(proj[p], ol.proj.get('EPSG:4326'), proj4(proj[p].getCode()).inverse, proj4(proj[p].getCode()).forward);
+  }
 
   mapProj = proj[NK.baseProjection];
 
