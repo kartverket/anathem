@@ -183,8 +183,9 @@ NK.init = function () {
     "ogc32633": new ol.proj.Projection({ code:"urn:ogc:def:crs:EPSG::32633", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
   };
 
+  ol.proj.addEquivalentProjections(goog.object.getValues(proj)); //they all are.
   for (var p in proj) {
-    ol.proj.addProjection(proj[p]);
+  //  ol.proj.addProjection(proj[p]);
     ol.proj.addCoordinateTransforms(proj[p], ol.proj.get('EPSG:4326'), proj4(proj[p].getCode()).inverse, proj4(proj[p].getCode()).forward);
   }
 
@@ -258,6 +259,54 @@ var container = null;
     NK.view.on("change:rotation", NK.functions.updateHistory);
     NK.functions.updateHistory();
   }
+
+  if (NK.functions.postMessage) {
+    (function () {
+      var vectorLayers,
+          layer,
+          feature,
+          vectorLayerData = [],
+          vectorFeatureData = [],
+          i,
+          j,
+          k,
+          l,
+          message;
+
+      vectorLayers = NK.util.getLayersBy('layerGroup','dekning').slice();
+
+      for (i = 0, j = vectorLayers.length; i < j; i += 1) {
+        layer = vectorLayers[i];
+        vectorLayerData.push({shortid: layer.get('shortid'), name: layer.get('title'), visibility: layer.getVisible()});
+
+        if (layer.getVisible() && layer.getSource().getFeatures().length) {
+
+          var features = layer.getSource().getFeatures();
+          for (k = 0, l = features.length; k < l; k += 1) {
+            feature = features[k];
+            vectorFeatureData.push({
+              "feature": feature.getId(),
+              "attributes": feature.values_ //feature.getAttributes()
+            });
+          }
+
+        }
+      }
+
+      message = {
+        "type": "mapInitialized",
+        "vectorLayers": vectorLayerData
+      };
+
+      if (vectorFeatureData.length > 0) {
+        message.visibleLayerFeatures = vectorFeatureData;
+      }
+
+      NK.functions.postMessage(message);
+    }());
+
+  }
+
 
 
 };

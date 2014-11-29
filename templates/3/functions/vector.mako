@@ -6,7 +6,7 @@ NK.functions.popup = NK.functions.popup || {};
 
 var skipKeys = ["boundedBy", "geometry", "msGeometry"];
 NK.functions.popup.ify = function(object) {
-  if (object === undefined) {
+  if (!goog.isDefAndNotNull(object)) {
     return "-";
   }
   if (goog.isString(object)) {
@@ -33,6 +33,32 @@ NK.functions.popup.ify = function(object) {
   return str;
 }
 
+NK.functions.vector.addSelectControls = function (map, layer, style, featureIdentity) {
+  var select = new ol.interaction.Select();
+  select.on("change:active", function(evt) { 
+    if (NK.functions.postMessage) {
+      var message = {
+        cmd: 'featureSelected',
+        feature: feature.getId(),
+        attributes: feature.values_,
+        layer: layer.get('shortid')
+      };
+      NK.functions.postMessage(message);
+    }
+  });
+
+  layer.on('change:visible', function(evt) {
+    if (layer.getVisible()) {
+      map.addInteraction(select);
+    } else {
+      map.removeInteraction(select);
+    }
+  });
+  if (layer.getVisible()) {
+    map.addInteraction(select);
+  } 
+};
+
 NK.functions.vector.addHoverControls = function (map, layer, style, featureIdentity) {
   if (!featureIdentity) {featureIdentity = Object.is;}
 
@@ -48,16 +74,17 @@ NK.functions.vector.addHoverControls = function (map, layer, style, featureIdent
   mouseHint.style.visibility = false;
 
   var displayFeatureInfo = function(pixel) {
-    var feature, geom;
+    var feature, geom, geom2;
     map.forEachFeatureAtPixel(pixel, function(f, layer) {
       if (!!feature) { 
         geom = f.getGeometry(); 
+        geom2 = feature.getGeometry();
         // TODO: mixed geometries?
-        if ((geom instanceof ol.geom.LineString) && 
-                   (feature.getGeometry().getLength() <= f.getGeometry().getLength())) {
+        if (goog.isDef(geom.getLength) && 
+                   (geom2.getLength() <= geom.getLength())) {
           return;
-        } else if ((geom instanceof ol.geom.Polygon) &&
-                   (feature.getGeometry().getArea() <= f.getGeometry().getArea())) {
+        } else if (goog.isDef(geom.getArea) &&
+                   (geom2.getArea() <= geom.getArea())) {
           return; 
         }
       }

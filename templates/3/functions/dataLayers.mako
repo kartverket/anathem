@@ -17,10 +17,10 @@ NK.functions.corsRequest = function (url, params) {
       url += k+"="+params[k]+"&";
     }
     return $.ajax({
-      //url: '/ws/px.py',
-      url: url,
+      url: '/ws/px.py',
+      //url: url,
       type: 'GET',
-      //data: url,
+      data: url,
       dataType: 'xml'
     });
   }
@@ -108,16 +108,6 @@ NK.functions.addWMSLayer = function(wmsUrl) {
     geoportal.displayLayerList();
   }
 };
-
-/* monkeypatch for ol.source.TileWMS.getRequestUrl_ to support custom CRS ***/
-ol.source.ImageWMS.prototype.getRequestUrl_orig = ol.source.ImageWMS.prototype.getRequestUrl_ ;
-ol.source.ImageWMS.prototype.getRequestUrl_ = function(extent, size, pixelRatio, projection, params) {
-  if (!!this.getProjection()) {
-    projection = this.getProjection();
-  }
-  return this.getRequestUrl_orig(extent, size, pixelRatio, projection, params);
-};
-
 
 NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   var crs = $.grep(parms['crs'], function(s) {
@@ -284,20 +274,23 @@ NK.functions.addWFSLayer = function(wfsUrl) {
   }
 };
 
+/** monkey patch to read GML elements outerBoundaryIs and innerBoundaryIs *************/
+//for (var i in ol.format.GML3.prototype) {
+//  if (!!ol.format.GML3.prototype[i]['http://www.opengis.net/gml']) {
+//    if (!!ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['exterior']) {
+//      ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['outerBoundaryIs'] = ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['exterior'];
+//      ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['innerBoundaryIs'] = ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['interior'];
+//    }
+//  }
+//}
+//
 /** monkey patch to read GML Point with coordinates child *************/
-ol.format.GML.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['coordinates'] = function(node, objectStack) {
-  node.textContent = node.textContent.replace(","," ");
-  return ol.format.GML.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['pos'](node, objectStack);
-}
-/*********** monkey patch to support more GML name spaces ***/
-for (var i in ol.format.GML) {
-  if (!!ol.format.GML[i]['http://www.opengis.net/gml']) {
-    ol.format.GML[i]['http://www.opengis.net/gml/3.2'] = ol.format.GML[i]['http://www.opengis.net/gml'];
-  }
-}
+//ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['coordinates'] = function(node, objectStack) {
+//  return ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['posList'](node, objectStack);
+//}
 /************************************************************/
 /** monkey patch to accept any name space in ol.xml.parse ***/
-ol.xml.parse = function(parsersNS, node, objectStack, opt_this) {
+ol.xml.parseNode = function(parsersNS, node, objectStack, opt_this) {
   if (!!parsersNS["*"]) {
     parsersNS[node.firstElementChild.namespaceURI] = parsersNS["*"];
   } 
@@ -311,59 +304,6 @@ ol.xml.parse = function(parsersNS, node, objectStack, opt_this) {
       }
     }
   }
-};
-/************************************************************/
-/** monkey patch to read GML features properly *************/
-ol.format.GML.readFeature_ = function(node, objectStack) {
-  var n, i, hasGeometry;
-  var knownGeometries = Object.keys(ol.format.GML.GEOMETRY_PARSERS_['http://www.opengis.net/gml']);
-  var fid = node.getAttribute('fid') ||
-      ol.xml.getAttributeNS(node, 'http://www.opengis.net/gml', 'id');
-  var values = {}, geometryName;
-  for (n = node.firstElementChild; !goog.isNull(n);
-      n = n.nextElementSibling) {
-    // Assume there is only one geometry node, and that is has a know geometry as child node:
-    hasGeometry = false;
-    for (i=0;i<n.childNodes.length;i++) {
-      hasGeometry = hasGeometry | (knownGeometries.indexOf(n.childNodes[i].localName) > -1);
-    }
-    if (!hasGeometry) {
-      var data = ol.xml.getStructuredTextContent(n, false);
-      if (goog.object.isEmpty(data)) {
-        data = undefined;
-      }
-      values[ol.xml.getLocalName(n)] = data;
-    } else {
-      geometryName = ol.xml.getLocalName(n);
-      values[geometryName] = ol.format.GML.readGeometry(n, objectStack);
-    }
-  }
-  var feature = new ol.Feature(values);
-  if (goog.isDef(geometryName)) {
-    feature.setGeometryName(geometryName);
-  }
-  if (fid) {
-    feature.setId(fid);
-  }
-  return feature;
-};
-/************************************************************/
-ol.xml.getStructuredTextContent = function(node, normalizeWhitespace) {
-  var accumulator = {};
-  if (node.nodeType == goog.dom.NodeType.CDATA_SECTION ||
-      node.nodeType == goog.dom.NodeType.TEXT) {
-    accumulator["text_"] = normalizeWhitespace ? String(node.nodeValue).replace(/(\r\n|\r|\n)/g, '') : node.nodeValue;
-  } else {
-    var n;
-    for (n = node.firstChild; !goog.isNull(n); n = n.nextSibling) {
-      if (n.nodeType == goog.dom.NodeType.TEXT) { 
-        accumulator["text_"] = (accumulator["text_"] || "") + (normalizeWhitespace ? String(n.nodeValue).replace(/(\r\n|\r|\n)/g, '') : n.nodeValue); 
-      } else {
-        accumulator[n.localName] = ol.xml.getStructuredTextContent(n, normalizeWhitespace, {});
-      }
-    }
-  }
-  return accumulator;
 };
 
 
@@ -391,16 +331,16 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   var source = new ol.source.ServerVector({
     format: format,
     loader: function(extent, resolution, projection) {
-      //var request = "/ws/px.py?" + url + "?service=WFS&version=1.1.0&request=GetFeature";
-      var request = url + "?service=WFS&version=1.1.0&request=GetFeature";
+      var request = "/ws/px.py?" + url + "?service=WFS&version=1.1.0&request=GetFeature";
+      //var request = url + "?service=WFS&version=1.1.0&request=GetFeature";
       request += "&typename=" + parms['type'];
       request += "&srsName=" + crs; 
       request += "&outputFormat=" + mimeFormat;
-      //if (parms['bboxFilter']) {
-      //  request += '&filter=<Filter%20xmlns="http://www.opengis.net/ogc"><BBOX><Envelope%20srsName="'+ crs +'"%20xmlns="http://www.opengis.net/gml"><lowerCorner>'+extent[0]+' '+extent[1]+'</lowerCorner><upperCorner>'+extent[2]+' '+extent[3]+'</upperCorner></Envelope></BBOX></Filter>';
-      //} else {
+      if (parms['bboxFilter']) {
+        request += '&filter=<Filter%20xmlns="http://www.opengis.net/ogc"><BBOX><Envelope%20srsName="'+ crs +'"%20xmlns="http://www.opengis.net/gml"><lowerCorner>'+extent[0]+' '+extent[1]+'</lowerCorner><upperCorner>'+extent[2]+' '+extent[3]+'</upperCorner></Envelope></BBOX></Filter>';
+      } else {
         request += "&bbox="+extent.join(",");
-      //}
+      }
       //request += "&bbox="+extent.join(",") + "," + crs;
       $.ajax({url:request}).done(function(response) {
         var features = source.readFeatures(response);

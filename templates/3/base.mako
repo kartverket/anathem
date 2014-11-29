@@ -40,7 +40,6 @@
     <script src="js/modernizr.min.js"></script>
     <script src="js/proj4.js"></script>
     <script src="js/ol-debug.js"></script>
-    <script src="js/overviewmapcontrol.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!--[if IE]>

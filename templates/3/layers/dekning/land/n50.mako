@@ -28,6 +28,7 @@
   M.addLayer(layer);
 
   NK.functions.vector.addHoverControls(map, layer, NK.styles.dekning.land.highlight, Object.is);
+  NK.functions.vector.addSelectControls(map, layer, NK.styles.dekning.land.highlight, Object.is);
 
   /* TODO ********
   onPopupClose = function (evt) {
