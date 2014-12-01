@@ -9,12 +9,12 @@ controls:
 - template: 3/controls/container
   id: search-panel
   controls:
-#  - template: 3/controls/search
-#    coordinates: http://norgeskart.no/ws/trans.py
-#    searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
-#    streetAddressesSearchUrl: http://norgeskart.no/ws/veg.py
-#    addressSearchUrl: http://norgeskart.no/ws/adr.py
-#    propertySearchUrl: http://norgeskart.no/ws/eie.py
+  - template: 3/controls/search
+    coordinates: http://norgeskart.no/ws/trans.py
+    searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
+    streetAddressesSearchUrl: http://norgeskart.no/ws/veg.py
+    addressSearchUrl: http://norgeskart.no/ws/adr.py
+    propertySearchUrl: http://norgeskart.no/ws/eie.py
 - template: 3/controls/container
   id: del-panel #norwegian, because AdBlock pro hides panels called share-panel
   controls:

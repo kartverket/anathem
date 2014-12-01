@@ -12,6 +12,7 @@ import os
 import re
 import closure
 from subprocess import call
+from codecs import open
 
 # matches mako parameters in a template: ${...}, but not containing brackets
 re_param = re.compile('\$\{([^\(\{]*?)\}')
@@ -143,7 +144,7 @@ def output_file(name, payload):
                 sys.exit(1)
             os.unlink("tmp/tmp.js")
         else:
-            fd = open("tmp/" + name, "w")
+            fd = open("tmp/" + name, "w", "utf-8")
             fd.write(payload)
     else:
         fd = open("tmp/" + name, "w")

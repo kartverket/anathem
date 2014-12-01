@@ -7,7 +7,7 @@ NK.util.getLayersBy = function(key, value) {
 };
 
 NK.util.getControlsByClass = function(cla) {
-  return $.grep(map.getControls().getArrap(), function(c) {
+  return $.grep(map.getControls().getArray(), function(c) {
     return c instanceof cla;
   });
 };
