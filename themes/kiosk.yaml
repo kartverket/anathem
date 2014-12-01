@@ -1,23 +1,26 @@
 template : base
-filename : statisk.html
+filename : kiosk.html
 title    : Norgeskart
-mapClass: embedded-map
-mapscript: clients/norgeskart-statisk.min.js
+mapscript: clients/kiosk.min.js
 ---
 template : mapscript
-filename : clients/norgeskart-statisk.min.js
+filename : clients/kiosk.min.js
 language  : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
 projection: 32633
+
+i18n:
+  - include: languages/nb/base
+
+baselayers:   
+    - template: layers/europa
 
 styles    :
     - template: styles/unlabeledMarker
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-  
-baselayers:   
-    - template: layers/europa
+
 overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
@@ -38,11 +41,30 @@ overlays  :
     # fakta layers
     - include: layers/geoJSON/kommunefjell
 
-functions:
-    template: functions/readURL
-controls:
-    - template: controls/status
-    - template: controls/scaleline
-    - template: controls/popout
-center:
+center    : 
     template: center/besseggen
+
+functions :
+    - template: functions/updateURL
+    - template: functions/readURL
+    - template: functions/vector
+
+controls  :
+    - template: controls/status
+    - template: controls/geolocation
+    - template: controls/navigation
+    - template: controls/scaleline
+    - template: controls/hashstate
+    - include: toolbars/basic
+    - include: toolbars/top-kiosk
+    - include: toolbars/secondary-kiosk
+    - template: controls/container
+      id: overview-container-panel
+      controls:
+      - template: controls/overview
+        name: omriss
+        id: omriss.norge.500m
+        url: /json/norge/500m.geojson
+        detailedLayer: enkel
+        maximized: "true"
+

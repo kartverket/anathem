@@ -117,9 +117,9 @@
     var a  = feature.attributes;
     var mainMapFeature, i, j;
       var markup = '<article>';
-      if (a.n && a.n !== 'NULL') {
-        markup += '<h1 class="h">' + a.n + '</h1>';
-      } 
+      if (!!a.n) {
+        markup += '<h1 class="h">' + feature.fid + " " + a.n + '</h1>';
+      }
       if (a.vignett) {
         var mainMapNumber = a.vignett.slice(0, 3);
         for (i = 0, j = feature.layer.features.length; i < j; i += 1) {
@@ -133,23 +133,23 @@
           } else {
             markup += OpenLayers.Lang.translate('Vignette in map');
           }
-           markup += ' ' + mainMapFeature.attributes.nr + ': ' + mainMapFeature.attributes.n;
+           markup += ' ' + mainMapFeature.attributes.nr + ' ' + mainMapFeature.attributes.n;
         }
       }
-      if (a.nr) {
-        markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
+      if (a.f) {
+        markup += '<p>' + OpenLayers.Lang.translate('Current edition') + ': ' + a.f + '</p>';
       }
-      if (a.u) {
-        markup += '<p>' + OpenLayers.Lang.translate('Latest print') + ': ' + a.u + '</p>';
-      }
-      if (a.d && datumNames[a.d]) {
-        markup += '<p>' + OpenLayers.Lang.translate('Datum') + ': ' + datumNames[a.d] + '</p>';
-      }
-      if (a.p) {
-        markup += '<p>' + OpenLayers.Lang.translate('Projection') + ': ' + projectionName(a.p) + '</p>';
+      if (a.g) {
+        markup += '<p>' + OpenLayers.Lang.translate('Latest print') + ': ' + a.g + '</p>';
       }
       if (a.s) {
-        markup += '<p>' + OpenLayers.Lang.translate('Scale') + ': 1:' + a.s + '</p>';
+        markup += '<p>' + OpenLayers.Lang.translate('Scale') + ' ' + a.s + '</p>';
+      }
+      if (a.p) {
+        markup += '<p>' + OpenLayers.Lang.translate('Projection') + ': ' + a.p + '</p>';
+      }
+      if (a.d) {
+        markup += '<p>' + OpenLayers.Lang.translate('Datum') + ': ' + a.d + '</p>';
       }
       markup += '</article>';
       return markup;
@@ -242,8 +242,8 @@
   M.addControl(selectControl);
 
 OpenLayers.Util.extend(OpenLayers.Lang.nb, {
-  'Map number': 'Kartblad',
-  'Latest print': 'Siste trykk',
+  'Current edition': 'Gyldig utgave',
+  'Latest print': 'Syste trykk md/&aring;r',
   'Datum': 'Datum',
   'Projection': 'Projeksjon',
   'Scale': 'M&aring;lestokk',

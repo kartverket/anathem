@@ -1,15 +1,18 @@
-# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
-
-template   : base
-title      : Norgeskart
+template : base
+filename : produktvelger.html
+title    : Norgeskart
 includeXDM : true
-mapscript:
-  template  : mapscript
-  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
+mapscript: clients/produktvelger.min.js
+---
+template : mapscript
+filename : clients/produktvelger.min.js
+language  : nb
+tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+projection: 32633
   
-  baselayers:   
+baselayers:   
     - template: layers/europa
-  overlays  :
+overlays  :
     - template: layers/wmts
       usetoken: true
       name: Terreng&shy;modell
@@ -35,10 +38,10 @@ mapscript:
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-  center    : 
+center    : 
     template: center/besseggen
-  functions :
-  controls  :
+functions :
+controls  :
     - template: controls/navigation
     - include: toolbars/embed-basic-toolbar
 
