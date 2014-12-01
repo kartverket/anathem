@@ -22,7 +22,7 @@ NK.status.refresh = function() {
   } else {
     $("#status").animate({"max-height": "0px"}); 
   }
-}
+};
 
 NK.functions.log = function(msg) {
   var now = new Date().getTime();
@@ -30,8 +30,8 @@ NK.functions.log = function(msg) {
   NK.status.refresh();
   setTimeout(NK.status.refresh, 21000);
   return now;
-}
+};
 NK.functions.updateLog = function(time, msg) {
   delete NK.status.messages[time];
   NK.functions.log(msg);
-}
+};
