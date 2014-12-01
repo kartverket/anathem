@@ -4,14 +4,14 @@ NK.styles = NK.styles || {};
 var blueStyle = function(text) {
   return [new ol.style.Style({
     stroke: new ol.style.Stroke({
-      color: "#44a",
+      color: [68,68,170,1],
       width: 2
     }),
     text: new ol.style.Text({
       font: '14px calibri, sans-serif',
       text: text,
       fill: new ol.style.Fill({
-        color: "#44a"
+        color: [68,68,170,1],
       }),
       stroke: new ol.style.Stroke({
         color: "#fff",
@@ -26,7 +26,10 @@ var blueHighlight = [new ol.style.Style({
   stroke: new ol.style.Stroke({
     color: "#aae",
     width: 2
-  })
+  }),
+  fill: new ol.style.Fill({
+    color: [68,68,170,0.1],
+  }),
 })]; 
 var pointStyle = [new ol.style.Circle({
   radius: 10,

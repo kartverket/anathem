@@ -275,19 +275,19 @@ NK.functions.addWFSLayer = function(wfsUrl) {
 };
 
 /** monkey patch to read GML elements outerBoundaryIs and innerBoundaryIs *************/
-//for (var i in ol.format.GML3.prototype) {
-//  if (!!ol.format.GML3.prototype[i]['http://www.opengis.net/gml']) {
-//    if (!!ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['exterior']) {
-//      ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['outerBoundaryIs'] = ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['exterior'];
-//      ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['innerBoundaryIs'] = ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['interior'];
-//    }
-//  }
-//}
-//
+for (var i in ol.format.GML3.prototype) {
+  if (!!ol.format.GML3.prototype[i]['http://www.opengis.net/gml']) {
+    if (!!ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['exterior']) {
+      ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['outerBoundaryIs'] = ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['exterior'];
+      ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['innerBoundaryIs'] = ol.format.GML3.prototype[i]['http://www.opengis.net/gml']['interior'];
+    }
+  }
+}
 /** monkey patch to read GML Point with coordinates child *************/
-//ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['coordinates'] = function(node, objectStack) {
-//  return ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['posList'](node, objectStack);
-//}
+ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['coordinates'] = function(node, objectStack) {
+  return ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_['http://www.opengis.net/gml']['posList'](node, objectStack);
+}
+
 /************************************************************/
 /** monkey patch to accept any name space in ol.xml.parse ***/
 ol.xml.parseNode = function(parsersNS, node, objectStack, opt_this) {
@@ -336,17 +336,21 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
       request += "&typename=" + parms['type'];
       request += "&srsName=" + crs; 
       request += "&outputFormat=" + mimeFormat;
-      if (parms['bboxFilter']) {
-        request += '&filter=<Filter%20xmlns="http://www.opengis.net/ogc"><BBOX><Envelope%20srsName="'+ crs +'"%20xmlns="http://www.opengis.net/gml"><lowerCorner>'+extent[0]+' '+extent[1]+'</lowerCorner><upperCorner>'+extent[2]+' '+extent[3]+'</upperCorner></Envelope></BBOX></Filter>';
-      } else {
-        request += "&bbox="+extent.join(",");
-      }
+      //if (parms['bboxFilter']) {
+      //  request += '&filter=<Filter%20xmlns="http://www.opengis.net/ogc"><BBOX><Envelope%20srsName="'+ crs +'"%20xmlns="http://www.opengis.net/gml"><lowerCorner>'+extent[0]+' '+extent[1]+'</lowerCorner><upperCorner>'+extent[2]+' '+extent[3]+'</upperCorner></Envelope></BBOX></Filter>';
+      //} else {
+      request += "&bbox="+extent.join(",");
+      //}
       //request += "&bbox="+extent.join(",") + "," + crs;
+      //request += "&bbox=" + ol.proj.transformExtent(extent, crs, 'EPSG:4326').join(",");
       $.ajax({url:request}).done(function(response) {
         var features = source.readFeatures(response);
         source.addFeatures(features);
       });
-    }
+    },
+    //strategy: ol.loadingstrategy.createTile(new ol.tilegrid.XYZ({
+    //  maxZoom: 19
+    //}))
   });
   var wfs = new ol.layer.Vector({
     source: source,
