@@ -27,6 +27,7 @@ mapscript:
     - include: layers/toporaster2
     - include: layers/janmayen
     - include: layers/svalbard
+    - include: layers/wms/UTMrutenett
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart

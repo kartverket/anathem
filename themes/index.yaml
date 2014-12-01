@@ -42,6 +42,7 @@ mapscript:
     - include: layers/wms/dybdekurver_havomraader
     - include: layers/wms/kystkontur
     - include: layers/wms/sjogrenser
+    - include: layers/wms/UTMrutenett
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart

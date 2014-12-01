@@ -50,4 +50,8 @@ controls:
     group: tjenester.CPOS-stasjoner
     title: CPOS-stasjoner
     buttonText: CPOS-stasjoner
+  - template: controls/overlaygrouppanel
+    group: tjenester.UTM-rutenett
+    title: UTM-rutenett
+    buttonText: UTM-rutenett
 
