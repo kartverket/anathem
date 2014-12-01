@@ -1,0 +1,33 @@
+template : 3/base
+filename : produktvelger.html
+title    : Norgeskart
+includeXDM: true
+mapscript: clients/produktvelger.min.js
+---
+template : 3/mapscript
+filename : clients/produktvelger.min.js
+language : nb
+tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+projection: 25833
+
+
+baselayers:
+    - include: 3/layers/europa
+overlays  :
+    - include: 3/layers/toporaster
+    - include: 3/layers/sjo
+
+    - include: 3/layers/dekning/n50
+    - include: 3/layers/dekning/sjo/hovedkart
+    - include: 3/layers/dekning/sjo/havnekart
+    - include: 3/layers/dekning/sjo/kystkart
+    - include: 3/layers/dekning/sjo/overseilingskart
+
+center    :
+    - template: 3/center/besseggen
+functions :
+    - template: 3/functions/readURL
+controls  :
+    - template: 3/controls/default
+    - template: 3/controls/status
+    - include: 3/toolbars/embed-basic-toolbar

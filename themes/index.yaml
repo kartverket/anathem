@@ -1,0 +1,44 @@
+template : 3/base
+filename : index.html
+title    : Norgeskart
+mapscript: clients/norgeskart.min.js
+--- 
+template : 3/mapscript
+filename : clients/norgeskart.min.js
+language  : nb
+tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+projection: 32633
+
+baselayers:   
+    - include: 3/layers/europa
+
+overlays  : 
+    - include: 3/layers/land
+    - include: 3/layers/sjo
+    - include: 3/layers/grunnkart
+# TODO: copy from dmn.yaml
+
+center    : 
+    template: 3/center/besseggen
+
+styles    :
+    - template: 3/styles/wfs
+#    - template: styles/unlabeledMarker
+#    - template: styles/labeledMarker
+#    - template: styles/omriss
+#    - template: styles/track
+
+functions :
+    - template: 3/functions/updateURL
+    - template: 3/functions/readURL
+
+controls  :
+    - template: 3/controls/default
+    - template: 3/controls/status
+#    - template: controls/geolocation
+#    - include: 3/toolbars/basic
+    - include: 3/toolbars/top
+#    - include: 3/toolbars/secondary
+    - template: 3/controls/container
+    - template: 3/controls/overview
+
