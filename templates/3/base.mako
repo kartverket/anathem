@@ -47,7 +47,7 @@
     <![endif]-->
 
 % if includeXDM:
-    <%include file="/easyXDM.html" />
+    <%include file="/easyXDM.mako" />
 % endif
     <script src="${mapscript}"></script>
   </body>
