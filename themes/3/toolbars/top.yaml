@@ -21,7 +21,7 @@ controls:
   - template: 3/controls/container
     id: print-panel
     controls:
-#    - template: 3/controls/print
+    - template: 3/controls/print
   - template: 3/controls/container
     id: getURL-panel
     controls:
