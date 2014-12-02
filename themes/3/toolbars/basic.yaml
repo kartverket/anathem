@@ -1,0 +1,43 @@
+template: 3/controls/container
+id: basic-toolbar
+controls:
+- template: 3/controls/container
+  id: fullscreen-panel
+  controls:
+  - template: 3/controls/fullscreen
+- template: 3/controls/container
+  id: zoom-panel
+  controls:
+  - template: 3/controls/zoom
+#  - template: 3/controls/zoomtoselection
+- template: 3/controls/container
+  id: pan-panel
+  controls:
+    - template: 3/controls/pan
+#- template: 3/controls/container
+#  id: point-panel
+#  controls:
+#    - template: controls/pointmenu
+#      url: http://beta.norgeskart.no/ws/trans.py
+#      infoUrl: http://openwps.statkart.no/skwms1/wps.elevation
+#      forecastUrl: http://beta.norgeskart.no/ws/forecast.py
+#      sunriseUrl: http://beta.norgeskart.no/ws/sun.py
+#      propertyUrl: http://beta.norgeskart.no/ws/wfs.teig.py
+#      i18n:
+#      - include: languages/nb/pointmenu
+- template: 3/controls/container
+  id: layerselector-panel
+  controls:
+#  - template: controls/rasterlayerselector
+#    group: modus1
+#  - template: controls/rasterlayerselector-popup
+#    title: "Sj&oslash;"
+#    group: sjo
+#  - template: controls/rasterlayerselector
+#    group: modus2
+#  - template: controls/rasterlayerselector-popup
+#    title: "Flere"
+#    group: flere
+#  - template: controls/vectorlayerselector
+#    group: dekning
+#    name: "Kart- inndeling"

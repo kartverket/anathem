@@ -37,7 +37,7 @@ controls  :
     - template: 3/controls/default
     - template: 3/controls/status
 #    - template: controls/geolocation
-#    - include: 3/toolbars/basic
+    - include: 3/toolbars/basic
     - include: 3/toolbars/top
 #    - include: 3/toolbars/secondary
     - template: 3/controls/container
