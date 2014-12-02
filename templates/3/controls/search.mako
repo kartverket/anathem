@@ -279,7 +279,8 @@ NK.controls.Search.prototype.doSearch = function (phraseParameter, page, pageLen
             url: this.searchUrl,
             paramNames: {
                 name: 'navn',
-                fylkeKommuneListe: 'fylkeKommuneListe',
+                //fylkeKommuneListe: 'fylkeKommuneListe',
+                fylkeKommuneNavnListe: 'fylkeKommuneNavnListe',
                 maxResult: 'antPerSide',
                 northLL: 'nordLL',
                 eastLL: 'ostLL',
@@ -297,7 +298,13 @@ NK.controls.Search.prototype.doSearch = function (phraseParameter, page, pageLen
                 var request,
                     requestParams = {};
 
-                requestParams[this.paramNames.name] = params.phrase;
+                params.phrase = params.phrase.split(',');
+                if (params.phrase.length >= 2 ){
+                  requestParams[this.paramNames.name] = params.phrase[0] + "*";
+                  requestParams[this.paramNames.fylkeKommuneNavnListe] = params.phrase[1].substring(0, params.phrase[1].length - 1);
+                } else {
+                  requestParams[this.paramNames.name] = params.phrase[0];
+                }
                 requestParams[this.paramNames.exactMatchesFirst] = true;
                 requestParams[this.paramNames.maxResult] = params.resultsPerPage;
                 requestParams['epsgKode'] = '4326';
