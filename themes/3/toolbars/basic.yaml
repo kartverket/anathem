@@ -9,7 +9,7 @@ controls:
   id: zoom-panel
   controls:
   - template: 3/controls/zoom
-#  - template: 3/controls/zoomtoselection
+  - template: 3/controls/zoomtoselection
 - template: 3/controls/container
   id: pan-panel
   controls:

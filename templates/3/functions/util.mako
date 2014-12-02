@@ -12,6 +12,12 @@ NK.util.getControlsByClass = function(cla) {
   });
 };
 
+NK.util.getInteractionsByClass = function(cla) {
+  return $.grep(map.getInteractions().getArray(), function(c) {
+    return c instanceof cla;
+  });
+};
+
 NK.util.createWidget = function( content, wCount, arrow ) {
     var widget = document.createElement('div'); 
     $(widget).addClass('widget');
