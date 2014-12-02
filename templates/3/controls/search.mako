@@ -1264,7 +1264,7 @@ NK.controls.Search.prototype.abortRequests = function(){
 },
 
 goog.object.extend(options, {
-  target: container,
+  target: container
 });
 NK.functions.addControlToContext(new NK.controls.Search(options), context);
 
