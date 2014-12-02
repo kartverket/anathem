@@ -1,6 +1,7 @@
 template : 3/base
 filename : index.html
 title    : Norgeskart
+#includeCesium: true
 mapscript: clients/norgeskart.min.js
 --- 
 template : 3/mapscript

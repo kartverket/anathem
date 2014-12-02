@@ -25,7 +25,7 @@ controls:
   - template: 3/controls/container
     id: getURL-panel
     controls:
-#    - template: 3/controls/getURL
+    - template: 3/controls/geturl
   - template: 3/controls/container
     id: embed-panel
     controls:

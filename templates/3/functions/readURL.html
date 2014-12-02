@@ -368,9 +368,7 @@ NK.functions.setMapState = function (params) {
       mapy = parms[2];
 
       if ((mapy > 0) && (mapy < 35) && (mapx > 50) && (mapx < 90)) {  /* we are dealing with WSG84 coordinates here */
-        pWSG84 = new Proj4js.Proj('EPSG:4326');   
-        pUTM = new Proj4js.Proj('EPSG:'+NK.baseProjection);   
-        xy = Proj4js.transform(pWSG84, pUTM, new Proj4js.Point(mapy, mapx));
+        xy = ol.proj.transform([mapy, mapx], 'EPSG:4326', map.getView().getProjection());
         mapx = xy.x;
         mapy = xy.y;
       }

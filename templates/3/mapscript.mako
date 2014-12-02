@@ -166,6 +166,7 @@ NK.init = function () {
 
   // TODO: cleanup projection loading
   var extents = {
+      'EPSG:3857': [-180, -90, 180, 90],
       'EPSG:25833': [-2500000, 3500000, 3045984, 9045984],
       'EPSG:32633': [-2500000, 3500000, 3045984, 9045984]
   };
@@ -184,12 +185,12 @@ NK.init = function () {
     "ogc25833": new ol.proj.Projection({ code:"urn:ogc:def:crs:EPSG::25833", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS }),
     "ogc32633": new ol.proj.Projection({ code:"urn:ogc:def:crs:EPSG::32633", extent:extents["EPSG:25833"], units:ol.proj.Units.METERS })
   };
-
   ol.proj.addEquivalentProjections(goog.object.getValues(proj)); //they all are.
   for (var p in proj) {
   //  ol.proj.addProjection(proj[p]);
     ol.proj.addCoordinateTransforms(proj[p], ol.proj.get('EPSG:4326'), proj4(proj[p].getCode()).inverse, proj4(proj[p].getCode()).forward);
   }
+  proj["3857"] = new ol.proj.Projection({code:"EPSG:3857", extent:extents["EPSG:3857"], units: ol.proj.Units.DEGREES });  
 
   mapProj = proj[NK.baseProjection];
 

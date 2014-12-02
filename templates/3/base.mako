@@ -26,6 +26,9 @@
     <link rel="stylesheet" type="text/css" href="css/ol.css" />
     <link rel="stylesheet" type="text/css" href="css/ol-extra.css" /> 
     <link rel="stylesheet" type="text/css" href="css/norgeskart-legacy.css" />
+% if includeCesium:
+    <link rel="stylesheet" type="text/css" href="js/Cesium/Widgets/widgets.css" />
+% endif
   </head>
   <body style="height: 100%; overflow: hidden;">
     <header>
@@ -42,6 +45,10 @@
     <script src="js/ol-debug.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
+% if includeCesium:
+    <script src="js/Cesium/Cesium.js"></script>
+    <script src="js/ol3cesium.js"></script>
+% endif
     <!--[if IE]>
     <script src="js/xdr.js"></script>
     <![endif]-->
