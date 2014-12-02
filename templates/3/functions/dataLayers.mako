@@ -347,10 +347,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
         var features = source.readFeatures(response);
         source.addFeatures(features);
       });
-    },
-    //strategy: ol.loadingstrategy.createTile(new ol.tilegrid.XYZ({
-    //  maxZoom: 19
-    //}))
+    }
   });
   var wfs = new ol.layer.Vector({
     source: source,

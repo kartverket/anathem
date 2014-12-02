@@ -136,7 +136,7 @@ def output_file(name, payload):
         os.unlink("tmp/tmp.ls")
     elif ext == "js":
         if compress:
-            fd = open("tmp/tmp.js", "w")
+            fd = open("tmp/tmp.js", "w", "utf-8")
             fd.write(payload)
             fd.close()
             if call(["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/" + name]):

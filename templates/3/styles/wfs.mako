@@ -11,7 +11,7 @@ var blueStyle = function(text) {
       font: '14px calibri, sans-serif',
       text: text,
       fill: new ol.style.Fill({
-        color: [68,68,170,1],
+        color: [68,68,170,1]
       }),
       stroke: new ol.style.Stroke({
         color: "#fff",
@@ -28,8 +28,8 @@ var blueHighlight = [new ol.style.Style({
     width: 2
   }),
   fill: new ol.style.Fill({
-    color: [68,68,170,0.1],
-  }),
+    color: [68,68,170,0.1]
+  })
 })]; 
 var pointStyle = [new ol.style.Circle({
   radius: 10,

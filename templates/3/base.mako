@@ -22,7 +22,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#333333" />
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />-->
     <link rel="stylesheet" type="text/css" href="css/ol.css" />
     <link rel="stylesheet" type="text/css" href="css/ol-extra.css" /> 
     <link rel="stylesheet" type="text/css" href="css/norgeskart-legacy.css" />
