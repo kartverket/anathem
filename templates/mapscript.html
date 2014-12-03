@@ -209,7 +209,7 @@ NK.functions.loadWCSLayer = function(wcsUrl, whenDone) {
   NK.dataLayers = NK.dataLayers || {};
   if (!!NK.dataLayers[wcsUrl]) {return;}
 
-  var wcs = {}, formats = {}, layers = {}, title = "", constraints="", attribution="";
+  var wcs = {}, formats = {}, layers = {}, title = "", constraints="", attribution="", description="";
   var resultWCS = NK.functions.getWCSCapabilities(wcsUrl);
   resultWCS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWCS.done(function (xml) {
@@ -222,6 +222,9 @@ NK.functions.loadWCSLayer = function(wcsUrl, whenDone) {
     });
     $(xml).find('Title').each(function() {
       title = $(this).text();
+    });
+    $(xml).find('Abstract').each(function() {
+      description = $(this).text();
     });
     $(xml).find('AccessConstraints').each(function() {
       constraints = $(this).text();
@@ -256,9 +259,11 @@ NK.functions.addWFSLayer = function(wfsUrl) {
     } else {
       $(xml).find('Service').each(function () {
         serviceParms['serviceTitle'] = $(this).children('Title').text();
+        serviceParms['description'] = $(this).children('Abstract').text();
       });
       $(xml).find('ServiceIdentification').each(function () {
         serviceParms['serviceTitle'] = $(this).find('Title').text();
+        serviceParms['description'] = $(this).children('Abstract').text();
       });
       $(xml).find('OutputFormats').each(function () {
         $(this).children('Format').each(function () {;
@@ -318,6 +323,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
     serviceParms['version'] = $(xml).children()[0].getAttribute("version");
     $(xml).find('Service').each(function () {
       serviceParms['serviceTitle'] = $(this).children('Title').text();
+      serviceParms['description'] = $(this).children('Abstract').text();
     });
     $(xml).find('GetFeatureInfo').each(function () {
       $(this).children('Format').each(function() {
@@ -393,6 +399,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
     type           : 'wfs',
     isUrlDataLayer : true,
     url            : url,
+    description    : parms['description'],
     serviceTitle   : parms['serviceTitle'],
     dataFormats    : parms['formats'],
     attribution    : parms['attribution'],
@@ -425,6 +432,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
     {
       title: parms['title'],
       serviceTitle: parms['serviceTitle'],
+      description: parms['description'],
       parent: parms['parent'] || null,
       isBaseLayer: false,
       buffer: 0,

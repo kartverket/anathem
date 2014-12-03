@@ -31,3 +31,6 @@ translations:
   - template: i18n/translation
     source: no attribution 
     translation: uten kildehenvisning
+  - template: i18n/translation
+    source: about 
+    translation: kilde
