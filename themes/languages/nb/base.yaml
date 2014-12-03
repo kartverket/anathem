@@ -28,3 +28,6 @@ translations:
   - template: i18n/translation
     source: Tools 
     translation: Verkt&oslash;y
+  - template: i18n/translation
+    source: no attribution 
+    translation: uten kildehenvisning

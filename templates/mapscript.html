@@ -257,6 +257,9 @@ NK.functions.addWFSLayer = function(wfsUrl) {
       $(xml).find('Service').each(function () {
         serviceParms['serviceTitle'] = $(this).children('Title').text();
       });
+      $(xml).find('ServiceIdentification').each(function () {
+        serviceParms['serviceTitle'] = $(this).find('Title').text();
+      });
       $(xml).find('OutputFormats').each(function () {
         $(this).children('Format').each(function () {;
           formats[$(this).text()] = true;
@@ -276,7 +279,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
           'logo' : logo && logo.getAttribute("xlink:href")
         }
       });
-      if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
+      if (!attribution) { attribution={'title':OpenLayers.Lang.translate('no attribution'), 'href':'#'}; }
       serviceParms['attribution'] = attribution;
       $(xml).find('FeatureType').each(function () {
         layerParms = {};
@@ -386,14 +389,17 @@ NK.functions.addWMSLayer = function(wmsUrl) {
 
 NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track"});
-  wfsLayer.type = 'wfs';
-  wfsLayer.isUrlDataLayer = true;
-  wfsLayer.url = url;
-  wfsLayer.dataFormats = parms['formats'];
-  wfsLayer.attribution = parms['attribution'];
-  wfsLayer.constraints = parms['constraints'];
-  wfsLayer.setVisibility(!!parms['visible']);
+  $.extend(wfsLayer,{
+    type           : 'wfs',
+    isUrlDataLayer : true,
+    url            : url,
+    serviceTitle   : parms['serviceTitle'],
+    dataFormats    : parms['formats'],
+    attribution    : parms['attribution'],
+    constraints    : parms['constraints']
+  });
   wfsLayer.setOpacity(parms['opacity']);
+  wfsLayer.setVisibility(!!parms['visible']);
 
   var type = parms['type'];
   if (type in NK.highlightQueue) {
