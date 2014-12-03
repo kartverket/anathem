@@ -62,6 +62,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
       title: name,
       source: source,
       shortid: id, 
+      layerGroup: options.layerGroup || null,
       isBaseLayer: !!options.isBaseLayer,
       visible: !!options.visible
     };

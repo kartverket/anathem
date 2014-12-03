@@ -28,13 +28,13 @@ controls:
 - template: 3/controls/container
   id: layerselector-panel
   controls:
-#  - template: controls/rasterlayerselector
-#    group: modus1
+  - template: 3/controls/layerselector
+    group: modus1
 #  - template: controls/rasterlayerselector-popup
 #    title: "Sj&oslash;"
 #    group: sjo
-#  - template: controls/rasterlayerselector
-#    group: modus2
+  - template: 3/controls/layerselector
+    group: modus2
 #  - template: controls/rasterlayerselector-popup
 #    title: "Flere"
 #    group: flere

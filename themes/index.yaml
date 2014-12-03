@@ -16,8 +16,20 @@ baselayers:
 overlays  : 
     - include: 3/layers/land
     - include: 3/layers/sjo
+    - include: 3/layers/sjo_enc
+    - include: 3/layers/flybilder
+    - include: 3/layers/terreng
     - include: 3/layers/grunnkart
-# TODO: copy from dmn.yaml
+    - include: 3/layers/toporaster
+# currently broken
+    - include: 3/layers/janmayen
+    - include: 3/layers/svalbard
+#
+    - include: 3/layers/dekning/n50
+    - include: 3/layers/dekning/sjo/hovedkart
+    - include: 3/layers/dekning/sjo/havnekart
+    - include: 3/layers/dekning/sjo/kystkart
+    - include: 3/layers/dekning/sjo/overseilingskart
 
 center    : 
     template: 3/center/besseggen
