@@ -3,7 +3,8 @@
         options.group = "${group}";
 % endif
 
-//TODO
+% if not 'NK.controls.LayerSelector' in vars:
+
 NK.controls = NK.controls || {};
 NK.controls.LayerSelector = function(options) {
   var wrapper, layerList, inputElem, labelSpan, li, trigger; 
@@ -68,7 +69,12 @@ NK.controls.LayerSelector = function(options) {
 
         trigger = document.createElement('span');
         $(trigger).addClass('layerTriggerTarget');
-        $(trigger).click(this, this.activate);
+        $(labelSpan).click({
+          selector: this,
+          inputElem: inputElem,
+          labelSpan: labelSpan,
+          layer   : layer
+        }, this.activate);
 
         labelSpan.appendChild( trigger );
         li.appendChild(inputElem);
@@ -88,6 +94,33 @@ NK.controls.LayerSelector = function(options) {
   });
 }
 ol.inherits(NK.controls.LayerSelector, ol.control.Control);
+
+NK.controls.LayerSelector.prototype.activate =  function(event) {
+  var rasterControls, i;
+  var self  = event.data.selector;
+  var layer = event.data.layer;
+
+  if (!self.disabled) {
+    rasterControls = NK.util.getControlsByClass(NK.controls.LayerSelector);
+    for (i = 0; i < rasterControls.length; i++) { 
+      rasterControls[i].hideAll();
+    }
+    layer.setVisible(true);
+    $(event.data.inputElem).addClass('is-checked');
+    $(event.data.labelSpan).addClass('for-checked');
+  }
+};
+
+NK.controls.LayerSelector.prototype.hideAll =  function() {
+  for (var l in this.dataLayers) {
+    this.dataLayers[l].layer.setVisible(false);
+    $(this.dataLayers[l].inputElem).removeClass('is-checked');
+    $(this.dataLayers[l].labelSpan).removeClass('for-checked');
+  }
+}
+
+<% vars['NK.controls.LayerSelector']=True %>
+%endif
 
 goog.object.extend(options, {
   target: container
