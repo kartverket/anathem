@@ -846,39 +846,51 @@ button {
   background-repeat: no-repeat;
 }
 .raster-layer-selector-item:hover:after {
-  background-image: url('img/raster-thumbs.png');  
-}
-.vector-layer-selector-item:hover:after {
-  background-image: url('img/coverage-thumbs.png');
+  background-image: url('img/layer-thumbs.png');  
 }
 .raster-layer-selector-item:last-child:hover:after,
-.vector-layer-selector-item:last-child:hover:after {
-  bottom: 0;
-  top: auto;
-}
 .raster-layer-selector-item .labelSpan {
   vertical-align: baseline;
 }
-#land-selector:hover:after,
-#dekning-papir-selector:hover:after,
-#dekning-plast-selector:hover:after {
+#land-selector:hover:after {
   background-position: 0 0;
 }
-#terreng-selector:hover:after,
-#dekning-sjo-selector:hover:after {
+#terreng-selector:hover:after {
   background-position: 0 -50px;
 }
-#enkel-selector:hover:after,
-#dekning-sjo-hv-selector:hover:after {
+#enkel-selector:hover:after {
   background-position: 0 -100px;
 }
-#flybilder-selector:hover:after,
-#dekning-sjo-ky-selector:hover:after {
+#flybilder-selector:hover:after {
   background-position: 0 -150px;
 }
-#sjo-selector:hover:after,
-#dekning-sjo-fi-selector:hover:after {
+#sjo-selector:hover:after {
   background-position: 0 -200px;
+}
+#dekning-land-selector:hover:after {
+  background-position: 0 -250px;
+}
+#dekning-sjo-selector:hover:after {
+  background-position: 0 -300px;
+}
+#dekning-sjo-hv-selector:hover:after {
+  background-position: 0 -350px;
+}
+#dekning-sjo-ky-selector:hover:after {
+  background-position: 0 -400px;
+}
+#dekning-sjo-fi-selector:hover:after {
+  background-position: 0 -450px;
+}
+/* TODO */
+#toporaster-selector:hover:after {
+  background-position: 0 0px;
+}
+#janmayen-selector:hover:after {
+  background-position: 0 0px;
+}
+#svalbard-selector:hover:after {
+  background-position: 0 0px;
 }
 
 /**********************************
