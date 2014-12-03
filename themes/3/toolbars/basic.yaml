@@ -40,6 +40,7 @@ controls:
     popup: "true"
     title: "Flere"
     group: flere
-#  - template: controls/vectorlayerselector
-#    group: dekning
-#    name: "Kart- inndeling"
+  - template: 3/controls/layerselector
+    popup: "true"
+    group: dekning
+    title: "Kart- inndeling"
