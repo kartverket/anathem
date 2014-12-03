@@ -1,9 +1,8 @@
 var simpleLayer = NK.util.getLayersBy('title','enkel')[0];
 
 var omap = new ol.control.OverviewMap({
-  className: 'ol-overviewmap ol-custom-overviewmap',
-  layers: [simpleLayer],
-  collapsed: false
+  className: 'overview-container-panel',
+//  layers: [simpleLayer] // this is broken
 })
 
 omap.setCollapsible(false);

@@ -24,3 +24,12 @@ td {
   border: 1px dotted #000;
 }
 
+.overview-container-panel {
+  right: 75px;
+  bottom: 5px;
+}
+
+.overview-container-panel button {
+  display: none;
+  visibility: hidden;
+}
