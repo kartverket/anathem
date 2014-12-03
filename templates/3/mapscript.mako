@@ -260,6 +260,10 @@ var container = null;
     NK.view.on("change:center", NK.functions.updateHistory);
     NK.view.on("change:resolution", NK.functions.updateHistory);
     NK.view.on("change:rotation", NK.functions.updateHistory);
+    map.getLayers().forEach(function(l) {
+      l.on("change:visible", NK.functions.updateHistory);
+      l.on("change:opacity", NK.functions.updateHistory);
+    });
     NK.functions.updateHistory();
   }
 

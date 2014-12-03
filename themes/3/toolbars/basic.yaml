@@ -30,14 +30,16 @@ controls:
   controls:
   - template: 3/controls/layerselector
     group: modus1
-#  - template: controls/rasterlayerselector-popup
-#    title: "Sj&oslash;"
-#    group: sjo
+  - template: 3/controls/layerselector
+    popup: "true"
+    title: "Sj&oslash;"
+    group: sjo
   - template: 3/controls/layerselector
     group: modus2
-#  - template: controls/rasterlayerselector-popup
-#    title: "Flere"
-#    group: flere
+  - template: 3/controls/layerselector
+    popup: "true"
+    title: "Flere"
+    group: flere
 #  - template: controls/vectorlayerselector
 #    group: dekning
 #    name: "Kart- inndeling"

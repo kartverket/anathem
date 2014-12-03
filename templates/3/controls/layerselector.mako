@@ -2,8 +2,15 @@
 % if group:
         options.group = "${group}";
 % endif
+% if popup:
+        options.popup = true;
+% endif
+% if title:
+        options.title = "${title}";
+% endif
 
 % if not 'NK.controls.LayerSelector' in vars:
+
 
 NK.controls = NK.controls || {};
 NK.controls.LayerSelector = function(options) {
@@ -16,6 +23,7 @@ NK.controls.LayerSelector = function(options) {
   this.dataLayers = [];
 
   wrapper = document.createElement("div");
+  wrapper.className = "layersDiv";
   layers  = NK.util.getLayersBy('layerGroup', this.group);
 
   if (layers.length) {
@@ -85,7 +93,32 @@ NK.controls.LayerSelector = function(options) {
   }
   if (layerList) {
     layerList.className = "rasterLayerList";
-    wrapper.appendChild(layerList);
+    if (options.popup) {
+      this.toggleWidgetDiv = document.createElement("div");
+      $(this.toggleWidgetDiv).addClass("vectorWidgetToggleBtn");
+      this.toggleWidgetDiv.tabIndex = 0;
+      this.toggleWidgetDiv.innerHTML = options.title;
+
+      this.widget = document.createElement("div");
+      this.widget.className = 'widget';
+      this.layerList = layerList;
+      this.widget.appendChild(this.layerList);
+      wrapper.appendChild(this.toggleWidgetDiv);
+      wrapper.appendChild(this.widget);
+
+      $(this.toggleWidgetDiv).click(this, function( event ) {
+        var self   = event.data;
+        var parent = self.toggleWidgetDiv.parentNode;
+        $(parent).toggleClass('show' );
+        var widget = self.layerList.parentElement;
+        var offset = widget.getBoundingClientRect().bottom - $(window).height();
+        if (offset > 0) {
+          widget.style.top = widget.style.top.split("px")[0] - offset - 5 + "px"; // don't you love mixed type?
+        }
+      });
+    } else {
+      wrapper.appendChild(layerList);
+    }
   }
 
   ol.control.Control.call(this, {
@@ -108,6 +141,9 @@ NK.controls.LayerSelector.prototype.activate =  function(event) {
     layer.setVisible(true);
     $(event.data.inputElem).addClass('is-checked');
     $(event.data.labelSpan).addClass('for-checked');
+    if (self.toggleWidgetDiv) {
+      $(self.toggleWidgetDiv.parentNode).addClass('show');
+    }
   }
 };
 
@@ -116,6 +152,9 @@ NK.controls.LayerSelector.prototype.hideAll =  function() {
     this.dataLayers[l].layer.setVisible(false);
     $(this.dataLayers[l].inputElem).removeClass('is-checked');
     $(this.dataLayers[l].labelSpan).removeClass('for-checked');
+  }
+  if (this.toggleWidgetDiv) {
+    $(this.toggleWidgetDiv.parentNode).removeClass('show');
   }
 }
 
