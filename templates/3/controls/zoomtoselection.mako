@@ -6,12 +6,13 @@ NK.controls.ZoomToSelection = function(options) {
   var wrapper, btn; 
 
   options = options || {};
-  
+  this.container = options.target;  
+
   this.dragzoom = new ol.interaction.DragZoom({
     condition: ol.events.condition.always
   });
 
-  btn = document.createElement('btn');
+  btn = document.createElement('button');
 
   btn.title = "Zoom to selection";
   btn.style.cursor = "pointer";
@@ -29,10 +30,12 @@ NK.controls.ZoomToSelection = function(options) {
 ol.inherits(NK.controls.ZoomToSelection, ol.control.Control);
 
 NK.controls.ZoomToSelection.prototype.enable = function() {
+  $(this.container).addClass("zoom-to-selection-selected");
   map.addInteraction(this.dragzoom);
 
 };
 NK.controls.ZoomToSelection.prototype.disable = function() {
+  $(this.container).removeClass("zoom-to-selection-selected");
   map.removeInteraction(this.dragzoom);
 };
 NK.controls.ZoomToSelection.prototype.toggle = function(event) {
