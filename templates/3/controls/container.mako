@@ -26,6 +26,9 @@
 	% if name:
 		% if toggleButton:
 			var header = document.createElement("button");
+                        $(header).click(container, function(event) {
+                          $(event.data).toggleClass("minified");
+                        });
 		% else:
 			var header = document.createElement("div");
 		% endif

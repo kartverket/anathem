@@ -51,7 +51,7 @@ controls  :
 #    - template: controls/geolocation
     - include: 3/toolbars/basic
     - include: 3/toolbars/top
-#    - include: 3/toolbars/secondary
+    - include: 3/toolbars/secondary
     - template: 3/controls/container
     - template: 3/controls/overview
 
