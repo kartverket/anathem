@@ -35,9 +35,7 @@ controls:
   - template: 3/controls/container
     id: help-panel  
     controls:
-#    - template: 3/controls/help
-#      i18n:
-#      - include: languages/nb/help
+    - template: 3/controls/help
   - template: 3/controls/container
     id: make-your-own-panel
     controls:

@@ -5,6 +5,8 @@ NK.controls.GetURL = function(options) {
   options = options || {};
   var wrapper, btn;
   var cName = 'getURL-button nkButton';
+
+  this.title = 'Share URL';
   
   wrapper = document.createElement('div');
   btn    = document.createElement('button');
