@@ -27,6 +27,13 @@ td {
 .overview-container-panel {
   right: 75px;
   bottom: 5px;
+  width: 200px;
+  height: 150px;
+}
+
+.ol-overviewmap-map {
+  width: 200px;
+  height: 150px;
 }
 
 .overview-container-panel button {

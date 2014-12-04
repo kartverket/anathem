@@ -89,8 +89,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
         var atts = bbox[0].attributes;
         var srs = atts['CRS'] || atts['SRS'];
         if (srs && (srs.value == map.getView().getProjection().getCode())) { 
-          layerParms['layerBounds'] = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
-                                                            atts["maxx"].value, atts["maxy"].value);
+          layerParms['layerBounds'] = [atts["minx"].value, atts["miny"].value, atts["maxx"].value, atts["maxy"].value];
         }
       }
       layerParms['layerText']=name;
