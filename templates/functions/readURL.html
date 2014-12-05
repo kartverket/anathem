@@ -23,6 +23,8 @@ description: |
 NK.visibleLayerQueue = NK.visibleLayerQueue || {}; 
 NK.opacityQueue = NK.opacityQueue || {}; 
 NK.highlightQueue = NK.highlightQueue || {}; 
+NK.registeredLayers = NK.registeredLayers || {};
+NK.registeredLayerQueue = NK.registeredLayerQueue || {};
 
 NK.functions.storeInitialLayerVisibility = function () {
   // store the initial layer visibility configuration
@@ -300,6 +302,7 @@ NK.functions.setMapState = function (params) {
       setOpacity,
       showLayerNamed,
       hideLayerNamed,
+      makeLayerAvailable,
       highlight,
       search,
       searchArray,
@@ -389,8 +392,21 @@ NK.functions.setMapState = function (params) {
       }         
     };
 
+    makeLayerAvailable = function (layerName) {
+      if (NK.registeredLayers[layerName]) {
+        NK.registeredLayers[layerName](); // perform the layer addition
+        delete NK.registeredLayers[layerName];
+      } else { 
+        NK.registeredLayerQueue[layerName] = true;
+      }
+    };
+
     showLayerNamed = function (layerName) {
       NK.lastAddedLayer = layerName;
+      if (NK.registeredLayers[layerName]) {
+        NK.registeredLayers[layerName](); // perform the layer addition
+        delete NK.registeredLayers[layerName];
+      }
       if (map.getLayersByName(layerName).length) {
         return setLayerVisibility(layerName, true);
       } else {
@@ -452,6 +468,13 @@ NK.functions.setMapState = function (params) {
           break;
         case '-':
           hideLayerNamed(extra.slice(1));
+          break;
+        case '*':
+          NK.compactMode = true;
+          var lid = extra.slice(1);
+          if (lid.length) {
+            makeLayerAvailable(lid);
+          }
           break;
         case '!':
           highlight(extra);

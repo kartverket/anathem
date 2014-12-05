@@ -20,8 +20,8 @@ NK.functions.updateHistory = function (evt) {
         if (!!center && !!zoom) {
             uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat);
             /* 1m precision ought to be enough for everyone --BG */
-            if(!!NK.urlParam){
-              uid += '/w/url=' + NK.urlParam[0];
+            if (NK.compactMode) {
+              uid += "/*";
             }
 
             if (!!NK.initLayers && !!map.layers) {
@@ -39,7 +39,7 @@ NK.functions.updateHistory = function (evt) {
                                         uid += "/-" + layer.shortid;
                                     }
                                 }
-                            } else if (layer.visibility) {
+                            } else if (layer.visibility || NK.compactMode) {
                                 if (layer.type == 'drawing') {
                                     uid += '/l/drawing/['+ layer.url.trim() +']';
                                 } else if (layer.type == 'geojson') {
@@ -49,20 +49,22 @@ NK.functions.updateHistory = function (evt) {
                                       uid += '/l/wms/[' + layer.url.trim() + ']';
                                     }
                                     var id = layer.params.LAYERS;
+                                    var marker = layer.visibility ? "+" : "*";
                                     if (id.indexOf("/")>-1) {
-                                      uid += '/[+'+id+']';
+                                      uid += '/['+marker+id+']';
                                     } else { 
-                                      uid += '/+'+id;
+                                      uid += '/'+marker+id;
                                     }
                                 } else if (layer.type == 'wfs') {
                                     if (uid.indexOf(layer.protocol.origUrl.trim())==-1) {
                                       uid += '/l/wfs/[' + layer.protocol.origUrl.trim() + ']';
                                     }
                                     var id = layer.protocol.featureType;
+                                    var marker = layer.visibility ? "+" : "*";
                                     if (id.indexOf("/")>-1) {
-                                      uid += '/[+'+id+']';
+                                      uid += '/['+marker+id+']';
                                     } else { 
-                                      uid += '/+'+id;
+                                      uid += '/'+marker+id;
                                     }
                                     for (var f in layer.selectedFeatures) {
                                       var centroid = layer.selectedFeatures[f].geometry.getCentroid();

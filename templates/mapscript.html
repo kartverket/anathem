@@ -365,8 +365,10 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       layerParms['title'] = $(this).children('Title').text();
       layerParms['visible'] = !!NK.visibleLayerQueue[name];
       layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
+      var register = (name in NK.visibleLayerQueue) || (name in NK.registeredLayerQueue);
       if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
       if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
+      if (name in NK.registeredLayerQueue) {delete NK.registeredLayerQueue[name];}
       layers.push(name);
       var bbox = $(xml).find('BoundingBox');
       if (!!bbox) {
@@ -378,7 +380,13 @@ NK.functions.addWMSLayer = function(wmsUrl) {
         }
       }
       layerParms['layerText']=name;
-      NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms));
+      if (NK.compactMode && (!register)) {
+        NK.registeredLayers[name] = function() { 
+          return NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms)); 
+        };
+      } else { 
+        NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms));
+      }
       if (!!NK.xdm) {
         NK.functions.postMessage({"type":"layerLoaded", "title":layerParms['title'], "parent":layerParms['parent'],"url":wmsUrl}); 
       }
