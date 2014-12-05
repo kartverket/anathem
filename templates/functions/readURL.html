@@ -409,6 +409,8 @@ NK.functions.setMapState = function (params) {
       }
       if (map.getLayersByName(layerName).length) {
         return setLayerVisibility(layerName, true);
+      } else if (map.getLayersBy('shortid',layerName).length) {
+        return setLayerVisibility(layerName, true);
       } else {
         var found = false;
         for (var l in map.layers) {
