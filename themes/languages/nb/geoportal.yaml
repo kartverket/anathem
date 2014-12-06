@@ -40,6 +40,12 @@ translations:
   - template: i18n/translation
     source: 'Close'
     translation: 'Avslutt'
+  - template: i18n/translation
+    source: 'All'
+    translation: 'Vis alle kartlag'
+  - template: i18n/translation
+    source: 'Only starred'
+    translation: 'Vis markerte kartlag'
 
 
 
