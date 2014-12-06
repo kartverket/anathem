@@ -381,11 +381,17 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       }
       layerParms['layerText']=name;
       if (NK.compactMode && (!register)) {
+        var title = layerParms['title'];
+        var parms = $.extend({},serviceParms,layerParms);
         NK.registeredLayers[name] = function() { 
-          return NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms)); 
+          return NK.functions.createDynamicWMSLayer(title, wmsUrl, parms); 
         };
       } else { 
-        NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms));
+        var layer = NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms));
+        if (register) {
+          layer.isStarred = true;
+          map.events.triggerEvent("changelayer", {layer:layer, property:"starred"});
+        }
       }
       if (!!NK.xdm) {
         NK.functions.postMessage({"type":"layerLoaded", "title":layerParms['title'], "parent":layerParms['parent'],"url":wmsUrl}); 
@@ -446,6 +452,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
       buffer: 0,
       ratio: 1.0,
       visibility: parms['visible'],
+      isStarred: parms['visible'], 
       opacity: parms['opacity'] || 1.0,
       transitionEffect: 'resize',
       singleTile: true,
@@ -517,6 +524,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   }
   map.addLayers([wms]);
   NK.functions.createLegend();
+  return wms;
 };
 
 NK.functions.imgError = function(image, altText) {

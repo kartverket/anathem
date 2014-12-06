@@ -394,7 +394,8 @@ NK.functions.setMapState = function (params) {
 
     makeLayerAvailable = function (layerName) {
       if (NK.registeredLayers[layerName]) {
-        NK.registeredLayers[layerName](); // perform the layer addition
+        var layer = NK.registeredLayers[layerName](); // perform the layer addition
+        layer.isStarred = true;
         delete NK.registeredLayers[layerName];
       } else { 
         NK.registeredLayerQueue[layerName] = true;
@@ -472,10 +473,11 @@ NK.functions.setMapState = function (params) {
           hideLayerNamed(extra.slice(1));
           break;
         case '*':
-          NK.compactMode = true;
           var lid = extra.slice(1);
           if (lid.length) {
             makeLayerAvailable(lid);
+          } else {
+            NK.compactMode = true;
           }
           break;
         case '!':

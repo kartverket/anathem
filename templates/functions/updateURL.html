@@ -39,7 +39,7 @@ NK.functions.updateHistory = function (evt) {
                                         uid += "/-" + layer.shortid;
                                     }
                                 }
-                            } else if (layer.visibility || NK.compactMode) {
+                            } else if (layer.visibility || layer.isStarred) {
                                 if (layer.type == 'drawing') {
                                     uid += '/l/drawing/['+ layer.url.trim() +']';
                                 } else if (layer.type == 'geojson') {
