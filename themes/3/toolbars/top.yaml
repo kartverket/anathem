@@ -29,9 +29,7 @@ controls:
   - template: 3/controls/container
     id: embed-panel
     controls:
-#    - template: 3/controls/embed
-#      i18n:
-#      - include: languages/nb/embed
+    - template: 3/controls/embed
   - template: 3/controls/container
     id: help-panel  
     controls:
