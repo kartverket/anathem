@@ -1,5 +1,5 @@
 template : base
-title    : "Geonorge | Norgeskart"
+title    : "Kart | Geonorge"
 mapClass: embedded-map
 mapscript:
   template  : mapscript
