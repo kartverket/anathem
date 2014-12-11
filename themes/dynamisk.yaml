@@ -15,6 +15,7 @@ mapscript:
   overlays  : 
     - include: layers/sjo_hovedkart2
     - include: layers/grunnkart
+    - include: layers/flybilder
   center:
     template: center/besseggen
   functions :
