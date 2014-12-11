@@ -10,6 +10,15 @@ translations:
   - template: i18n/translation
     source: Sea
     translation: Sj&oslash;
+  - template: i18n/translation
+    source: Aerial 
+    translation: Fly&shy;bilder
+ 
+
+
+
+
+ 
  
 
 
