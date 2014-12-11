@@ -43,8 +43,8 @@ mapscript:
 #    - template: controls/geolocation
     - template: controls/navigation
     - template: controls/scaleline
-    - include: toolbars/basic
     - include: toolbars/top
+    - include: toolbars/basic
     - include: toolbars/secondary
     - template: controls/container
       id: overview-container-panel
