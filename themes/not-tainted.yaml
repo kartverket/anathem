@@ -1,30 +1,30 @@
 template : 3/base
-filename : index.html
+filename : not-tainted.html
 title    : Norgeskart
 #includeCesium: true
-mapscript: clients/norgeskart.min.js
+mapscript: clients/norgeskart-ntc.min.js
 --- 
 template : 3/mapscript
-filename : clients/norgeskart.min.js
+filename : clients/norgeskart-ntc.min.js
 language  : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
 projection: 25833
 
 baselayers:   
-    - include: 3/layers/europa
-
+#    - include: 3/layers/europa
+#
 overlays  : 
-    - include: 3/layers/land
-    - include: 3/layers/sjo
-    - include: 3/layers/sjo_enc
-    - include: 3/layers/flybilder
-    - include: 3/layers/terreng
-    - include: 3/layers/grunnkart
-    - include: 3/layers/toporaster
+#    - include: 3/layers/land
+#    - include: 3/layers/sjo
+#    - include: 3/layers/sjo_enc
+#    - include: 3/layers/flybilder
+#    - include: 3/layers/terreng
+#    - include: 3/layers/grunnkart
+#    - include: 3/layers/toporaster
 ## currently broken
-    - include: 3/layers/janmayen
-    - include: 3/layers/svalbard
-##
+#    - include: 3/layers/janmayen
+#    - include: 3/layers/svalbard
+
     - include: 3/layers/dekning/n50
     - include: 3/layers/dekning/sjo/hovedkart
     - include: 3/layers/dekning/sjo/havnekart
