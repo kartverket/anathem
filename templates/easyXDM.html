@@ -8,7 +8,6 @@
 
 <script type="text/javascript">
 	var NK = NK || {};
-        NK.xdm = true;
 	NK.easyXDM = NK.easyXDM || {};
 	NK.easyXDM.socket = new easyXDM.Socket({
 		onMessage: function (data, origin) {
@@ -216,6 +215,7 @@
 			}
 		}
 	});
+        NK.xdm = true;
 
 NK.functions = NK.functions || {};
 NK.functions.postMessage = function (msg) {
