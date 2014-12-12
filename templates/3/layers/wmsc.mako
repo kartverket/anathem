@@ -3,6 +3,7 @@
     title: "${name}",
     source: new ol.source.TileWMS({
       url: "${url}",
+      crossOrigin: 'anonymous',
       params: {
         LAYERS: "${layers}", 
         VERSION: "1.1.1",

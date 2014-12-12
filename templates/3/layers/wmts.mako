@@ -46,6 +46,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
           resolutions: resolutions,
           matrixIds: myMatrixIds.length ? myMatrixIds : matrixIds
         }),
+        crossOrigin: 'anonymous',
         attributions: [new ol.Attribution({html: "<a href='http://kartverket.no/Kart/Gratis-kartdata/Lisens/'>CC-BY</a> <a href='http://kartverket.no'>Kartverket</a>"})]
     };
     if (typeof(url)==='string') {
