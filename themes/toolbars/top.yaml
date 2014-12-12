@@ -55,3 +55,10 @@ controls:
     propertySearchUrl: http://norgeskart.no/ws/eie.py
     i18n:
     - include: languages/nb/search
+- template: controls/container
+  id: geonorge-logo-panel
+  controls:
+  - template: controls/logo
+    svgLogo: <a href="http://prototype.dev.geonorge.no/Geonorge/" class="navbar-title"><div class="navbar-headline"><strong>Geonorge</strong></div><div class="navbar-subline">- hele Norges kartportal</div></a>
+    noPng: true
+    noLink: true

@@ -7,4 +7,10 @@ params:
 % if svgLogo:
 	options.svgLogo = '${svgLogo}';
 % endif
+% if noPng:
+	options.noPng = true;
+% endif
+% if noLink:
+	options.noLink = true;
+% endif
 NK.functions.addControlToContext(new OpenLayers.Control.Logo(options), context);
