@@ -15,6 +15,9 @@ NK.functions.popup.ify = function(object) {
     }
     return object;
   }
+  if (goog.isNumber(object)) {
+    return object;
+  }
   var keys = Object.keys(object);
   if ((keys.length == 1) && (keys[0] == "text_")) {
     if (object.text_.indexOf("://")>-1) {

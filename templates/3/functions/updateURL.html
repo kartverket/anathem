@@ -29,9 +29,9 @@ NK.functions.updateHistory = function (evt) {
                                 }
                             } else if (layer.getVisible()) {
                                 if (layer.get('type') == 'drawing') {
-                                    uid += '/l/drawing/['+ layer.getSource().getUrl() +']';
+                                    uid += '/l/drawing/['+ layer.get('url') +']';
                                 } else if (layer.get('type') == 'geojson') {
-                                    uid += '/l/geojson/['+ layer.getSource().getUrl() +']';
+                                    uid += '/l/geojson/['+ layer.get('url') +']';
                                 } else if (layer.get('type') == 'wms') {
                                     if (uid.indexOf(layer.getSource().getUrl())==-1) {
                                       uid += '/l/wms/[' + layer.getSource().getUrl() + ']';

@@ -365,3 +365,49 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   map.addLayer(wfs);
   NK.functions.vector.addHoverControls(map, wfs, NK.styles.wfs.highlight); 
 } 
+
+NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
+  var mapProjection,
+      formatOptions,
+      geoJSONFormat,
+      layerOptions,
+      layer,
+      correctEpsgCode,
+      layerExtensions;
+
+  mapProjection = map.getView().getProjection();
+
+  layer = new ol.layer.Vector({
+    source: new ol.source.GeoJSON ({
+      url: url
+    }),
+    style: function(feature, resolution) {
+      var color = feature.get('color');
+      if (!!color) { 
+        var rgb = color.split(" ");
+        var width = feature.get('size') || 2;
+        return [new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: [rgb[0],rgb[1],rgb[2],1],
+            width: width - 0
+          })
+        })];
+      } else {
+        return NK.styles.wfs['default'];
+      }
+    },
+    title: "drawing",
+    shortid: 'urlDataLayer_' + NK.functions.urlDataLayerCounter,
+    projection: mapProjection,
+    displayInLayerSwitcher: false,
+    isUrlDataLayer: true,
+    type: 'geojson',
+    url: url
+  })
+
+  $.extend(layer.values_, extensionProperties);
+
+  map.addLayer(layer);
+  NK.functions.vector.addHoverControls(map, layer, NK.styles.wfs.highlight);
+};
+

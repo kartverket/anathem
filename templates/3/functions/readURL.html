@@ -189,64 +189,6 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
   NK.lastParsedLayer = url;
 };
 
-NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
-  var mapProjection,
-      formatOptions,
-      geoJSONFormat,
-      layerOptions,
-      layer,
-      correctEpsgCode,
-      layerExtensions;
-
-  formatOptions = {
-    'internalProjection': map.getProjection(),
-    'externalProjection': map.getProjection()
-  };
-
-  /* set external projection, if provided  */
-
-  if (epsgCode && NK.projections[epsgCode]) {
-    formatOptions.externalProjection = NK.projections[epsgCode];
-    correctEpsgCode = epsgCode;
-  } else {
-    correctEpsgCode = NK.baseProjection;
-  }
-
-  geoJSONFormat = new OpenLayers.Format.GeoJSON(formatOptions);
-
-  layerOptions = {
-    shortid: 'urlDataLayer_' + NK.functions.urlDataLayerCounter, 
-    protocol: new OpenLayers.Protocol.HTTP({
-      'url': url,
-      'format': geoJSONFormat
-    }),
-    strategies: [new OpenLayers.Strategy.Fixed({preload: true, autoActivate: true})],
-    styleMap: NK.styles.track,
-    projection: mapProjection,
-    displayInLayerSwitcher: false,
-    visibility: true
-  };
-
-  layer = new OpenLayers.Layer.Vector(
-    'urlDataLayer_' + NK.functions.urlDataLayerCounter++,
-    layerOptions
-  );
-
-  layerExtensions = {
-    'isUrlDataLayer': true,
-    'type': 'geojson',
-    'epsgCode': correctEpsgCode,
-    'url': url
-  };
-
-  if (extensionProperties) {
-    layerExtensions = OpenLayers.Util.extend(layerExtensions, extensionProperties); 
-  }
-
-  layer = OpenLayers.Util.extend(layer, layerExtensions);
-
-  map.addLayers([layer]);
-};
 
 NK.functions.highlightFeature = function(layer, fid, coords) { 
    // works for fid, does not work for spatial
