@@ -368,9 +368,6 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
 
 NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   var mapProjection,
-      formatOptions,
-      geoJSONFormat,
-      layerOptions,
       layer,
       correctEpsgCode,
       layerExtensions;
@@ -386,11 +383,35 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
       if (!!color) { 
         var rgb = color.split(" ");
         var width = feature.get('size') || 2;
-        return [new ol.style.Style({
-          stroke: new ol.style.Stroke({
+        var symbol = feature.get('symbol') || 'circle';
+        var stroke = new ol.style.Stroke({
             color: [rgb[0],rgb[1],rgb[2],1],
-            width: width - 0
-          })
+            width: 2 
+        });
+        var fill = new ol.style.Fill({
+            color: [rgb[0],rgb[1],rgb[2],0.8]
+        });
+        var pointStyle;
+
+        if (symbol == 'square') {
+          pointStyle = new ol.style.RegularShape({
+            points: 4,
+            angle: Math.PI/4,
+            fill: fill,
+            stroke: stroke,
+            radius: width
+          });
+        } else {
+          pointStyle = new ol.style.Circle({
+            fill: fill,
+            stroke: stroke,
+            radius: width
+          });
+        }
+        return [new ol.style.Style({
+          fill: fill, 
+          stroke: stroke, 
+          image: pointStyle
         })];
       } else {
         return NK.styles.wfs['default'];
