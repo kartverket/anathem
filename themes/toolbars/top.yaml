@@ -59,6 +59,6 @@ controls:
   id: geonorge-logo-panel
   controls:
   - template: controls/logo
-    svgLogo: <a href="http://prototype.dev.geonorge.no/Geonorge/" class="navbar-title"><div class="navbar-headline" style="margin-top:14px"><strong>Geonorge</strong></div></a>
+    svgLogo: <a href="http://www.geonorge.no/" class="navbar-title"><div class="navbar-headline" style="margin-top:14px"><strong>Geonorge</strong></div></a>
     noPng: true
     noLink: true
