@@ -1,0 +1,7 @@
+template: 3/layers/dekning/historisk
+name: Generalkart
+id: dekning.h.gen
+url: "http://norgeskart.no/json/dekning/historisk/General.geojson" 
+serie: general
+layerGroup: dekning.h
+preferredBackground: land

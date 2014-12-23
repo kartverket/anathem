@@ -67,7 +67,6 @@ def recurse_render(data):
                     data[key] = "\n".join([recurse_render(x) for x in value])
             except IOError, er:
                 print "Template specified in configuration %s was not found:" % template_name
-                print data
                 print er
                 sys.exit(1)
         # then render the main template

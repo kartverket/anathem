@@ -62,8 +62,9 @@ NK.functions.vector.addSelectControls = function (map, layer, style, featureIden
   } 
 };
 
-NK.functions.vector.addHoverControls = function (map, layer, style, featureIdentity) {
+NK.functions.vector.addHoverControls = function (map, layer, style, featureIdentity, popupBuilder) {
   if (!featureIdentity) {featureIdentity = Object.is;}
+  if (!popupBuilder)    {popupBuilder    = NK.functions.popup.ify;}
 
   var featureOverlay = new ol.FeatureOverlay({
     map: map,
@@ -112,7 +113,7 @@ NK.functions.vector.addHoverControls = function (map, layer, style, featureIdent
       }
     }
     if (!!feature) {
-      mouseHint.innerHTML = NK.functions.popup.ify(feature.values_);
+      mouseHint.innerHTML = popupBuilder(feature.values_);
       $.extend(mouseHint.style, {
         left: pixel[0]+10+"px",
         top: pixel[1]+15+"px"

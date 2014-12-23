@@ -1,0 +1,42 @@
+template : 3/base
+filename : historisk.html
+title    : Norgeskart
+#includeCesium: true
+mapscript: clients/norgeskart-historisk.min.js
+--- 
+template : 3/mapscript
+filename : clients/norgeskart-historisk.min.js
+language  : nb
+tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+projection: 25833
+
+baselayers:   
+    - include: 3/layers/europa
+
+overlays  : 
+    - include: 3/layers/grunnkart
+    - include: 3/layers/dekning/historisk/general
+
+center    : 
+    template: 3/center/besseggen
+
+styles    :
+#    - template: 3/styles/wfs
+    - template: 3/styles/dekning/historisk
+#    - template: styles/unlabeledMarker
+#    - template: styles/labeledMarker
+#    - template: styles/omriss
+#    - template: styles/track
+
+functions :
+    - template: 3/functions/updateURL
+    - template: 3/functions/readURL
+
+controls  :
+    - template: 3/controls/default
+    - template: 3/controls/status
+    - include: 3/toolbars/basic-historisk
+    - include: 3/toolbars/top
+    - template: 3/controls/container
+    - template: 3/controls/overview
+

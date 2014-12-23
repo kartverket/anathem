@@ -414,7 +414,7 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
           image: pointStyle
         })];
       } else {
-        return NK.styles.wfs['default'];
+        return NK.styles.wfs['default'](feature, resolution);
       }
     },
     title: "drawing",
