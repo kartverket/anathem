@@ -404,7 +404,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
         markup += '<h1 class="h">' + uuDictTmp['info']['name'] + '</h1>';
         markup += '<p>' + uuDictTmp['info']['extra'] + '</p>';
         markup += '<div class="externalToolbarLink"><a href="http://kartverket.no/tilgjengelighet/"><br>Les mer om Tilgjengelighetstjenester</a></div>';
-        for (i = 5, l = test.length - 1; i < l; i += 1) {
+        for (i = 4, l = test.length - 1; i < l; i += 1) {
           tmp = test[i].split(" = ");
           if (tmp[1])
             tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
