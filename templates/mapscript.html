@@ -360,7 +360,14 @@ NK.init = function () {
       "getfeatureinfo": function(event) {
         try {
           if (event.text != "") {
-            window.open().document.write(event.text);
+            var windowName = 'Faktaark';
+            var popUp = window.open('', windowName, 'width=700, scrollbars, resizable');
+            if (popUp === null || typeof(popUp) == 'undefined') {
+              alert('Please disable your pop-up blocker and click the "Open" link again.');
+            } else {
+              popUp.document.write(event.text);
+              popUp.focus();
+            }
           }
         } catch(e) {}
       }
