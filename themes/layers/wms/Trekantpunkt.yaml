@@ -6,3 +6,4 @@ layerGroup: tjenester.Fastmerker
 id: Trekantpunkt
 usetoken: true
 singleTile: true
+minZoom: 8

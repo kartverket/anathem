@@ -6,3 +6,4 @@ layerGroup: tjenester.Fastmerker
 id: Niv_fastmerker
 usetoken: true
 singleTile: true
+minZoom: 7

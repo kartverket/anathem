@@ -6,3 +6,4 @@ layerGroup: tjenester.Fastmerker
 id: Landsnettpunkt
 usetoken: true
 singleTile: true
+minZoom: 7

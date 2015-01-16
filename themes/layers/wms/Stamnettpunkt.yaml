@@ -6,3 +6,4 @@ layerGroup: tjenester.Fastmerker
 id: Stamnettpunkt
 usetoken: true
 singleTile: true
+minZoom: 7
