@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Godkjent m&aring;te
+name: Alle skrivem&aring;te statuser
 layers: Vedtatt_og_godkjent_skrivemaate
-layerGroup: tjenester.Vedtatt_og_godkjent_skrivemaate
+layerGroup: tjenester.alle
 id: Vedtatt_og_godkjent_skrivemaate
 usetoken: true
 singleTile: true

@@ -56,3 +56,7 @@ controls:
     group: tjenester.ikke_autoriserte_skrivemaate
     title: Ikke autoriserte skrivem&aring;ter
     buttonText: Ikke autoriserte skrivem&aring;ter
+  - template: controls/overlaygrouppanel
+    group: tjenester.alle
+    title: Alle
+    buttonText: Alle
