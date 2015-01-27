@@ -363,7 +363,7 @@ NK.init = function () {
             var windowName = 'Faktaark';
             var popUp = window.open('', windowName, 'width=700, scrollbars, resizable');
             if (popUp === null || typeof(popUp) == 'undefined') {
-              alert('Please disable your pop-up blocker and click the "Open" link again.');
+              alert('Du må slå av pop-up blocker for å kunne se faktaark og så prøve på nytt.');
             } else {
               popUp.document.write(event.text);
               popUp.focus();
