@@ -41,3 +41,6 @@ controls:
   - template: controls/vectorlayerselector
     group: dekning
     name: "Kart- inndeling"
+  - template: controls/rasterlayerselector-popup
+    title: "Historikk"
+    group: historik
