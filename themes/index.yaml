@@ -34,7 +34,6 @@ overlays  :
 
     - include: layers/wms/n5raster
     - include: layers/wms/amtskart
-    - include: layers/wms/historisk
 
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
