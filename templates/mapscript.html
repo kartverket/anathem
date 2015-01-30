@@ -3,7 +3,7 @@
 var NK = NK || {};
 NK.mapEventListeners = {};
 
-var gkopen, 
+var gkopen,
     gkopen_wmts,
     proj,
     mapProj,
@@ -76,8 +76,8 @@ NK.functions.resetTokenError = function () {
 };
 
 NK.functions.updateToken = function (request) {
-  var i, 
-      j, 
+  var i,
+      j,
       reloadLimit;
 
   reloadLimit = new Date(Date.now() - NK.tokenError.RELOAD_LIMIT_SECONDS * 1000);
@@ -178,7 +178,7 @@ NK.init = function () {
   Proj4js.defs["EPSG:3575"] ="+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
   Proj4js.defs["EPSG:3034"] ="+proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs";
 
-  NK.projections = proj = {  
+  NK.projections = proj = {
     //pregenerated projection objects
     "32633": new OpenLayers.Projection('EPSG:32633'),
     "32631": new OpenLayers.Projection('EPSG:32631'),
@@ -220,7 +220,7 @@ NK.init = function () {
   // Create map canvas
 
   if (!!params.proj) {
-    mapProj = proj[params.proj]; 
+    mapProj = proj[params.proj];
   }
 
   NK.mapOptions = {
@@ -234,8 +234,8 @@ NK.init = function () {
     theme: 'theme/norgeskart/style.css'
   };
 
-  map = new OpenLayers.Map( 
-    'map', 
+  map = new OpenLayers.Map(
+    'map',
     OpenLayers.Util.extend(NK.mapOptions, {
       controls: [], //defined later
       numZoomLevels: NK.zoomLevels,
@@ -302,7 +302,7 @@ NK.init = function () {
 
     if (NK.geolocator) {
       NK.geolocator.activate();
-    } 
+    }
   }
 
   if (NK.functions.postMessage) {
@@ -312,7 +312,7 @@ NK.init = function () {
           feature,
           vectorLayerData = [],
           vectorFeatureData = [],
-          i, 
+          i,
           j,
           k,
           l,
@@ -363,7 +363,7 @@ NK.init = function () {
             var windowName = 'Faktaark';
             var popUp = window.open('', windowName, 'width=700, scrollbars, resizable');
             if (popUp === null || typeof(popUp) == 'undefined') {
-              alert('Du må slå av pop-up blocker for å kunne se faktaark og så prøve på nytt.');
+              alert('Du m&aring; sl&aring; av pop-up blocker for &aring; kunne se faktaark og s&aring; pr&oslash;ve p&aring; nytt.');
             } else {
               popUp.document.write(event.text);
               popUp.focus();
@@ -396,7 +396,7 @@ var cb = function(response, status, request) {
 
 var initializeToken = function () {
   $.ajax({
-    url: NK.tokenService, 
+    url: NK.tokenService,
     success: cb,
     type: 'GET'
   });
