@@ -164,7 +164,7 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
 
   switch (type) {
     case 'geojson':
-      NK.functions.addGeoJsonLayer(url, "32633"); //FIXME: hardcoding EPSG code, should move to all WGS as per the latest GeoJSON memorandum
+      NK.functions.addGeoJsonLayer(url, "4326"); //defaults to WGS84 as per standard definition
       break;
     case 'drawing':
       NK.functions.addGeoJsonLayer(url, "32633", {'isDrawing': true});
@@ -197,6 +197,7 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   };
 
   /* set external projection, if provided  */
+  /* TODO: re-read file with 32633 if the coordinates are out of bounds */
 
   if (epsgCode && NK.projections[epsgCode]) {
     formatOptions.externalProjection = NK.projections[epsgCode];
