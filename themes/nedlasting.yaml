@@ -33,6 +33,9 @@ overlays  :
     - include: layers/geoJSON/dtm-utm33
     - include: layers/geoJSON/dtm-utm33-100km
     - include: layers/geoJSON/dtm-utm35
+    - include: layers/geoJSON/raster-32
+    - include: layers/geoJSON/raster-33
+    - include: layers/geoJSON/raster-35
     - include: layers/geoJSON/raster-n50
     - include: layers/geoJSON/raster-n250
     - include: layers/geoJSON/raster-n500
