@@ -531,7 +531,12 @@ NK.functions.imgError = function(image, altText) {
   image.style.visibility='hidden';
   image.style.width="10px";
   image.style.height="1px";
-  altText.style.visibility='visible'; 
+  document.getElementById(altText).style.visibility='visible';
+};
+NK.functions.imgType = function(image, altText) {
+  if ((image.mimeType == 'text/xml') || (image.mimeType == 'application/vnd.ogc.se_xml')) { 
+    NK.functions.imgError(image, altText);
+  }
 };
 
 NK.functions.createLegend = function () {
@@ -544,7 +549,8 @@ NK.functions.createLegend = function () {
       if (layer.visibility && (!!layer.params) && (!!layer.params.LAYERS)) {
         var legendURL = map.layers[i].getFullRequestString({
           REQUEST: "GetLegendGraphic",
-          EXCEPTIONS: "application/vnd.ogc.se_inimage",
+          //EXCEPTIONS: "application/vnd.ogc.se_inimage",
+          //EXCEPTIONS: "text/xml",
           FORMAT: "image/png",
           SERVICE: "WMS",
           VERSION: "1.1.1",
@@ -552,7 +558,7 @@ NK.functions.createLegend = function () {
         });
         var name = layer.title || layer.name;
         var id   = "legend_" + layer.name;
-        legendDiv.innerHTML += name + "<br/><img src='" + legendURL + "' onerror='NK.functions.imgError(this, "+id+");'>";
+        legendDiv.innerHTML += name + "<br/><img src='" + legendURL + "' onerror='NK.functions.imgError(this, \""+id+"\");' onload='NK.functions.imgType(this, \""+id+"\");'>";
         legendDiv.innerHTML += "<span id='"+id+"' style='visibility:hidden'><a href='"+ legendURL +"' style='color:#fff'><i>Feil ved lasting av tegnforklaringen</i></a><br/>";
        
       }
