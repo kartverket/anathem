@@ -45,6 +45,14 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'buffer': 4
     };
 
+
+    if (!!options.wmsService) {
+      layerOptions['wmsService'] = options.wmsService;
+    }
+    if (!!options.wmsLayers) {
+      layerOptions['wmsLayers'] = options.wmsLayers;
+    }
+
     if (!!options.extent) {
       var c = options.extent.split(",");
       var customBounds = new OpenLayers.Bounds(c);
@@ -118,6 +126,14 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if visible:
     options.visibility = true;
+  % endif
+
+  % if wmsService:
+    options.wmsService = "${wmsService}";
+  % endif
+
+  % if wmsLayers:
+    options.wmsLayers = "${wmsLayers}";
   % endif
 
   % if layerGroup:

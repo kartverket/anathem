@@ -5,3 +5,5 @@ layer: topo2_dybde
 layerGroup: modus1
 id: land
 visible: true
+wmsService: wms.topo2
+wmsLayers: Topo2_WMS
