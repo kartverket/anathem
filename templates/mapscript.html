@@ -292,7 +292,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         if (!name) {return;}
         layers.push(name);
         layerParms['title'] = $(this).children('Title').text();
-        layerParms['visible'] = name in NK.visibleLayerQueue;
+        layerParms['visible'] = (!!NK.visibleLayerQueue[name]) && NK.visibleLayerQueue[name];
         if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
         if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
         layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
@@ -363,7 +363,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       }
 
       layerParms['title'] = $(this).children('Title').text();
-      layerParms['visible'] = !!NK.visibleLayerQueue[name];
+      layerParms['visible'] = (!!NK.visibleLayerQueue[name]) && NK.visibleLayerQueue[name]; //false or index value
       layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
       var register = (name in NK.visibleLayerQueue) || (name in NK.registeredLayerQueue);
       if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
@@ -413,6 +413,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
     type           : 'wfs',
     isUrlDataLayer : true,
     url            : url,
+    initialIndex   : parms['visible'],
     description    : parms['description'],
     serviceTitle   : parms['serviceTitle'],
     dataFormats    : parms['formats'],
@@ -421,6 +422,16 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   });
   wfsLayer.setOpacity(parms['opacity']);
   wfsLayer.setVisibility(!!parms['visible']);
+
+  if (!!parms['visible']) {
+    map.setLayerIndex(wms, parms['visible']-1);
+    var layers = map.layers.slice(0);
+    for (var i in layers) {
+      if (!!layers.initialIndex) {
+        map.setLayerIndex(layers[i], layers[i].initialIndex-1); 
+      }
+    }
+  }
 
   var type = parms['type'];
   if (type in NK.highlightQueue) {
@@ -451,8 +462,9 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
       isBaseLayer: false,
       buffer: 0,
       ratio: 1.0,
-      visibility: parms['visible'],
-      isStarred: parms['visible'], 
+      visibility: !!parms['visible'],
+      isStarred: !!parms['visible'], 
+      initialIndex: parms['visible'],
       opacity: parms['opacity'] || 1.0,
       transitionEffect: 'resize',
       singleTile: true,
@@ -517,12 +529,23 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
         }
       });
       map.addControl(featureInfo);
-      if (parms['visible']) {
+      if (!!parms['visible']) {
         featureInfo.activate();
       }
     }
   }
   map.addLayers([wms]);
+
+  if (!!parms['visible']) {
+    map.setLayerIndex(wms, parms['visible']-1);
+    var layers = map.layers.slice(0);
+    for (var i in layers) {
+      if (!!layers.initialIndex) {
+        map.setLayerIndex(layers[i], layers[i].initialIndex-1); 
+      }
+    }
+  }
+
   NK.functions.createLegend();
   return wms;
 };
@@ -543,6 +566,7 @@ NK.functions.createLegend = function () {
   var legendDiv = OpenLayers.Util.getElement('legendBox');
   if (!!legendDiv) {
     legendDiv.innerHTML = "";
+    legendDiv.style.overflowY = "scroll";
     // create getLegendGraphic request for all active layers
     for (var i = 1; i < map.layers.length; i++) {
       var layer = map.layers[i];
