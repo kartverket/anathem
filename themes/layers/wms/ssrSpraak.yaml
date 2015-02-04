@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Alle spr&aring;k
+name: Spr&aring;k
 layers: Spraak
 layerGroup: tjenester.alle
 id: Spraak
