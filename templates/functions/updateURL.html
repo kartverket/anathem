@@ -8,15 +8,17 @@ NK.functions.createLegend = function () {
     // create getLegendGraphic request for all active layers
     for (var i = 1; i < map.layers.length; i++) {
       if (map.layers[i].visibility && map.layers[i].layerGroup != "modus") {
-        var legendURL = map.layers[i].getFullRequestString({
-          REQUEST: "GetLegendGraphic",
-          EXCEPTIONS: "application/vnd.ogc.se_inimage",
-          FORMAT: "image/png",
-          SERVICE: "WMS",
-          VERSION: "1.1.1",
-          LAYER: map.layers[i].params.LAYERS
-        });
-        legendDiv.innerHTML += map.layers[i].name + "<br><img src=" + legendURL + "><br>";
+        if (!!map.layers[i].params) {
+          var legendURL = map.layers[i].getFullRequestString({
+            REQUEST: "GetLegendGraphic",
+            EXCEPTIONS: "application/vnd.ogc.se_inimage",
+            FORMAT: "image/png",
+            SERVICE: "WMS",
+            VERSION: "1.1.1",
+            LAYER: map.layers[i].params.LAYERS
+          });
+          legendDiv.innerHTML += map.layers[i].name + "<br><img src=" + legendURL + "><br>";
+        }
       }
     }
     if( legendDiv.innerHTML == ""){
