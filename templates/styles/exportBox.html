@@ -1,11 +1,11 @@
-% if not 'styles.export.box' in vars:
+% if not 'styles.eksport.box' in vars:
 OpenLayers.Util.extend(OpenLayers.Lang.nb, {
     'Height': 'H\u00F8yde',
     'Width': 'Bredde'
 });
 NK.styles = NK.styles || {};
-NK.styles.export = NK.styles.export || {};
-NK.styles.export.box = new OpenLayers.StyleMap({
+NK.styles.eksport = NK.styles.eksport || {};
+NK.styles.eksport.box = new OpenLayers.StyleMap({
 	'default': new OpenLayers.Style({
 	  strokeWidth: 2,
 	  strokeColor  : "#616060",
@@ -33,7 +33,7 @@ NK.styles.export.box = new OpenLayers.StyleMap({
 	})
 });
 
-NK.styles.export.mask =  new OpenLayers.Style({
+NK.styles.eksport.mask =  new OpenLayers.Style({
 	strokeWidth: 2,
 	strokeColor  : "#616060",
 	fillOpacity: 0, 
@@ -47,5 +47,5 @@ NK.styles.export.mask =  new OpenLayers.Style({
 	labelOutlineWidth: 5
 });
 
-<% vars['styles.export.box']=True %>
+<% vars['styles.eksport.box']=True %>
 % endif

@@ -2,9 +2,11 @@ template: controls/container
 id: share-toolbar
 controls:
 - template: controls/container
-  id: print-panel
+  id: export-panel
   controls:
-  - template: controls/print
+  - template: controls/export
+    i18n:
+    - include: languages/nb/export
 - template: controls/container
   id: getURL-panel
   controls:
