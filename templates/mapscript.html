@@ -359,14 +359,16 @@ NK.init = function () {
     eventListeners: {
       "getfeatureinfo": function(event) {
         try {
-          if (event.text != "") {
-            var windowName = 'Faktaark';
-            var popUp = window.open('', windowName, 'width=700, scrollbars, resizable');
-            if (popUp === null || typeof(popUp) == 'undefined') {
-              alert('Du m&aring; sl&aring; av pop-up blocker for &aring; kunne se faktaark og s&aring; pr&oslash;ve p&aring; nytt.');
-            } else {
-              popUp.document.write(event.text);
-              popUp.focus();
+          if (!!event.text) {
+            if (event.text.length > 3) {
+              var windowName = 'Faktaark';
+              var popUp = window.open('', windowName, 'width=700, scrollbars, resizable');
+              if (popUp === null || typeof(popUp) == 'undefined') {
+                alert('Du m&aring; sl&aring; av pop-up blocker for &aring; kunne se faktaark og s&aring; pr&oslash;ve p&aring; nytt.');
+              } else {
+                popUp.document.write(event.text);
+                popUp.focus();
+              }
             }
           }
         } catch(e) {}
