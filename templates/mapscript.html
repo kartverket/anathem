@@ -356,7 +356,11 @@ NK.init = function () {
     infoFormat: 'text/html',
     eventListeners: {
       "getfeatureinfo": function(event) {
-        window.open().document.write(event.text);
+        if (!!event.text) {
+          if (event.text.length > 3) {
+            window.open().document.write(event.text);
+          }
+        }
       }
     }
   });
