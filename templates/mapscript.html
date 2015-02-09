@@ -139,6 +139,13 @@ NK.functions.getNewToken = function () {
     OpenLayers.Request.GET({url: NK.tokenService, success: NK.functions.updateToken});
   }
 };
+var closePopupCallBack = function () {
+  var itemIndex;
+  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
+    map.popups[itemIndex].hide();
+  }
+  this.hide();
+};
 
 % if functions :
   ${functions}
