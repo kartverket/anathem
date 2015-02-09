@@ -350,7 +350,7 @@ NK.init = function () {
     }());
 
   }
-
+  var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup();
   var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
     url: "http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?",
     proxyUrl: "/ws/featureinfo.py?http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?",
@@ -359,25 +359,20 @@ NK.init = function () {
     eventListeners: {
       "getfeatureinfo": function(event) {
         try {
-          if (!!event.text) {
-            if (event.text.length > 3) {
-              var windowName = 'Faktaark';
-              var url = event.text.split(' = ');
-              if (url.length > 1) {
-                url = url[1].replace(/'/g,'');
-                url = 'http://faktaark.statkart.no/SSRFakta/faktaarkfraobjektid?enhet=' + url;
-                var popUp = window.open(url, windowName, 'width=700, scrollbars, resizable');
-                if (popUp === null || typeof(popUp) == 'undefined') {
-                  alert('Du m\u00e5 sl\u00e5 av pop-up blocker for \u00e5 kunne se faktaark og s\u00e5 pr\u00f8ve p\u00e5 nytt.');
-                } else {
-                  popUp.focus();
-                }
-              } else {
-                alert('Beklager, ingen informasjon om denne punkt.');
-              }
-            }
+          map.addPopup(new OpenLayers.Popup.FramedSideAnchored(
+            null,
+            map.getLonLatFromPixel(event.xy),
+            null,
+            markupGeneratorFunction(event.text),
+            null,
+            true,
+            closePopupCallBack,
+            {x: 10, y: -65},
+            'selected-feature-popup, user-marker'
+          ), true);
+        } catch(e) {
+          console.log(e);
           }
-        } catch(e) { }
       }
     }
   });

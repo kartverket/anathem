@@ -5,26 +5,87 @@ NK.functions.popup = NK.functions.popup || {};
 
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
-    var a = feature.attributes, 
-        i,
-        l,
-        markup = '<article>';
-
-    if (conf.heading && a[conf.heading]) {
-      markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
-    }
-    if (conf.data) {
-      for (i = 0, l = conf.data.length; i < l; i += 1) {
-        if (conf.data[i].attribute && a[conf.data[i].attribute]) {
-          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</p>';
+    var a = feature, i, j, k, l, markup = '', tmpMarkup = '';
+    var test;
+    var dict = {
+      'content': {
+        'enh_ssr_id:': 'enh_ssr_id',
+        'enh_snavn:': 'enh_snavn'
+      }
+    };
+    test = a.split("\n");
+    if (test.length > 5) {
+      markup += '<article style="overflow-y: auto; height:300px" >';
+      a = feature.replace(/Layer/g, ",,Layer");
+      a = a.split(",,");
+      for (i = 0; i < a.length; ++i) {
+        if (a[i].substring(0, 5) == "Layer") {
+          //Layer
+          tmpMarkup = '';
+          var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
+          var tmpResp = [];
+          var nrlDictResponse = [];
+          markup += '<h1 class="h">Lag : ' + tmp[1].trim() + '</h1>';
+          a[i] = a[i].replace(/Feature/g, ",,Feature");
+          var f = a[i].split(",,");
+          for (l = 0; l < f.length; ++l) {
+            //feature
+            if (f[l].substring(0, 7) == "Feature") {
+              tmpMarkup += '<div class="featureInfo" style="display: table">';
+              test = f[l].split("\n");
+              try {
+                for (j = 0, k = test.length - 1; j < k; j += 1) {
+                  tmp = test[j].split(" = ");
+                  if (tmp[1]) {
+                    tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
+                  }
+                  if (!!tmp[1]) {
+                    nrlDictResponse[tmp[0].trim()] = tmp[1].replace(/'/g, "");
+                  }
+                }
+                for (var prop in dict['content']) {
+                  tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell"></span><span class="value" style="display: table-cell">';
+                  if (!!tmpResp[dict['content'][prop]]) {
+                    if (!!dict['content'][prop]) {
+                      if (dict['content'][prop] === 'enh_ssr_id') {
+                        tmpMarkup += '<div class="externalToolbarLink"><a href="http://faktaark.statkart.no/SSRFakta/faktaarkfraobjektid?enhet=' + tmpResp[dict['content'][prop]] + '" target="_blank">';
+                      } else if(dict['content'][prop] === 'enh_snavn') {
+                        tmpMarkup += 'Mer info om : ' + tmpResp[dict['content'][prop]] + '</a></div></span></p>';
+                      } else {
+                        tmpMarkup += tmpResp[dict['content'][prop]] + '</span></p>';
+                      }
+                    } else {
+                      tmpMarkup += '</span></p>';
+                    }
+                  } else {
+                    if (typeof dict['content'][prop] === 'object') {
+                      for (var internprop in dict['content'][prop]) {
+                        tmpMarkup += tmpResp[internprop];
+                        tmpMarkup += dict['content'][prop][internprop];
+                      }
+                    } else {
+                      tmpMarkup += '</p>';
+                    }
+                  }
+                }
+              } catch (e) {
+                //console.log(e);
+              }
+              tmpMarkup += '</div>';
+            }
+          }
+          markup += tmpMarkup;
         }
       }
+    } else {
+      markup += '<article>';
+      markup += "Vi har ingen data for dette punktet";
     }
     markup += '</article>';
     return markup;
   };
 };
-NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction, options) {
+  NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction, options) {
   var featureSelector = options.selectControl;
   return function (feature) {
     var popup, 
