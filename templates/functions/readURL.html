@@ -166,6 +166,9 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
     case 'geojson':
       NK.functions.addGeoJsonLayer(url, "4326"); //defaults to WGS84 as per standard definition
       break;
+    case 'sosi':
+      NK.functions.addSOSILayer(url);
+      break;
     case 'drawing':
       NK.functions.addGeoJsonLayer(url, "32633", {'isDrawing': true});
       break;
@@ -181,6 +184,11 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
   }
   NK.lastParsedLayer = url;
 };
+
+NK.functions.addSOSILayer = function (url) {
+  NK.addLayerType.SOSIFile('sosi', 'sosi', url, {});
+};
+
 
 NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   var mapProjection,
@@ -403,7 +411,7 @@ NK.functions.setMapState = function (params) {
       }
     };
 
-    showLayerNamed = function (layerName) {
+    showLayerNamed = function (layerName, layerIndex) {
       NK.lastAddedLayer = layerName;
       if (NK.registeredLayers[layerName]) {
         NK.registeredLayers[layerName](); // perform the layer addition
@@ -422,7 +430,7 @@ NK.functions.setMapState = function (params) {
           }
         }
         if (!found) {
-          NK.visibleLayerQueue[layerName]=true;
+          NK.visibleLayerQueue[layerName] = layerIndex;
         }
       }
     };
@@ -466,9 +474,11 @@ NK.functions.setMapState = function (params) {
 
     for (index = 3; index < parms.length; index += 1) {
       extra = parms[index];
+      var layerIndex = map.layers.length;
       switch (extra.charAt(0)) {
         case '+':
-          showLayerNamed(extra.slice(1));
+          showLayerNamed(extra.slice(1), layerIndex);
+          layerIndex += 1;
           break;
         case '-':
           hideLayerNamed(extra.slice(1));

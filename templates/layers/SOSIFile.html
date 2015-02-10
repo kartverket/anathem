@@ -115,6 +115,9 @@ NK.addLayerType.SOSIFile = (function (M, MP, P) {
 <% vars['layerTypeGeoJSON']=True %>
 % endif
 
+% if name:
+## do nothing if name is not given - useful to just include the functions above
+
 (function () {
   var options = {};
 
@@ -156,3 +159,5 @@ NK.addLayerType.SOSIFile = (function (M, MP, P) {
 
   NK.addLayerType.SOSIFile('${id}', '${name}', '${url}', options);
 }());
+
+%endif
