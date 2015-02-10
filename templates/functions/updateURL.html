@@ -44,6 +44,8 @@ NK.functions.updateHistory = function (evt) {
                                     uid += '/l/drawing/['+ layer.url.trim() +']';
                                 } else if (layer.type == 'geojson') {
                                     uid += '/l/geojson/['+ layer.url.trim() +']';
+                                } else if (layer.type == 'sosi') {
+                                    uid += '/l/sosi/['+ layer.url.trim() +']';
                                 } else if (layer.type == 'wms') {
                                     if (uid.indexOf(layer.url.trim())==-1) {
                                       uid += '/l/wms/[' + layer.url.trim() + ']';

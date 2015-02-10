@@ -186,7 +186,8 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
 };
 
 NK.functions.addSOSILayer = function (url) {
-  NK.addLayerType.SOSIFile('sosi', 'sosi', url, {});
+  var layer = NK.addLayerType.SOSIFile('sosi', 'sosi', url, {'styleName':'track'});
+  layer.setVisibility(true);
 };
 
 

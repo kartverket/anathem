@@ -44,6 +44,9 @@ NK.addLayerType.SOSIFile = (function (M, MP, P) {
       styleMap: NK.styles.omriss,
       projection: MP,
       displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
+      isUrlDataLayer: true,
+      type: 'sosi',
+      url: url,
       visibility: (options && options.visible) ? 1 : 0
     };
     if (options) {
@@ -109,6 +112,7 @@ NK.addLayerType.SOSIFile = (function (M, MP, P) {
     }
     
     M.addLayer(layer);
+    return layer;
   };
 }(map, mapProj, proj));
 
