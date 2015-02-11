@@ -164,10 +164,10 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
 
   switch (type) {
     case 'geojson':
-      NK.functions.addGeoJsonLayer(url, "4326"); //defaults to WGS84 as per standard definition
+      NK.functions.addGeoJsonLayer(url, "4326", null, true); //defaults to WGS84 as per standard definition
       break;
     case 'sosi':
-      NK.functions.addSOSILayer(url);
+      NK.functions.addSOSILayer(url, true);
       break;
     case 'drawing':
       NK.functions.addGeoJsonLayer(url, "32633", {'isDrawing': true});
@@ -185,13 +185,17 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
   NK.lastParsedLayer = url;
 };
 
-NK.functions.addSOSILayer = function (url) {
+NK.functions.addSOSILayer = function (url, clickable) {
   var layer = NK.addLayerType.SOSIFile('sosi', 'sosi', url, {'styleName':'track'});
   layer.setVisibility(true);
+
+  if (clickable) {
+    NK.functions.popup.addConfiguredPopup(map, layer);
+  }
 };
 
 
-NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
+NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties, clickable) {
   var mapProjection,
       formatOptions,
       geoJSONFormat,
@@ -199,6 +203,8 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
       layer,
       correctEpsgCode,
       layerExtensions;
+
+  clickable = clickable || false;
 
   formatOptions = {
     'internalProjection': map.getProjection(),
@@ -249,6 +255,10 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   layer = OpenLayers.Util.extend(layer, layerExtensions);
 
   map.addLayers([layer]);
+
+  if (clickable) {
+    NK.functions.popup.addConfiguredPopup(map, layer);
+  }
 };
 
 NK.functions.highlightFeature = function(layer, fid, coords) { 

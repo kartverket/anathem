@@ -5,7 +5,15 @@ NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
 
 NK.functions.popup.smartData = function (str) {
-  if (str.indexOf('://')>-1) {
+  if (typeof str == 'object') {
+    var ret =  "<table>";
+    for (key in str) {
+        ret += "<tr><td>"+key+": </td><td>"+NK.functions.popup.smartData(str[key])+"</td></tr>"
+    }
+    ret += "</table>";
+    return ret;
+  }
+  if (!!str && (!!str.indexOf) && (str.indexOf('://')>-1)) {
     return '<a href="' + str + '" style="color:#fff">' + str + '</a>';
   }
   return str;
