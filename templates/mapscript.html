@@ -428,6 +428,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
     var layers = map.layers.slice(0);
     for (var i in layers) {
       if (!!layers.initialIndex) {
+        //todo: compare initialIndex with layer initialIndex, possibly swap.
         map.setLayerIndex(layers[i], layers[i].initialIndex-1); 
       }
     }
@@ -541,6 +542,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
     var layers = map.layers.slice(0);
     for (var i in layers) {
       if (!!layers.initialIndex) {
+        //todo: compare initialIndex with layer initialIndex, possibly swap.
         map.setLayerIndex(layers[i], layers[i].initialIndex-1); 
       }
     }
