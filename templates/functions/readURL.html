@@ -172,6 +172,9 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
     case 'drawing':
       NK.functions.addGeoJsonLayer(url, "32633", {'isDrawing': true});
       break;
+    case 'bbox':
+      NK.functions.addBboxLayer(url);
+      break;
     case 'wms':
       NK.functions.addWMSLayer(url);
       break;
@@ -193,6 +196,45 @@ NK.functions.addSOSILayer = function (url, clickable) {
     NK.functions.popup.addConfiguredPopup(map, layer);
   }
 };
+
+NK.functions.addBboxLayer = function (url) {
+  
+  var c = url.split(",").map(parseFloat); //west, south, east, north
+
+  var options = {
+    'isUrlDataLayer':true,
+    'type':'bbox',
+    'url':url,
+    'styleMap': NK.styles.track
+  };
+  var layer = new OpenLayers.Layer.Vector('bbox', options);
+
+  var points = [];
+  var dx = (c[2]-c[0]) / 10.0;
+  var dy = (c[3]-c[1]) / 10.0;
+  for (var i=0; i<10; i++) {
+    points.push([c[0] + i*dx, c[1]]);
+  }
+  for (var i=0; i<10; i++) {
+    points.push([c[2], c[1] + i*dy]);
+  }
+  for (var i=0; i<10; i++) {
+    points.push([c[2] - i*dx, c[3]]);
+  }
+  for (var i=0; i<10; i++) {
+    points.push([c[0], c[3] - i*dy]);
+  }
+  var wgs = new OpenLayers.Projection("EPSG:4326");
+  var mp  = map.getProjectionObject();
+  points = points.map(function (p) { return (new OpenLayers.Geometry.Point(p[0],p[1])).transform(wgs, mp) });
+  var ring = new OpenLayers.Geometry.LinearRing(points);
+  var poly = new OpenLayers.Geometry.Polygon([ring]);
+  var feat = new OpenLayers.Feature.Vector(poly);
+  layer.addFeatures([feat]);
+
+  map.addLayers([layer]);
+  layer.setVisibility(true);
+}
 
 
 NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties, clickable) {
