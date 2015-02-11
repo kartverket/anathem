@@ -6,10 +6,10 @@ translations:
     translation: Avslutt
   - template: i18n/translation
     source: Export 
-    translation: Eksport
+    translation: Lagre
   - template: i18n/translation
     source: Export maps 
-    translation: Eksporter kartutsnitt
+    translation: Lagre kartutsnitt
   - template: i18n/translation
     source: Previous 
     translation: Forrige
@@ -18,16 +18,16 @@ translations:
     translation: Neste
   - template: i18n/translation
     source: "This guide helps you to select a map area for print or export from the base map. The exported map will not include overlays or user data painted on the map." 
-    translation: "Her kan du velge et kartutsnitt fra grunnkartene som lages et bilde av. Eksporten vil ikke inkludere brukertegninger eller tematiske kartlag."
+    translation: "Her kan du velge et kartutsnitt som det lagres et bilde av. Bildet vil ikke inkludere brukertegninger eller tematiske kartlag."
   - template: i18n/translation
     source: "All map data is free for any use if attribution is given to \"Kartverket\" (License: CC-BY)."
-    translation: "Alle kartene er fri for all bruk hvis kildehenvisningen \"Kartverket\" er angitt. (Lisens: CC-BY)"
+    translation: "Kartene er fri til bruk med kildehenvisningen \"Kartverket\". (Lisens: CC-BY)"
   - template: i18n/translation
     source: "Choose output size and format" 
     translation: "Velg st&oslash;rrelse og format."
   - template: i18n/translation
     source: "From the drop down box below, select the size of the map to be exported." 
-    translation: "Fra rullgardinene nedenfor, velg st&oslash;rrelse og format av eksporten."
+    translation: "Fra rullgardinene under velger du st&oslash;rrelse og format p&aring; eksporten."
 
 
 
