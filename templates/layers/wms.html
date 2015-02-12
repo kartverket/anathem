@@ -5,8 +5,11 @@
     {
       % if usetoken:
       gkt: NK.gkToken,
-      % endif    
-      layers: "${layers}", 
+      % endif
+      % if useticket:
+      ticket: NK.encTicket,
+      % endif
+      layers: "${layers}",
       transparent: ${transparent}, 
   % if styles:
       styles: "${styles}",
@@ -44,5 +47,13 @@
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT; 
   }
+
+  % if useticket:
+  if (wms.params.TICKET) {
+    wms.params.ticket = wms.params.TICKET;
+    delete wms.params.TICKET;
+  }
+  % endif
+
   map.addLayers([wms]);
 }());
