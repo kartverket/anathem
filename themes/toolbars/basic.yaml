@@ -15,17 +15,6 @@ controls:
   controls:
     - template: controls/pan
 - template: controls/container
-  id: point-panel
-  controls:
-    - template: controls/pointmenu
-      url: http://beta.norgeskart.no/ws/trans.py
-      infoUrl: http://openwps.statkart.no/skwms1/wps.elevation
-      forecastUrl: http://beta.norgeskart.no/ws/forecast.py
-      sunriseUrl: http://beta.norgeskart.no/ws/sun.py
-      propertyUrl: http://beta.norgeskart.no/ws/wfs.teig.py
-      i18n:
-      - include: languages/nb/pointmenu
-- template: controls/container
   id: layerselector-panel
   controls:
   - template: controls/rasterlayerselector
