@@ -525,9 +525,9 @@ NK.functions.setMapState = function (params) {
     }
 
 
+    var layerIndex = map.layers.length;
     for (index = 3; index < parms.length; index += 1) {
       extra = parms[index];
-      var layerIndex = map.layers.length;
       switch (extra.charAt(0)) {
         case '+':
           showLayerNamed(extra.slice(1), layerIndex);

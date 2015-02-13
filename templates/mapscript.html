@@ -427,9 +427,8 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
     map.setLayerIndex(wms, parms['visible']-1);
     var layers = map.layers.slice(0);
     for (var i in layers) {
-      if (!!layers.initialIndex) {
-        //todo: compare initialIndex with layer initialIndex, possibly swap.
-        map.setLayerIndex(layers[i], layers[i].initialIndex-1); 
+      if (!!layers[i].initialIndex) {
+        map.setLayerIndex(wfsLayer, map.getLayerIndex(layers[i])); //replace position
       }
     }
   }
@@ -541,9 +540,10 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
     map.setLayerIndex(wms, parms['visible']-1);
     var layers = map.layers.slice(0);
     for (var i in layers) {
-      if (!!layers.initialIndex) {
-        //todo: compare initialIndex with layer initialIndex, possibly swap.
-        map.setLayerIndex(layers[i], layers[i].initialIndex-1); 
+      if (!!layers[i].initialIndex) {
+        if (layers[i].initialIndex > wms.initialIndex) { 
+          map.setLayerIndex(wms, map.getLayerIndex(layers[i])); //replace position
+        }
       }
     }
   }
