@@ -24,18 +24,25 @@ NK.controls.Help = function(options) {
 
   var mac = (navigator.platform && navigator.platform.indexOf('Mac') !== -1) || (navigator.userAgent && navigator.userAgent.indexOf('iPhone') !== -1);
   var ctrlKey = mac ? '⌘ ' : 'Ctrl + ';
-  var html = '<div class="header">';
+  var html = '<div id="shortcuts" class="help-menu">';
   html += '<h1 class="h">' + 'Keyboard shortcuts' + '</h1>';
-  html += '<p>' + 'You can navigate using the following keyboard shortcuts' + ':</p>';
+  html += '<div class="shortcuts-panel"><p>' + 'You can navigate using the following keyboard shortcuts' + ':</p>';
   html += '<p>' + 'Press TAB to change selected control. Press ENTER to activate the selected control.' + '</p>';
-  html += '</div>';
-  html += '<div class="shortcuts-panel"><table><thead><tr><th scope="col">' + 'Keyboard shortcut' + '</th><th scope="col">' + 'Function' + '</th></tr></thead><tbody>';
+
+  html += '<table><thead><tr><th scope="col">' + 'Keyboard shortcut' + '</th><th scope="col">' + 'Function' + '</th></tr></thead><tbody>';
   html += '<tr><td>F11</td><td>'+'Full screen'+'</td></tr>';
   html += '<tr><td>' + ctrlKey + 'P</td><td>'+ 'Print'+'</td></tr>';
   html += '<tr><td>+ og -</td><td>'+ 'Zoom'+'</td></tr>';
   html += '<tr><td>'+ 'Arrow keys'+'</td><td>'+ 'Pan'+'</td></tr>';
   html += '<tr><td>Home, End, PageUp, PageDown</td><td>'+  'Fast panning'+'</td></tr>';
-  html += '</tbody></table></div>';
+  html += '</tbody></table>';
+  html += '</div>';
+
+  html += '<h1 class="h">Ofte stilte sp\u00f8rsm\u00e5l om norgeskart.no</h1>';
+  html += '<div id="faqBox" class="faq-panel">'
+  html += '</div>';
+
+  html += '</div>';
   this.cnt.innerHTML = html;
 
   this.widget = NK.util.createWidget(this.cnt, 1);
@@ -47,8 +54,24 @@ NK.controls.Help = function(options) {
     element: wrapper,
     target: options.target
   });
+  $.ajax({
+    url: 'http://skrivte57.statkart.no/miecar/js/faq.txt',
+    success: function (response, status, request) {
+      var faq = request.responseText.replace(/[\"\r\n]/g, '');
+      $("#faqBox").html(faq);
 
-}
+      $(".faq-panel").accordion({
+        heightStyle: "fill",
+        collapsible: true
+      });
+      $(".help-menu").accordion({
+        collapsible: true,
+        heightStyle: "content"
+      });
+    },
+    type: 'GET'
+  });
+};
 ol.inherits(NK.controls.Help, ol.control.Control);
 
 NK.controls.Help.prototype.toggle = function (event) {

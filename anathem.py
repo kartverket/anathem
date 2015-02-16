@@ -8,11 +8,9 @@ from mako.template import *
 from mako.lookup import TemplateLookup
 import yaml
 import sys
-import os
 import re
 import closure
 from subprocess import call
-from codecs import open
 
 # matches mako parameters in a template: ${...}, but not containing brackets
 re_param = re.compile('\$\{([^\(\{]*?)\}')
@@ -23,7 +21,7 @@ options = []
 if len(sys.argv) > 3:
     options = sys.argv[3:]
 
-compress = "no-compression" not in options
+compress = not "no-compression" in options
 defaults = yaml.load(open("default.yaml", "r"))
 lookup = TemplateLookup(directories=['./templates/'])
 
@@ -49,13 +47,8 @@ def recurse_render(data):
         template_name = data["template"]
         try:
             template = Template(filename=("templates/%s.mako" % template_name), lookup=lookup)
-        except IOError:
-            try:
-                template = Template(filename=("templates/%s.html" % template_name), lookup=lookup)
-            except Exception, ex:
-                print "Could not open either templates/%s.mako or .html in %s" % (template_name, os.getcwd())
-                print ex
-                sys.exit(1)
+        except:
+            template = Template(filename=("templates/%s.html" % template_name), lookup=lookup)
         # for every other key in the configuration:
         # if it is a dict, render a subtemplate
         # if it is a list, render an array of subtemplates
@@ -80,10 +73,7 @@ def recurse_render(data):
             print "\nMissing parameter while parsing template '%s'." % template_name
 
             try:
-                try:
-                    code = open("templates/%s.html" % template_name, "r").read()
-                except:
-                    code = open("templates/%s.mako" % template_name, "r").read()
+                code = open("templates/%s.html" % template_name, "r").read()
                 params = re_param.findall(code)
                 print "The template supports *and* requires the following parameters:"
                 print "Provide it with an empty string if it is not to be included.\n"
@@ -135,16 +125,17 @@ def output_file(name, payload):
         os.unlink("tmp/tmp.ls")
     elif ext == "js":
         if compress:
-            fd = open("tmp/tmp.js", "w", "utf-8")
+            fd = open("tmp/tmp.js", "w")
             fd.write(payload)
             fd.close()
-            if call(["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/" + name]):
+            if call(
+                ["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/" + name]):
                 print "Error compressing javascript."
                 sys.exit(1)
             os.unlink("tmp/tmp.js")
         else:
-            fd = open("tmp/" + name, "w", "utf-8")
-            fd.write(payload)
+            fd = open("tmp/" + name, "w")
+            fd.write(payload.encode('utf8') + '\n')
     else:
         fd = open("tmp/" + name, "w")
         fd.write(payload)
