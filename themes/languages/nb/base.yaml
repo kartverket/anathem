@@ -23,6 +23,9 @@ translations:
     source: Visible overlays
     translation: Synlige kartlag
   - template: i18n/translation
+    source: Background layers
+    translation: Bakgrunnslag
+  - template: i18n/translation
     source: Available overlays
     translation: Tilgjengelige kartlag
   - template: i18n/translation
