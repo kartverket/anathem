@@ -35,7 +35,12 @@ wmts = new OpenLayers.Layer.WMTS({
   dataURL:  "http://openwms.statkart.no/skwms1/wms.europa",
   dataType: "wms",
   dataFormats: ["image/png","image/png; mode=24bit","image/jpeg"],
-  dataLayers: "Europa_WMS"
+  dataLayers: "Europa_WMS",
+
+  attribution: { 
+   "title":"Kartverket"
+  },
+  description: "Europa grunnkart"
 });
 
 if (wmts.params.GKT) {

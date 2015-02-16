@@ -19,10 +19,14 @@
       visibility: ${visible}, 
       transitionEffect: 'resize',
   % if singleTile:
-      singleTile: true
+      singleTile: true,
   % else:
-      singleTile: false
+      singleTile: false,
   % endif
+      attribution: {
+       'title':"${attribution}"
+      },
+      description: "${abstract}"
     }
   );
 

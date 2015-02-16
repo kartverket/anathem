@@ -82,6 +82,9 @@ NK.functions.updateHistory = function (evt) {
                             }
                         }
                         if (layer.opacity<1.0) {
+                          if (layer.isBaseLayer) {
+                            uid += "/+"+layer.shortid;
+                          }
                           uid += "/o"+Math.floor(layer.opacity * 100);
                         }
                     }

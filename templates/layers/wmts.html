@@ -15,6 +15,8 @@ params:
   id: short id to be used to identify this layer in the client URL 
   name: Name of the layer to be displayed in menus etc.
   layer: WMTS layer name requested from the service
+  attribution: Attribution string
+  abstract: Service description
 </%doc>
 % if not 'layerTypeWMTS' in vars:
 
@@ -102,6 +104,9 @@ NK.addLayerType.WMTS = (function (M, MP) {
       layer.dataFormats = options.dataFormats.split(",");
     }
 
+    layer.description = options.abstract;
+    layer.attribution = {"title":options.attribution};
+
     if (layer.params.GKT) {
       layer.params.gkt = layer.params.GKT;
       delete layer.params.GKT; 
@@ -181,6 +186,16 @@ NK.addLayerType.WMTS = (function (M, MP) {
   % if isBaseLayer:
     options.isBaseLayer = "${isBaseLayer}"
   % endif
+
+  % if attribution:
+    options.attribution = "${attribution}"
+  % endif
+
+  % if abstract:
+    options.abstract = "${abstract}"
+  % endif
+
+
 
   NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
 }());

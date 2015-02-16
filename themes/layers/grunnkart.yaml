@@ -12,3 +12,5 @@ dataType:    "wms"
 dataURL :    "http://wms.geonorge.no/skwms1/wms.topo2"
 dataFormats: "image/png,image/png; mode=24bit,image/jpeg"
 dataLayers:  "topo2_WMS"
+attribution: Kartverket
+abstract   : "Norges grunnkart"
