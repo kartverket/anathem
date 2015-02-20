@@ -23,6 +23,9 @@ translations:
     source: Undo
     translation: Angre 
   - template: i18n/translation
+    source: Upload
+    translation: Last opp 
+  - template: i18n/translation
     source: Save
     translation: Lagre
   - template: i18n/translation
