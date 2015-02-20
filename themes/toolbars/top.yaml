@@ -36,6 +36,7 @@ controls:
     id: help-panel  
     controls:
     - template: controls/help
+      faqUrl: http://norgeskart.no/js/faq.html
       i18n:
       - include: languages/nb/help
   - template: controls/container
