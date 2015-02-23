@@ -55,5 +55,12 @@
   }
   % endif
 
+  % if linkedTo:
+  wms.events.register("visibilitychanged", wms, function(arg) {
+    map.getLayersBy("shortid","${linkedTo}")[0].setVisibility(wms.getVisibility());
+  });
+  %endif
+  
+
   map.addLayers([wms]);
 }());

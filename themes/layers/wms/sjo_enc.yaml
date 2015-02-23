@@ -9,3 +9,4 @@ id: sjo_enc
 singleTile: true
 visible: "false"
 minZoom: 10
+linkedTo: enkel
