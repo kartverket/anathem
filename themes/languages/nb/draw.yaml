@@ -26,6 +26,15 @@ translations:
     source: Upload
     translation: Last opp 
   - template: i18n/translation
+    source: Upload files in GPX format. More to come. 
+    translation: Last opp filer i formatet GPX.
+  - template: i18n/translation
+    source: Download
+    translation: Last ned 
+  - template: i18n/translation
+    source: Download drawing in GeoJSON format. More options to come. 
+    translation: Last ned tegningen i formatet GeoJSON.
+  - template: i18n/translation
     source: Save
     translation: Lagre
   - template: i18n/translation
