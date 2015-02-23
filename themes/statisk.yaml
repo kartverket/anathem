@@ -26,7 +26,8 @@ overlays  :
     - include: layers/flybilder
     - include: layers/terreng
     - include: layers/grunnkart
-    - include: layers/toporaster2
+    - include: layers/toporaster3
+    - include: layers/fjellskygge
     - include: layers/janmayen
     - include: layers/svalbard
 
