@@ -6,8 +6,8 @@ mapscript: clients/kiosk.min.js
 template : mapscript
 filename : clients/kiosk.min.js
 language  : nb
-tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-ticketServiceUrl: http://norgeskart.no/ws/esk.py?wms.ecc_enc
+tokenServiceUrl: /ws/gkt.py
+ticketServiceUrl: /ws/esk.py?wms.ecc_enc
 projection: 32633
 
 i18n:

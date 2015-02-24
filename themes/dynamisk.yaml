@@ -7,8 +7,8 @@ mapscript: clients/norgeskart-dynamisk.min.js
 template : mapscript
 filename : clients/norgeskart-dynamisk.min.js
 language  : nb
-tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-ticketServiceUrl: http://norgeskart.no/ws/esk.py?wms.ecc_enc
+tokenServiceUrl: /ws/gkt.py
+ticketServiceUrl: /ws/esk.py?wms.ecc_enc
 projection: 32633
 
 styles    :
