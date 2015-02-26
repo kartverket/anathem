@@ -48,11 +48,11 @@ controls:
   id: search-panel
   controls:
   - template: controls/search
-    coordinates: http://norgeskart.no/ws/trans.py
+    coordinates: /ws/trans.py
     searchUrl: https://ws.geonorge.no/SKWSIndexSSR/ssr/sok
-    streetAddressesSearchUrl: http://norgeskart.no/ws/veg.py
-    addressSearchUrl: http://norgeskart.no/ws/adr.py
-    propertySearchUrl: http://norgeskart.no/ws/eie.py
+    streetAddressesSearchUrl: /ws/veg.py
+    addressSearchUrl: /ws/adr.py
+    propertySearchUrl: /ws/eie.py
     i18n:
     - include: languages/nb/search
 - template: controls/container

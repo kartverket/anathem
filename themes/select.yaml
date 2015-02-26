@@ -7,7 +7,7 @@ includeXDM: "true"
 
 mapscript:
   template  : mapscript
-  tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+  tokenServiceUrl: /ws/gkt.py
   
   baselayers:   
     - template: layers/europa
