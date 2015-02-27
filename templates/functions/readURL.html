@@ -35,7 +35,7 @@ NK.functions.addLabeledMarker = function (params, number, okToHide) {
       label,
       feature,
       popup,
-      properties;
+      properties,xy, pWSG84, pUTM;
 
   layers = map.getLayersBy('shortid', 'pekere');
   if (layers.length > 0) {
@@ -45,9 +45,18 @@ NK.functions.addLabeledMarker = function (params, number, okToHide) {
     map.addLayer(layer);
   }
 
-  x = parseInt(params[0], 10);
-  y = parseInt(params[1], 10);
-  properties = {};
+  x = params[0];
+  y = params[1];
+
+  if ((y > 0) && (y < 35) && (x > 50) && (x < 90)) {  /* we are dealing with WSG84 coordinates here */
+    pWSG84 = new Proj4js.Proj('EPSG:4326');
+    pUTM = new Proj4js.Proj('EPSG:' + NK.baseProjection);
+    xy = Proj4js.transform(pWSG84, pUTM, new Proj4js.Point(y, x));
+    x = xy.x;
+    y = xy.y;
+  }
+
+properties = {};
 
   if ((params.length > 2) && (!!params[2])) {
     properties.popupText = decodeURIComponent(params[2]);

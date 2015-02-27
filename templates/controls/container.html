@@ -45,7 +45,11 @@
 				OpenLayers.Element.removeClass(this, 'minified');
 			} else {
 				OpenLayers.Element.addClass(this, 'minified');
-			}	
+        map.getControlsByClass('OpenLayers.Control.Draw')[0].hideControls(true);
+        map.getControlsByClass('OpenLayers.Control.OverlayGroupPanel')[0].hideControls(true);
+        map.getControlsByClass('OpenLayers.Control.HeightProfile')[0].hideControls(true);
+        map.getControlsByClass('OpenLayers.Control.Transformations')[0].hideControls(true);
+			}
 		}, container));
 	% endif
 

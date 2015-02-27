@@ -1,0 +1,10 @@
+template: layers/geoJSONFileMC
+url: /json/dekning/raster/32.geojson
+name: Raster UTM32 
+id: raster-32
+epsgCode: 32633 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "n"

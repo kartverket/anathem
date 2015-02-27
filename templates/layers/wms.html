@@ -5,8 +5,11 @@
     {
       % if usetoken:
       gkt: NK.gkToken,
-      % endif    
-      layers: "${layers}", 
+      % endif
+      % if useticket:
+      ticket: NK.encTicket,
+      % endif
+      layers: "${layers}",
       transparent: ${transparent}, 
   % if styles:
       styles: "${styles}",
@@ -44,5 +47,20 @@
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT; 
   }
+
+  % if useticket:
+  if (wms.params.TICKET) {
+    wms.params.ticket = wms.params.TICKET;
+    delete wms.params.TICKET;
+  }
+  % endif
+
+  % if linkedTo:
+  wms.events.register("visibilitychanged", wms, function(arg) {
+    map.getLayersBy("shortid","${linkedTo}")[0].setVisibility(wms.getVisibility());
+  });
+  %endif
+  
+
   map.addLayers([wms]);
 }());
