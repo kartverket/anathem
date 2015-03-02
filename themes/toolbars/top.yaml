@@ -49,7 +49,7 @@ controls:
   controls:
   - template: controls/search
     coordinates: /ws/trans.py
-    searchUrl: https://ws.geonorge.no/SKWSIndexSSR/ssr/sok
+    searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
     streetAddressesSearchUrl: /ws/veg.py
     addressSearchUrl: /ws/adr.py
     propertySearchUrl: /ws/eie.py
