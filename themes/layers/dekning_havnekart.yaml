@@ -1,7 +1,7 @@
 template: layers/dekning/sjo/havnekart
 name: Havne&shy;kart
 id: dekning.sjo.hv
-url: /json/dekning/sjo/havnekart.json
+url: /json/dekning/sjo/havnekart_ny.json
 mapTypeId: havnekart
 layerGroup: dekning
 preferredBackground: sjo

@@ -1,30 +1,34 @@
-# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
-
 template : base
+filename : dynamisk.html
 title    : Norgeskart
 mapClass: embedded-map
+mapscript: clients/norgeskart-dynamisk.min.js
+---
+template : mapscript
+filename : clients/norgeskart-dynamisk.min.js
+language  : nb
+tokenServiceUrl: /ws/gkt.py
+ticketServiceUrl: /ws/esk.py?wms.ecc_enc
+projection: 32633
 
-mapscript:
-  template  : mapscript
-  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
-
-  styles    :
+styles    :
     - template: styles/unlabeledMarker
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
 
   
-  baselayers:   
+baselayers:   
     - template: layers/europa
-  overlays  : 
+overlays  : 
     - include: layers/topo2
+    - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
     - include: layers/wms/sjo_enc
     - include: layers/flybilder
     - include: layers/terreng
-    - include: layers/grunnkart
-    - include: layers/toporaster2
+    - include: layers/toporaster3
+    - include: layers/fjellskygge
     - include: layers/janmayen
     - include: layers/svalbard
     - include: layers/wms/UTMrutenett
@@ -46,12 +50,12 @@ mapscript:
     # fakta layers
     - include: layers/geoJSON/kommunefjell
 
-  center:
+center:
     template: center/besseggen
-  functions:
+functions:
     - template: functions/readURL
     - template: functions/popup
-  controls  :
+controls  :
     - template: controls/status
     - template: controls/navigation
     - template: controls/scaleline

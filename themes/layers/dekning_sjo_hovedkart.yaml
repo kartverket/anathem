@@ -1,7 +1,7 @@
 template: layers/dekning/sjo/hovedkart
 name: Hoved&shy;kart sj&oslash;
 id: dekning.sjo
-url: /json/dekning/sjo/hovedserie.json
+url: /json/dekning/sjo/hovedserie_ny.json
 mapTypeId: sjo
 layerGroup: dekning
 preferredBackground: sjo

@@ -1,8 +1,9 @@
 template : base
+filename : index.html
 title    : Norgeskart
 mapscript: clients/norgeskart.min.js
----
-template  : mapscript
+--- 
+template : mapscript
 filename : clients/norgeskart.min.js
 language  : nb
 tokenServiceUrl: /ws/gkt.py
@@ -12,7 +13,7 @@ projection: 32633
 i18n:
   - include: languages/nb/base
 
-baselayers:
+baselayers:   
     - template: layers/europa
 
 styles    :
@@ -21,7 +22,7 @@ styles    :
     - template: styles/omriss
     - template: styles/track
 
-overlays  :
+overlays  : 
     - include: layers/topo2
     - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
@@ -50,14 +51,13 @@ overlays  :
     - include: layers/wms/Svenske_finske_stasjoner
     - include: layers/wms/PGS_stasjoner_planlagt
 
-center    :
+center    : 
     template: center/besseggen
 
 functions :
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
-    - template: functions/popup
 
 controls  :
     - template: controls/status
@@ -76,3 +76,4 @@ controls  :
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
+
