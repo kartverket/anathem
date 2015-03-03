@@ -65,7 +65,7 @@ def recurse_render(data):
     # or catch any exceptions, and be a bit smart helping the user to find the mistake
     allkeys = defaults.copy()
     allkeys.update(data)
-    allkeys['vars']=defaults
+    allkeys['vars'] = defaults
     try:
       return template.render(**allkeys)
     except NameError, er:
@@ -95,9 +95,9 @@ def output_file(name, payload):
   ext  = dots[-1]
   if   ext == "coffee" or ext == "cs":
     fd = open("tmp/tmp.coffee", "w")
-    fd.write(payload);
+    fd.write(payload.encode('utf-8'))
     fd.close()
-    if call(["coffee", "-bo", "tmp/", "-c", "tmp/tmp.coffee" ]):
+    if call(["coffee", "-bo", "tmp/", "-c", "tmp/tmp.coffee"]):
       print "Error compiling coffeescript."
       sys.exit(1)
     ext = "js"
@@ -109,7 +109,7 @@ def output_file(name, payload):
     os.unlink("tmp/tmp.coffee")
   elif ext == "ls":
     fd = open("tmp/tmp.ls", "w")
-    fd.write(payload);
+    fd.write(payload.encode('utf-8'))
     fd.close()
     if call(["lsc", "-bo", "tmp/", "-c", "tmp/tmp.ls" ]):
       print "Error compiling livescript."
@@ -124,7 +124,7 @@ def output_file(name, payload):
   elif ext == "js":
     if compress:
       fd = open("tmp/tmp.js", "w")
-      fd.write(payload);
+      fd.write(payload.encode('utf-8'))
       fd.close()
       if call(["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/"+name]):
         print "Error compressing javascript."
@@ -132,10 +132,10 @@ def output_file(name, payload):
       os.unlink("tmp/tmp.js")
     else:
       fd = open("tmp/"+name, "w")
-      fd.write(payload.encode('utf-8'));
+      fd.write(payload.encode('utf-8'))
   else:
     fd = open("tmp/"+name, "w")
-    fd.write(payload);
+    fd.write(payload.encode('utf-8'))
     fd.close()
   print "%s/%s.%s" % (destdir, file, ext)
   try:
