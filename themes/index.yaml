@@ -49,7 +49,6 @@ overlays  :
     - include: layers/wms/Landsnettpunkt
     - include: layers/wms/PGS_stasjoner
     - include: layers/wms/Svenske_finske_stasjoner
-    - include: layers/wms/PGS_stasjoner_planlagt
 
 center    : 
     template: center/besseggen
@@ -58,6 +57,7 @@ functions :
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
+    - template: functions/popup
 
 controls  :
     - template: controls/status

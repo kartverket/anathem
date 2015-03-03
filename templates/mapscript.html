@@ -241,6 +241,14 @@ var closePopupCallBack = function () {
   this.hide();
 };
 
+var closePopupCallBack = function () {
+  var itemIndex;
+  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
+    map.popups[itemIndex].hide();
+  }
+  this.hide();
+};
+
 % if functions :
   ${functions}
 % endif
@@ -451,22 +459,34 @@ NK.init = function () {
     }());
 
   }
+%if not statisk:
+  var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup();
   var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
     url: "http://wms.geonorge.no/skwms1/wms.fastmerker?",
+    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.fastmerker?",
     queryVisible: true,
-    infoFormat: 'text/html',
+    infoFormat: 'text/plain',
     eventListeners: {
       "getfeatureinfo": function(event) {
-        if (!!event.text) {
-          if (event.text.length > 3) {
-            window.open().document.write(event.text);
+        try {
+          map.addPopup(new OpenLayers.Popup.FramedSideAnchored(
+            null,
+            map.getLonLatFromPixel(event.xy),
+            null,
+            markupGeneratorFunction(event.text),
+            null,
+            true,
+            closePopupCallBack,
+            {x: 10, y: -65},
+            'selected-feature-popup, user-marker'
+          ), true);
+        } catch(e) {}
           }
         }
-      }
-    }
   });
   map.addControl(featureInfo);
   featureInfo.activate();
+%endif
 
 };
 // end init()
