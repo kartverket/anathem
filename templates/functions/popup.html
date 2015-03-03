@@ -1,4 +1,4 @@
-% if not 'popupFunctions' in vars:  
+﻿% if not 'popupFunctions' in vars:  
 
 NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
@@ -11,7 +11,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         'info': {
           'name': 'Fakta om CPOS stasjoner',
           'extra': 'CPOS stasjonene samler GNSS-data som sendes til kartverkets kontrollsenter. GNSS-dataene brukes bl.a. til drift av kartverkets posisjonstjenester. ',
-          'link' : '<a href="http://kartverket.no/Posisjonstjenester/">Les mer om CPOS stasjoner</a>'
+          'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om CPOS stasjoner</a>'
         },
         'content': {
           'Stasjonsnavn:': 'stasjonsnavn',
@@ -25,7 +25,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         'info': {
           'name': 'Fakta om CPOS stasjoner',
           'extra': 'CPOS stasjonene samler GNSS-data som sendes til kartverkets kontrollsenter. GNSS-dataene brukes bl.a. til drift av kartverkets posisjonstjenester. ',
-          'link' : '<a href="http://kartverket.no/Posisjonstjenester/">Les mer om CPOS stasjoner</a>'
+          'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om CPOS stasjoner</a>'
         },
         'content': {
           'Stasjonsnavn:': 'stasjonsnavn',
@@ -39,7 +39,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         'info': {
           'name': 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene">Les mer om Fastmerker</a>'
+          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
           //'ogc_fid:': 'ogc_fid',
@@ -65,7 +65,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         'info': {
           'name': 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene">Les mer om Fastmerker</a>'
+          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
           'Punktnummer:': 'punktnummer',
@@ -89,7 +89,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         'info': {
           'name': 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene">Les mer om Fastmerker</a>'
+          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
           'Punktnummer:': 'punktnummer',
@@ -113,7 +113,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         'info': {
           'name': 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene">Les mer om Fastmerker</a>'
+          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
           'Punktnummer:': 'punktnummer',
@@ -197,7 +197,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     } else {
       markup += '<article>Vi har ingen data for dette punktet';
     }
-    markup += '</article>';
+    markup += '<div class="externalToolbarLink">Kilde: <a href="http://www.kartverket.no" target="_blank">Kartverket</a></div></article>';
     return markup;
   };
 
