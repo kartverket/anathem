@@ -1,4 +1,4 @@
-#!/usr/bin/env python26
+﻿#!/usr/bin/env python26
 """ 
 anathem - a simple template processing script around mako and yaml. 
 Use YAML configuration files to combine mako templates.
@@ -30,8 +30,8 @@ config     = [yaml.load(doc) for doc in templates]
 
 def recurse_render(data):
   """
-  render a template as indicated by the given configuration. 
-  data: a dictionary containing at least a "template" key, and 
+  render a template as indicated by the given configuration.
+  data: a dictionary containing at least a "template" key, and
   one key for every parameter the template includes
   """
 
@@ -52,7 +52,7 @@ def recurse_render(data):
     # if it is a dict, render a subtemplate
     # if it is a list, render an array of subtemplates
     for key,value in data.items():
-      try: 
+      try:
         if type(value)==type(dict()):
           data[key] = recurse_render(value)
         if type(value)==type(list()):
@@ -70,8 +70,8 @@ def recurse_render(data):
       return template.render(**allkeys)
     except NameError, er:
       print "\nMissing parameter while parsing template '%s'." % template_name
-       
-      try: 
+
+      try:
         code   = open("templates/%s.html" % template_name, "r").read()
         params = re_param.findall(code)
         print "The template supports *and* requires the following parameters:"
@@ -132,7 +132,7 @@ def output_file(name, payload):
       os.unlink("tmp/tmp.js")
     else:
       fd = open("tmp/"+name, "w")
-      fd.write(payload);
+      fd.write(payload.encode('utf-8'));
   else:
     fd = open("tmp/"+name, "w")
     fd.write(payload);
