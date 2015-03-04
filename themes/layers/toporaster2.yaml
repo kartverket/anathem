@@ -4,3 +4,5 @@ name: Rasterkart
 layer: toporaster2
 layerGroup: flere 
 id: toporaster
+wmsService: wms.toporaster3
+wmsLayers: toporaster

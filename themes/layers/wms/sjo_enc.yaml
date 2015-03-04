@@ -9,3 +9,5 @@ id: sjo_enc
 singleTile: true
 visible: "false"
 minZoom: 10
+wmsService: "wms.ecc_enc"
+wmsLayers: "cells"

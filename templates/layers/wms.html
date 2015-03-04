@@ -27,6 +27,14 @@
   % if minZoom:
       minZoom: ${minZoom},
   % endif
+  % if wmsService:
+      wmsService: "${wmsService}",
+      layer: "${layers}", 
+  % endif
+  % if wmsLayers:
+      wmsLayers: "${wmsLayers}",
+  % endif
+
       transitionEffect: 'resize'
     }
   );

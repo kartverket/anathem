@@ -4,3 +4,6 @@ name: Hovedkart
 layer: sjo_hovedkart2
 layerGroup: sjo 
 id: sjo
+wmsService: wms.sjo_hovedkart2
+wmsLayers: "Sjokart_hovedkartserien2"
+

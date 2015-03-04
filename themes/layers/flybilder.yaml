@@ -7,3 +7,5 @@ name: Fly&shy;bilder
 layers: NiB
 layerGroup: modus2
 id: flybilder
+wmsService: wms.norgeibilder
+wmsLayers: SatelliteImage 
