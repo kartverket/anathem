@@ -4,5 +4,5 @@ name: terreng
 layer: terreng_norgeskart 
 layerGroup: modus2
 id: terreng
-wmsService: wms.terrengmodell
-wmsLayers: relieff
+wmsService: wms.terreng_norgeskart
+wmsLayers: terreng_norgeskart_wms

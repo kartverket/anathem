@@ -4,4 +4,6 @@ name: enkel
 layer: norges_grunnkart 
 layerGroup: flere 
 id: enkel 
+wmsService: wms.norges_grunnkart
+wmsLayers: Norges_grunnkart
 

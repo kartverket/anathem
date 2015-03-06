@@ -8,4 +8,4 @@ layers: NiB
 layerGroup: modus2
 id: flybilder
 wmsService: wms.norgeibilder
-wmsLayers: SatelliteImage 
+wmsLayers: SatelliteImage,OrtofotoAlle 
