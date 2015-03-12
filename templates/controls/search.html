@@ -14,4 +14,7 @@
 % if propertySearchUrl:
         options.propertySearchUrl = "${propertySearchUrl}";
 % endif
+% if keyboardHelper:
+        options.keyboardHelper = true;
+% endif
 NK.functions.addControlToContext(new OpenLayers.Control.Search(options), context);

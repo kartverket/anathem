@@ -41,6 +41,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'shortid': id, 
       'crossOrigin': 'anonymous', 
       'isBaseLayer': false,
+      'linkedTo': options.linkedTo || null,
       'transitionEffect': 'resize',
       'displayOutsideMaxExtent': false,
       'buffer': 4
@@ -86,6 +87,12 @@ NK.addLayerType.WMTS = (function (M, MP) {
     if (options.visible) {
       NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
       NK.defaultVisibleLayers.push(id);
+    }
+
+    if (options.linkedTo) {
+      layer.events.register("visibilitychanged", layer, function(arg) {
+        map.getLayersBy("shortid",options.linkedTo)[0].setVisibility(layer.getVisibility());
+      });
     }
 
     layer.events.register("tileerror", layer, function(arg) {
@@ -147,6 +154,10 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if tileorigin:
     options.tileorigin = "${tileorigin}"
+  % endif
+
+  % if linkedTo:
+    options.linkedTo = "${linkedTo}"
   % endif
 
   var layer = NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);

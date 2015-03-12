@@ -1,46 +1,52 @@
 template : 3/base
 filename : dynamisk-med-navigasjon.html
 title    : Norgeskart
+mapClass: embedded-map
 mapscript: clients/norgeskart-dynamisk-med-navigasjon.min.js
 ---
 template : 3/mapscript
 filename : clients/norgeskart-dynamisk-med-navigasjon.min.js
-language : nb
+language  : nb
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-projection: 25833
+projection: 32633
+
+styles    :
+    - template: styles/unlabeledMarker
+    - template: styles/labeledMarker
+    - template: styles/omriss
+    - template: styles/track
 
 baselayers:   
     - include: 3/layers/europa
 overlays  : 
-    - include: 3/layers/land
-    - include: 3/layers/sjo
-    - include: 3/layers/sjo_enc
+    - include: 3/layers/topo2
+    - include: 3/layers/grunnkart
+    - include: 3/layers/sjo_hovedkart2
+    - include: 3/layers/wms/sjo_enc
     - include: 3/layers/flybilder
     - include: 3/layers/terreng
-    - include: 3/layers/grunnkart
-    - include: 3/layers/toporaster
-# currently broken
+    - include: 3/layers/toporaster3
+    - include: 3/layers/fjellskygge
     - include: 3/layers/janmayen
     - include: 3/layers/svalbard
-#
-    - include: 3/layers/dekning/n50
-    - include: 3/layers/dekning/sjo/hovedkart
-    - include: 3/layers/dekning/sjo/havnekart
-    - include: 3/layers/dekning/sjo/kystkart
-    - include: 3/layers/dekning/sjo/overseilingskart
-styles :
-    - template: 3/styles/wfs
-functions:
-    - template: 3/functions/readURL
-    - template: 3/functions/updateURL
 
-controls:
-    - template: 3/controls/default
-    - template: 3/controls/status
-    - template: 3/controls/popout
-#    - template: 3/controls/overview
-    - include: 3/toolbars/embed-basic-toolbar
+    - include: 3/layers/dekning_n50_plast
+    - include: 3/layers/dekning_sjo_hovedkart
+    - include: 3/layers/dekning_havnekart
+    - include: 3/layers/dekning_kystkart
+    - include: 3/layers/dekning_overseilingskart
+
+    # fakta layers
+    - include: 3/layers/geoJSON/kommunefjell
 
 center:
     template: 3/center/besseggen
-#    template: 3/center/svalbard
+functions :
+    template: 3/functions/readURL
+controls  :
+    - template: 3/controls/status
+    - template: 3/controls/navigation
+    - template: 3/controls/scaleline
+    - include: 3/toolbars/embed-basic-toolbar
+    - template: 3/controls/popout
+      

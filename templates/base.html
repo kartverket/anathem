@@ -28,6 +28,22 @@
     <link rel="stylesheet" type="text/css" href="theme/norgeskart/no-svg.css" />
     <![endif]-->
     <link rel="stylesheet" media="print" type="text/css" href="theme/norgeskart/print.css" />
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-5163611-5', 'auto', {
+'allowLinker': true});
+ga('require', 'linkid');
+ga('set', 'anonymizeIp', true);
+ga('require','linker');
+ga('linker:autoLink',['kartverket.no','norgeskart.no','seeiendom.no','rettikartet.no','seplan.no']); 
+ga('send', 'pageview');
+</script>
+
   </head>
   <body style="height: 100%; overflow: hidden;">
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -46,9 +62,10 @@
     <script src="js/underscore-min.js"></script>
     <script src="js/SOSI.js.min.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="js/jquery.ui.min.js"></script>
     <script src="js/jquery.storageapi.min.js"></script>
     <script src="js/jquery.caret.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.keyboard.min.js"></script>
     <!--[if IE]>
     <script src="js/xdr.js"></script>
     <![endif]-->
@@ -56,7 +73,7 @@
     <!--<script src="js/uniform/jquery.uniform.js"></script>-->
 
 % if includeXDM:
-    <%include file="/3/easyXDM.html" />
+    <%include file="/easyXDM.html" />
 % endif
     <script src="${mapscript}"></script>
 
