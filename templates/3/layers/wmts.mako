@@ -1,4 +1,4 @@
-% if not 'layerTypeWMTS' in vars:
+% if 'layerTypeWMTS' not in vars:
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.WMTS = (function (M, MP) {
@@ -82,7 +82,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
   };
 }(map, mapProj));
 
-<% vars['layerTypeWMTS']=True %>
+<% vars['layerTypeWMTS'] = True %>
 % endif
 
 (function () {
@@ -141,7 +141,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
     options.tileOrigin = "${tileorigin}"
   % endif
 
-  var layer = NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
+  NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
 
   % if onZoom:
     ${onZoom}

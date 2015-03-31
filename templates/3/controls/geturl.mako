@@ -32,8 +32,7 @@ NK.controls.GetURL = function(options) {
     element: wrapper,
     target: options.target
   });
-
-}
+};
 ol.inherits(NK.controls.GetURL, ol.control.Control);
 
 NK.controls.GetURL.prototype.changeHash = function() {        

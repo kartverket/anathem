@@ -21,7 +21,7 @@
 NK.controls = NK.controls || {};
 NK.controls.Search = function(options) {
   options = options || {};
-  var element, formElem, inputElem,
+  var element, formElem, inputElem, divgroup,
       inputResultsPerPage, inputResultPageNumber,
       submitBtn, searchFunction;
 
@@ -55,12 +55,16 @@ NK.controls.Search = function(options) {
 
   formElem = document.createElement('form');
   formElem.setAttribute('action', options.searchUrl);
+  formElem.setAttribute('class', 'navbar-form navbar-left');
+  formElem.setAttribute('role', 'search');
+  formElem.onsubmit = function () {return false};
 
-  formElem.onsubmit = function () {return false}; 
-
+  divgroup = document.createElement('div');
+  divgroup.setAttribute('class', 'input-group');
   inputElem = document.createElement('input');
   inputElem.setAttribute('name', 'searchInput');
   inputElem.setAttribute('id', 'searchInput');
+  inputElem.setAttribute('class', 'form-control');
   inputElem.setAttribute('type', 'search');
   inputElem.setAttribute('autocomplete', 'off');
   inputElem.setAttribute('autocorrect', 'off');
@@ -80,16 +84,17 @@ NK.controls.Search = function(options) {
   inputResultPageNumber.setAttribute( 'value', '0' );
   inputResultPageNumber.setAttribute( 'type', 'hidden' );
         
-  submitBtn = document.createElement( 'button' );
+  submitBtn = document.createElement( 'span' );
   submitBtn.setAttribute( 'type', 'submit' );
   submitBtn.setAttribute( 'id', this.submitBtnId );
-  submitBtn.setAttribute('class', 'submit-button');
+  submitBtn.setAttribute('class', 'submit-button input-group-addon');
   submitBtn.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="439px" height="438px" viewBox="0 0 439 438" class="icon search" preserveAspectRatio="xMidYMid meet"><path d="M432.155,368.606l-2.64-2.639l0.005-0.004l-105.53-105.539c14.662-25.259,23.18-54.54,23.379-85.837C347.985,78.772,270.817,0.612,175.01,0.01c-0.387-0.001-0.761-0.002-1.145-0.002C78.595,0.012,1.045,76.951,0.431,172.366c-0.605,95.81,76.561,173.967,172.359,174.579c0.379,0.002,0.751,0.004,1.133,0.004c31.845,0,61.686-8.627,87.357-23.63l105.439,105.45l0.009-0.01l2.638,2.636c7.973,7.975,20.897,7.967,28.871,0l33.918-33.917C440.124,389.511,440.128,376.578,432.155,368.606z M173.07,302.708c-71.252-0.456-128.852-58.802-128.401-130.059c0.456-70.798,58.414-128.399,129.198-128.403l0.864,0.002c34.518,0.216,66.884,13.863,91.137,38.426c24.251,24.564,37.485,57.105,37.262,91.63c-0.216,34.371-13.767,66.64-38.149,90.859c-24.376,24.212-56.715,37.545-91.058,37.545L173.07,302.708z"/></svg>' + '<span>Search</span>';
         
   formElem.appendChild(inputResultsPerPage);
   formElem.appendChild(inputResultPageNumber);
-  formElem.appendChild(inputElem);
-  formElem.appendChild(submitBtn);
+  divgroup.appendChild(inputElem);
+  divgroup.appendChild(submitBtn);
+  formElem.appendChild(divgroup);
   element.innerHTML = '';
   element.appendChild(formElem);
 

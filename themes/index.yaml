@@ -1,7 +1,6 @@
 template : 3/base
 filename : index.html
 title    : Norgeskart
-#includeCesium: true
 mapscript: clients/norgeskart.min.js
 --- 
 template : 3/mapscript
@@ -12,46 +11,43 @@ ticketServiceUrl: "/ws/esk.py?wms.ecc_enc"
 projection: 25833
 #projection: 32633
 
-i18n:
-  - include: languages/nb/base
-
-baselayers:   
+baselayers:
     - include: 3/layers/europa
 
-styles    :
-    - template: 3/styles/unlabeledMarker
-    - template: 3/styles/labeledMarker
-    - template: 3/styles/omriss
-    - template: 3/styles/track
-
-overlays  : 
-    - include: 3/layers/topo2
+overlays:
+    - include: 3/layers/land
     - include: 3/layers/grunnkart
-    - include: 3/layers/sjo_hovedkart2
-    - include: 3/layers/wms/sjo_enc
+    - include: 3/layers/sjo
+    - include: 3/layers/sjo_enc
     - include: 3/layers/flybilder
     - include: 3/layers/terreng
-    - include: 3/layers/toporaster3
-    - include: 3/layers/fjellskygge
+    - include: 3/layers/toporaster
+#    - include: 3/layers/fjellskygge
     - include: 3/layers/janmayen
     - include: 3/layers/svalbard
 
-    - include: layers/dekning_n50_plast
-    - include: layers/dekning_sjo_hovedkart
-    - include: layers/dekning_havnekart
-    - include: layers/dekning_kystkart
-    - include: layers/dekning_overseilingskart
+    - include: 3/layers/dekning/n50
+    - include: 3/layers/dekning/sjo/hovedkart
+    - include: 3/layers/dekning/sjo/havnekart
+    - include: 3/layers/dekning/sjo/kystkart
+    - include: 3/layers/dekning/sjo/overseilingskart
 
     # fakta layers
-    - include: layers/geoJSON/kommunefjell
+#    - include: layers/geoJSON/kommunefjell
 
     # friluftsliv layers
-    - include: layers/wms/fotruter
-    - include: layers/wms/sykkelruter
-    - include: layers/wms/skiloyper
-    - include: layers/wms/friluft-annen
-    - include: layers/wms/friluft-tilrettelegging 
+#    - include: layers/wms/fotruter
+#    - include: layers/wms/sykkelruter
+#    - include: layers/wms/skiloyper
+#    - include: layers/wms/friluft-annen
+#    - include: layers/wms/friluft-tilrettelegging
 
+styles    :
+#    - template: 3/styles/unlabeledMarker
+#    - template: 3/styles/labeledMarker
+#    - template: 3/styles/omriss
+#    - template: 3/styles/track
+    - template: 3/styles/wfs
 
 center    : 
     template: 3/center/besseggen
@@ -59,23 +55,15 @@ center    :
 functions :
     - template: 3/functions/updateURL
     - template: 3/functions/readURL
-    - template: 3/functions/vector
+#    - template: 3/functions/vector
 
 controls  :
-    - template: controls/status
-    - template: controls/geolocation
-    - template: controls/navigation
-    - template: controls/scaleline
-    - template: controls/hashstate
-    - include: toolbars/basic
-    - include: toolbars/top
-    - include: toolbars/secondary
-    - template: controls/container
-      id: overview-container-panel
-      controls:
-      - template: controls/overview
-        name: omriss
-        id: omriss.norge.500m
-        url: /json/norge/500m.geojson
-        detailedLayer: enkel
-
+    - template: 3/controls/default
+    - template: 3/controls/status
+#    - template: controls/geolocation
+#    - template: 3/controls/scaleline
+    - include: 3/toolbars/basic
+    - include: 3/toolbars/top
+    - include: 3/toolbars/secondary
+    - template: 3/controls/container
+    - template: 3/controls/overview

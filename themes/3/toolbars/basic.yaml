@@ -11,11 +11,9 @@ controls:
   - template: 3/controls/zoom
   - template: 3/controls/zoomtoselection
 - template: 3/controls/container
-  id: pan-panel
-  controls:
-    - template: 3/controls/pan
-- template: 3/controls/container
   id: layerselector-panel
+  layerselector: true
+  svgIcon: '<svg width="45" height="45" xmlns="http://www.w3.org/2000/svg"><g><title>Layer 1</title><path id="svg_1" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m16.768551,38.517307l11.167488,4.42775v-36.803636l-11.167488,-4.427935v36.803631l0,0.000191zm-14.768551,4.911568l12.387096,-4.911568v-36.803627l-12.387096,4.911755v36.803642l0,-0.000202zm28.316563,-37.263813v36.803638l12.417843,-4.923439v-36.803629l-12.417843,4.923722l0,-0.000292l0,0z" fill="none"/></g></svg>'
   controls:
   - template: 3/controls/layerselector
     group: modus1

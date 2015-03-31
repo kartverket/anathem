@@ -120,7 +120,7 @@ NK.controls.LayerSelector = function(options) {
       wrapper.appendChild(layerList);
     }
   }
-
+  options.target = document.getElementById('layerswitcher');
   ol.control.Control.call(this, {
     element: wrapper,
     target: options.target

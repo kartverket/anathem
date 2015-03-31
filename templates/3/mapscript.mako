@@ -22,9 +22,10 @@ NK.gkToken = "unInitialized";
 NK.tokenService = "${tokenServiceUrl}";
 % endif
 
-NK.baseProjection = "25833";
 % if projection:
 NK.baseProjection = "${projection}";
+% else:
+NK.baseProjection = "25833";
 % endif
 
 NK.tokenLastUpdated = new Date(0);
@@ -235,18 +236,20 @@ NK.init = function () {
   };
   map = new ol.Map(NK.mapOptions);
 
-% if baselayers:
-  // Base layers
-  ${baselayers}
-% endif
 
-%if overlays:
+% if overlays:
   // Overlays
   ${overlays}
 % endif
 
+% if baselayers:
+  // Baselayers
+  ${baselayers}
+% endif
+
 var controlContext = map;
 var container = null;
+var collect = null;
 
 % if controls:
   ${controls}

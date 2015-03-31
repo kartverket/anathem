@@ -6,11 +6,13 @@ Use YAML configuration files to combine mako templates.
 
 from mako.template import *
 from mako.lookup import TemplateLookup
-import yaml
 import sys
+import os
 import re
 import closure
+import yaml
 from subprocess import call
+from codecs import open
 
 # matches mako parameters in a template: ${...}, but not containing brackets
 re_param = re.compile('\$\{([^\(\{]*?)\}')
@@ -27,7 +29,6 @@ lookup = TemplateLookup(directories=['./templates/'])
 
 templates = open("themes/%s.yaml" % tema, "r").read().split("---")
 config = [yaml.load(doc) for doc in templates]
-
 
 def recurse_render(data):
     """
