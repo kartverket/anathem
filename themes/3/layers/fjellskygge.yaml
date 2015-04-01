@@ -1,0 +1,5 @@
+template: 3/layers/wmts
+usetoken: true
+name: Fjellskygge 
+layer: fjellskygge
+id: fjellskygge 
