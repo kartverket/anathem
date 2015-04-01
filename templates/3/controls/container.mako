@@ -118,16 +118,28 @@ parentContainer = containerParam;
     var cnt = document.createElement("div");
     cnt.setAttribute("class","cnt")
     cnt.setAttribute("id","layerswitcher")
+    var h3 = document.createElement("h3");
+    var text = document.createTextNode("Velgt kart type:");
+    h3.appendChild(text);
+    cnt.appendChild(h3);
 
     wrapper.appendChild(cnt);
     div.appendChild(wrapper);
 
     container.appendChild(header);
     container.appendChild(div);
+
   % endif
 
   container.className = className;
   parentContainer.appendChild(container);
+
+  % if layerselector:
+  $('#layerselector-panel').click(this, function(event) {
+      $(this).toggleClass('active');
+  });
+  % endif
+
 % endif
 
 
