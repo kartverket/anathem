@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.fastmerker?
-name: PGS stasjoner
+name: Norske stasjoner
 layers: PGS_stasjoner
 layerGroup: tjenester.CPOS-stasjoner
 id: PGS_stasjoner

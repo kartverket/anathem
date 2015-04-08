@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.fastmerker?
-name: Landsnett punkt
+name: Landsnettpunkter
 layers: Landsnettpunkt
 layerGroup: tjenester.Fastmerker
 id: Landsnettpunkt
