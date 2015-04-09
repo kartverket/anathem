@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: Alle
+layers: t_syn
+layerGroup: tjenester.Tettsted_Syn
+id: t_syn
+usetoken: true
+singleTile: true
+getfeature: true

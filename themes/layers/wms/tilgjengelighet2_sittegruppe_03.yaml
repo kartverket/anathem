@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: Sittegruppe
+layers: sittegruppe_03
+layerGroup: tjenester.friluftsyn
+id: sittegruppe_03
+usetoken: true
+singleTile: true
+getfeature: true

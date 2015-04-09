@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: Alle
+layers: t_el_rullestol
+layerGroup: tjenester.Tettsted_Elektrisk_rullestol
+id: t_el_rullestol
+usetoken: true
+singleTile: true
+getfeature: true

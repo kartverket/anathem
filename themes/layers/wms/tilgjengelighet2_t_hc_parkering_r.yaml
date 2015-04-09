@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: HC-parkering
+layers: t_HC_parkering_r
+layerGroup: tjenester.Tettsted_Rullestol
+id: t_HC_parkering_r
+usetoken: true
+singleTile: true
+getfeature: true

@@ -365,10 +365,12 @@ NK.init = function () {
     }());
 
   }
+
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2();
-  var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
-    url: "http://wms.geonorge.no/skwms1/wms.tilgjengelighet?",
-    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.tilgjengelighet?",
+
+  var featureInfo2 = new OpenLayers.Control.WMSGetFeatureInfo({
+    url: "http://nnrite008/cgi-bin/tilgjengelighet2?",
+    proxyUrl: "/ws/featureinfo.py?http://nnrite008/cgi-bin/tilgjengelighet2?",
     queryVisible: true,
     infoFormat: 'text/plain',
     eventListeners: {
@@ -384,13 +386,13 @@ NK.init = function () {
           closePopupCallBack,
           {x: 10, y: -65},
           'selected-feature-popup, user-marker'
-          ), true);
-        } catch(e) {}
-      }
+        ), true);
+      } catch(e) {}
+    }
     }
   });
-  map.addControl(featureInfo);
-  featureInfo.activate();
+  map.addControl(featureInfo2);
+  featureInfo2.activate();
 };
 // end init()
 

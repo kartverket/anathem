@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: Turishytte
+layers: turishytte_01
+layerGroup: tjenester.friluft_rullestol
+id: turishytte_01
+usetoken: true
+singleTile: true
+getfeature: true

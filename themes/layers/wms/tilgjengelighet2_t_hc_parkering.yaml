@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: HC-parkering
+layers: t_HC_parkering
+layerGroup: tjenester.Tettsted_Syn
+id: t_HC_parkering
+usetoken: true
+singleTile: true
+getfeature: true

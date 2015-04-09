@@ -19,7 +19,6 @@ mapscript:
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-    #- include: styles/SLD/maritimegrenser
 
   overlays  : 
     - include: layers/topo2
@@ -32,65 +31,76 @@ mapscript:
     - include: layers/janmayen
     - include: layers/svalbard
 
-    #- include: layers/wms/kommunegrenser
-    #- include: layers/wms/amtskart
-    #- include: layers/wms/dybdedata
-    #- include: layers/wms/dybdelag
-    #- include: layers/wms/havbunnraster
-    #- include: layers/wms/dekning_sjomaaling
-    #- include: layers/wms/dybdekontur
-    #- include: layers/wms/dybdekurver_havomraader
-    #- include: layers/wms/kystkontur
-    #- include: layers/wms/sjogrenser
-
     - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
-#    - include: layers/omriss_norge_1000m
-#    - include: layers/omriss_norge_500m
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
     # tilgjengelighet WMS
-    - include: layers/wms/tilgjengelighet_kulturminner_flate
-    - include: layers/wms/tilgjengelighet_kulturminner_punkt
+    - include: layers/wms/tilgjengelighet2_t_rullestol
+    - include: layers/wms/tilgjengelighet2_t_el_rullestol
+    - include: layers/wms/tilgjengelighet2_t_syn
+    - include: layers/wms/tilgjengelighet2_t_vei
+    - include: layers/wms/tilgjengelighet2_t_vei_el
+    - include: layers/wms/tilgjengelighet2_t_vei_r
+    - include: layers/wms/tilgjengelighet2_t_parkeringsomrade_el
+    - include: layers/wms/tilgjengelighet2_t_parkeringsomrade_r
+    - include: layers/wms/tilgjengelighet2_t_parkeringsomrade
+    - include: layers/wms/tilgjengelighet2_t_hc_parkering
+    - include: layers/wms/tilgjengelighet2_t_hc_parkering_el
+    - include: layers/wms/tilgjengelighet2_t_hc_parkering_r
+    - include: layers/wms/tilgjengelighet2_t_inngangsbygg
+    - include: layers/wms/tilgjengelighet2_t_inngangsbygg_r_01
+    - include: layers/wms/tilgjengelighet2_t_inngangsbygg_r_02
 
-    - include: layers/wms/tilgjengelighet_friluft
-    - include: layers/wms/tilgjengelighet_friluftsomrade
-    - include: layers/wms/tilgjengelighet_statlig_sikra_polygon
-    - include: layers/wms/tilgjengelighet_turvei
-    - include: layers/wms/tilgjengelighet_parkeringsomrader_friluft
-    - include: layers/wms/tilgjengelighet_hc_parkering_friluft
-    - include: layers/wms/tilgjengelighet_baderampe
-    - include: layers/wms/tilgjengelighet_fiskeplass
-    - include: layers/wms/tilgjengelighet_gapahukhytte
-    - include: layers/wms/tilgjengelighet_grillbalplass
-    - include: layers/wms/tilgjengelighet_serveringskiosk
-    - include: layers/wms/tilgjengelighet_sittegruppe
-    - include: layers/wms/tilgjengelighet_toalett
-    - include: layers/wms/tilgjengelighet_turisthytte
+    - include: layers/wms/tilgjengelighet2_f_rullestol
+    - include: layers/wms/tilgjengelighet2_f_el_rullestol
+    - include: layers/wms/tilgjengelighet2_f_syn
+    - include: layers/wms/tilgjengelighet2_baderampe_01 
+    - include: layers/wms/tilgjengelighet2_baderampe_03 
+    - include: layers/wms/tilgjengelighet2_fiskeplass_01 
+    - include: layers/wms/tilgjengelighet2_fiskeplass_02 
+    - include: layers/wms/tilgjengelighet2_fiskeplass_03 
+    - include: layers/wms/tilgjengelighet2_friluftsomrade_01 
+    - include: layers/wms/tilgjengelighet2_friluftsomrade_02 
+    - include: layers/wms/tilgjengelighet2_friluftsomrade_03 
+    - include: layers/wms/tilgjengelighet2_gapahukhytte_01 
+    - include: layers/wms/tilgjengelighet2_gapahukhytte_02 
+    - include: layers/wms/tilgjengelighet2_gapahukhytte_03 
+    - include: layers/wms/tilgjengelighet2_grillbalplass_01 
+    - include: layers/wms/tilgjengelighet2_grillbalplass_02 
+    - include: layers/wms/tilgjengelighet2_grillbalplass_03 
+    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_01 
+    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_02 
+    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_03 
+    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_01 
+    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_02 
+    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_03 
+    - include: layers/wms/tilgjengelighet2_sittegruppe_01 
+    - include: layers/wms/tilgjengelighet2_sittegruppe_02 
+    - include: layers/wms/tilgjengelighet2_sittegruppe_03 
+    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_01 
+    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_02 
+    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_03 
+    - include: layers/wms/tilgjengelighet2_toalett_01 
+    - include: layers/wms/tilgjengelighet2_toalett_02 
+    - include: layers/wms/tilgjengelighet2_toalett_03 
+    - include: layers/wms/tilgjengelighet2_turishytte_01 
+    - include: layers/wms/tilgjengelighet2_turishytte_02 
+    - include: layers/wms/tilgjengelighet2_turishytte_03 
+    - include: layers/wms/tilgjengelighet2_turvei_01 
+    - include: layers/wms/tilgjengelighet2_turvei_02 
+    - include: layers/wms/tilgjengelighet2_turvei_03 
 
-    - include: layers/wms/tilgjengelighet_tettsted
-    - include: layers/wms/tilgjengelighet_vei
-    - include: layers/wms/tilgjengelighet_parkeringsomrader_tettsted
-    - include: layers/wms/tilgjengelighet_HC-parkeringsplasser
-    - include: layers/wms/tilgjengelighet_inngang_bygg
-
-    - include: layers/wms/tilgjengelighet_pilotfylker
-    - include: layers/wms/tilgjengelighet_ressurskommuner 
-
-    # tilgjengelighet WFS
-    #- include: layers/wfs/uu_test
-
-  center    : 
+  center    :
     template: center/besseggen
 
   functions :
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
+    - template: functions/popup
 
   controls  :
     - template: controls/status
@@ -109,6 +119,3 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
-
-#splashscreen:
-#  - template: splashscreen/betainfo
