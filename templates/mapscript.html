@@ -323,6 +323,8 @@ NK.init = function () {
   if (!!params.proj) {
     mapProj = proj[params.proj]; 
   }
+var options = {
+};
 
   NK.mapOptions = {
     projection: mapProj,
@@ -381,6 +383,7 @@ NK.init = function () {
   // Add controls at the end, to keep focus
   var controlContext = map;
   var container = null;
+  var collect = null;
 
 % if controls:
   ${controls}
@@ -451,6 +454,7 @@ NK.init = function () {
     }());
 
   }
+  map.addControl(new OpenLayers.Control.Attribution());
 
 };
 // end init()

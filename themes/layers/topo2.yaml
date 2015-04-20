@@ -5,3 +5,6 @@ layer: topo2_dybde
 layerGroup: modus1
 id: land
 visible: true
+attribution: true
+
+

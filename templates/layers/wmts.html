@@ -46,6 +46,9 @@ NK.addLayerType.WMTS = (function (M, MP) {
       'buffer': 4
     };
 
+    if (!!options.attribution) {
+      layerOptions['attribution'] = options.attribution;
+    }
     if (!!options.extent) {
       var c = options.extent.split(",");
       var customBounds = new OpenLayers.Bounds(c);
@@ -157,6 +160,13 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if linkedTo:
     options.linkedTo = "${linkedTo}"
+  % endif
+
+  % if attribution:
+    options.attribution = {
+      title: "Kartverket",
+      href: "http://www.kartverket.no/"
+    }
   % endif
 
   var layer = NK.addLayerType.WMTS('${id}', '${name}', url, '${layer}', options);
