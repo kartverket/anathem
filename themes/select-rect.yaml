@@ -31,3 +31,4 @@ mapscript:
       autostart: "true"
     - template: controls/status
     - template: controls/scaleline
+    - include: toolbars/embed-basic-toolbar
