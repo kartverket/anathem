@@ -1,8 +1,8 @@
 template: layers/geoJSONFileMC
-url: /json/dekning/raster/n1000_ny.geojson
-name: Raster N1000
-id: raster-n1000
-epsgCode: 4326 
+url: /json/dekning/raster/33.geojson
+name: Raster UTM33
+id: raster-33
+epsgCode: 32633 
 styleName: omrissFylker 
 layerGroup: nedlasting 
 popup:
