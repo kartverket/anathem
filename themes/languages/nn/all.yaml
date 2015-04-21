@@ -1,0 +1,246 @@
+template: i18n/language
+language: nn
+translations:
+  - template: i18n/translation
+    source: Server error
+    translation: Feil med tenesta
+  - template: i18n/translation
+    source: An error has occured.
+    translation: Eitt eller fleire kartlag vert ikkje viste som dei skal.
+  - template: i18n/translation
+    source: Reloading maps in 
+    translation: Pr&oslash;ver &aring; lasta kartlaga p&aring; nytt om
+  - template: i18n/translation
+    source: minutes.
+    translation: minutt.
+  - template: i18n/translation
+    source: minute.
+    translation: minutt.
+  - template: i18n/translation
+    source: Drawing
+    translation: Teikna og m&aring;la
+  - template: i18n/translation
+    source: Drawing tool
+    translation: Teikna og m&aring;la
+  - template: i18n/translation
+    source: Draw point
+    translation: Teikn punkt
+  - template: i18n/translation
+    source: Draw line
+    translation: Teikn linje
+  - template: i18n/translation
+    source: Draw polygon
+    translation: Teikn areal
+  - template: i18n/translation
+    source: Draw label
+    translation: Legg tekst til element i teikninga
+  - template: i18n/translation
+    source: Undo
+    translation: Angr
+  - template: i18n/translation
+    source: Save
+    translation: Lagr
+  - template: i18n/translation
+    source: Longitude
+    translation: Lengdegrad
+  - template: i18n/translation
+    source: Latitude
+    translation: Breiddegrad
+  - template: i18n/translation
+    source: Length
+    translation: Lengd
+  - template: i18n/translation
+    source: Circumference
+    translation: Omkrins
+  - template: i18n/translation
+    source: Area
+    translation: Areal
+  - template: i18n/translation
+    source: Measures
+    translation: M&aring;l
+  - template: i18n/translation
+    source: Cancel
+    translation: Avbryt
+  - template: i18n/translation
+    source: Add text
+    translation: Legg til tekst
+  - template: i18n/translation
+    source: Update
+    translation: Oppdat&eacute;r
+  - template: i18n/translation
+    source: Embed
+    translation: Bruk kartutsnitt
+  - template: i18n/translation
+    source: Select type
+    translation: Vel type
+  - template: i18n/translation
+    source: Dynamic map based on open services
+    translation: Dynamisk kart basert p&aring; opne tenester
+  - template: i18n/translation
+    source: Static map
+    translation: Statisk kart
+  - template: i18n/translation
+    source: Terms
+    translation: Vilk&aring;r for bruk
+  - template: i18n/translation
+    source: You can use the maps freely for any internet based purposes. You are not allowed to combine multiple maps to form a bigger, continous map.
+    translation: Du kan fritt nytta kartutsnitta til alle nettbaserte f&oslash;rem&aring;l. Karta m&aring; nyttast enkeltvis og ikkje setjast saman slik at dei dannar eit st&oslash;rre, samanhengande kart.
+  - template: i18n/translation
+    source: Svalbard terms
+    translation: Integrasjon av Svalbard-kart er ikkje tillate utan særskild avtale med Norsk Polarinstitutt. Sj&aring; bruksvilk&aring;ra i Norsk Polarinstitutt sin eigen kartportal, TopoSvalbard (toposvalbard.npolar.no) for meir informasjon.
+  - template: i18n/translation
+    source: 'Content providers: Kartverket, Geovekst, municipalities and Norge digitalt partners.'
+    translation: 'Innhaldsleverand&oslash;rar: Kartverket, Geovekst, kommunane og Noreg digitalt-partar.'
+  - template: i18n/translation
+    source: Previous
+    translation: F&oslash;rre
+  - template: i18n/translation
+    source: Next
+    translation: Neste
+  - template: i18n/translation
+    source: Show selected map area
+    translation: Vis kartutsnitt
+  - template: i18n/translation
+    source: Choose area
+    translation: Vel utsnitt
+  - template: i18n/translation
+    source: Include map tools
+    translation: Ta med kartverkt&oslash;y
+  - template: i18n/translation
+    source: Include markers
+    translation: Set inn mark&oslash;r
+  - template: i18n/translation
+    source: Delete marker
+    translation: Slett mark&oslash;r
+  - template: i18n/translation
+    source: Comment
+    translation: Skriv inn kommentar
+  - template: i18n/translation
+    source: Add
+    translation: Legg til
+  - template: i18n/translation
+    source: Skip
+    translation: Hopp over
+  - template: i18n/translation
+    source: Click in the map to add markers with descriptions.
+    translation: Klikk i kartet for &aring; setja inn mark&oslash;rar med forklaring. Legg til fleire punkt ved &aring; klikka i kartet.
+  - template: i18n/translation
+    source: To ensure a good user experience, we recommend you provide descriptions for your map. As a result, the embedded map will cater to people using assistive technology.
+    translation: For &aring; skapa ei god brukaroppleving tilr&aring;r me at du legg inn ei beskriving. Kartutsnittet vil d&aring; verta tilrettelagt for brukarar med spesielle behov.
+  - template: i18n/translation
+    source: Hold down left mouse button and draw desired embed area on the map. You may later adjust the size of the area with the buttons that appear on the corners of the drawn rectangle.
+    translation: Teikn det ynskte utsnittet og den ynskte storleiken i kartet ved &aring; halda nede venstre museknapp. Du kan justera storleiken ved &aring; dra i hj&oslash;rna p&aring; kartutsnittet.
+  - template: i18n/translation
+    source: Map description
+    translation: Beskriv kartutsnittet
+  - template: i18n/translation
+    source: 'Short description:'
+    translation: 'Kort beskriving:'
+  - template: i18n/translation
+    source: I.ex.
+    translation: T.d.
+  - template: i18n/translation
+    source: '"Stores in Hordaland"'
+    translation: '"Utsalsstader i Hordaland"'
+  - template: i18n/translation
+    source: Why?
+    translation: Kvifor?
+  - template: i18n/translation
+    source: A short description is shown when the mouse cursor is held over the embedded map.
+    translation: Det vert vist ei kort beskriving n&aring;r du held musepeikaren over kartet.
+  - template: i18n/translation
+    source: 'Long description:'
+    translation: 'Lang beskriving:'
+  - template: i18n/translation
+    source: A long description is used when there is an error, or when the user is unable to see the map.
+    translation: Ei lang beskriving vert nytta n&aring;r det skjer ein feil, som at kartet ikke kan visast, eller at brukaren ikkje kan sj&aring; kartet.
+  - template: i18n/translation
+    source: Generate map
+    translation: Generér kart
+  - template: i18n/translation
+    source: Generate code
+    translation: Generér kode
+  - template: i18n/translation
+    source: 'Points:'
+    translation: 'Punkt:'
+  - template: i18n/translation
+    source: Select code and copy
+    translation: Merk kode og klipp ut
+  - template: i18n/translation
+    source: 'step <span>${stepCount}</span> of '
+    translation: 'trinn <span>${stepCount}</span> av '
+  - template: i18n/translation
+    source: Quit
+    translation: Avslutt
+  - template: i18n/translation
+    source: Height profile
+    translation: H&oslash;gdeprofil
+  - template: i18n/translation
+    source: Make a height profile
+    translation: Lag h&oslash;gdeprofil
+  - template: i18n/translation
+    source: Click in the map to draw a line.
+    translation: Klikk i kartet for &aring; trekkja ei linje.
+  - template: i18n/translation
+    source: Double click to finish
+    translation: Dobbeltklikk for &aring; avslutta
+  - template: i18n/translation
+    source: Use some other format
+    translation: Bruk eit anna format
+  - template: i18n/translation
+    source: Show height profile
+    translation: Vis h&oslash;gdeprofil
+  - template: i18n/translation
+    source: Popular routes
+    translation: Populære h&oslash;gdeprofilar
+  - template: i18n/translation
+    source: Birkebeinerrennet
+    translation: Birkebeinarrennet
+  - template: i18n/translation
+    source: Besseggen
+    translation: Besseggen
+  - template: i18n/translation
+    source: Norseman
+    translation: Norseman
+  - template: i18n/translation
+    source: An error occured.
+    translation: Det har skjedd ein feil.
+  - template: i18n/translation
+    source: Unable to read track from file.
+    translation: Fila inneheld ikkje GPX-data.
+  - template: i18n/translation
+    source: Upload GPX file
+    translation: Last opp ei GPX-fil
+  - template: i18n/translation
+    source: Choose File
+    translation: Vel fil
+  - template: i18n/translation
+    source: Enter WKT geometry data
+    translation: Lim inn eit WKT LINESTRING-uttrykk
+  - template: i18n/translation
+    source: 'Generating height profile visualization'
+    translation: 'Genererer h&oslash;gdeprofil-visualisering'
+  - template: i18n/translation
+    source: 'Your height profile'
+    translation: 'H&oslash;gdeprofilen din'
+  - template: i18n/translation
+    source: 'Close'
+    translation: 'Lukk'
+  - template: i18n/translation
+    source: 'Open print friendly'
+    translation: Opn utskriftsvenleg'
+  - template: i18n/translation
+    source: 'Make your own map'
+    translation: 'Lag ditt eige kart'
+  - template: i18n/translation
+    source: 'Illustrative maps:'
+    translation: 'Illustrasjonskart:'
+  - template: i18n/translation
+    source: 'Map data are geographic data in vector format.'
+    translation: 'Kartdata er geografiske data i vektorformat som vert nytta til framstilling av kart, som bakgrunnskart for andre tema og som koplingsdata mot annan informasjon.'
+  - template: i18n/translation
+    source: 'Map data:'
+    translation: 'Kartdata:'
+  - template: i18n/translation
+    source: 'Simple illustration maps of Norway, in several different formats. These maps can be used as they are, or easily be transformed to suit specific needs.'
+    translation: 'Enkle illustrasjonskart over Noreg i fleire ulike format. Du kan nytta dei som dei er, eller lett tilpassa dei til akkurat det behovet du har.'
