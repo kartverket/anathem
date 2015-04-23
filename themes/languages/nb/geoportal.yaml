@@ -14,11 +14,14 @@ translations:
     source: 'Service'
     translation: 'Tjeneste'
   - template: i18n/translation
-    source: 'Layer'
-    translation: 'Lag'
+    source: 'Layer list'
+    translation: 'Kartlag'
   - template: i18n/translation
-    source: 'Legend'
-    translation: 'Tegnfor- klaring'
+    source: 'Thematic overlays'
+    translation: 'Tematiske kartlag'
+  - template: i18n/translation
+    source: 'Legends'
+    translation: 'Tegnforklaringer'
   - template: i18n/translation
     source: 'Base URL'
     translation: 'Basis-URL'
