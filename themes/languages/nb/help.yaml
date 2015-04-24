@@ -16,3 +16,9 @@ translations:
   - template: i18n/translation
     source: Function
     translation: Funksjon
+  - template: i18n/translation
+    source: FAQ
+    translation: Ofte stilte sp\u00f8rsm\u00e5l om norgeskart.no
+  - template: i18n/translation
+    source: Legend
+    translation: Tegnforklaring

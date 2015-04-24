@@ -1,3 +1,7 @@
 <%inherit file="/controls/controlcontext.html" />
 
+% if faqUrl:
+  options.faqUrl = "${faqUrl}";
+% endif
+
 NK.functions.addControlToContext(new OpenLayers.Control.Help(options), context);

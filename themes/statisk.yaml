@@ -7,7 +7,8 @@ mapscript: clients/norgeskart-statisk.min.js
 template : mapscript
 filename : clients/norgeskart-statisk.min.js
 language  : nb
-tokenServiceUrl: http://norgeskart.no/ws/gkt.py
+tokenServiceUrl: /ws/gkt.py
+ticketServiceUrl: /ws/esk.py?wms.ecc_enc
 projection: 32633
 
 styles    :
@@ -20,12 +21,13 @@ baselayers:
     - template: layers/europa
 overlays  : 
     - include: layers/topo2
+    - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
     - include: layers/wms/sjo_enc
     - include: layers/flybilder
     - include: layers/terreng
-    - include: layers/grunnkart
-    - include: layers/toporaster2
+    - include: layers/toporaster3
+    - include: layers/fjellskygge
     - include: layers/janmayen
     - include: layers/svalbard
 
