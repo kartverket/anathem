@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Avsl&aring;tt
+name: Avslege
 layers: Avslaatt
 layerGroup: tjenester.ikke_autoriserte_skrivemaate
 id: Avslaatt

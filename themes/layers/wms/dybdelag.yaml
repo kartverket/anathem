@@ -1,7 +1,7 @@
 template: layers/wms
 usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.dybdedata
-name: Dybde&shy;lag
+name: Djupnelag
 layers: Dybdelag,MudretOmrade
 layerGroup: tjenester.sjo.dybde
 id: dybdelag

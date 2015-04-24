@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Samferdsel
+name: Samferdsle
 layers: Samferdsel
 layerGroup: tjenester.Navnetype
 id: Samferdsel

@@ -5,12 +5,12 @@ mapscript: clients/norgeskart.min.js
 --- 
 template : mapscript
 filename : clients/norgeskart.min.js
-language  : nb
+language  : nn
 tokenServiceUrl: http://norgeskart.no/ws/gkt.py
 projection: 32633
 
 i18n:
-  - include: languages/nb/base
+  - include: languages/nn/all
 
 baselayers:   
     - template: layers/europa

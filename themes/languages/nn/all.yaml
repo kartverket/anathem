@@ -87,7 +87,7 @@ translations:
     translation: Du kan fritt nytta kartutsnitta til alle nettbaserte f&oslash;rem&aring;l. Karta m&aring; nyttast enkeltvis og ikkje setjast saman slik at dei dannar eit st&oslash;rre, samanhengande kart.
   - template: i18n/translation
     source: Svalbard terms
-    translation: Integrasjon av Svalbard-kart er ikkje tillate utan særskild avtale med Norsk Polarinstitutt. Sj&aring; bruksvilk&aring;ra i Norsk Polarinstitutt sin eigen kartportal, TopoSvalbard (toposvalbard.npolar.no) for meir informasjon.
+    translation: Integrasjon av Svalbard-kart er ikkje tillate utan s&aelig;rskild avtale med Norsk Polarinstitutt. Sj&aring; bruksvilk&aring;ra i Norsk Polarinstitutt sin eigen kartportal, TopoSvalbard (toposvalbard.npolar.no) for meir informasjon.
   - template: i18n/translation
     source: 'Content providers: Kartverket, Geovekst, municipalities and Norge digitalt partners.'
     translation: 'Innhaldsleverand&oslash;rar: Kartverket, Geovekst, kommunane og Noreg digitalt-partar.'
@@ -156,10 +156,10 @@ translations:
     translation: Ei lang beskriving vert nytta n&aring;r det skjer ein feil, som at kartet ikke kan visast, eller at brukaren ikkje kan sj&aring; kartet.
   - template: i18n/translation
     source: Generate map
-    translation: Generér kart
+    translation: Gener&eacute;r kart
   - template: i18n/translation
     source: Generate code
-    translation: Generér kode
+    translation: Gener&eacute;r kode
   - template: i18n/translation
     source: 'Points:'
     translation: 'Punkt:'
@@ -192,7 +192,7 @@ translations:
     translation: Vis h&oslash;gdeprofil
   - template: i18n/translation
     source: Popular routes
-    translation: Populære h&oslash;gdeprofilar
+    translation: Popul&aelig;re h&oslash;gdeprofilar
   - template: i18n/translation
     source: Birkebeinerrennet
     translation: Birkebeinarrennet
@@ -228,7 +228,7 @@ translations:
     translation: 'Lukk'
   - template: i18n/translation
     source: 'Open print friendly'
-    translation: Opn utskriftsvenleg'
+    translation: 'Opn utskriftsvenleg'
   - template: i18n/translation
     source: 'Make your own map'
     translation: 'Lag ditt eige kart'

@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Bebyggelse/ eiendom
+name: Busetnad/ eigedom
 layers: Bygninger_eiendom
 layerGroup: tjenester.Navnetype
 id: Bygninger_eiendom

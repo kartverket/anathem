@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Vedtatt
+name: Vedteke
 layers: Vedtatt
 layerGroup: tjenester.autoriserte_skrivemaate
 id: Vedtatt

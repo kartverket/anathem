@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Vannkontur
+name: Vasskontur
 layers: Vannkontur
 layerGroup: tjenester.Navnetype
 id: Vannkontur
