@@ -7,6 +7,6 @@ styleName: omrissFylker
 layerGroup: nedlasting 
 popup:
   template: popup/popup
-  headingAttribute: "fid"
+  headingAttribute: "n"
 
 
