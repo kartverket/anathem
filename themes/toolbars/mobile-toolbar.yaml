@@ -5,7 +5,3 @@ controls:
   id: zoom-panel
   controls:
   - template: controls/zoom
-- template: controls/container
-  id: pan-panel
-  controls:
-    - template: controls/pan

@@ -1,8 +1,8 @@
 template : base
 filename : mobile.html
 title    : Norgeskart
-mapClass: embedded-map
 mapscript: clients/mobile.min.js
+mobile: true
 ---
 template : mapscript
 filename : clients/mobile.min.js
@@ -10,6 +10,7 @@ language  : nb
 tokenServiceUrl: /ws/gkt.py
 ticketServiceUrl: /ws/esk.py?wms.ecc_enc
 projection: 32633
+mobile: true
 
 styles    :
     - template: styles/unlabeledMarker

@@ -334,7 +334,11 @@ var options = {
     maxResolution: 21664.0,
   //      minResolution: 0.165283203125,
     numZoomLevels: NK.zoomLevels,
-    theme: 'theme/norgeskart/style.css'
+% if mobile:
+  theme: 'theme/norgeskart/mobile.css'
+% else:
+  theme: 'theme/norgeskart/style.css'
+% endif
   };
 
   map = new OpenLayers.Map( 
