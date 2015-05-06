@@ -365,6 +365,7 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       }
 
       layerParms['title'] = $(this).children('Title').text();
+      layerParms['description'] = $(this).children('Abstract').text();
       layerParms['visible'] = (!!NK.visibleLayerQueue[name]) && NK.visibleLayerQueue[name]; //false or index value
       layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
       var register = (name in NK.visibleLayerQueue) || (name in NK.registeredLayerQueue);
