@@ -49,6 +49,9 @@ translations:
   - template: i18n/translation
     source: 'Only starred'
     translation: 'Vis markerte kartlag'
+  - template: i18n/translation
+    source: 'Show in compact mode'
+    translation: 'Vis kartlaget i lista ogs&aring; n&aring;r den er sammentrukket'
 
 
 
