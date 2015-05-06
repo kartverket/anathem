@@ -121,7 +121,7 @@ NK.functions.pauseTokenUpdate = function () {
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
 
-    NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
+    //NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
 
     NK.tokenError.pauseTimer = setTimeout(function () {
       NK.tokenUpdatePaused = false;
@@ -251,7 +251,9 @@ NK.functions.addWFSLayer = function(wfsUrl) {
   resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWFS.done(function (xml) {
     var version = $(xml).find('ServiceTypeVersion')
-    if (!!version) {version = version.text().trim();}
+    if (!!version) {
+      version = version.last().text().trim(); // TODO: select 1.1.0 over 2.0.0
+    }
     serviceParms['version'] = version;
     var exception = $(xml).find('ExceptionText').text();
     if (!!exception) {
@@ -424,7 +426,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   wfsLayer.setVisibility(!!parms['visible']);
 
   if (!!parms['visible']) {
-    map.setLayerIndex(wms, parms['visible']-1);
+    map.setLayerIndex(wfsLayer, parms['visible']-1);
     var layers = map.layers.slice(0);
     for (var i in layers) {
       if (!!layers[i].initialIndex) {
