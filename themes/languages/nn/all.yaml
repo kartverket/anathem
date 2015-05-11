@@ -244,3 +244,258 @@ translations:
   - template: i18n/translation
     source: 'Simple illustration maps of Norway, in several different formats. These maps can be used as they are, or easily be transformed to suit specific needs.'
     translation: 'Enkle illustrasjonskart over Noreg i fleire ulike format. Du kan nytta dei som dei er, eller lett tilpassa dei til akkurat det behovet du har.'
+  - template: i18n/translation
+    source: Find place, coordinates, address
+    translation: Finn stad, adresse, koordinat
+  - template: i18n/translation
+    source: Areas
+    translation: Omr&aring;de
+  - template: i18n/translation
+    source: Addresses
+    translation: Adresser
+  - template: i18n/translation
+    source: Objects
+    translation: Objekt
+  - template: i18n/translation
+    source: Search
+    translation: S&oslash;k
+  - template: i18n/translation
+    source: Searching
+    translation: S&oslash;kjer
+  - template: i18n/translation
+    source: "More results"
+    translation: "Sj&aring; fleire >"
+  - template: i18n/translation
+    source: "Total search results: ${count}"
+    translation: "${count} treff"
+  - template: i18n/translation
+    source: "number"
+    translation: "nummer"
+  - template: i18n/translation
+    source: "no results found"
+    translation: "s&oslash;ket gav ingen treff"
+  - template: i18n/translation
+    source: Country
+    translation: Nasjon
+  - template: i18n/translation
+    source: County
+    translation: Fylke
+  - template: i18n/translation
+    source: Municipality
+    translation: Kommune
+  - template: i18n/translation
+    source: City
+    translation: By
+  - template: i18n/translation
+    source: District
+    translation: Bydel
+  - template: i18n/translation
+    source: Adm. district
+    translation: Adm. bydel
+  - template: i18n/translation
+    source: Village
+    translation: Tettstad
+  - template: i18n/translation
+    source: Hamlet
+    translation: Grend
+  - template: i18n/translation
+    source: Settlement
+    translation: Tett busetnad
+  - template: i18n/translation
+    source: Mountain area
+    translation: Fjellomr&aring;de
+  - template: i18n/translation
+    source: Community
+    translation: Bygd
+  - template: i18n/translation
+    source: Rural district
+    translation: Tettstaddel
+  - template: i18n/translation
+    source: Address
+    translation: Adressenamn
+  - template: i18n/translation
+    source: Airport
+    translation: Flyplass
+  - template: i18n/translation
+    source: Prison
+    translation: Fengsel
+  - template: i18n/translation
+    source: Cultural highlight
+    translation: Annan kulturdetalj
+  - template: i18n/translation
+    source: Station
+    translation: Stasjon
+  - template: i18n/translation
+    source: Church
+    translation: Kyrkje
+  - template: i18n/translation
+    source: Bridge
+    translation: Bru
+  - template: i18n/translation
+    source: School
+    translation: Skule
+  - template: i18n/translation
+    source: Farm
+    translation: Gardsbruk
+  - template: i18n/translation
+    source: Island
+    translation: "&Oslash;y"
+  - template: i18n/translation
+    source: Industrial area
+    translation: "Industriomr&aring;de"
+  - template: i18n/translation
+    source: "University/college"
+    translation: "Universitet/h&oslash;gskule"
+  - template: i18n/translation
+    source: 'Search results contain properties without known borders. We cannot display these, but you can repeat your search on <a href="http://www.seeiendom.no" target="_blank" style="color:#fff">seeiendom.no</a> to retrieve more information.'
+    translation: 'S&oslash;kjeresultatet inneheld eigedomar utan kjende teiggrenser. Desse kan ikke visast p&aring; kartet, men du kan s&oslash;kja p&aring; <a href="http://www.seeiendom.no" target="_blank" style="color:#fff">seeiendom.no</a> for &aring; henta meir informasjon.'
+  - template: i18n/translation
+    source: 'Search for properties as follows:<br/>Municipality-Gardsnr/Bruksnr/Feste/Seksjon<br/>e.g.: <b>Ringerike-38/98</b></br/> or by entering an address.'
+    translation: 'S&oslash;k etter eigedomar slik:<br/>Kommune-G&aring;rdsnr/Bruksnr/Feste/Seksjon<br/> t.d.: <b>Ringerike-38/98</b></br/>eller ved &aring; tasta inn gateadressa.'
+
+  - template: i18n/translation
+    source: Transformations
+    translation: Transformasjonar
+  - template: i18n/translation
+    source: Transform coordinates 
+    translation: Transformer koordinatar
+  - template: i18n/translation
+    source: Select input coordinate system
+    translation: Fr&aring; koordinatsystem
+  - template: i18n/translation
+    source: Select output coordinate system
+    translation: Til koordinatsystem
+  - template: i18n/translation
+    source: Fill out the coordinate fields or click in the map 
+    translation: Skliv inn koordinatar eller klikk i kartet
+  - template: i18n/translation
+    source: Help
+    translation: Hjelp
+  - template: i18n/translation
+    source: East coordinate
+    translation: Aust-koordinat
+  - template: i18n/translation
+    source: North coordinate
+    translation: Nord-koordinat
+  - template: i18n/translation
+    source: Longitude
+    translation: Lengdegrad
+  - template: i18n/translation
+    source: Latitude
+    translation: Breiddegrad
+  - template: i18n/translation
+    source: Show coordinates
+    translation: Transform&eacute;r koordinatar
+  - template: i18n/translation
+    source: Transformed coordinates
+    translation: Transformerte koordinatar
+  - template: i18n/translation
+    source: An error occured
+    translation: Det oppstod ein feil
+  - template: i18n/translation
+    source: Go to coordinates
+    translation: G&aring; til koordinatar
+
+  - template: i18n/translation
+    source: Share map
+    translation: Del kart
+  - template: i18n/translation
+    source: Get URL
+    translation: Vis URL
+  - template: i18n/translation
+    source: Share by
+    translation: Del p&aring;
+  - template: i18n/translation
+    source: e-mail
+    translation: e-post
+  - template: i18n/translation
+    source: Twitter
+    translation: Twitter
+  - template: i18n/translation
+    source: Facebook
+    translation: Facebook
+
+  - template: i18n/translation
+    source: Fullscreen
+    translation: Fullskjermsvisning
+  - template: i18n/translation
+    source: Exit fullscreen
+    translation: Avslutt fullskjermsvisning
+
+  - template: i18n/translation
+    source: Pan north
+    translation: nordover
+  - template: i18n/translation
+    source: Pan south
+    translation: s&oslash;rover
+  - template: i18n/translation
+    source: Pan east
+    translation: austover
+  - template: i18n/translation
+    source: Pan west
+    translation: vestover
+  - template: i18n/translation
+    source: Print 
+    translation: Skriv ut
+
+  - template: i18n/translation
+    source: No records found
+    translation: S&oslash;ket gav ingen treff
+  - template: i18n/translation
+    source: house number
+    translation: husnummer
+  - template: i18n/translation
+    source: 'Total search results: ${count}'
+    translation: '${count} treff'
+
+  - template: i18n/translation
+    source: Zoom in
+    translation: Zoom inn
+  - template: i18n/translation
+    source: Zoom out
+    translation: Zoom ut
+  - template: i18n/translation
+    source: Zoom to selection
+    translation: Zoom til valt omr&aring;de
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
