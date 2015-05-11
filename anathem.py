@@ -11,6 +11,7 @@ import sys
 import re
 import closure
 from subprocess import call
+from codecs import open
 
 # matches mako parameters in a template: ${...}, but not containing brackets
 re_param = re.compile('\$\{([^\(\{]*?)\}')
@@ -22,10 +23,10 @@ if len(sys.argv) > 3:
   options = sys.argv[3:]
 
 compress   = not "no-compression" in options
-defaults   = yaml.load(open("default.yaml", "r"))
+defaults   = yaml.load(open("default.yaml", "r", "utf-8"))
 lookup     = TemplateLookup(directories=['./templates/'])
 
-templates  = open("themes/%s.yaml" % tema, "r").read().split("---")
+templates  = open("themes/%s.yaml" % tema, "r", "utf-8").read().split("---")
 config     = [yaml.load(doc) for doc in templates]
 
 def recurse_render(data):
@@ -38,7 +39,7 @@ def recurse_render(data):
   if "include" in data:
     # load another configuration file indicated by the include key
     include_name = data["include"]
-    include = yaml.load(open("themes/%s.yaml" % include_name, "r"))
+    include = yaml.load(open("themes/%s.yaml" % include_name, "r", "utf-8"))
     return recurse_render(include)
 
   elif "template" in data:
@@ -72,7 +73,7 @@ def recurse_render(data):
       print "\nMissing parameter while parsing template '%s'." % template_name
 
       try:
-        code   = open("templates/%s.html" % template_name, "r").read()
+        code   = open("templates/%s.html" % template_name, "r", "utf-8").read()
         params = re_param.findall(code)
         print "The template supports *and* requires the following parameters:"
         print "Provide it with an empty string if it is not to be included.\n"
@@ -94,7 +95,7 @@ def output_file(name, payload):
   file = ".".join(dots[:-1])
   ext  = dots[-1]
   if   ext == "coffee" or ext == "cs":
-    fd = open("tmp/tmp.coffee", "w")
+    fd = open("tmp/tmp.coffee", "w", "utf-8")
     fd.write(payload);
     fd.close()
     if call(["coffee", "-bo", "tmp/", "-c", "tmp/tmp.coffee" ]):
@@ -108,7 +109,7 @@ def output_file(name, payload):
     os.rename("tmp/tmp.js", "tmp/"+file+".js")
     os.unlink("tmp/tmp.coffee")
   elif ext == "ls":
-    fd = open("tmp/tmp.ls", "w")
+    fd = open("tmp/tmp.ls", "w", "utf-8")
     fd.write(payload);
     fd.close()
     if call(["lsc", "-bo", "tmp/", "-c", "tmp/tmp.ls" ]):
@@ -123,7 +124,7 @@ def output_file(name, payload):
     os.unlink("tmp/tmp.ls")
   elif ext == "js":
     if compress:
-      fd = open("tmp/tmp.js", "w")
+      fd = open("tmp/tmp.js", "w", "utf-8")
       fd.write(payload);
       fd.close()
       if call(["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/"+name]):
@@ -134,7 +135,7 @@ def output_file(name, payload):
       fd = open("tmp/"+name, "w")
       fd.write(payload);
   else:
-    fd = open("tmp/"+name, "w")
+    fd = open("tmp/"+name, "w", "utf-8")
     fd.write(payload);
     fd.close()
   print "%s/%s.%s" % (destdir, file, ext)

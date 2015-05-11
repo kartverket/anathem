@@ -278,6 +278,12 @@ translations:
     source: Country
     translation: Nasjon
   - template: i18n/translation
+    source: Street 
+    translation: Gate
+  - template: i18n/translation
+    source: House 
+    translation: Hus
+  - template: i18n/translation
     source: County
     translation: Fylke
   - template: i18n/translation
@@ -427,7 +433,7 @@ translations:
     translation: nordover
   - template: i18n/translation
     source: Pan south
-    translation: s&oslash;rover
+    translation: sørover
   - template: i18n/translation
     source: Pan east
     translation: austover
@@ -456,7 +462,7 @@ translations:
     translation: Zoom ut
   - template: i18n/translation
     source: Zoom to selection
-    translation: Zoom til valt omr&aring;de
+    translation: Zoom til valt område
 
 
 
