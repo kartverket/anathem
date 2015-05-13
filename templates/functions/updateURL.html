@@ -32,6 +32,18 @@ NK.functions.createLegend = function () {
   }
 };
 
+NK.functions.addedLayers = function () {
+  var re = /[+]\w*/;
+  var results = re.exec(window.location.href);
+  if (results == null) {
+    return null;
+  } else {
+    return results[0].substr(1);
+  }
+};
+
+NK.addedLayer = NK.functions.addedLayers();
+
 NK.functions.updateHistory = function (evt) {
   var center,
       zoom,
@@ -45,6 +57,9 @@ NK.functions.updateHistory = function (evt) {
     center = map.getCenter();
     zoom   = map.getZoom();
 
+    var mouseCursor= document.getElementById('map').style;
+    mouseCursor.cursor = 'default';
+
     if (!!center && !!zoom) {
       uid = zoom + "/" + Math.round(center.lon) + "/" + Math.round(center.lat); 
       /* 1m precision ought to be enough for everyone --BG */
@@ -53,11 +68,16 @@ NK.functions.updateHistory = function (evt) {
         for (i in map.layers) {
           if (map.layers.hasOwnProperty(i)) {
             layer = map.layers[i];
+            if(layer.shortid === NK.addedLayer && typeof layer.shortid !== 'undefined'){
+              layer.setVisibility(true);
+              NK.addedLayer = null;
+            }
             if (!layer.isBaseLayer) {
               if (!layer.isUrlDataLayer) {
                 if (layer.visibility) {
                   if ($.inArray(layer.shortid, NK.initLayers) === -1 && typeof layer.shortid !== 'undefined') {
                     uid += "/+" + layer.shortid;
+                    mouseCursor.cursor = 'pointer'
                   }
                 } else {
                   if ($.inArray(layer.shortid, NK.initLayers) > -1 && typeof layer.shortid !== 'undefined') {
