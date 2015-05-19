@@ -506,7 +506,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
         infoFormat: preferredFormat,
         eventListeners: {
           "getfeatureinfo": function(event) {
-            var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event, formats), null, true,
+            var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event, wms, formats), null, true,
                               NK.functions.closePopupCallBack, {x: 0, y: -15}, 'selected-feature-popup, user-marker')
             map.addPopup(popup, true);
             if (!event.features.length && (!event.text || !event.text.trim().length)) {

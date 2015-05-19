@@ -49,11 +49,11 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     }
   };
 };
-NK.functions.popup.wmsFeatureInfoPopup = function (event, formats) {
+NK.functions.popup.wmsFeatureInfoPopup = function (event, service, formats) {
   if (!event.text || !event.text.trim().length) {
     return "Ingen informasjon.";
   }
-  var html;
+  var html = "<div style='margin-bottom: 8px'>Tjeneste: <b>" + (service.title || service.name) + "</b></div>";
   if ((event.object.infoFormat == "text/xml") || (event.object.infoFormat == "application/vnd.ogc.wms_xml")) {
     var data = [];
     $(event.text).find("FIELDS").each(function() {
@@ -72,13 +72,13 @@ NK.functions.popup.wmsFeatureInfoPopup = function (event, formats) {
       }
       content += '</li>';
     }
-    html = '<div style="width:100%; max-height:300px; overflow-y:scroll margin-left:10px">'+content+'</div>';
+    html += '<div style="width:100%; max-height:300px; overflow-y:scroll margin-left:10px; background:white">'+content+'</div>';
   }
   else if (event.object.infoFormat == "text/html") {
-    html = '<div style="width:100%; max-height:300px; overflow:scroll">'+event.text+'</div>';
+    html += '<div style="width:100%; max-height:300px; overflow:scroll; background:white">'+event.text+'</div>';
   }
   else if (event.object.infoFormat == "text/plain") {
-    html = '<div style="max-height:300px; overflow-y:scroll"><pre>'+event.text+'</pre></div>';
+    html += '<div style="max-height:300px; overflow-y:scroll; background:white"><pre>'+event.text+'</pre></div>';
   }
   var request = decodeURIComponent(event.request._object.responseURL);
   for (var f in formats) {
