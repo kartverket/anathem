@@ -1,7 +1,7 @@
 template: controls/container
 id: top-toolbar
 topnavbar: true
-svgLogo: <svg width="45" height="45" xmlns="http://www.w3.org/2000/svg"><g><title>Layer 1</title><path id="svg_1" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m16.768551,38.517307l11.167488,4.42775v-36.803636l-11.167488,-4.427935v36.803631l0,0.000191zm-14.768551,4.911568l12.387096,-4.911568v-36.803627l-12.387096,4.911755v36.803642l0,-0.000202zm28.316563,-37.263813v36.803638l12.417843,-4.923439v-36.803629l-12.417843,4.923722l0,-0.000292l0,0z" fill="none"/></g></svg>
+svgLogo: '<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" width="210" height="45" viewBox="0 0 300 45" xml:space="preserve" > <g transform="matrix(0.82943746,0,0,0.76213183,0.71667308,-747.5402)" id="g3553"> <g transform="translate(-257.99818,720.67118)" id="g3555"> <polygon points="262.2,329.7 262.2,272.2 281.7,265 281.7,322.4 " id="polygon3557" style="opacity:0.8;fill:#ffffff" /> <polygon points="307.3,329.7 307.3,272.2 326.9,265 326.9,322.4 " id="polygon3559" style="opacity:0.4;fill:#ffffff" /> <polygon points="303.8,329.7 303.8,272.2 285.3,265 285.3,322.4 " id="polygon3561" style="opacity:0.6;fill:#ffffff" /> <text x="335" y="300" font-size="40" font-stretch="condensed" font-weight="bold" id="text3563" style="font-weight:bold;font-stretch:condensed;font-size:40px;font-family:MetaBook, Arial, sans-serif;fill:#ffffff">NORGESKART</text> </g></g> </svg>'
 controls:
 - template: controls/navdropdown
   id: nav-panel
