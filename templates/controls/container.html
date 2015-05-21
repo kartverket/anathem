@@ -136,12 +136,16 @@
       var cnt = document.createElement("div");
       cnt.setAttribute("class","cnt")
       cnt.setAttribute("id","layerswitcher")
+
+      var wrapperHeader = document.createElement("div");
+      wrapperHeader.setAttribute("class","wrapperHeader");
       var h3 = document.createElement("h3");
       var text = document.createTextNode("Velg karttype:");
       h3.appendChild(text);
-      cnt.appendChild(h3);
+      wrapperHeader.appendChild(h3);
 
       wrapper.appendChild(cnt);
+      div.appendChild(wrapperHeader);
       div.appendChild(wrapper);
 
       container.appendChild(div);
