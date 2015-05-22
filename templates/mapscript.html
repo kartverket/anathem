@@ -245,6 +245,8 @@ NK.functions.loadWCSLayer = function(wcsUrl, whenDone) {
 }
 
 NK.functions.addWFSLayer = function(wfsUrl) {
+  wfsUrl = wfsUrl.trim();
+  if (wfsUrl.slice(-1)=='?') wfsUrl=wfsUrl.slice(0,-1);
   if (map.getLayersBy("url",wfsUrl).length) {return;}
   var layers = [], formats={}, serviceParms={}, layerParms;
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
@@ -316,6 +318,8 @@ NK.functions.addWFSLayer = function(wfsUrl) {
 };
 
 NK.functions.addWMSLayer = function(wmsUrl) {
+  wmsUrl = wmsUrl.trim();
+  if (wmsUrl.slice(-1)=='?') wmsUrl=wmsUrl.slice(0,-1);
   if (map.getLayersBy("url",wmsUrl).length) {return;}
   var layers = [], formats=[], fiFormats=[], serviceParms={}, layerParms;
 
@@ -411,7 +415,10 @@ NK.functions.addWMSLayer = function(wmsUrl) {
 };
 
 NK.functions.createDynamicWFSLayer = function (name, url, parms) {
-  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track"});
+  var outputFormat = 'text/xml; subtype=gml/3.2.1';
+  if (!parms['formats'][outputFormat]) outputFormat = 'text/xml; subtype=gml/3.1.1';
+  if (!parms['formats'][outputFormat]) outputFormat = 'text/xml; subtype=gml/2.1.2';
+  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track", "outputFormat":outputFormat});
   $.extend(wfsLayer,{
     type           : 'wfs',
     isUrlDataLayer : true,

@@ -58,8 +58,10 @@ NK.addLayerType.WFS = (function (M, MP) {
                           typename: featureType, 
                           srsName: options.epsg || "EPSG:"+NK.baseProjection, 
                           version: options.version || '1.1.0',
+			  outputFormat: options.outputFormat || 'text/xml; subtype=gml/3.2.1'
                         },
-                        format: new OpenLayers.Format.GML.v3()
+                        format: new OpenLayers.Format.GML.v3(),
+                        srsInBBOX: true
                   };
 		  protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
                 } else {
@@ -103,6 +105,27 @@ NK.addLayerType.WFS = (function (M, MP) {
 			name,
 			layerOptions
 		);
+
+                //monkey patch to send BBOX as WGS84
+                /* layer.strategies[0].calculateBounds = function(mapBounds) {
+                  if(!mapBounds) {
+                    mapBounds = this.getMapBounds();
+                  }
+                  var center = mapBounds.getCenterLonLat();
+                  var dataWidth = mapBounds.getWidth() * this.ratio;
+                  var dataHeight = mapBounds.getHeight() * this.ratio;
+                  this.bounds = new OpenLayers.Bounds(
+                    center.lon - (dataWidth / 2),
+                    center.lat - (dataHeight / 2),
+                    center.lon + (dataWidth / 2),
+                    center.lat + (dataHeight / 2)
+                  );
+                  this.bounds = this.bounds.clone().transform( map.projection , NK.projections[4326] );
+                  return this.bounds;
+                };
+                layer.strategies[0].activate();
+                */
+
                 layer.events.register("loadend", layer, function(evt) {
                   if (evt.response && evt.response.priv) {
                     var root = evt.response.priv.responseXML.firstChild;
