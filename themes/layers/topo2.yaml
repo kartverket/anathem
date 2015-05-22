@@ -2,6 +2,7 @@ template: layers/wmts
 usetoken: true
 name: Land 
 layer: topo2_dybde
-layerGroup: modus1
+layerGroup: land
 id: land
-visible: false
+visible: true
+attribution: true

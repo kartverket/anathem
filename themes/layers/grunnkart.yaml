@@ -2,6 +2,6 @@ template: layers/wmts
 usetoken: true
 name: enkel 
 layer: norges_grunnkart 
-layerGroup: flere 
+layerGroup: land
 id: enkel 
 visible: true

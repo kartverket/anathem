@@ -3,7 +3,7 @@ anathem
 
 A simple template processor to build modular OpenLayers clients, using mako templates.
 
-    ./anathem.py theme
+    ./anathem.py theme destdir
 
 runs the processor on the configuration file "theme.yaml" in the themes subdirectory. The theme determines how to assemble the templates in the templates subdirectory.
 
@@ -26,6 +26,7 @@ There are several ways to provide parameters to each template.
 A theme file is written in YAML syntax. It should contain at least one dictionary type with a "template" key. The most simple theme file is therefore:
 
     template: name
+    filename: output.html
 
 In addition, the dictionary may contain parameter values to this template. These values may, in themselves, be templates. 
 Each parameter may be of one of the following types:
@@ -55,6 +56,16 @@ Each parameter may be of one of the following types:
       - template: layer2
         parameter: value2
 ```
+
+## Multiple documents
+
+A theme file may create several output files, each of which is a 'document' in the YAML file:
+
+    template: one
+    filename: output1.html
+    --- 
+    template: two
+    filename: output2.html
 
 ## Default values 
 

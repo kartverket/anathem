@@ -1,4 +1,4 @@
-(function (context, containerParam) {
+(function (context, containerParam, collect) {
 	var parentContainer = document.body,
 		className = "toolbar",
 		container;
@@ -11,49 +11,159 @@
 		parentContainer = containerParam;
 		className = "panel";
 % if className:
-	className = "${className} panel";
+  	className = "${className}";
 % endif	
-
 	}
-	
-	container = document.createElement("div");
 
-	% if id:
-	container.id = "${id}";
-	% endif
+% if topnavbar:
+  container = document.createElement('nav');
+  container.id = "top-toolbar";
+  container.className = className + ' navbar-inverse';
 
+  var innerContainer = document.createElement('div');
+  innerContainer.className = 'container-fluid';
 
-	% if name:
-		% if toggleButton:
-			var header = document.createElement("button");
-		% else:
-			var header = document.createElement("div");
-		% endif
+  var header = document.createElement('div');
+  header.className = 'navbar-header';
 
-		header.className = "panel-name";
-		var name = document.createElement('span');
-		name.innerHTML = "${name}";
+  header.innerHTML = '<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-collapse-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>';
+  header.innerHTML += ' <a class="navbar-brand" href="http://kartverket.no" target="_blank">${svgLogo}</a>';
 
-		% if svgIcon:
-			header.innerHTML = OpenLayers.Util.hideFromOldIE('${svgIcon}');
-		%endif
+  var collectDiv = document.createElement('div');
+  collectDiv.className = 'collapse navbar-collapse';
+  collectDiv.id = 'navbar-collapse-1';
 
-		header.appendChild(name);
-		container.appendChild(header);
-		OpenLayers.Event.observe(header, 'click', OpenLayers.Function.bind(function (evt) {
-			if (OpenLayers.Element.hasClass(this,'minified')) {
-				OpenLayers.Element.removeClass(this, 'minified');
-			} else {
-				OpenLayers.Element.addClass(this, 'minified');
-			}	
-		}, container));
-	% endif
+  collect = document.createElement('ul');
+  collect.className = 'nav navbar-nav';
 
+  collectDiv.appendChild(collect);
 
-	container.className = className;
-	parentContainer.appendChild(container); 
+  innerContainer.appendChild(header);
+  innerContainer.appendChild(collectDiv);
+
+  container.appendChild(innerContainer);
+  parentContainer.appendChild(container);
+% elif top:
+  container = document.createElement("li");
+  % if id:
+    container.id = "${id}";
+  % endif
+
+  % if name:
+      % if toggleButton:
+        var header = document.createElement("button");
+      % else:
+        var header = document.createElement("div");
+      % endif
+
+      header.className = "panel-name";
+      var name = document.createElement('span');
+      name.innerHTML = "${name}";
+
+      % if svgIcon:
+        header.innerHTML = OpenLayers.Util.hideFromOldIE('${svgIcon}');
+      %endif
+
+      header.appendChild(name);
+      container.appendChild(header);
+      OpenLayers.Event.observe(header, 'click', OpenLayers.Function.bind(function (evt) {
+        if (OpenLayers.Element.hasClass(this,'minified')) {
+          OpenLayers.Element.removeClass(this, 'minified');
+        } else {
+          OpenLayers.Element.addClass(this, 'minified');
+          map.getControlsByClass('OpenLayers.Control.Draw')[0].hideControls(true);
+          map.getControlsByClass('OpenLayers.Control.OverlayGroupPanel')[0].hideControls(true);
+          map.getControlsByClass('OpenLayers.Control.HeightProfile')[0].hideControls(true);
+          map.getControlsByClass('OpenLayers.Control.Transformations')[0].hideControls(true);
+        }
+      }, container));
+  % endif
+
+  container.className = className;
+  collect.appendChild(container);
+% else:
+
+  container = document.createElement("div");
+  % if id:
+    container.id = "${id}";
+  % endif
+
+  % if name:
+      % if toggleButton:
+        var header = document.createElement("button");
+      % else:
+        var header = document.createElement("div");
+      % endif
+
+      header.className = "panel-name";
+      var name = document.createElement('span');
+      name.innerHTML = "${name}";
+
+      % if svgIcon:
+        header.innerHTML = OpenLayers.Util.hideFromOldIE('${svgIcon}');
+      %endif
+
+      header.appendChild(name);
+      container.appendChild(header);
+      OpenLayers.Event.observe(header, 'click', OpenLayers.Function.bind(function (evt) {
+        if (OpenLayers.Element.hasClass(this,'minified')) {
+          OpenLayers.Element.removeClass(this, 'minified');
+        } else {
+          OpenLayers.Element.addClass(this, 'minified');
+          map.getControlsByClass('OpenLayers.Control.Draw')[0].hideControls(true);
+          map.getControlsByClass('OpenLayers.Control.OverlayGroupPanel')[0].hideControls(true);
+          map.getControlsByClass('OpenLayers.Control.HeightProfile')[0].hideControls(true);
+          map.getControlsByClass('OpenLayers.Control.Transformations')[0].hideControls(true);
+        }
+      }, container));
+  % endif
+
+  % if layerselector:
+      var header = document.createElement("button");
+      header.className = "panel-name";
+      header.innerHTML = 'Kartvalg';
+
+      % if svgIcon:
+        header.innerHTML += OpenLayers.Util.hideFromOldIE('${svgIcon}');
+      %endif
+      var div = document.createElement("div");
+      div.setAttribute("id","map_chooser")
+      div.setAttribute("class","widget")
+
+      var wrapper = document.createElement("div");
+      wrapper.setAttribute("class","wrapper")
+
+      var cnt = document.createElement("div");
+      cnt.setAttribute("class","cnt")
+      cnt.setAttribute("id","layerswitcher")
+
+      var wrapperHeader = document.createElement("div");
+      wrapperHeader.setAttribute("class","wrapperHeader");
+      var h3 = document.createElement("h3");
+      var text = document.createTextNode("Velg karttype:");
+      h3.appendChild(text);
+      wrapperHeader.appendChild(h3);
+
+      wrapper.appendChild(cnt);
+      div.appendChild(wrapperHeader);
+      div.appendChild(wrapper);
+
+      container.appendChild(div);
+      container.appendChild(header);
+  % endif
+
+  container.className = className;
+  parentContainer.appendChild(container);
+
+  % if layerselector:
+    $('#layerselector-panel').click(this, function(event) {
+      $(this).toggleClass('active');
+    });
+  % endif
+
+% endif
 
 	% if controls:
 	${controls}
 	% endif
-}(controlContext, container));
+}(controlContext, container, collect));

@@ -17,9 +17,14 @@ gkopen = "http://opencache.statkart.no/gatekeeper/gk/gk.open";
 gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
 NK.gkToken = "unInitialized";
+NK.encTicket = "unInitialized";
 
 % if tokenServiceUrl:
 NK.tokenService = "${tokenServiceUrl}";
+% endif
+
+% if ticketServiceUrl:
+NK.ticketService = "${ticketServiceUrl}";
 % endif
 
 NK.baseProjection = "32633";
@@ -28,13 +33,24 @@ NK.baseProjection = "${projection}";
 % endif
 
 NK.tokenLastUpdated = new Date(0);
+NK.ticketLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
+NK.ticketUpdatePaused = false;
 
 % if i18n:
   ${i18n}
 % endif
 
 NK.tokenError = {
+  PAUSE_MINUTES: 2,
+  RELOAD_LIMIT_SECONDS: 15,
+  messagePopup: null,
+  pauseTimeRemainingElement: null,
+  pauseTimeRemainingText: null,
+  pauseTimer: null,
+  pauseCountdownTimer: null
+};
+NK.ticketError = {
   PAUSE_MINUTES: 2,
   RELOAD_LIMIT_SECONDS: 15,
   messagePopup: null,
@@ -75,6 +91,25 @@ NK.functions.resetTokenError = function () {
   }
 };
 
+NK.functions.resetTicketError = function () {
+  if (NK.ticketError.pauseTimeRemainingElement) {
+    NK.ticketError.pauseTimeRemainingElement.parentNode.removeChild(NK.ticketError.pauseTimeRemainingElement);
+    NK.ticketError.pauseTimeRemainingElement = null;
+  }
+  if (NK.ticketError.messagePopup) {
+    NK.ticketError.messagePopup.parentNode.removeChild(NK.ticketError.messagePopup);
+    NK.ticketError.messagePopup = null;
+  }
+  if (NK.ticketError.pauseTimer) {
+    clearTimeout(NK.ticketError.pauseTimer);
+    NK.ticketError.pauseTimer = null;
+  }
+  if (NK.ticketError.pauseCountdownInterval) {
+    clearInterval(NK.ticketError.pauseCountdownInterval);
+    NK.ticketError.pauseCountdownInterval = null;
+  }
+};
+
 NK.functions.updateToken = function (request) {
   var i, 
       j, 
@@ -100,10 +135,33 @@ NK.functions.updateToken = function (request) {
     NK.functions.pauseTokenUpdate();
   }
 };
+NK.functions.updateTicket = function (request) {
+  var i,
+    j,
+    reloadLimit;
+
+  reloadLimit = new Date(Date.now() - NK.ticketError.RELOAD_LIMIT_SECONDS * 1000);
+
+  NK.encTicket = request.responseText.replace(/[\"\r\n]/g, '');
+
+  if (NK.tokenLastUpdated < reloadLimit) { // was token updated less than RELOAD_LIMIT_SECONDS ago?
+    if (!NK.ticketUpdatePaused) {
+      NK.functions.resetTicketError();
+      NK.ticketLastUpdated = new Date();
+
+      for (i = 0, j = map.layers.length; i < j; i += 1) {
+        if (map.layers[i].params && map.layers[i].params.ticket) {
+          map.layers[i].params.ticket = NK.encTicket;
+          map.layers[i].redraw();
+        }
+      }
+    }
+  } else {
+    NK.functions.pauseTicketUpdate();
+  }
+};
 
 NK.functions.pauseTokenUpdate = function () {
-  var popup, innerWrapper, heading, message, timeRemaining, statusLink;
-
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
 
@@ -132,12 +190,55 @@ NK.functions.pauseTokenUpdate = function () {
     }, 60 * 1000);
   }
 };
+NK.functions.pauseTicketUpdate = function () {
+  if (!NK.ticketUpdatePaused) {
+    NK.ticketUpdatePaused = true;
+
+    NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
+
+    NK.ticketError.pauseTimer = setTimeout(function () {
+      NK.ticketUpdatePaused = false;
+      NK.functions.getNewTicket();
+    },  60 * parseInt(NK.ticketError.PAUSE_MINUTES, 10) * 1000);
+
+    NK.ticketError.pauseCountdownInterval = setInterval(function () {
+      var content, timeLeft;
+      if (NK.ticketError.pauseTimeRemainingElement) {
+        content = NK.ticketError.pauseTimeRemainingElement.innerHTML;
+        timeLeft = (parseInt(content, 10) - 1);
+        NK.ticketError.pauseTimeRemainingElement.innerHTML = timeLeft.toString();
+        if (timeLeft === 1) {
+          if (NK.ticketError.pauseTimeRemainingText.textContent) {
+            NK.ticketError.pauseTimeRemainingText.textContent = ' ' + OpenLayers.Lang.translate('minute.');
+          } else {
+            // old IE...
+            NK.ticketError.pauseTimeRemainingText.innerText = ' ' + OpenLayers.Lang.translate('minute.');
+          }
+        }
+      }
+    }, 60 * 1000);
+  }
+};
 
 NK.functions.getNewToken = function () {
   if (NK.gkToken !== null) {
     NK.gkToken = null;
     OpenLayers.Request.GET({url: NK.tokenService, success: NK.functions.updateToken});
   }
+};
+NK.functions.getNewTicket = function () {
+  if (NK.encTicket !== null) {
+    NK.encTicket = null;
+    OpenLayers.Request.GET({url: NK.ticketService, success: NK.functions.updateTicket});
+  }
+};
+
+var closePopupCallBack = function () {
+  var itemIndex;
+  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
+    map.popups[itemIndex].hide();
+  }
+  this.hide();
 };
 
 var closePopupCallBack = function () {
@@ -237,6 +338,8 @@ NK.init = function () {
   if (!!params.proj) {
     mapProj = proj[params.proj]; 
   }
+var options = {
+};
 
   NK.mapOptions = {
     projection: mapProj,
@@ -246,7 +349,11 @@ NK.init = function () {
     maxResolution: 21664.0,
   //      minResolution: 0.165283203125,
     numZoomLevels: NK.zoomLevels,
-    theme: 'theme/norgeskart/style.css'
+% if mobile:
+  theme: 'theme/norgeskart/mobile.css'
+% else:
+  theme: 'theme/norgeskart/style.css'
+% endif
   };
 
   map = new OpenLayers.Map( 
@@ -295,6 +402,7 @@ NK.init = function () {
   // Add controls at the end, to keep focus
   var controlContext = map;
   var container = null;
+  var collect = null;
 
 % if controls:
   ${controls}
@@ -365,6 +473,7 @@ NK.init = function () {
     }());
 
   }
+  map.addControl(new OpenLayers.Control.Attribution());
 
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2();
 
@@ -408,10 +517,18 @@ var addEvent = function(event, handler) {
 
 var cb = function(response, status, request) {
   NK.gkToken = request.responseText.replace(/[\"\r\n]/g, '');
+};
+var startTicket = function(response, status, request) {
+  NK.encTicket = request.responseText.replace(/[\"\r\n]/g, '');
   NK.init();
 };
 
 var initializeToken = function () {
+  $.ajax({
+    url: NK.ticketService,
+    success: startTicket,
+    type: 'GET'
+  });
   $.ajax({
     url: NK.tokenService, 
     success: cb,
@@ -419,3 +536,4 @@ var initializeToken = function () {
   });
 };
 addEvent('load', initializeToken);
+

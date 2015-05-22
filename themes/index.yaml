@@ -1,41 +1,53 @@
-# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
-
 template : base
+filename : index.html
 title    : Norgeskart
-mapscript: 
-  template  : mapscript
-  language  : nb
-  tokenServiceUrl: http://norgeskart.no/ws/gkt.py
-  projection: 32633
+mapscript: clients/norgeskart.min.js
+---
+template : mapscript
+filename : clients/norgeskart.min.js
+language  : nb
+tokenServiceUrl: /ws/gkt.py
+ticketServiceUrl: "/ws/esk.py?wms.ecc_enc"
+projection: 32633
 
-  i18n:
+i18n:
   - include: languages/nb/base
 
-  baselayers:   
+baselayers:
     - template: layers/europa
 
-  styles    :
+styles    :
     - template: styles/unlabeledMarker
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
 
-  overlays  : 
-    - include: layers/topo2
-    - include: layers/sjo_hovedkart2
-    - include: layers/wms/sjo_enc
+overlays  :
+    # Menu on the left
+    # LAND
+    - include: layers/topo2  # Landkart
+    - include: layers/toporaster3 # Rasterkart
+    - include: layers/grunnkart # Enkel
     - include: layers/flybilder
     - include: layers/terreng
-    - include: layers/grunnkart
-    - include: layers/toporaster2
-    - include: layers/janmayen
-    - include: layers/svalbard
 
-    - include: layers/dekning_n50_plast
+    # SJO
+    - include: layers/sjo_hovedkart2
+    - include: layers/wms/sjo_enc
+
+    # FLERE
+    - include: layers/svalbard
+    - include: layers/janmayen
+
+    # KARTINNDELING
     - include: layers/dekning_sjo_hovedkart
+    - include: layers/dekning_n50_plast
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
+
+    # Linked from others
+    - include: layers/fjellskygge
 
     # tilgjengelighet WMS
     - include: layers/wms/tilgjengelighet2_t_rullestol
@@ -57,52 +69,52 @@ mapscript:
     - include: layers/wms/tilgjengelighet2_f_rullestol
     - include: layers/wms/tilgjengelighet2_f_el_rullestol
     - include: layers/wms/tilgjengelighet2_f_syn
-    - include: layers/wms/tilgjengelighet2_baderampe_01 
-    - include: layers/wms/tilgjengelighet2_baderampe_03 
-    - include: layers/wms/tilgjengelighet2_fiskeplass_01 
-    - include: layers/wms/tilgjengelighet2_fiskeplass_02 
-    - include: layers/wms/tilgjengelighet2_fiskeplass_03 
-    - include: layers/wms/tilgjengelighet2_friluftsomrade_01 
-    - include: layers/wms/tilgjengelighet2_friluftsomrade_02 
-    - include: layers/wms/tilgjengelighet2_friluftsomrade_03 
-    - include: layers/wms/tilgjengelighet2_gapahukhytte_01 
-    - include: layers/wms/tilgjengelighet2_gapahukhytte_02 
-    - include: layers/wms/tilgjengelighet2_gapahukhytte_03 
-    - include: layers/wms/tilgjengelighet2_grillbalplass_01 
-    - include: layers/wms/tilgjengelighet2_grillbalplass_02 
-    - include: layers/wms/tilgjengelighet2_grillbalplass_03 
-    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_01 
-    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_02 
-    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_03 
-    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_01 
-    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_02 
-    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_03 
-    - include: layers/wms/tilgjengelighet2_sittegruppe_01 
-    - include: layers/wms/tilgjengelighet2_sittegruppe_02 
-    - include: layers/wms/tilgjengelighet2_sittegruppe_03 
-    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_01 
-    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_02 
-    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_03 
-    - include: layers/wms/tilgjengelighet2_toalett_01 
-    - include: layers/wms/tilgjengelighet2_toalett_02 
-    - include: layers/wms/tilgjengelighet2_toalett_03 
-    - include: layers/wms/tilgjengelighet2_turishytte_01 
-    - include: layers/wms/tilgjengelighet2_turishytte_02 
-    - include: layers/wms/tilgjengelighet2_turishytte_03 
-    - include: layers/wms/tilgjengelighet2_turvei_01 
-    - include: layers/wms/tilgjengelighet2_turvei_02 
-    - include: layers/wms/tilgjengelighet2_turvei_03 
+    - include: layers/wms/tilgjengelighet2_baderampe_01
+    - include: layers/wms/tilgjengelighet2_baderampe_03
+    - include: layers/wms/tilgjengelighet2_fiskeplass_01
+    - include: layers/wms/tilgjengelighet2_fiskeplass_02
+    - include: layers/wms/tilgjengelighet2_fiskeplass_03
+    - include: layers/wms/tilgjengelighet2_friluftsomrade_01
+    - include: layers/wms/tilgjengelighet2_friluftsomrade_02
+    - include: layers/wms/tilgjengelighet2_friluftsomrade_03
+    - include: layers/wms/tilgjengelighet2_gapahukhytte_01
+    - include: layers/wms/tilgjengelighet2_gapahukhytte_02
+    - include: layers/wms/tilgjengelighet2_gapahukhytte_03
+    - include: layers/wms/tilgjengelighet2_grillbalplass_01
+    - include: layers/wms/tilgjengelighet2_grillbalplass_02
+    - include: layers/wms/tilgjengelighet2_grillbalplass_03
+    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_01
+    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_02
+    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_03
+    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_01
+    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_02
+    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_03
+    - include: layers/wms/tilgjengelighet2_sittegruppe_01
+    - include: layers/wms/tilgjengelighet2_sittegruppe_02
+    - include: layers/wms/tilgjengelighet2_sittegruppe_03
+    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_01
+    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_02
+    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_03
+    - include: layers/wms/tilgjengelighet2_toalett_01
+    - include: layers/wms/tilgjengelighet2_toalett_02
+    - include: layers/wms/tilgjengelighet2_toalett_03
+    - include: layers/wms/tilgjengelighet2_turishytte_01
+    - include: layers/wms/tilgjengelighet2_turishytte_02
+    - include: layers/wms/tilgjengelighet2_turishytte_03
+    - include: layers/wms/tilgjengelighet2_turvei_01
+    - include: layers/wms/tilgjengelighet2_turvei_02
+    - include: layers/wms/tilgjengelighet2_turvei_03
 
-  center    :
+center    :
     template: center/besseggen
 
-  functions :
+functions :
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
     - template: functions/popup
 
-  controls  :
+controls  :
     - template: controls/status
     - template: controls/geolocation
     - template: controls/navigation

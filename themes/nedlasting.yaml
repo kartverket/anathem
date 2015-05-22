@@ -1,20 +1,24 @@
-# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
-
-template   : base
-title      : Norgeskart
+template : base
+filename : nedlasting.html
+title    : Norgeskart
 includeXDM : true
-mapscript  : 
-  template  : mapscript
-  tokenServiceUrl: http://beta.norgeskart.no/ws/gkt.py
+mapscript: clients/nedlasting.min.js
+---
+template : mapscript
+filename : clients/nedlasting.min.js
+language  : nb
+tokenServiceUrl: /ws/gkt.py
+ticketServiceUrl: /ws/esk.py?wms.ecc_enc
+projection: 32633
 
-  baselayers:   
+baselayers:   
     - template: layers/europa
 
-  styles    :
+styles    :
     - template: styles/omriss
     - template: styles/omrissFylker
 
-  overlays  : 
+overlays  : 
     - include: layers/topo2
     - include: layers/sjo_hovedkart2
 
@@ -30,22 +34,22 @@ mapscript  :
     - include: layers/geoJSON/dtm-utm33
     - include: layers/geoJSON/dtm-utm33-100km
     - include: layers/geoJSON/dtm-utm35
+    - include: layers/geoJSON/raster-32
+    - include: layers/geoJSON/raster-33
+    - include: layers/geoJSON/raster-35
     - include: layers/geoJSON/raster-n50
-    #- include: layers/geoJSON/raster-n50-utm32
-    #- include: layers/geoJSON/raster-n50-utm33
-    #- include: layers/geoJSON/raster-n50-utm35
     - include: layers/geoJSON/raster-n250
     - include: layers/geoJSON/raster-n500
     - include: layers/geoJSON/raster-n1000
     
-  center    : 
+center    : 
     template: center/besseggen
 
-  functions :
+functions :
     - template: functions/updateURL
     - template: functions/readURL
 
-  controls  :
+controls  :
     - template: controls/geolocation
     - template: controls/navigation
     - template: controls/hashstate
