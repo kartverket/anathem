@@ -50,10 +50,20 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
   };
 };
 NK.functions.popup.wmsFeatureInfoPopup = function (event, service, formats) {
+  var html = "<div style='margin-bottom: 8px'>Tjeneste: <b>" + (service.title || service.name) + "</b>";
   if (!event.text || !event.text.trim().length) {
-    return "Ingen informasjon.";
+    return html + "Ingen informasjon.</div>";
   }
-  var html = "<div style='margin-bottom: 8px'>Tjeneste: <b>" + (service.title || service.name) + "</b></div>";
+  if (event.text.indexOf("no results")>-1) {
+    return html + "<p>Tjenesten leverer ingen resultater for valgt omr&aring;de. Pr&oslash;v &aring; zoome til kartlagsomr&aring;de f&oslash;rst.</p></div>";
+  } else 
+  if (event.text.indexOf("not queryable")>-1) {
+    return html + "<p>Tjenesten kan ikke levere informasjon om gruppelag. Aktiver et tematisk underordnet kartlag og pr&oslash;v igjen.</p></div>";
+  } else 
+  if (event.text.indexOf("ServiceException")>-1) {
+    html += "<p>Tjenesten leverer f&oslash;lgende feilmelding:</p>";
+  } 
+  html += "</div>";
   if ((event.object.infoFormat == "text/xml") || (event.object.infoFormat == "application/vnd.ogc.wms_xml")) {
     var data = [];
     $(event.text).find("FIELDS").each(function() {
