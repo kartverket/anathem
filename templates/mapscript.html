@@ -486,8 +486,8 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
       version: parms['version']
     }
   );
-  if (!!parms['bounds']) {
-    wms.maxExtent = parms['bounds'];
+  if (!!parms['layerBounds']) {
+    wms.maxExtent = parms['layerBounds'];
     wms.displayOutsideMaxExtent = false;
   }
   if (wms.params.GKT) {
