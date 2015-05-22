@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Kulturminner flate
+layers: kulturminner_flate
+layerGroup: tjenester.kultur
+id: kulturminner_flate
+usetoken: true
+singleTile: true
+getfeature: true

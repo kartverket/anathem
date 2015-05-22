@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Gapahukhytte
+layers: gapahukhytte
+layerGroup: tjenester.Friluft
+id: gapahukhytte
+usetoken: true
+singleTile: true
+getfeature: true

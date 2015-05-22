@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Inngang bygg
+layers: inngang_bygg
+layerGroup: tjenester.tettsted
+id: inngang_bygg
+usetoken: true
+singleTile: true
+getfeature: true

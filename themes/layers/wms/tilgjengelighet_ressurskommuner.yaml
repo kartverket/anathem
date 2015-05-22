@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Ressurs kommuner
+layers: ressurskommuner
+layerGroup: tjenester.Generelt
+id: ressurskommuner
+usetoken: true
+singleTile: true
+getfeature: true

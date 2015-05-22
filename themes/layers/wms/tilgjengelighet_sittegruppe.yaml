@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Sittegruppe
+layers: sittegruppe
+layerGroup: tjenester.Friluft
+id: sittegruppe
+usetoken: true
+singleTile: true
+getfeature: true

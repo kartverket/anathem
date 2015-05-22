@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: Vei
+layers: t_vei
+layerGroup: tjenester.Tettsted_Syn
+id: t_vei
+usetoken: true
+singleTile: true
+getfeature: true

@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Alle
+layers: friluft
+layerGroup: tjenester.Friluft
+id: friluft_alle
+usetoken: true
+singleTile: true

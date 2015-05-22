@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Turvei
+layers: turvei
+layerGroup: tjenester.Friluft
+id: turvei
+usetoken: true
+singleTile: true
+getfeature: true

@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: Friluftsomr&aring;de
+layers: friluftsomrade_03
+layerGroup: tjenester.friluftsyn
+id: friluftsomrade_03
+usetoken: true
+singleTile: true
+getfeature: true

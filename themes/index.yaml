@@ -13,7 +13,7 @@ projection: 32633
 i18n:
   - include: languages/nn/all
 
-baselayers:   
+baselayers:
     - template: layers/europa
 
 styles    :
@@ -22,23 +22,26 @@ styles    :
     - template: styles/omriss
     - template: styles/track
 
-overlays  : 
-    - include: layers/topo2
-    - include: layers/grunnkart
-    - include: layers/sjo_hovedkart2
-    - include: layers/wms/sjo_enc
+overlays  :
+    # Menu on the left
+    # LAND
+    - include: layers/topo2  # Landkart
+    - include: layers/toporaster3 # Rasterkart
+    - include: layers/grunnkart # Enkel
     - include: layers/flybilder
     - include: layers/terreng
-    - include: layers/toporaster3
-    - include: layers/fjellskygge
-    - include: layers/janmayen
+
+    # SJO
+    - include: layers/sjo_hovedkart2
+    - include: layers/wms/sjo_enc
+
+    # FLERE
     - include: layers/svalbard
+    - include: layers/janmayen
 
-    - include: layers/wms/n5raster
-    - include: layers/wms/amtskart
-
-    - include: layers/dekning_n50_plast
+    # KARTINNDELING
     - include: layers/dekning_sjo_hovedkart
+    - include: layers/dekning_n50_plast
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
@@ -50,6 +53,8 @@ overlays  :
     - include: layers/wms/ssrSpraakLulesamisk
     - include: layers/wms/ssrSpraakSorsamisk
     - include: layers/wms/ssrSpraakKvensk
+    # Linked from others
+    - include: layers/fjellskygge
 
     - include: layers/wms/ssrNavnetype
     - include: layers/wms/ssrNavnetypeAdministrative_omraader
@@ -88,8 +93,7 @@ overlays  :
     - include: layers/wms/friluft-annen
     - include: layers/wms/friluft-tilrettelegging 
 
-
-center    : 
+center    :
     template: center/besseggen
 
 functions :

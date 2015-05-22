@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/tilgjengelighet2?
+name: Fiskeplass
+layers: fiskeplass_02
+layerGroup: tjenester.friluft_elektrisk_rullestol
+id: fiskeplass_02
+usetoken: true
+singleTile: true
+getfeature: true

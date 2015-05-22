@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Toalett
+layers: toalett
+layerGroup: tjenester.Friluft
+id: toalett
+usetoken: true
+singleTile: true
+getfeature: true

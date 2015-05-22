@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Kulturminner punkt
+layers: kulturminner_punkt
+layerGroup: tjenester.kultur
+id: kulturminner_punkt
+usetoken: true
+singleTile: true
+getfeature: true

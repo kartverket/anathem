@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
+name: Grillb&aring;lplass
+layers: grillbalplass
+layerGroup: tjenester.Friluft
+id: grillbalplass
+usetoken: true
+singleTile: true
+getfeature: true
