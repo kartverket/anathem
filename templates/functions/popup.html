@@ -456,7 +456,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Oppdatert:'           : 'oppdatert'
         }
       },
-      't_HC_parkering'      : {
+      't_hc_parkering'      : {
         'info'   : {
           'name' : 'TETTSTED - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
@@ -474,7 +474,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Oppdatert:'           : 'oppdatert'
         }
       },
-      't_HC_parkering_r'      : {
+      't_hc_parkering_r'      : {
         'info'   : {
           'name' : 'TETTSTED - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
@@ -492,7 +492,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Oppdatert:'           : 'oppdatert'
         }
       },
-      't_HC_parkering_el'      : {
+      't_hc_parkering_el'      : {
         'info'   : {
           'name' : 'TETTSTED - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
@@ -920,7 +920,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
     };
     test = a.split("\n");
     if (test.length > 5) {
-      markup += '<article style="overflow-y: auto; height:380px" >';
+      markup += '<article style="overflow-y: auto; height:324px" >';
       a = feature.replace(/Layer/g, ",,Layer");
       a = a.split(",,");
       for (i = 0; i < a.length; ++i) {
@@ -932,7 +932,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           var tmpResp = [];
           var uuDictResponse = [];
           markup += '<h1 class="h">' + uuDictTmp['info']['name'] + '</h1>';
-          markup += '<p>' + uuDictTmp['info']['extra'] + '</p>';
+          markup += '<p style="margin:0">' + uuDictTmp['info']['extra'] + '</p>';
           markup += '<div class="externalToolbarLink"><a href="http://kartverket.no/tilgjengelighet/"><br>Les mer om Tilgjengelighetstjenester</a></div>';
           a[i] = a[i].replace(/Feature/g, ",,Feature");
           var f = a[i].split(",,");
@@ -952,7 +952,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                   }
                 }
                 for (var prop in uuDictTmp['content']) {
-                  tmpMarkup += '<p>' + prop + ' ';
+                  tmpMarkup += '<p style="margin:0">' + prop + ' ';
                   if (!!tmpResp[uuDictTmp['content'][prop]]) {
                     if (!!uuDictTmp['content'][prop]) {
                       tmpMarkup += tmpResp[uuDictTmp['content'][prop]] + '</p>';
