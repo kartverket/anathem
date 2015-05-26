@@ -1,6 +1,6 @@
 template: layers/geoJSONFile
 url: /json/tema/kommunefjell/Kommunefjell.geojson
-name: Kommunenes fjelltopper
+name: Fjelltoppar i kommunane
 id: fjelltopper
 epsgCode: 32633 
 styleName: unlabeledMarker
