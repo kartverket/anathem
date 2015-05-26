@@ -249,6 +249,13 @@ var closePopupCallBack = function () {
   this.hide();
 };
 
+NK.functions.imgError = function(image, altText) {
+  image.style.visibility='hidden';
+  image.style.width="10px";
+  image.style.height="1px";
+  altText.style.visibility='visible';
+};
+
 % if functions :
   ${functions}
 % endif
@@ -331,6 +338,8 @@ NK.init = function () {
   if (!!params.proj) {
     mapProj = proj[params.proj]; 
   }
+var options = {
+};
 
   NK.mapOptions = {
     projection: mapProj,
@@ -340,7 +349,11 @@ NK.init = function () {
     maxResolution: 21664.0,
   //      minResolution: 0.165283203125,
     numZoomLevels: NK.zoomLevels,
-    theme: 'theme/norgeskart/style.css'
+% if mobile:
+  theme: 'theme/norgeskart/mobile.css'
+% else:
+  theme: 'theme/norgeskart/style.css'
+% endif
   };
 
   map = new OpenLayers.Map( 
@@ -389,6 +402,7 @@ NK.init = function () {
   // Add controls at the end, to keep focus
   var controlContext = map;
   var container = null;
+  var collect = null;
 
 % if controls:
   ${controls}
@@ -459,12 +473,13 @@ NK.init = function () {
     }());
 
   }
+  map.addControl(new OpenLayers.Control.Attribution());
 %if not statisk:
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup();
   var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
-    url: "http://wms.geonorge.no/skwms1/wms.nrl?",
-    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.nrl?",
-    queryVisible: true,
+  url: "http://wms.geonorge.no/skwms1/wms.nrl?",
+  proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.nrl?",
+  queryVisible: true,
     infoFormat: 'text/plain',
     eventListeners: {
       "getfeatureinfo": function(event) {
@@ -480,7 +495,9 @@ NK.init = function () {
             {x: 10, y: -65},
             'selected-feature-popup, user-marker'
           ), true);
-        } catch(e) {}
+        } catch(e) {
+          console.log(e);
+          }
       }
     }
   });

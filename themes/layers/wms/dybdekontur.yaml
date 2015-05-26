@@ -1,7 +1,7 @@
 template: layers/wms
 usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.dybdedata
-name: Dybde&shy;kurve, kyst
+name: Djupne&shy;kurve, kyst
 layers: Dybdekontur
 layerGroup: tjenester.sjo.dybde
 id: dybdekontur

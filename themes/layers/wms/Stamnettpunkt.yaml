@@ -1,0 +1,9 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.fastmerker?
+name: Stamnettpunkter
+layers: Stamnettpunkt
+layerGroup: tjenester.Fastmerker
+id: Stamnettpunkt
+usetoken: true
+singleTile: true
+minZoom: 7

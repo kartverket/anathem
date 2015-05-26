@@ -1,6 +1,37 @@
 var NK = NK || {};
 NK.functions = NK.functions || {};
 
+NK.functions.createLegend = function () {
+  var legendDiv = OpenLayers.Util.getElement('legendBox');
+  if (!!legendDiv) {
+    legendDiv.innerHTML = "";
+    // create getLegendGraphic request for all active layers
+    for (var i = 1; i < map.layers.length; i++) {
+      if (map.layers[i].visibility && map.layers[i].layerGroup != "modus") {
+      if (!!map.layers[i].params) {
+        var legendURL = map.layers[i].getFullRequestString({
+          REQUEST: "GetLegendGraphic",
+          EXCEPTIONS: "application/vnd.ogc.se_inimage",
+          FORMAT: "image/png",
+          SERVICE: "WMS",
+          VERSION: "1.1.1",
+          LAYER: map.layers[i].params.LAYERS
+        });
+        legendDiv.innerHTML += map.layers[i].name + "<br><img src=" + legendURL + "><br>";
+      }
+    }
+  }
+  if( legendDiv.innerHTML == ""){
+    legendDiv.innerHTML = "Ingen tegnforklaring, velg f\u00f8rst et lag under TJENESTER.";
+  }
+  $('legendBox').eq(0).ready(function() {
+    if (legendDiv.clientHeight > (window.innerHeight / 2) ){
+      document.getElementById('legend').setAttribute("style","height:"+ (window.innerHeight / 2) + "px;overflow-y:auto");
+    }
+  });
+  }
+};
+
 NK.functions.addedLayers = function () {
   var re = /[+]\w*/;
   var results = re.exec(window.location.href);
@@ -12,27 +43,6 @@ NK.functions.addedLayers = function () {
 };
 
 NK.addedLayer = NK.functions.addedLayers();
-
-NK.functions.createLegend = function () {
-  var legendDiv = OpenLayers.Util.getElement('legendBox');
-  if (!!legendDiv) {
-    legendDiv.innerHTML = "";
-    // create getLegendGraphic request for all active layers
-    for (var i = 1; i < map.layers.length; i++) {
-      if (map.layers[i].visibility) {
-        var legendURL = map.layers[i].getFullRequestString({
-          REQUEST: "GetLegendGraphic",
-          EXCEPTIONS: "application/vnd.ogc.se_inimage",
-          FORMAT: "image/png",
-          SERVICE: "WMS",
-          VERSION: "1.1.1",
-          LAYER: map.layers[i].params.LAYERS
-        });
-        legendDiv.innerHTML += "<img src=" + legendURL + "><br>";
-      }
-    }
-  }
-};
 
 NK.functions.updateHistory = function (evt) {
   var center,

@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://openwms.statkart.no/skwms1/wms.rutenett?
+name: UTM-rutenett
+layers: UTMrutenett
+layerGroup: tjenester.UTM-rutenett
+id: UTMrutenett
+usetoken: true
+singleTile: true
