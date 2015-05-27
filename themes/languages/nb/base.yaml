@@ -36,4 +36,4 @@ translations:
     translation: uten kildehenvisning
   - template: i18n/translation
     source: about 
-    translation: kilde
+    translation: info 
