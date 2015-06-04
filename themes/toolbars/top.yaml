@@ -46,7 +46,7 @@ controls:
     className: topnavpanel
     controls:
     - template: controls/help
-      faqUrl: http://norgeskart.no/js/faq.html
+      faqUrl: /js/faq.html
       i18n:
       - include: languages/nb/help
 #  - template: controls/container

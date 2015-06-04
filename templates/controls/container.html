@@ -127,15 +127,15 @@
         header.innerHTML += OpenLayers.Util.hideFromOldIE('${svgIcon}');
       %endif
       var div = document.createElement("div");
-      div.setAttribute("id","map_chooser")
-      div.setAttribute("class","widget")
+      div.setAttribute("class","widget");
 
       var wrapper = document.createElement("div");
-      wrapper.setAttribute("class","wrapper")
+      wrapper.setAttribute("class","wrapper col1");
+      wrapper.setAttribute("id","map_chooser");
 
       var cnt = document.createElement("div");
-      cnt.setAttribute("class","cnt")
-      cnt.setAttribute("id","layerswitcher")
+      cnt.setAttribute("class","cnt");
+      cnt.setAttribute("id","layerswitcher");
 
       var wrapperHeader = document.createElement("div");
       wrapperHeader.setAttribute("class","wrapperHeader");
