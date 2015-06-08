@@ -11,7 +11,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         markup = '<article>';
 
     if (conf.heading && a[conf.heading]) {
-      markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
+      markup += '<h4>' + a[conf.heading] + '</h4>';
     }
     if (conf.data) {
       for (i = 0, l = conf.data.length; i < l; i += 1) {
@@ -26,8 +26,8 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
 };
 NK.functions.popup.generatePopupMarkup2 = function (conf) {
   return function (feature) {
-    var a = feature, i, j, k, l, markup = '', tmpMarkup = '';
-    var test;
+    var a = feature, f, i, j, k, l, markup = '', tmpMarkup = '', tmp, tmpBildeMarkup, uuDictResponse = [], tmpResp = [],
+      uuDictTmp, dictBilde, test;
     var uuDict = {
       'friluftsomrade_01'            : {
         'info'   : {
@@ -926,20 +926,19 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
       for (i = 0; i < a.length; ++i) {
         if (a[i].substring(0, 5) == "Layer") {
           //Layer
-          tmpMarkup = '';
-          var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
-          var uuDictTmp = uuDict[tmp[1].trim()];
-          var tmpResp = [];
-          var uuDictResponse = [];
-          markup += '<h1 class="h">' + uuDictTmp['info']['name'] + '</h1>';
-          markup += '<p style="margin:0">' + uuDictTmp['info']['extra'] + '</p>';
-          markup += '<div class="externalToolbarLink"><a href="http://kartverket.no/tilgjengelighet/"><br>Les mer om Tilgjengelighetstjenester</a></div>';
+          tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
+          uuDictTmp = uuDict[tmp[1].trim()];
+          markup += '<h4>' + uuDictTmp['info']['name'] + '</h4>';
+          markup += '<p>' + uuDictTmp['info']['extra'] + '</p>';
+          markup += '<div class="externalToolbarLink"><a href="http://kartverket.no/tilgjengelighet/">Les mer om Tilgjengelighetstjenester</a></div>';
           a[i] = a[i].replace(/Feature/g, ",,Feature");
-          var f = a[i].split(",,");
+          f = a[i].split(",,");
           for (l = 0; l < f.length; ++l) {
             //feature
+            tmpMarkup = '';
+            tmpBildeMarkup = '';
             if (f[l].substring(0, 7) == "Feature") {
-              tmpMarkup += '<div class="featureInfo" style="display: table">';
+              tmpMarkup += '<ul class="featureInfo">';
               test = f[l].split("\n");
               try {
                 for (j = 0, k = test.length - 1; j < k; j += 1) {
@@ -952,12 +951,12 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                   }
                 }
                 for (var prop in uuDictTmp['content']) {
-                  tmpMarkup += '<p style="margin:0">' + prop + ' ';
+                  tmpMarkup += '<li>' + prop + ' ';
                   if (!!tmpResp[uuDictTmp['content'][prop]]) {
                     if (!!uuDictTmp['content'][prop]) {
-                      tmpMarkup += tmpResp[uuDictTmp['content'][prop]] + '</p>';
+                      tmpMarkup += tmpResp[uuDictTmp['content'][prop]] + '</li>';
                     } else {
-                      tmpMarkup += 'Ingen tilrettelegging </p>';
+                      tmpMarkup += 'Ingen tilrettelegging </li>';
                     }
                   } else {
                     if (typeof uuDictTmp['content'][prop] === 'object') {
@@ -966,7 +965,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                         tmpMarkup += uuDictTmp['content'][prop][internprop];
                       }
                     } else {
-                      tmpMarkup += '</p>';
+                      tmpMarkup += '</li>';
                     }
                   }
                 }
@@ -974,7 +973,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                 //console.log(e);
               }
 
-              var tmpBildeMarkup = '<table style="width:80px"><tr>';
+              tmpBildeMarkup = '<table style="width:80px"><tr>';
               if (!!uuDictResponse['t_rulle']) {
                 tmpBildeMarkup += '<td id="flat_td"><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol/' + uuDictResponse['t_rulle'] + '.png" height=20 width=20 /></td>';
               }
@@ -995,19 +994,19 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
               }
               tmpBildeMarkup += '</tr></table>';
               if (!!uuDictResponse['bilde']) {
-                var dictBilde = uuDictResponse['bilde'].split('.');
-                dictBilde = dictBilde[0];
-                tmpBildeMarkup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=180 width=246 SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" onerror="NK.functions.imgError(this, ' + dictBilde + ');"></a>';
-                tmpBildeMarkup += '<span id="' + dictBilde + '" style="visibility:hidden"><a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" style="color:#fff"><i>Feil ved lasting av bilde</i></a></span><br/>';
+                dictBilde = uuDictResponse['bilde'].split('.')[0];
+                tmpBildeMarkup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=180 width=246 alt="" SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" alt="\'' + dictBilde + '\'" onerror="NK.functions.imgError(this, \'' + dictBilde + '\');"></a>';
+                tmpBildeMarkup += '<span id="' + dictBilde + '" style="visibility:hidden"><a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" style="color:#fff"><i>Feil ved lasting av bilde</i></a></span>';
               }
+              tmpMarkup += '</ul>';
             }
+            markup += '<div class="objectInfo">' + tmpBildeMarkup + tmpMarkup + '</div>';
           }
-          markup += tmpBildeMarkup + tmpMarkup + '<div></br></div>';
         }
       }
     } else {
       markup += '<article>';
-      markup += "Vi har ingen data for dette punktet";
+      markup += "<p>Vi har ingen data for dette punktet</p>";
     }
     markup += '</article>';
     return markup;
@@ -1044,11 +1043,9 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
     }
 
     if (feature.fid && feature.layer) {
-
       sameFidFeatures = feature.layer.getFeaturesByFid(feature.fid);
       for (i = 0, j = sameFidFeatures.length; i < j; i += 1) {
         feature.layer.selectedFeatures.push(sameFidFeatures[i]);
-
         this.highlight.apply(this, [sameFidFeatures[i]]);
       } 
     }
@@ -1097,7 +1094,6 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
 };
 
 NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
-
   var generatePopupMarkup,
       onFeatureSelect,
       onFeatureUnselect,
@@ -1105,7 +1101,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
       selectControl;
       
   generatePopupMarkup = NK.functions.popup.generatePopupMarkup(popupConfig);
-
   onPopupClose = function (evt) {
     if (this.feature) {
       selectControl.unselect(this.feature);
@@ -1113,7 +1108,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   };
 
   onFeatureSelect = NK.functions.popup.getFeatureSelector(M, generatePopupMarkup, onPopupClose, popupConfig);
-
   onFeatureUnselect = function (feature) {
       if (feature.popup) {
         feature.popup.feature = null;
@@ -1131,7 +1125,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl);
 
   M.addControl(selectControl);
-
 };
 
 <% vars['popupFunctions']=True %>
