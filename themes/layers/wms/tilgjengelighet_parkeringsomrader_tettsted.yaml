@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
-name: Parkerings omr&aring;de
-layers: parkeringsomrader_tettsted
-layerGroup: tjenester.tettsted
-id: parkeringsomrader_tettsted
-usetoken: true
-singleTile: true
-getfeature: true

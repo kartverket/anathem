@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Friluftsomr&aring;de
-layers: friluftsomrade_01
-layerGroup: tjenester.friluft_rullestol
-id: friluftsomrade_01
-usetoken: true
-singleTile: true
-getfeature: true

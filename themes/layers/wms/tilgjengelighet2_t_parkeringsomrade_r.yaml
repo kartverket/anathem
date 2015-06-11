@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Parkerings omr&aring;de
-layers: t_parkeringsomrade_r
-layerGroup: tjenester.Tettsted_Rullestol
-id: t_parkeringsomrade_r
-usetoken: true
-singleTile: true
-getfeature: true

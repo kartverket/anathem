@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
-name: Vei
-layers: vei
-layerGroup: tjenester.tettsted
-id: vei
-usetoken: true
-singleTile: true
-getfeature: true

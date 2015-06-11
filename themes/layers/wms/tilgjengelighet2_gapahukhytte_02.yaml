@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Gapahukhytte
-layers: gapahukhytte_02
-layerGroup: tjenester.friluft_elektrisk_rullestol
-id: gapahukhytte_02
-usetoken: true
-singleTile: true
-getfeature: true

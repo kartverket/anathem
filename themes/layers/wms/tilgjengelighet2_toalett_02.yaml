@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Toalett
-layers: toalett_02
-layerGroup: tjenester.friluft_elektrisk_rullestol
-id: toalett_02
-usetoken: true
-singleTile: true
-getfeature: true

@@ -46,64 +46,19 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
+    # Menu on the right
+    # fakta layers
+    - include: layers/geoJSON/kommunefjell
+
+    # friluftsliv layers
+    - include: layers/wms/fotruter
+    - include: layers/wms/sykkelruter
+    - include: layers/wms/skiloyper
+    - include: layers/wms/friluft-annen
+    - include: layers/wms/friluft-tilrettelegging
+
     # Linked from others
     - include: layers/fjellskygge
-
-    # tilgjengelighet WMS
-    - include: layers/wms/tilgjengelighet2_t_rullestol
-    - include: layers/wms/tilgjengelighet2_t_el_rullestol
-    - include: layers/wms/tilgjengelighet2_t_syn
-    - include: layers/wms/tilgjengelighet2_t_vei
-    - include: layers/wms/tilgjengelighet2_t_vei_el
-    - include: layers/wms/tilgjengelighet2_t_vei_r
-    - include: layers/wms/tilgjengelighet2_t_parkeringsomrade_el
-    - include: layers/wms/tilgjengelighet2_t_parkeringsomrade_r
-    - include: layers/wms/tilgjengelighet2_t_parkeringsomrade
-    - include: layers/wms/tilgjengelighet2_t_hc_parkering
-    - include: layers/wms/tilgjengelighet2_t_hc_parkering_el
-    - include: layers/wms/tilgjengelighet2_t_hc_parkering_r
-    - include: layers/wms/tilgjengelighet2_t_inngangsbygg
-    - include: layers/wms/tilgjengelighet2_t_inngangsbygg_r_01
-    - include: layers/wms/tilgjengelighet2_t_inngangsbygg_r_02
-
-    - include: layers/wms/tilgjengelighet2_f_rullestol
-    - include: layers/wms/tilgjengelighet2_f_el_rullestol
-    - include: layers/wms/tilgjengelighet2_f_syn
-    - include: layers/wms/tilgjengelighet2_baderampe_01
-    - include: layers/wms/tilgjengelighet2_baderampe_03
-    - include: layers/wms/tilgjengelighet2_fiskeplass_01
-    - include: layers/wms/tilgjengelighet2_fiskeplass_02
-    - include: layers/wms/tilgjengelighet2_fiskeplass_03
-    - include: layers/wms/tilgjengelighet2_friluftsomrade_01
-    - include: layers/wms/tilgjengelighet2_friluftsomrade_02
-    - include: layers/wms/tilgjengelighet2_friluftsomrade_03
-    - include: layers/wms/tilgjengelighet2_gapahukhytte_01
-    - include: layers/wms/tilgjengelighet2_gapahukhytte_02
-    - include: layers/wms/tilgjengelighet2_gapahukhytte_03
-    - include: layers/wms/tilgjengelighet2_grillbalplass_01
-    - include: layers/wms/tilgjengelighet2_grillbalplass_02
-    - include: layers/wms/tilgjengelighet2_grillbalplass_03
-    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_01
-    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_02
-    - include: layers/wms/tilgjengelighet2_hc_parkering_friluft_03
-    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_01
-    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_02
-    - include: layers/wms/tilgjengelighet2_parkeringsomrader_friluft_03
-    - include: layers/wms/tilgjengelighet2_sittegruppe_01
-    - include: layers/wms/tilgjengelighet2_sittegruppe_02
-    - include: layers/wms/tilgjengelighet2_sittegruppe_03
-    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_01
-    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_02
-    - include: layers/wms/tilgjengelighet2_statlig_sikra_polygon_03
-    - include: layers/wms/tilgjengelighet2_toalett_01
-    - include: layers/wms/tilgjengelighet2_toalett_02
-    - include: layers/wms/tilgjengelighet2_toalett_03
-    - include: layers/wms/tilgjengelighet2_turishytte_01
-    - include: layers/wms/tilgjengelighet2_turishytte_02
-    - include: layers/wms/tilgjengelighet2_turishytte_03
-    - include: layers/wms/tilgjengelighet2_turvei_01
-    - include: layers/wms/tilgjengelighet2_turvei_02
-    - include: layers/wms/tilgjengelighet2_turvei_03
 
 center    :
     template: center/besseggen
@@ -112,7 +67,6 @@ functions :
     - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
-    - template: functions/popup
 
 controls  :
     - template: controls/status

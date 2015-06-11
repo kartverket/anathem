@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
-name: Frilufts omr&aring;de
-layers: friluftsomrade
-layerGroup: tjenester.Friluft
-id: friluftsomrade
-usetoken: true
-singleTile: true
-getfeature: true

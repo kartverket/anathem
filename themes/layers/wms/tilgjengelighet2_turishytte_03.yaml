@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Turishytte
-layers: turishytte_03
-layerGroup: tjenester.friluftsyn
-id: turishytte_03
-usetoken: true
-singleTile: true
-getfeature: true
