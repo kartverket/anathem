@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Statlig sikra
-layers: statlig_sikra_polygon_02
-layerGroup: tjenester.friluft_elektrisk_rullestol
-id: statlig_sikra_polygon_02
-usetoken: true
-singleTile: true
-getfeature: true

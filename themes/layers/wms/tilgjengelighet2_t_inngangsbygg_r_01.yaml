@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Inngang bygg
-layers: t_inngangbygg_r_01
-layerGroup: tjenester.Tettsted_Rullestol
-id: t_inngangbygg_r_01
-usetoken: true
-singleTile: true
-getfeature: true

@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Alle
-layers: f_syn
-layerGroup: tjenester.friluftsyn
-id: f_syn
-usetoken: true
-singleTile: true
-getfeature: true

@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Alle
-layers: f_el_rullestol
-layerGroup: tjenester.friluft_elektrisk_rullestol
-id: f_el_rullestol
-usetoken: true
-singleTile: true
-getfeature: true

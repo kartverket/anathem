@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
-name: Pilotfylker
-layers: pilotfylker
-layerGroup: tjenester.Generelt
-id: pilotfylker
-usetoken: true
-singleTile: true
-getfeature: true

@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet?
-name: Parkerings omr&aring;der
-layers: parkeringsomrader_friluft
-layerGroup: tjenester.Friluft
-id: parkeringsomrader_friluft
-usetoken: true
-singleTile: true
-getfeature: true

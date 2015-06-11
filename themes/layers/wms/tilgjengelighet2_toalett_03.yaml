@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Toalett
-layers: toalett_03
-layerGroup: tjenester.friluftsyn
-id: toalett_03
-usetoken: true
-singleTile: true
-getfeature: true

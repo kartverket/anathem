@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Gapahukhytte
-layers: gapahukhytte_03
-layerGroup: tjenester.friluftsyn
-id: gapahukhytte_03
-usetoken: true
-singleTile: true
-getfeature: true

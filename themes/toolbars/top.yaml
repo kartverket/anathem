@@ -41,11 +41,11 @@ controls:
       i18n:
       - include: languages/nb/embed
   - template: controls/container
-    id: help-panel  
+    id: info-panel
     top: true
     className: topnavpanel
     controls:
-    - template: controls/help
-      faqUrl: http://norgeskart.no/js/faq.html
+    - template: controls/info
+      faqUrl: /js/faq.html
       i18n:
       - include: languages/nb/help

@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Parkerings omr&aring;de
-layers: t_parkeringsomrade
-layerGroup: tjenester.Tettsted_Syn
-id: t_parkeringsomrade
-usetoken: true
-singleTile: true
-getfeature: true

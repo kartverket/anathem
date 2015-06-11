@@ -1,4 +1,4 @@
-% if not 'popupFunctions' in vars:  
+% if not 'popupFunctions' in vars:
 
 NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
@@ -25,7 +25,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
           var tmpResp = [];
           var nrlDictResponse = [];
-          markup += '<h1 class="h">Lag : ' + tmp[1].trim() + '</h1>';
+          markup += '<h4 class="h">Lag : ' + tmp[1].trim() + '</h4>';
           a[i] = a[i].replace(/Feature/g, ",,Feature");
           var f = a[i].split(",,");
           for (l = 0; l < f.length; ++l) {
@@ -115,11 +115,9 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     }
 
     if (feature.fid && feature.layer) {
-
       sameFidFeatures = feature.layer.getFeaturesByFid(feature.fid);
       for (i = 0, j = sameFidFeatures.length; i < j; i += 1) {
         feature.layer.selectedFeatures.push(sameFidFeatures[i]);
-
         this.highlight.apply(this, [sameFidFeatures[i]]);
       } 
     }
@@ -168,7 +166,6 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
 };
 
 NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
-
   var generatePopupMarkup,
       onFeatureSelect,
       onFeatureUnselect,
@@ -176,7 +173,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
       selectControl;
       
   generatePopupMarkup = NK.functions.popup.generatePopupMarkup(popupConfig);
-
   onPopupClose = function (evt) {
     if (this.feature) {
       selectControl.unselect(this.feature);
@@ -184,7 +180,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   };
 
   onFeatureSelect = NK.functions.popup.getFeatureSelector(M, generatePopupMarkup, onPopupClose, popupConfig);
-
   onFeatureUnselect = function (feature) {
       if (feature.popup) {
         feature.popup.feature = null;
@@ -202,7 +197,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl);
 
   M.addControl(selectControl);
-
 };
 
 <% vars['popupFunctions']=True %>

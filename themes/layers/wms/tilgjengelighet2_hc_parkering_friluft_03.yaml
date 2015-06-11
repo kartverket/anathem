@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: HC-parkering
-layers: hc_parkering_friluft_03
-layerGroup: tjenester.friluftsyn
-id: hc_parkering_friluft_03
-usetoken: true
-singleTile: true
-getfeature: true

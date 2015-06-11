@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
-name: Fiskeplass
-layers: fiskeplass_03
-layerGroup: tjenester.friluftsyn
-id: fiskeplass_03
-usetoken: true
-singleTile: true
-getfeature: true

@@ -120,4 +120,3 @@ controls  :
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
-
