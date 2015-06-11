@@ -62,9 +62,10 @@ NK.tokenError = {
 
 NK.mapservers = {};
 NK.mapservers.wmts = [
-  "http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
-  "http://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
-  "http://gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts"
+  "http://skrivte58:8080/geowebcache/service/wmts",
+//  "http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
+//  "http://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts",
+//  "http://gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts"
 ];
 NK.zoomLevels = 18;
 
@@ -416,8 +417,8 @@ NK.functions.addWMSLayer = function(wmsUrl) {
 
 NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   var outputFormat = 'text/xml; subtype=gml/3.2.1';
-  if (!parms['formats'][outputFormat]) outputFormat = 'text/xml; subtype=gml/3.1.1';
-  if (!parms['formats'][outputFormat]) outputFormat = 'text/xml; subtype=gml/2.1.2';
+  if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/3.1.1';
+  if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/2.1.2';
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track", "outputFormat":outputFormat});
   $.extend(wfsLayer,{
     type           : 'wfs',
@@ -666,9 +667,10 @@ NK.init = function () {
     return new OpenLayers.Bounds(left, top - size, left + size, top); 
   };
 
+  //  "3575" : NK.boundsFromScale(-9014250.655, 9014250.655, 2.51513690142E8),
   NK.bounds = bounds = {
     "4326" : NK.boundsFromScale(90, -180, 2.795411320143589E8),
-    "3575" : NK.boundsFromScale(-1.8133594E7, 1.07763E7, 5.0601127250000006E8),
+    "3575" : NK.boundsFromScale(-5545984.0, 5545984.0, 1.5474285714285716E8),
  
     "25829" : NK.boundsFromScale(-500000.0, 9045984.0, 7.737142857142858E7),
     "25830" : NK.boundsFromScale(-1000000.0, 9045984.0, 7.737142857142858E7),
