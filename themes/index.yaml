@@ -29,6 +29,8 @@ mapscript:
     - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
     - include: layers/flybilder
+    - include: layers/svalbard
+    - include: layers/janmayen
 
   center    : 
     template: center/besseggen
