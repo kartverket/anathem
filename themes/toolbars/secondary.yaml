@@ -5,31 +5,71 @@ svgIcon: '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="27px" hei
 id: secondary-toolbar
 controls:
 - template: controls/container
+  id: tools-panel
+  controls:
+  - template: controls/draw
+    i18n:
+    - include: languages/nb/draw
+    storageUrl: /ws/upload-json.py
+    styleName: track
+  - template: controls/emergencyposter
+    serviceURL: http://openwps.statkart.no/skwms1/wps.elevation
+    ssrwsURL: https://ws.geonorge.no/SKWS3Index/ssr/sok?
+    pdfServiceUrl: http://ws.geonorge.no/ngnk2/ngnk?
+    i18n:
+    - include: languages/nb/emergencyposter
+  - template: controls/heightprofile
+    heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
+    gpxStorageUrl: /ws/upload-gpx.py
+    trackStyleName: track
+    predefinedGpxFiles:
+    - template: gpx/gpxFile
+      name: Rallarvegen Haugast&oslash;l - Fl&aring;m
+      url: /xml/gpx/rallarvegen.gpx
+    - template: gpx/gpxFile
+      name: Birkebeinerrittet
+      url: /xml/gpx/birkebeinerrittet.gpx
+    - template: gpx/gpxFile
+      name: Birkebeinerrennet 2012
+      url: /xml/gpx/birkebeinerrennet-2012.gpx
+
+    i18n:
+    - include: languages/nb/heightprofile
+  - template: controls/transformations
+    url: /ws/trans.py
+- template: controls/container
+  name: Fagdata
   id: services-panel
   controls:
   - template: controls/overlaygrouppanel
     group: tjenester.Tettsted_Rullestol
     title: Tettsted_Rullestol
     buttonText: Tettsted Rullestol
+    buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
   - template: controls/overlaygrouppanel
     group: tjenester.Tettsted_Elektrisk_rullestol
     title: Tettsted_Elektrisk_rullestol
     buttonText: Tettsted Elektrisk rullestol
+    buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
   - template: controls/overlaygrouppanel
     group: tjenester.Tettsted_Syn
     title: Tettsted_Syn
     buttonText: Tettsted Syn
+    buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
 
   - template: controls/overlaygrouppanel
     group: tjenester.friluft_rullestol
     title: Friluft_rullestol
     buttonText: Friluft Rullestol
+    buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
   - template: controls/overlaygrouppanel
     group: tjenester.friluft_elektrisk_rullestol
     title: friluft_elektrisk_rullestol
     buttonText: Friluft Elektrisk Rullestol
+    buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
   - template: controls/overlaygrouppanel
     group: tjenester.friluftsyn
     title: friluftsyn
     buttonText: Friluft Syn
+    buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
 
