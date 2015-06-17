@@ -241,14 +241,6 @@ var closePopupCallBack = function () {
   this.hide();
 };
 
-var closePopupCallBack = function () {
-  var itemIndex;
-  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
-    map.popups[itemIndex].hide();
-  }
-  this.hide();
-};
-
 NK.functions.imgError = function(image, alt) {
   image.style.visibility='hidden';
   image.style.width="10px";
@@ -475,34 +467,6 @@ var options = {
 
   }
   map.addControl(new OpenLayers.Control.Attribution());
-
-  var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2();
-
-  var featureInfo2 = new OpenLayers.Control.WMSGetFeatureInfo({
-    url: "http://nnrite008/cgi-bin/tilgjengelighet2?",
-    proxyUrl: "/ws/featureinfo.py?http://nnrite008/cgi-bin/tilgjengelighet2?",
-    queryVisible: true,
-    infoFormat: 'text/plain',
-    eventListeners: {
-    "getfeatureinfo": function(event) {
-      try {
-        map.addPopup(new OpenLayers.Popup.FramedSideAnchored(
-          null,
-          map.getLonLatFromPixel(event.xy),
-          null,
-          markupGeneratorFunction(event.text),
-          null,
-          true,
-          closePopupCallBack,
-          {x: 10, y: -65},
-          'selected-feature-popup, user-marker popover'
-        ), true);
-      } catch(e) {}
-    }
-    }
-  });
-  map.addControl(featureInfo2);
-  featureInfo2.activate();
 };
 // end init()
 
