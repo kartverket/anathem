@@ -10,3 +10,4 @@ tileorigin: "-5120900.0,9998100.0"
 shortMatrixIds: true
 layerGroup: modus 
 id: janmayen 
+hideOverview: true

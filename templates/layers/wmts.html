@@ -103,6 +103,9 @@ NK.addLayerType.WMTS = (function (M, MP) {
       layer.dataType    = options.dataType;
       layer.dataFormats = options.dataFormats.split(",");
     }
+    if (!!options.hideOverview) {
+      layer.hideOverview = true;  
+    }
 
     layer.description = options.abstract;
     layer.attribution = {"title":options.attribution};
@@ -170,6 +173,10 @@ NK.addLayerType.WMTS = (function (M, MP) {
 
   % if databbox:
     options.databbox = "${databbox}"
+  % endif
+
+  % if hideOverview:
+    options.hideOverview = true
   % endif
 
   % if dataURL:
