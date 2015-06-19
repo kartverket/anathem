@@ -9,3 +9,5 @@ layerGroup: modus
 id: flybilder
 attribution: Kartverket
 abstract: "Norge i bilder"
+databbox: "-115000,6400000,1140000,7967861"
+
