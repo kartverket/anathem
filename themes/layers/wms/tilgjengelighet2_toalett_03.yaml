@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?
 name: Toalett
 layers: toalett_03
 layerGroup: tjenester.friluftsyn

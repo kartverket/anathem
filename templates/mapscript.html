@@ -369,8 +369,8 @@ NK.init = function () {
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup2();
 
   var featureInfo2 = new OpenLayers.Control.WMSGetFeatureInfo({
-    url: "http://nnrite008/cgi-bin/tilgjengelighet2?",
-    proxyUrl: "/ws/featureinfo.py?http://nnrite008/cgi-bin/tilgjengelighet2?",
+    url: "http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?",
+    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?",
     queryVisible: true,
     infoFormat: 'text/plain',
     eventListeners: {

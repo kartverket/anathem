@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?
 name: Gapahukhytte
 layers: gapahukhytte_02
 layerGroup: tjenester.friluft_elektrisk_rullestol

@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?
 name: HC-parkering
 layers: t_HC_parkering_el
 layerGroup: tjenester.Tettsted_Elektrisk_rullestol

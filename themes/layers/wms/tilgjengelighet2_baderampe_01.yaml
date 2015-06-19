@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/tilgjengelighet2?
+url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?
 name: Baderampe
 layers: baderampe_01
 layerGroup: tjenester.friluft_rullestol
