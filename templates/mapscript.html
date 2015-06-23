@@ -667,10 +667,10 @@ NK.init = function () {
     return new OpenLayers.Bounds(left, top - size, left + size, top); 
   };
 
-  //  "3575" : NK.boundsFromScale(-9014250.655, 9014250.655, 2.51513690142E8),
   NK.bounds = bounds = {
     "4326" : NK.boundsFromScale(90, -180, 2.795411320143589E8),
-    "3575" : NK.boundsFromScale(-5545984.0, 5545984.0, 1.5474285714285716E8),
+    //"3575" : NK.boundsFromScale(-5545984.0, 5545984.0, 1.5474285714285716E8),
+    "3575" : NK.boundsFromScale(-9014250.655, 9014250.655, 2.51513690142E8),
  
     "25829" : NK.boundsFromScale(-500000.0, 9045984.0, 7.737142857142858E7),
     "25830" : NK.boundsFromScale(-1000000.0, 9045984.0, 7.737142857142858E7),
