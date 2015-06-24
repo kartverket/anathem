@@ -489,7 +489,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   );
   if (!!parms['layerBounds']) {
     wms.maxExtent = parms['layerBounds'];
-    wms.displayOutsideMaxExtent = false;
+    wms.displayOutsideMaxExtent = true; //should be false, but some services just don't know their boundaries
   }
   if (wms.params.GKT) {
     wms.params.gkt = wms.params.GKT;
