@@ -21,7 +21,7 @@
     translation: Hjelp
   - template: i18n/translation
     source: East coordinate
-    translation: "&oslash;st-koordinat"
+    translation: "&Oslash;st-koordinat"
   - template: i18n/translation
     source: North coordinate
     translation: Nord-koordinat
