@@ -1,0 +1,136 @@
+ template: i18n/language
+ language: nb
+ translations:
+  - template: i18n/translation
+    source: Transformations
+    translation: Transformasjoner
+  - template: i18n/translation
+    source: Transform coordinates
+    translation: Transformer koordinater
+  - template: i18n/translation
+    source: Select input coordinate system
+    translation: Fra koordinatsystem
+  - template: i18n/translation
+    source: Select output coordinate system
+    translation: Til koordinatsystem
+  - template: i18n/translation
+    source: Fill out the coordinate fields or click in the map
+    translation: Skriv inn koordinater eller klikk i kartet
+  - template: i18n/translation
+    source: Help
+    translation: Hjelp
+  - template: i18n/translation
+    source: East coordinate
+    translation: "&oslash;st-koordinat"
+  - template: i18n/translation
+    source: North coordinate
+    translation: Nord-koordinat
+  - template: i18n/translation
+    source: Longitude
+    translation: Lengdegrad
+  - template: i18n/translation
+    source: Latitude
+    translation: Breddegrad
+  - template: i18n/translation
+    source: Show coordinates
+    translation: Transformer koordinater
+  - template: i18n/translation
+    source: Transformed coordinates
+    translation: Transformerte koordinater
+  - template: i18n/translation
+    source: An error occured
+    translation: En feil oppstod
+  - template: i18n/translation
+    source: Go to coordinates
+    translation: G&aring; til koordinater
+
+  - template: i18n/translation
+    source: Share map
+    translation: Del kart
+  - template: i18n/translation
+    source: Get URL
+    translation: Vis URL
+  - template: i18n/translation
+    source: Share by
+    translation: Del p&aring;
+  - template: i18n/translation
+    source: e-mail
+    translation: e-post
+  - template: i18n/translation
+    source: Twitter
+    translation: Twitter
+  - template: i18n/translation
+    source: Facebook
+    translation: Facebook
+
+  - template: i18n/translation
+    source: Fullscreen
+    translation: Fullskjermsvisning
+  - template: i18n/translation
+    source: Exit fullscreen
+    translation: Avslutt fullskjermsvisning
+
+  - template: i18n/translation
+    source: Pan north
+    translation: nordover
+  - template: i18n/translation
+    source: Pan south
+    translation: s&oslash;rover
+  - template: i18n/translation
+    source: Pan east
+    translation: "&oslash;stover"
+  - template: i18n/translation
+    source: Pan west
+    translation: vestover
+
+  - template: i18n/translation
+    source: Print
+    translation: Skriv ut
+
+  - template: i18n/translation
+    source: No records found
+    translation: S&oslash;ket gav ingen treff
+  - template: i18n/translation
+    source: house number
+    translation: husnummer
+  - template: i18n/translation
+    source: "Total search results: ${count}"
+    translation: "${count} treff"
+  - template: i18n/translation
+    source: More results
+    translation: se flere >
+  - template: i18n/translation
+    source: Searching
+    translation: S&oslash;ker
+  - template: i18n/translation
+    source: Search
+    translation: S&oslash;k
+
+  - template: i18n/translation
+    source: Country
+    translation: Norge
+  - template: i18n/translation
+    source: Region
+    translation: Landsdel
+  - template: i18n/translation
+    source: County
+    translation: Fylke
+  - template: i18n/translation
+    source: Municipality
+    translation: Kommune
+  - template: i18n/translation
+    source: Street
+    translation: Gate
+  - template: i18n/translation
+    source: House
+    translation: Hus
+  - template: i18n/translation
+    source: Zoom in
+    translation: Zoom inn
+  - template: i18n/translation
+    source: Zoom out
+    translation: Zoom ut
+
+  - template: i18n/translation
+    source: Zoom to selection
+    translation: Zoom til valgt omr&aring;de
