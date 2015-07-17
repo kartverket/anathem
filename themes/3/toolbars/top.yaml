@@ -34,9 +34,9 @@ controls:
     controls:
     - template: 3/controls/geturl
   - template: 3/controls/container
-    id: help-panel  
+    id: info-panel
     top: true
     className: topnavpanel
     controls:
-    - template: 3/controls/help
+    - template: 3/controls/info
 

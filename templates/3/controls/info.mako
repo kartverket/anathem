@@ -5,7 +5,7 @@ NK.controls = NK.controls || {};
 NK.controls.Help = function(options) {
   options = options || {};
   var wrapper, btn;
-  var cName = 'help-button nkButton';
+  var cName = 'info-button nkButton';
   
   this.title = 'Help';
 
@@ -24,7 +24,7 @@ NK.controls.Help = function(options) {
 
   var mac = (navigator.platform && navigator.platform.indexOf('Mac') !== -1) || (navigator.userAgent && navigator.userAgent.indexOf('iPhone') !== -1);
   var ctrlKey = mac ? '⌘ ' : 'Ctrl + ';
-  var html = '<div id="shortcuts" class="help-menu">';
+  var html = '<div id="shortcuts" class="info-menu">';
   html += '<h1 class="h">' + 'Keyboard shortcuts' + '</h1>';
   html += '<div class="shortcuts-panel"><p>' + 'You can navigate using the following keyboard shortcuts' + ':</p>';
   html += '<p>' + 'Press TAB to change selected control. Press ENTER to activate the selected control.' + '</p>';
@@ -64,7 +64,7 @@ NK.controls.Help = function(options) {
         collapsible: true,
         heightStyle: "content"
       });
-      $(".help-menu").accordion({
+      $(".info-menu").accordion({
         collapsible: true,
         heightStyle: "content",
         active: false

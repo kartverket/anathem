@@ -1081,21 +1081,23 @@ input[type=radio], input[type=checkbox] {
 
 #getURL-panel {
   &.active {
-    > .nkButton {
-      @extend %selected-button;
-    }
-    > .widget {
-      right: 0;
-      top: 100%;
-      left: auto;
-      bottom: auto;
-      display: block;
-      height: auto;
-      margin-top: 15px;
-      line-height: 18px;
-      text-align: left;
-      text-transform: none;
-      background-color: $panel-color;
+    > div {
+      > .nkButton {
+        @extend %selected-button;
+      }
+      > .widget {
+        right: 0;
+        top: 100%;
+        left: auto;
+        bottom: auto;
+        display: block;
+        height: auto;
+        margin-top: 15px;
+        line-height: 18px;
+        text-align: left;
+        text-transform: none;
+        background-color: $panel-color;
+      }
     }
   }
 
