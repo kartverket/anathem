@@ -8,21 +8,19 @@
 
 $font-family-main: MetaBook, Arial, sans-serif;
 $font-family-output: monospace;
-$font-header: 30px;
-
 $base-color: #606060;
 $dark-color: #000;
 $button-light-blue: #408ccd;
 $button-dark-blue: #0058a3;
+$bootstrap-blue: #337ab7;
 $grey: rgba(lighten($base-color, 11), 1);
 $lightest-color: #fff;
+$toolbar-width: 68px;
 $panel-color: rgba(80, 80, 80, .9);
 $panel-color-hex: #606161;
-$link-background-color: #3A80BB;
-
-$toolbar-width: 68px;
 $share-toolbar-panel-width: 60px;
 $share-toolbar-panel-height: 39px;
+$link-background-color: #3A80BB;
 
 %clearfix {
   &:before,
@@ -40,7 +38,7 @@ $share-toolbar-panel-height: 39px;
 }
 
 %header-font {
-  font-family: $font-family-main;
+  font-family: MetaBook, Arial, sans-serif;
   font-size: 30px;
   font-weight: normal;
 }
@@ -54,7 +52,6 @@ $share-toolbar-panel-height: 39px;
 
 %button {
   border-radius: 3px;
-  cursor: pointer;
 }
 
 %selected-button {
@@ -85,10 +82,6 @@ $share-toolbar-panel-height: 39px;
   background-repeat: repeat-y;
 }
 
-%standard-text {
-  font-size: 12px;
-}
-
 %full-height {
   height: 100%;
 }
@@ -98,18 +91,14 @@ $share-toolbar-panel-height: 39px;
     content: '';
     border: 7px solid transparent;
     width: 0;
-
     height: 0;
     position: absolute;
   }
 }
 
 %button-style {
-  border: 1px solid rgba(0, 60, 111, .82);
-  cursor: pointer;
   border-radius: 12px;
   color: $lightest-color;
-  text-transform: uppercase;
 }
 
 @mixin active-step($name, $step, $stepCount) {
@@ -187,9 +176,6 @@ $share-toolbar-panel-height: 39px;
 
 %terms-accept-button-style {
   @extend %button-style;
-  background-size: 150%;
-  background-position: 0 100%;
-
   &,
   &:hover,
   &:focus {
@@ -206,14 +192,11 @@ $share-toolbar-panel-height: 39px;
 
 %blue-terms-accept-button-style {
   @extend %terms-accept-button-style;
-  @extend %blue-button-gradient;
+  background-color: $bootstrap-blue;
 }
 
 %one-lined-button {
-  height: 24px;
   width: auto;
-  position: relative;
-  line-height: 24px;
 }
 
 %blue-one-lined-button {
@@ -226,12 +209,8 @@ $share-toolbar-panel-height: 39px;
 }
 
 %grey-one-lined-button {
-  @extend %grey-button-gradient;
   @extend %terms-accept-button-style;
   @extend %one-lined-button;
-  border: 1px solid #01437c;
-  padding: 0 12px;
-  text-align: left;
 }
 
 %search-button-style {
@@ -245,7 +224,7 @@ $share-toolbar-panel-height: 39px;
 }
 
 %close-cross {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAYCAYAAADOMhxqAAAAT0lEQVR42r2RUQoAMAhCPWL3v4z7in2VE2GBBMETJdAc3K2VAQvMEZAGwrXvEaAjRaV//cEcVBUdNYAXxcAEcwOUAUfXvqeAjhSV/vgHRwe/QqT/idrCCQAAAABJRU5ErkJggg==');
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAYCAYAAADOMhxqAAAAT0lEQVR42r2RUQoAMAhCPWL3v4z7in2VE2GBBMETJdAc3K2VAQvMEZAGwrXvEaAjRaV//cEcVBUdNYAXxcAEcwOUAUfXvqeAjhSV/vgHRwe/QqT/idrCCQAAAABJRU5ErkJggg==') !important;
 }
 
 %close-cross-grey {
@@ -264,8 +243,6 @@ $share-toolbar-panel-height: 39px;
 
 %widget-main-heading {
   text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 300;
 }
 
 %progress-bullets {
@@ -280,6 +257,9 @@ $share-toolbar-panel-height: 39px;
   background-repeat: no-repeat;
   display: inline-block;
   position: absolute;
+  height: auto;
+  overflow: inherit;
+  background-color: inherit;
 
   li {
     display: inline-block;
@@ -333,11 +313,7 @@ html {
 
 body {
   @extend %full-height;
-  margin: 0;
-  padding: 0;
-
   -webkit-font-smoothing: antialiased;
-
   /**
    * Overflow as hidden will hide the meny options,
    * when the window's size is small.
@@ -347,10 +323,6 @@ body {
 }
 
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  font-family: $font-family-main;
   padding: 0;
   margin: 0;
 }
@@ -370,19 +342,10 @@ button {
   @extend %button;
 }
 
-input, select {
-  color: black;
-}
-ul,ol{
-  margin-bottom: 0;
-}
 label {
   display: block;
   margin-top: 5px;
-  margin-bottom: 0;
-  font-size: 12px;
   font-weight: normal;
-  line-height: 1.42857143;
   white-space: nowrap;
   vertical-align: middle;
   -ms-touch-action: manipulation;
@@ -396,97 +359,13 @@ label {
 
 .toolbar {
   @extend %partial-transparent;
-  font-family: $font-family-main;
-  font-size: 10px;
   z-index: 2000;
   color: $lightest-color;
-  text-transform: capitalize;
-
   button {
     background-color: transparent;
     border: none;
   }
 }
-
-#embed-basic-toolbar {
-  @extend %shadow;
-
-  position: absolute;
-  top: 0;
-  width: $toolbar-width;
-  transition-duration: 0.5s;
-  transition-property: -webkit-transform;
-  transition-property: -o-transform;
-  transition-property: -moz-transform;
-  transition-property: -ms-transform;
-  transition-property: transform;
-
-  .panel {
-    padding: 20px 0;
-    &:last-child {
-      padding-bottom: 0;
-    }
-  }
-
-  .collapse-toolbar-toggle {
-    width: 100%;
-    padding: 5px;
-    border-radius: 0;
-    text-indent: -999em;
-    overflow: hidden;
-
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      margin: 0 0 10px -10px;
-      border: 10px solid transparent;
-    }
-
-    &.on {
-      @extend %shadow;
-      background-color: $panel-color;
-      display: none;
-
-      &:after {
-        border-bottom: none;
-        border-top-color: $lightest-color;
-      }
-    }
-    &.off:after {
-      border-top: none;
-      border-bottom-color: $lightest-color;
-    }
-
-  }
-  .collapse-toolbar-panel {
-    position: relative;
-    padding-top: 2px;
-  }
-
-  &.collapsed {
-    -webkit-transform: translateY(-100%);
-    -o-transform: translateY(-100%);
-    -moz-transform: translateY(-100%);
-    -ms-transform: translateY(-100%);
-    transform: translateY(-100%);
-
-    .collapse-toolbar-toggle {
-      &.on {
-        position: absolute;
-        top: 100%;
-        border-radius: 0;
-        display: block;
-      }
-      &.off:after {
-        border-bottom-color: transparent;
-      }
-    }
-  }
-}
-
 #basic-toolbar,
 #secondary-toolbar {
   @extend %shadow;
@@ -527,15 +406,12 @@ label {
   top: 0;
   left: $toolbar-width * 1.5;
   box-shadow: 2px 0 2px rgba(0, 0, 0, .25);
-  padding: 0 9px;
   z-index: 4000;
   border-radius: 0 0 10px 10px;
-  width: 930px;
-
+  width: 960px;
   .panel {
     vertical-align: top;
     display: inline-block;
-
     + .panel {
       @extend %vertical-divider;
     }
@@ -543,25 +419,13 @@ label {
   > .panel {
     height: 60px;
   }
+  a.navbar-brand{
+    margin-top: 7px;
+  }
 }
 .topnavpanel{
   margin-top: 12px;
 }
-
-#top-decoration-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 13px;
-  z-index: 5000;
-  background-image: -webkit-linear-gradient(#9e9e9e, #505050);
-  background-image: -moz-linear-gradient(#9e9e9e, #505050);
-  background-image: -ms-linear-gradient(#9e9e9e, #505050);
-  background-image: -o-linear-gradient(#9e9e9e, #505050);
-  background-image: linear-gradient(#9e9e9e, #505050);
-}
-
 #del-panel {
   position: relative;
   height: 40px;
@@ -628,19 +492,17 @@ label {
 #layerselector-panel {
   button {
     @extend %button;
-    margin-left: 8px;
+    font-size: medium;
   }
   &.active {
     > button {
       @extend %selected-button;
     }
     > .widget {
-      top: 100%;
-      display: inline-block;
+      display: table;
       height: auto;
       background-color: $panel-color;
       width: 300px;
-
       h3 {
         margin-bottom: 10px;
         padding: 8px;
@@ -652,37 +514,28 @@ label {
         }
       }
       .cnt > div {
-        padding: 5px 5px 5px;
+        text-transform: uppercase;
       }
     }
   }
-
+}
+.wrapperHeader{
+  display: table-header-group;
 }
 .rasterLayerList,
 .vectorLayerList {
-  margin: 0;
-  padding: 0;
   list-style: none;
-
-  li {
-    position: relative;
-    padding: 0 3px 0 3px;
-  }
-
   input {
     position: absolute;
     left: -100%;
   }
-
 }
 
 .layersDiv .vectorWidgetToggleBtn,
 .rasterLayerList label,
 .vectorLayerList label {
   @extend %button;
-  color: $lightest-color;
   padding: 7px 3px;
-  display: block;
   cursor: pointer;
 }
 
@@ -701,10 +554,6 @@ label {
 .rasterLayerList label.for-checked:after,
 .vectorLayerList input.is-checked + label:after,
 .vectorLayerList label.for-checked:after {
-  /*
-  .rasterLayerList input:checked + label:after,
-  .vectorLayerList input:checked + label:after {
-  */
   content: '';
   display: block;
   position: absolute;
@@ -729,11 +578,13 @@ label {
 }
 */
 #layerselector-panel-vector .widget {
-  /*
-    margin-left: 15px;
-  */
   margin-left: 7px;
   @extend %shadow;
+}
+.wrapper {
+}
+#map_chooser {
+  display: table;
 }
 
 #getURL-panel.active:after {
@@ -755,21 +606,15 @@ label {
 
 .fullscreen-button {
   width: inherit;
-  height: inherit;
+  height: 60px;
   cursor: pointer;
 }
 svg.kartverket.logo {
   height: 42px;
-  width: 119px;
+  width: 42px;
   .outline,
   .text {
     fill: $lightest-color;
-  }
-}
-.navbar-brand {
-  padding: 4px 15px;
-  :hover {
-    background-color: $link-background-color;
   }
 }
 #logoGeonorge {
@@ -783,7 +628,6 @@ svg.kartverket.logo {
 }
 
 #logoGeonorge a:hover {
-  text-decoration: underline;
   display: block
 }
 
@@ -791,17 +635,11 @@ svg.kartverket.logo {
   position: relative;
 }
 
-.layersDiv .vectorWidgetToggleBtn {
-  font-size: 12px;
-}
 .vectorWidgetToggleBtn {
   margin: 0 3px 0 3px;
 }
 .layersDiv .widget {
-  @extend %partial-transparent;
-  margin: -10px 0 0 10px;
   width: 125px;
-  overflow: hidden;
 }
 
 .layersDiv .widget > .arrow {
@@ -844,19 +682,19 @@ svg.kartverket.logo {
 
 /* on show */
 .layersDiv.show .widget {
-  display: block;
+  display: table-column-group;
   height: auto;
   overflow: visible;
+  text-transform: capitalize;
+  background-color: transparent;
 }
 
 .vectorLayerList li {
   text-transform: none;
-  font-size: 12px;
 }
 
 #basic-toolbar .vectorLayerList .olButton {
   margin: 0;
-
   &:hover,
   &:focus {
     text-decoration: underline;
@@ -947,7 +785,28 @@ svg.kartverket.logo {
   }
 }
 
+.olControlAttribution {
+  font-size: inherit;
+  left: 30px;
+  bottom: 1em;
+  a {
+    color: $dark-color;
+    display: table-cell;
+    height: 60px;
+    background-image: url("data:image/svg+xml;utf8,<svg width='123' height='181' xmlns='http://www.w3.org/2000/svg' class='kartverket logo' preserveAspectRatio='xMidYMid meet' viewBox='0 0 123 181'><title>Kartverket</title><g><title>Layer 1</title> <path id='svg_12' fill='#fff' d='m9.538,0c-5.266,0 -9.536,4.271 -9.536,9.54v162.61198c-0.002,4.57701 4.27,8.84801 9.536,8.84801h104.922c5.266,0 9.537,-4.271 9.537,-9.539v-161.92282c0.003,-5.267 -4.271,-9.538 -9.537,-9.538' class='outline'/> <path fill='#C6CDD3' d='m111.575,4.992h-99.152c-4.977,0 -9.013,4.036 -9.013,9.014v60.802c7.782,-5.92 17.521,-14.199 35.091,-9.864c15.139,3.737 18.439,15.407 42.387,28.665c14.66,8.115 28.414,1.853 39.703,-4.703v-74.9c0,-4.978 -4.039,-9.014 -9.01601,-9.014' id='svg_13'/> <path fill='#3C3C3C' d='m88.628,120.735c-4.939,-0.604 -8.781,-2.312 -12.557,-4.761c-8.386,-5.178 -16.433,-13.646 -33.542,-22.528c-13.63,-6.622 -26.924,-1.573 -39.106,5.37l-0.014,0.007v68.17101c0,4.97801 4.036,9.01399 9.014,9.1399h99.152c4.97701,0 9.014,-4.036 9.014,-9.01399v-55.576c-10.58199,6.066 -20.742,10.994 -31.961,9.317' id='svg_14'/> <path fill='#FFFFFF' d='m80.888,93.609c-23.947,-13.257 -27.247,-24.927 -42.388,-28.665c-17.569,-4.335 -27.308,3.944 -35.091,9.864l0.017,12.266l-0.002,11.742c12.182,-6.944 25.657,-12.35201 39.107,-5.37c17.107,8.882 25.154,17.349 33.541,22.528c3.82,2.359 7.711,4.035 12.558,4.761c11.217,1.676 21.37701,-3.253 31.96101,-9.318l-0.02901,-10.847l0.02901,-11.665c-11.289,6.558 -25.04301,12.82 -39.703,4.704' id='svg_15'/> </g></svg>");
+    background-position: left;
+    background-size: 30px 60px;
+    background-repeat: no-repeat;
+    text-indent: 35px;
+    vertical-align: middle;
+    opacity: 0.9;
+    font-weight: 600;
+  }
+}
+
 .olControlScaleLine {
+  left: 90px;
+  bottom: 3em;
   -webkit-transform: translate(75px, 0);
   -ms-transform: translate(75px, 0);
   transform: translate(75px, 0);
@@ -957,7 +816,9 @@ svg.kartverket.logo {
   transition: -ms-transform .5s ease-in-out;
   transition: transform .5s ease-in-out;
 }
-
+input[type=radio], input[type=checkbox] {
+  visibility: hidden;
+}
 .fullscreen,
 .embedded-map {
 
@@ -995,12 +856,12 @@ svg.kartverket.logo {
 }
 
 #fullscreen-panel {
-  position: absolute;
-  bottom: 10px;
-  right: 160px;
-  height: 80px;
-  width: 80px;
-  border-right: 1px solid rgba(0,0,0,0.7);
+  padding: 0 !important;
+  background-color: rgba(80,80,80,0);
+  -webkit-transition: -webkit-transform .5s ease-in-out, background-color .5s linear;
+  -o-transition: transform .5s ease-in-out, background-color .5s linear;
+  transition: -ms-transform .5s ease-in-out, background-color .5s linear;
+  transition: transform .5s ease-in-out, background-color .5s linear;
 }
 
 .fullscreen #fullscreen-panel {
@@ -1008,7 +869,6 @@ svg.kartverket.logo {
   -o-transition: transform .5s ease-in-out, background-color .5s step-start;
   transition: -ms-transform .5s ease-in-out, background-color .5s step-start;
   transition: transform .5s ease-in-out, background-color .5s step-start;
-  border: 0;
 }
 
 .fullscreen {
@@ -1040,9 +900,11 @@ svg.kartverket.logo {
 
   #fullscreen-panel {
     @extend %partial-transparent;
-    -webkit-transform: translate(130px, -10px);
-    -ms-transform: translate(130px, -10px);
-    transform: translate(130px, -10px);
+
+    -webkit-transform: translate(70px, -73px);
+    -ms-transform: translate(70px, -73px);
+    transform: translate(70px, -73px);
+
     @extend %shadow;
   }
   #overview-container-panel {
@@ -1059,8 +921,8 @@ svg.kartverket.logo {
 }
 
 #fullscreen-panel .icon {
-  height: 40px;
-  width: 40px;
+  //  height: 20px;
+  //  width: 20px;
 }
 
 .lt-ie9 {
@@ -1092,15 +954,6 @@ svg.kartverket.logo {
 ******************************************/
 .toolbar .nkButton {
   @extend %button;
-  width: 60px;
-  height: 40px;
-  padding: 8px;
-  text-decoration: none;
-  text-transform: none;
-  span {
-    font-size: 12px;
-    color: white;
-  }
 }
 
 .nkButton :hover {
@@ -1110,7 +963,6 @@ svg.kartverket.logo {
 .externalToolbarLink {
   text-align: center;
   display: block;
-  font-size: 12px;
   &:hover {
     background-color:$link-background-color;
   }
@@ -1118,11 +970,6 @@ svg.kartverket.logo {
 
 .externalToolbarLink a {
   color: $lightest-color;
-  text-decoration: none;
-}
-
-.externalToolbarLink a:hover {
-  text-decoration: underline;
 }
 
 #services-panel {
@@ -1132,10 +979,10 @@ svg.kartverket.logo {
     margin-bottom: 5px;
     text-transform: uppercase;
   }
-
   button.nkButton {
     height: auto;
     min-height: 40px;
+    width: $toolbar-width;
   }
 }
 
@@ -1161,10 +1008,12 @@ svg.kartverket.logo {
 }
 
 .toolbar .widget {
-  left: 100%;
-  top: 0;
+  left: 110%;
 }
 
+.dataLayersDiv {
+  line-height: 0.5;
+}
 /******************************************
 === share toolbar ===
 ******************************************/
@@ -1183,7 +1032,6 @@ svg.kartverket.logo {
         bottom: auto;
         display: block;
         height: auto;
-        font-size: 12px;
         margin-top: 15px;
         line-height: 18px;
         text-align: left;
@@ -1202,7 +1050,6 @@ svg.kartverket.logo {
       &:nth-last-child(#{$nth_last}) {
         .widget {
           //            right: -#{$share-toolbar-panel-width * ($nth_last - 1)};
-
           &:after {
             right: #{$share-toolbar-panel-width * ($nth_last - 0.5) - 7px};
           }
@@ -1244,7 +1091,6 @@ svg.kartverket.logo {
       bottom: auto;
       display: block;
       height: auto;
-      font-size: 12px;
       margin-top: 15px;
       line-height: 18px;
       text-align: left;
@@ -1327,7 +1173,6 @@ svg.kartverket.logo {
         }
         .h {
           @extend %header-font;
-          font-size: 18px;
           text-transform: none;
           margin-bottom: 15px;
         }
@@ -1341,7 +1186,6 @@ svg.kartverket.logo {
         span {
           display: block;
           margin-top: 10px;
-          font-size: 12px;
         }
         &:hover,
         &:focus,
@@ -1353,7 +1197,6 @@ svg.kartverket.logo {
       }
       .h {
         @extend %widget-main-heading;
-        font-size: 12px;
         text-transform: uppercase;
         margin-bottom: 10px;
       }
@@ -1458,7 +1301,6 @@ svg.kartverket.logo {
         }
         .h {
           @extend %header-font;
-          font-size: 18px;
           text-transform: none;
           margin-bottom: 15px;
         }
@@ -1472,7 +1314,6 @@ svg.kartverket.logo {
         span {
           display: block;
           margin-top: 10px;
-          font-size: 12px;
         }
         &:hover,
         &:focus,
@@ -1484,7 +1325,6 @@ svg.kartverket.logo {
       }
 
       .h {
-        @extend %widget-main-heading;
         margin-bottom: 15px;
       }
     }
@@ -1495,10 +1335,10 @@ svg.kartverket.logo {
 }
 
 /******************************************
-=== help panel ===
+=== Info panel ===
 ******************************************/
 
-#help-panel {
+#info-panel {
   button {
     @extend %button;
   }
@@ -1513,41 +1353,19 @@ svg.kartverket.logo {
       bottom: auto;
       display: block;
       height: auto;
-      font-size: 12px;
       margin-top: 15px;
-      line-height: 18px;
       text-align: left;
       text-transform: none;
       background-color: $panel-color;
       width: 300px;
 
       .h {
-        font-size: 12px;
-        margin-bottom: 10px;
         padding: 10px 10px 10px;
       }
       .h:hover {
         background-color: $link-background-color;
         cursor: pointer;
-      }
-      p {
-        margin-bottom: 10px;
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-      .cnt > div {
-        //padding: 10px 10px 10px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      table, tr, th, td {
-        border: 1px solid #444;
-      }
-      th, td {
-        padding: 8px 10px 6px;
+        text-decoration: underline;
       }
     }
     .shortcuts-panel {
@@ -1555,13 +1373,11 @@ svg.kartverket.logo {
       padding: 10px 10px 10px;
     }
   }
-
 }
 
 #faqBox {
-  margin: 5px;
+  margin: 1px;
 }
-
 .ui-accordion-content-1 {
   display: block;
   height: 90px;
@@ -1572,9 +1388,7 @@ svg.kartverket.logo {
   margin: 0 0 10px 0;
   padding: 5px;
 }
-
 .ui-accordion-header-1 {
-  font-size: 1em;
   background-color: rgba(0, 0, 0, 0.34);
   margin: 2px;
   border-radius: 5px;
@@ -1586,7 +1400,6 @@ svg.kartverket.logo {
     cursor: pointer;
   }
 }
-
 .ui-accordion-header-1:hover {
   background-color: $link-background-color;
   cursor: pointer;
@@ -1602,26 +1415,39 @@ svg.kartverket.logo {
   .widget {
     width: 500px;
   }
+  &.active {
+    > .nkButton {
+      @extend %selected-button;
+    }
+    > .widget {
+      right: 0;
+      top: 100%;
+      left: auto;
+      bottom: auto;
+      display: block;
+      height: auto;
+      margin-top: 15px;
+      text-align: left;
+      text-transform: none;
+      background-color: $panel-color;
+    }
+  }
 }
 
 .embedContent {
   header {
     padding: 20px;
-
     .h {
       @extend %header-font;
     }
   }
-
   .progress {
     @extend %progress-bullets;
     right: 20px;
     top: 20px;
-
     li {
       margin-right: 1em;
     }
-
     @include active-step(type, 1, 7);
     @include active-step(terms, 2, 7);
     @include active-step(area, 3, 7);
@@ -1630,18 +1456,13 @@ svg.kartverket.logo {
     @include active-step(preview, 6, 7);
     @include active-step(output, 7, 7);
   }
-
   .buttons-panel {
     margin-bottom: 20px;
     padding: 20px;
     @extend %horizontal-divider;
-
     button {
-
       @extend %blue-terms-accept-button-style;
-      padding: 3px 10px;
       position: relative;
-
       &.next:after,
       &.back:before {
         content: '';
@@ -1650,13 +1471,11 @@ svg.kartverket.logo {
         display: block;
         border: 6px solid transparent;
         position: absolute;
-        top: 5px;
+        top: 9px;
       }
-
       &.next {
         float: right;
         padding-right: 26px;
-
         &:after {
           border-right-width: 0;
           border-left-color: $lightest-color;
@@ -1666,7 +1485,6 @@ svg.kartverket.logo {
       &.back {
         position: relative;
         padding-left: 26px;
-
         &:before {
           left: 10px;
           border-left-width: 0;
@@ -1677,80 +1495,50 @@ svg.kartverket.logo {
   }
 
   .step-specific {
-
     @extend %horizontal-divider;
     padding: 25px;
 
-    .h {
-      font-size: 11px;
-      text-transform: uppercase;
-      font-weight: normal;
-    }
-    .h, p {
-      padding-bottom: 10px;
-    }
-
     /* elements present at step 1 (type) */
-
     &.type {
       button {
         @extend %big-button;
-
         &.static-button {
           float: right;
           @extend %clearfix;
         }
-
         svg {
           width: 188px;
         }
       }
-
       + .buttons-panel {
         display: none;
       }
     }
 
     /* elements present at step 2 (terms)   */
-
     /* elements present at step 3 (area)    */
 
     &.area {
-
       @extend %clearfix;
       padding-top: 0;
       background-position: 0 25px;
-
       .h {
-
         padding-bottom: 25px;
         line-height: 25px;
       }
 
-      /*
-      input,
-      label {
-        float: right;
-      }
-      */
-
       .mode-options-container {
-
         position: relative;
         margin-bottom: 5px;
-
         p.draw-instructions {
           margin-right: 150px;
         }
-
         label {
           margin: 0 5px;
-
           &[for="defineAreaModeDraw"] {
             margin-right: 15px;
           }
         }
-
         input#include-map-tools {
           position: absolute;
           top: 2px;
@@ -1764,34 +1552,27 @@ svg.kartverket.logo {
       }
 
       .fixed-inputs-container {
-
         display: none;
         margin-bottom: 5px;
-
         input {
           width: 75px;
           padding: 2px 4px;
         }
-
         span {
           &.x {
             display: inline-block;
             margin: 0 5px;
           }
         }
-
         &.on {
           display: block;
         }
       }
-
     }
 
     /* elements present at step 4 (markers) */
-
     &.markers {
       padding: 25px 0 0 0;
-
       .h,
       .instructions {
         padding-left: 25px;
@@ -1854,7 +1635,6 @@ svg.kartverket.logo {
             background-image: -o-linear-gradient(135deg, #0159a3, #4a8ac1);
             background-image: linear-gradient(135deg, #0159a3, #4a8ac1);
           }
-
         }
 
         .remove-marker {
@@ -1883,13 +1663,8 @@ svg.kartverket.logo {
       }
       input, textarea {
         display: block;
-        width: 75%;
-        margin-top: 5px;
+        width: 100%;
         padding: 5px;
-        line-height: 18px;
-      }
-      input {
-        margin-bottom: 20px;
       }
       textarea {
         height: 75px;
@@ -1953,13 +1728,8 @@ svg.kartverket.logo {
 
       section {
         padding-bottom: 10px;
-
         &.map-container {
           padding-bottom: 0;
-        }
-
-        .h {
-          padding-bottom: 5px;
         }
       }
       &.limit-height {
@@ -1978,11 +1748,6 @@ svg.kartverket.logo {
     &.markers {
       background-position: 0 25px;
       padding-top: 0;
-
-      .h {
-        padding-bottom: 25px;
-        line-height: 25px;
-      }
     }
   }
 
@@ -2026,7 +1791,6 @@ svg.kartverket.logo {
 .embed-add-marker {
   @extend %grey-one-lined-button;
   color: $panel-color;
-  font-weight: bold;
 }
 
 .embed-add-marker {
@@ -2034,37 +1798,10 @@ svg.kartverket.logo {
 }
 
 /******************************************
-=== Nav panel ===
-******************************************/
-.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
-  background-color: rgba(80, 80, 80, 0.9);
-}
-.navbar-inverse .navbar-nav>li>a {
-  color: inherit;
-  line-height: 34px;
-}
-.dropdown, .dropdown-toggle, .dropdown-menu {
-  color: $lightest-color;
-  background-color: rgba(80, 80, 80, 0.9);
-  font-size: 12px;
-
-}
-.dropdown-menu li a {
-  color: inherit;
-}
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
-  color: inherit;
-  text-decoration: underline;
-  background-color: $link-background-color;
-}
-
-/******************************************
 === get Zoom panel ===
 ******************************************/
 #zoom-panel {
   margin-left: -4px;
-
   &,
   .sliderWrapper,
   .zoombar-and-buttons-wrapper {
@@ -2128,13 +1865,6 @@ svg.kartverket.logo {
     color: $lightest-color;
     box-shadow: 0 0 6px rgba(0, 0, 0, .7);
   }
-  //.slider:hover span {
-  //  position: absolute;
-  //  padding: 3px 8px;
-  //  top: 0;
-  //  left: 30px;
-  //  display: block;
-  //}
 }
 
 .zoombar-and-buttons-wrapper .wrapper .olButton {
@@ -2168,14 +1898,8 @@ html.touch {
 /*****************************
 === search ===
 *****************************/
-#search-panel {
-  padding: 0 20px;
-  position: relative;
-}
-
 #searchInput {
   min-width: 220px;
-  position: relative;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
   height: 28px;
@@ -2186,21 +1910,15 @@ html.touch {
 
 #searchSubmit {
   @extend %search-button-style;
+  cursor: pointer;
   position: relative;
-  border-radius: 0 12px 12px 0;
-
+  border: 1px solid $bootstrap-blue;
   .icon {
     height: 22px;
     width: 15px;
     display: none;
   }
 }
-
-/* Bootstrap tilpassing*/
-.input-group {
-  margin: 10px 0 0 0;
-}
-
 
 .lt-ie9 #searchSubmit {
   top: 23px;
@@ -2236,9 +1954,7 @@ html.touch {
 #searchResults {
   @extend %partial-transparent;
   @extend %shadow;
-
   z-index: 1;
-  display: none;
   top: 65px;
   left: 0;
   right: 0;
@@ -2247,19 +1963,14 @@ html.touch {
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 28px;
-  max-height: 450px;
-
+  max-height: 340px;
+  width: 120%;
   .result-paging {
     margin: 0 40px 0 8px;
     padding: 8px 0;
     text-align: right;
   }
 
-  .h {
-    font-size: 11px;
-    font-family: $font-family-main;
-    font-weight: normal;
-  }
   .result-category {
     margin: 0 8px;
     padding: 14px 0 10px;
@@ -2267,22 +1978,17 @@ html.touch {
     + .result-category {
       @extend %horizontal-divider;
     }
-
     .icon {
       width: 36px;
       height: 20px;
     }
-
     .h,
     .icon {
       display: inline-block;
     }
-
     .h {
       line-height: 20px;
       vertical-align: top;
-      font-size: 11px;
-      font-family: $font-family-main;
     }
   }
   .areas span,
@@ -2300,11 +2006,8 @@ html.touch {
   ul li {
     list-style-type: none;
     text-transform: none;
-    font-size: 12px;
-    font-family: $font-family-main;
-    line-height: 14px;
-    margin-top: 10px;
     clear: right;
+    margin-bottom: 3px;
   }
 }
 
@@ -2342,6 +2045,14 @@ html.touch {
     &:active {
       @extend %close-cross-container;
     }
+  }
+}
+.close {
+  &,
+  &:hover,
+  &:visited,
+  &:active {
+    @extend %close-cross-container;
   }
 }
 
@@ -2457,8 +2168,7 @@ html.svg {
 }
 */
 button:hover,
-a:hover,
-{
+a:hover {
   background-color: $link-background-color;
 }
 
@@ -2477,29 +2187,19 @@ a:hover,
 /**************************
 ==== popup styling ===
 **************************/
+.user-marker {
+  display: inherit;
+  max-width: inherit;
+}
 .user-marker,
 #nk-selected-feature,
 #nk-selected-coverage-map {
   @extend %shadow;
-
   background-color: $panel-color !important;
   color: $lightest-color;
-  font-size: 12px;
-  text-transform: none;
-  font-family: $font-family-main;
-  line-height: 14px;
-  margin-top: 10px;
-
   .h {
-    font-size: 12px;
-    font-family: $font-family-main;
-    font-weight: normal;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    line-height: 14px;
   }
   div {
-    margin-bottom: 8px;
   }
 }
 
@@ -2643,11 +2343,9 @@ html.touch #overview-container-panel .olControlOverviewMapExpandableToggleSizeBu
     width: 24px;
   }
 }
-
 #secondary-toolbar ~ #overview-container-panel {
   right: 80px;
   bottom: 10px;
-  height: 80px;
 }
 
 html.touch {
@@ -2659,6 +2357,7 @@ html.touch {
   #searchResults a.close {
     &,
     .icon.close {
+      background-size: 24px;
       width: 24px;
       height: 24px;
     }
@@ -2698,7 +2397,6 @@ html.touch {
 focus for toolbar controls
 ***************************/
 
-.fullscreen-button:focus,
 .olControlZoomIn:focus,
 .olControlZoomOut:focus,
 .zoom-to-selection-button:focus,
@@ -2872,7 +2570,6 @@ focus for toolbar controls
     left: auto;
     top: 25%;
     height: auto;
-    font-size: 12px;
     text-align: left;
     text-transform: none;
     right: 78px;
@@ -2911,14 +2608,8 @@ focus for toolbar controls
 
 .tool.draw {
   .widget {
-
-    width: 92px;
+    width: 98px;
     padding: 10px;
-
-    .h {
-      @extend %widget-main-heading;
-    }
-
     ul {
       list-style: none;
       text-align: center;
@@ -2967,12 +2658,9 @@ focus for toolbar controls
       li {
         margin-top: 5px;
         overflow: hidden;
-
         &.text-only {
-
           button {
             width: 100%;
-
             span {
               margin-top: 0;
             }
@@ -2982,7 +2670,6 @@ focus for toolbar controls
     }
 
     .measures {
-
       &.point {
         .length,
         .area {
@@ -3001,7 +2688,6 @@ focus for toolbar controls
         padding: 10px 10px 0 10px;
       }
       dl {
-        line-height: 1.4em;
       }
       .h,
       dd {
@@ -3021,20 +2707,14 @@ focus for toolbar controls
 #feature-label {
   width: 100%;
 }
-
 .update-feature-label,
 .cancel-feature-label {
-  @extend %blue-one-lined-button;
-  padding: 0 12px 0 12px;
-  margin-top: 1em;
-
   &:disabled {
     @extend %grey-one-lined-button;
     color: $panel-color-hex;
     cursor: not-allowed;
   }
 }
-
 .cancel-feature-label {
   float: right;
 }
@@ -3053,13 +2733,11 @@ focus for toolbar controls
     }
     label,
     button {
-      display: block;
-      margin-top: 20px;
+      margin-top: 1em;
     }
     fieldset {
       border: none;
-      margin-top: 20px;
-      padding-top: 1em;
+      margin-top: 1em;
     }
     legend {
       color: $lightest-color;
@@ -3082,44 +2760,29 @@ focus for toolbar controls
       filter: alpha(opacity=0);
     }
     button {
-      @extend %blue-one-lined-button;
-      padding: 0 12px 0 12px;
-
+      background-color: $bootstrap-blue;
       &:disabled {
         @extend %grey-one-lined-button;
-        color: $panel-color-hex;
         cursor: not-allowed;
       }
       &[type='submit'] {
-        height: 40px;
-        text-align: center;
         width: 100%;
-        font-size: 12px;
       }
     }
-
     .popular-route {
-      @extend %blue-one-lined-button;
-      padding: 0 12px 0 12px;
-      display: block;
-      text-decoration: none;
       margin: 0 0 1em 0;
-      text-transform: none;
-      font-size: 12px;
     }
-
     .error-message {
       @extend %horizontal-divider;
       background-position: 0 0;
-      margin-top: 20px;
-      padding-top: 10px;
+      margin-top: 1em;
+      padding-top: 1em;
     }
   }
 }
 
 .height-profile-lightbox.splashscreen {
   .widget {
-
     .loadingNotice {
       display: none;
     }
@@ -3132,38 +2795,24 @@ focus for toolbar controls
         padding: 25px;
       }
     }
-
     width: 820px;
     padding: 0;
     margin: 25px auto 0;
-
     .header {
       padding: 24px 15px 24px 24px;
-
       a.close {
         position: absolute;
         top: 4px;
         right: -12px;
       }
-
-      h1.h {
-        font-family: $font-family-main;
-        font-size: 30px;
-        line-height: 34px;
-        font-weight: normal;
-      }
     }
-
     .image-wrapper {
       text-align: center;
     }
-
     .button-panel {
-
       background-position: 0 0;
       padding: 15px;
       text-align: right;
-
       button {
         @extend %terms-accept-button-style;
         @extend %blue-button-gradient;
@@ -3172,11 +2821,9 @@ focus for toolbar controls
         padding: 0 32px 0 12px;
         margin-right: 20px;
         position: relative;
-
         &:last-child {
           margin-right: 0;
         }
-
         &:after {
           content: '';
           display: block;
@@ -3199,7 +2846,6 @@ focus for toolbar controls
           background-position: 0 0;
           background-image: url('img/btn-icon-print.png');
         }
-
       }
     }
   }
@@ -3213,11 +2859,6 @@ focus for toolbar controls
     width: 400px;
     padding: 0 10px 10px 10px;
     top: -210px;
-    button {
-      @extend %blue-one-lined-button;
-      margin-top: 20px;
-      text-transform: capitalize;
-    }
     label {
       &:before {
         content: '\a';
@@ -3231,23 +2872,10 @@ focus for toolbar controls
     }
     legend {
       color: $lightest-color;
-      margin-bottom: 0;
-    }
-    select, input {
-      border: 1px solid $dark-color;
-      height: 24px;
-      width: 200px;
-    }
-    input {
-      padding: 5px;
     }
     h2 {
-      font-size: 12px;
       font-weight: bold;
       margin: 15px 0 0;
-    }
-    h1 {
-      font-size: 2em;
     }
     .output-value {
       font-weight: bold;
@@ -3269,7 +2897,6 @@ focus for toolbar controls
       legend {
         color: lighten($base-color, 25);
       }
-
       input,
       select {
         background-color: lighten($base-color, 25);
@@ -3296,11 +2923,8 @@ $overlayMenuItemMargin: 5px;
 
 .overlay-group-panel {
   text-align: center;
-
   .widget {
-    //    @extend %shadow;
     top: 0;
-
     .cnt {
       ul {
         list-style: none;
@@ -3336,18 +2960,14 @@ $overlayMenuItemMargin: 5px;
           a, header {
             margin: $overlayMenuItemMargin;
             color: #fff;
-            width: $overlayMenuItemWidth + $overlayMenuItemMargin * 2;
-            display: block;
-            height: 30px;
-            text-decoration: none;
-
-            &:hover,
-            &:focus {
-              text-decoration: underline;
-            }
+            width: inherit;
+            display: table-cell;
+            height: inherit;
+            text-align: center;
+            vertical-align: middle;
+            padding: 2px;
           }
           .h {
-            font-size: 10px;
             height: 40px;
             top: 0;
             left: 0;
@@ -3355,18 +2975,15 @@ $overlayMenuItemMargin: 5px;
             padding-top: 10px;
             padding-left: 10px;
             width: $overlayMenuItemWidth + $overlayMenuItemMargin * 4;
-
           }
           header {
             + ul {
               display: none;
-
               &:hover,
               &:focus {
                 display: block;
               }
             }
-
             &.active,
             &:hover {
               + ul {
@@ -3392,6 +3009,9 @@ $overlayMenuItemMargin: 5px;
 /***************************
   emergency poster control
 ***************************/
+.required:after {
+  content: "* ";
+}
 
 #map.select-emergency-poster-point {
   cursor: url('img/emergency-marker.png') 17 51, default !important;
@@ -3403,16 +3023,14 @@ $overlayMenuItemMargin: 5px;
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 900;
+  z-index: 6000;
   display: none;
   overflow: visible;
-  /*background: transparent url('img/emergency-marker.png') no-repeat 0 0;*/
   margin: -44px 0 0 -9px;
 
   &.active {
     display: block;
   }
-
   > .arrow {
     position: absolute;
     bottom: 100%;
@@ -3427,7 +3045,6 @@ $overlayMenuItemMargin: 5px;
 
   .emergency-poster-popup {
     top: auto;
-    right: auto;
     bottom: 100%;
     left: -165px;
     width: 400px;
@@ -3459,63 +3076,33 @@ $overlayMenuItemMargin: 5px;
   }
 }
 
-/*.emergency-poster-terms-popup, .emergency-poster-location-popup {*/
 .emergency-poster-popup {
   @extend %partial-transparent;
   @extend %shadow;
   position: absolute;
-  top: 100px;
-  right: 200px;
   z-index: 2000;
   max-width: 406px;
   color: $lightest-color;
-  font-size: 12px;
-
+  border-radius: 10px;
   .contentContainer {
-
     .header {
-      padding: 24px 24px 24px 60px;
+      padding: 24px 24px 4px 60px;
       background-repeat: no-repeat;
       background-position: 20px 24px;
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAB8lBMVEUCAgICAgICAgICAgICAgICAgKqqqoCAgKIiIh5eXlfX1+KioqWlpaNjY11dXV9fX2UlJSPj4+BgYGXl5eenp45OTmdnZ0ODg56enqRkZGOjo5lZWWcnJyoqKiampqnp6dqamqZmZlUVFRYWFinp6eAgIBra2ufn5+VlZWampp+fn5oaGiQkJCXl5diYmKSkpKUlJSampptbW2bm5tvb28iIiLsAwPb29uxsbG4uLjpLy/AwMC7u7vi4uK2trbR0dHf39/x8fHrMTHsMjKwsLCvr6+srKze3t6qqqrrLCzNzc3JycnpLi/oLi63t7fg4eHt7e3rMDDPz8/GxsbBwcG8vLzqKirsLCzsMTHW1tbj4+PpKSnLy8vsCwvn5+ju7u7MzM3Y2Nnz8/PExMTqMDC5ubnHx8fuoaLgnp7tj4/a2tr29vbtm5vV1dbW19fq6urp6enS0tLtmprfjY3n5+e6uruys7Prqqrc3N3pLi7b29zdm5vg4ODr7OzQ0ND39/fo6Ojgjo6tra3rKyv4+Pjw8PDv7/D09PTurK3X19fS0tPoKSm/v7/T09TqLy+ysrLh4eHhlJThhITgg4PekZHrn5/m5ub19fbMzMzl5eXb3NzW1tfOzs7CwsL19fXtkJC9vb66urq0tLTIyMjy8vLU1dXfL3tCAAAANnRSTlMAAQIEBQMABkApF0JpSyQtX1A0bJQMjwcrVk4aiOJ53h57EhPVMR2bYnUvHFRwGFljfh+AIQmEbjEzAAACE0lEQVR4XpXUVZfbMBAF4KSS4+ByF7pbZmbZDnOWmbHMzMzMzAz/s5p4pFrHfek8f2fuTWTJ4/P5PMp4vR7XOI3XMSpykllyFKYSjdijaf9kNqF6c43fXxnUKSkzl+Fkwbz51s6fe2LJJbVBYKAUQ+iyhZaReXt3x6/MnVOpM+HFFJXTVJvGrau2mem9fK39RogSVNKssG47zNFj04bZ5NzF+9A1u7+o5s37Uj4ESoRppMLMoNn7df/rshlPHCkugkCxSG9Ji6wRxkZs05MeCEOgaBQYklkctaEpXcgHYRU2qr8k+3B0E805Y6AWV/FFs/MHZWdAwhw4PFfnCNNi0hxt40iY7ffNIEFE52wDcy+Xy41mpxib2vUkGu3cx82YtRSRRqtSkHWIKXOdm9/xEDQvow3HIeuEik5y8/g0IoibhD5nR7PZvj6Ii3ae7+q6yM2D7hqBSGVMnsX4MGPD5c5gUmYzkX9BoVeYBEcT0rS3Ngik0eWGMD2AhLkyuBLPBfJWxYVJAxKmv7BanDBHet0YmtIEYw+FebQWFslPpfHpMzyL5y9evkLTUVyHi7DVeishzwLNu0IEF8lrEO7+oJqOQhUYRKia8v1OM1iM4EVQVGNdcvKjbT59NjduEka9nHqgvpiMfxv6/qN18xb35URF6NaAvzrir2hQrrn7waCUEmITadxPj8YBkv98xISS0F3lD6SF3DjTwx3qAAAAAElFTkSuQmCC');
-
-      h1.h {
-        font-family: $font-family-main;
-        font-size: 30px;
-        font-weight: normal;
-      }
     }
     .step-body {
-      padding: 0 24px 1px 24px;
-      &, .h {
-        font-size: 12px;
-        line-height: 1.5;
-      }
-      .h {
-        text-transform: uppercase;
-        font-weight: normal;
-        margin-bottom: .75em;
-      }
-      p {
-        margin-bottom: 1.5em;
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
+      padding: 0 8px;
     }
     .button-panel {
       @extend %horizontal-divider;
       background-position: 0 0;
-      padding: 12px 24px;
+      padding: 12px 12px;
     }
     .h {
       margin: 0;
     }
   }
-}
-
-span#star {
-  /*color: red;*/
 }
 
 .emergency-poster-popup,
@@ -3534,7 +3121,6 @@ span#star {
       padding: 25px;
     }
   }
-
   .progress {
     @extend %progress-bullets;
     right: 24px;
@@ -3542,12 +3128,6 @@ span#star {
     @include active-step(terms, 1, 3);
     @include active-step(location, 2, 3);
     @include active-step(preview, 3, 3);
-  }
-
-  .button-panel {
-    button {
-      font-size: 11px;
-    }
   }
 }
 
@@ -3557,55 +3137,23 @@ span#star {
 }
 
 .emergency-poster-popup .contentContainer.terms {
-
   .button-panel {
     button {
-      @extend %blue-one-lined-button;
       width: 100%;
-
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        border: 6px solid transparent;
-        border-left-color: $lightest-color;
-        top: 6px;
-        right: 6px;
-      }
     }
   }
 }
 
 .emergency-poster-popup .contentContainer.location {
-
   .emergency-point-name-input-wrapper {
     margin-bottom: 8px;
-
     label[for="emergencyPointNameInput"] {
-      display: block;
-      margin-bottom: 5px;
       text-transform: uppercase;
       font-weight: bold;
     }
-
-    #emergencyPointNameInput {
-      padding: 5px;
-      margin-right: 5px;
-      width: 60%;
-      border: none;
-      font-size: 12px;
-      line-height: 18px;
-    }
-    span {
-      text-transform: none;
-      font-weight: normal;
-      line-height: 14px;
-    }
   }
-
   .emergency-point-location-wrapper {
     h2 {
-      font-size: 12px;
       text-transform: uppercase;
       font-weight: bold;
     }
@@ -3616,7 +3164,6 @@ span#star {
     .altPointListContainer {
       margin-top: 5px;
       margin-bottom: 6px;
-
       #emergencyPointAltLocationMenu {
         display: block;
       }
@@ -3628,36 +3175,12 @@ span#star {
   }
   .button-panel {
     button {
-      /*@extend %button-style;*/
-      @extend %terms-accept-button-style;
-      line-height: 24px;
-      text-align: left;
-      padding: 0 12px;
-
       &.redo {
-        @extend %grey-button-gradient;
-        border: 1px solid #01437c;
         position: relative;
         text-transform: none;
-        color: #505050;
       }
-
       &.accept {
-        @extend %blue-button-gradient;
-        border: 1px solid #01437c;
-        padding-right: 26px;
-        position: relative;
         float: right;
-
-        &:after {
-          content: '';
-          display: block;
-          position: absolute;
-          border: 6px solid transparent;
-          border-left-color: $lightest-color;
-          top: 6px;
-          right: 6px;
-        }
       }
     }
   }
@@ -3678,12 +3201,6 @@ span#star {
         position: absolute;
         top: 4px;
         right: -12px;
-      }
-      h1.h {
-        font-family: $font-family-main;
-        font-size: 30px;
-        line-height: 34px;
-        font-weight: normal;
       }
     }
 
@@ -3790,23 +3307,11 @@ span#star {
     }
 
     .button-panel {
-      background-position: 0 0;
       padding: 15px;
       text-align: right;
-
       button {
-        @extend %terms-accept-button-style;
-        @extend %blue-button-gradient;
-        line-height: 24px;
-        text-align: left;
-        padding: 0 32px 0 12px;
-        margin-right: 20px;
+        padding: 6px 32px 6px 12px;
         position: relative;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
         &:after {
           content: '';
           display: block;
@@ -3814,16 +3319,14 @@ span#star {
           height: 14px;
           position: absolute;
           border: none;
-          top: 5px;
+          top: 9px;
           right: 10px;
         }
-
         &.save:after {
           background-repeat: no-repeat;
           background-position: 0 0;
           background-image: url('img/btn-icon-save.png');
         }
-
         &.print:after {
           background-repeat: no-repeat;
           background-position: 0 0;
@@ -4010,7 +3513,6 @@ span#star {
     background: transparent no-repeat center center;
     cursor: pointer;
     margin: 0;
-    position: 0;
     z-index: 20;
     top: 0;
     left: 0;
@@ -4186,11 +3688,9 @@ span#star {
     display: inline-block;
     font-size: 11px;
     padding: 5px 2px 5px 2px;
-
     &:hover,
     &:active {
       color: $lightest-color;
-      text-decoration: underline;
     }
   }
 
@@ -4325,7 +3825,6 @@ span#star {
       label,
       select {
         display: block;
-        font-size: 13px;
       }
       label,
       dl {
@@ -4338,7 +3837,6 @@ span#star {
       label {
         margin-top: 5px;
       }
-
     }
 
     .label, .value {
@@ -4346,7 +3844,6 @@ span#star {
       overflow: hidden;
       padding: 2px 0 0 0;
       white-space: nowrap;
-      font-size: 13px;
     }
 
     .label.description, .value {
@@ -4820,30 +4317,6 @@ input:disabled {
       }
     }
   }
-  .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
-    background-color: rgba(80, 80, 80, 0.9);
-  }
-  .navbar-inverse .navbar-nav>li>a {
-    color: inherit;
-  }
-  .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-    color: inherit;
-  }
-  .dropdown, .dropdown-toggle, .dropdown-menu {
-    color: $lightest-color;
-    background-color: rgba(80, 80, 80, 0.9);
-    font-size: 12px;
-    line-height: 26px;
-  }
-  .dropdown-menu li a {
-    color: inherit;
-  }
-  .dropdown-menu > li > a:hover,
-  .dropdown-menu > li > a:focus {
-    color: inherit;
-    text-decoration: underline;
-    background-color: $link-background-color;
-  }
 }
 
 @media screen and (max-width: 900px) {
@@ -4938,12 +4411,20 @@ input:disabled {
       top: 8px;
     }
     #searchSubmit {
-      right: 68px;
+      right: 10px;
     }
   }
 }
 
 @media screen and (max-width: 449px) {
+  #basic-toolbar, #secondary-toolbar {
+    top: 0;
+  }
+  #basic-toolbar #fullscreen-panel {
+    padding-bottom: 0;
+    visibility: hidden;
+    height: 0;
+  }
   #top-toolbar {
     #del-panel {
       display: none;
@@ -4983,5 +4464,35 @@ input:disabled {
       bottom: 15px;
       right: 0;
     }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #top-toolbar {
+    right:inherit;
+    width:inherit;
+  }
+  .zoombar-and-buttons-wrapper+.zoom-to-selection-button {
+    margin-top: -30px;
+    visibility: hidden;
+  }
+  #secondary-toolbar ~ #overview-container-panel {
+    visibility: hidden;
+  }
+  #layerselector-panel.active>.widget {
+    top: 0;
+    width: auto;
+  }
+  #searchInput {
+    min-width: 0;
+  }
+  #top-toolbar #searchSubmit {
+    right: 0;
+  }
+  .topnavpanel {
+    margin-top: 0;
+    height: 0;
+    width: 0;
+    visibility: hidden;
   }
 }

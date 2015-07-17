@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="css/ol.css" />
     <link rel="stylesheet" type="text/css" href="css/ol-extra.css" /> 
     <link rel="stylesheet" type="text/css" href="css/norgeskart-legacy.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.norgeskart.css" />
 % if includeCesium:
     <link rel="stylesheet" type="text/css" href="js/Cesium/Widgets/widgets.css" />
 % endif
