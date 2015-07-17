@@ -13,8 +13,6 @@ projection: 25833
 
 baselayers:
     - include: 3/layers/europa
-
-overlays:
     - include: 3/layers/land
     - include: 3/layers/grunnkart
     - include: 3/layers/sjo

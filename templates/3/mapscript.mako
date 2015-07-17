@@ -47,10 +47,10 @@ NK.tokenError = {
 
 NK.mapservers = {};
 NK.mapservers.wmts = [
-  "http://cache1.kartverket.no/grunnkart/wmts",
-  "http://cache2.kartverket.no/grunnkart/wmts",
-  "http://cache3.kartverket.no/grunnkart/wmts",
-  "http://cache4.kartverket.no/grunnkart/wmts"
+  "http://cache1.kartverket.no/proff/wmts",
+  "http://cache2.kartverket.no/proff/wmts",
+  "http://cache3.kartverket.no/proff/wmts",
+  "http://cache4.kartverket.no/proff/wmts"
 ];
 NK.zoomLevels = 18;
 
@@ -235,12 +235,6 @@ NK.init = function () {
     controls: []
   };
   map = new ol.Map(NK.mapOptions);
-
-
-% if overlays:
-  // Overlays
-  ${overlays}
-% endif
 
 % if baselayers:
   // Baselayers

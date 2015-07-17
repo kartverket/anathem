@@ -56,7 +56,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
     }
     if (!!customExtent) {
       sourceOptions['extent'] = customExtent;
-    } 
+    }
     var source = new ol.source.WMTS(sourceOptions);
 
     layerOptions = {
@@ -82,7 +82,7 @@ NK.addLayerType.WMTS = (function (M, MP) {
   };
 }(map, mapProj));
 
-<% vars['layerTypeWMTS'] = True %>
+<% vars['layerTypeWMTS']= True %>
 % endif
 
 (function () {
