@@ -130,8 +130,12 @@
       div.setAttribute("class","widget");
 
       var wrapper = document.createElement("div");
-      wrapper.setAttribute("class","wrapper col1");
+      wrapper.setAttribute("class","wrapper");
       wrapper.setAttribute("id","map_chooser");
+
+      var wrapper2 = document.createElement("div");
+      wrapper2.setAttribute("class","wrapper");
+      wrapper2.setAttribute("id","layer_chooser");
 
       var cnt = document.createElement("div");
       cnt.setAttribute("class","cnt");
@@ -147,6 +151,7 @@
       wrapper.appendChild(cnt);
       div.appendChild(wrapperHeader);
       div.appendChild(wrapper);
+      div.appendChild(wrapper2);
 
       container.appendChild(div);
       container.appendChild(header);
