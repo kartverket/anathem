@@ -51,11 +51,11 @@ overlays  :
     - include: layers/geoJSON/kommunefjell
 
     # friluftsliv layers
-#    - include: layers/wms/fotruter
-#    - include: layers/wms/sykkelruter
-#    - include: layers/wms/skiloyper
-#    - include: layers/wms/friluft-annen
-#    - include: layers/wms/friluft-tilrettelegging
+    - include: layers/wms/fotruter
+    - include: layers/wms/sykkelruter
+    - include: layers/wms/skiloyper
+    - include: layers/wms/friluft-annen
+    - include: layers/wms/friluft-tilrettelegging
 
     # Linked from others
     - include: layers/fjellskygge

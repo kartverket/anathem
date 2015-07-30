@@ -41,10 +41,10 @@ controls:
   name: Tjenester
   id: services-panel
   controls:
-#  - template: controls/overlaygrouppanel
-#    group: tjenester.friluft
-#    title: Friluft
-#    buttonText: Friluft
+  - template: controls/overlaygrouppanel
+    group: tjenester.friluft
+    title: Friluft
+    buttonText: Friluft
   - template: controls/overlaygrouppanel
     group: tjenester.fakta
     title: Fakta
