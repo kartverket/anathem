@@ -1,0 +1,22 @@
+template: 3/layers/geoJSONFile
+url: /json/tema/kommunefjell/Kommunefjell.geojson
+name: Kommunenes fjelltopper
+id: fjelltopper
+visible: true
+epsgCode: 32633
+styleName: unlabeledMarker
+layerGroup: tjenester.fakta 
+popup:
+  template: popup/popup
+  headingAttribute: "OFFISIELT NAVN"
+  data:
+  - template: popup/data
+    attribute: "FYLKESNAVN"
+    label: Fylke
+  - template: popup/data
+    attribute: "KOMMUNENAVN"
+    label: Kommune
+  - template: popup/data
+    attribute: "HOYDE [m]"
+    label: H&oslash;yde
+    unit: "m"

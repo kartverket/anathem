@@ -6,13 +6,11 @@ Use YAML configuration files to combine mako templates.
 
 from mako.template import *
 from mako.lookup import TemplateLookup
+import yaml
 import sys
-import os
 import re
 import closure
-import yaml
 from subprocess import call
-from codecs import open
 
 # matches mako parameters in a template: ${...}, but not containing brackets
 re_param = re.compile('\$\{([^\(\{]*?)\}')
@@ -138,16 +136,17 @@ def output_file(name, payload):
             fd = open("tmp/" + name, "w")
             fd.write(payload.encode('utf8') + '\n')
     else:
-        fd = open("tmp/" + name, "w")
+        fd = open("tmp/"+name, "w")
         fd.write(payload)
         fd.close()
     print "%s/%s.%s" % (destdir, file, ext)
     try:
-        os.rename("tmp/%s.%s" % (file, ext), "%s/%s.%s" % (destdir, file, ext))  # move to output directory
-    except OSError, er:
+        os.rename("tmp/%s.%s" % (file, ext), "%s/%s.%s" % (destdir, file, ext)) # move to output directory
+    except OSError as e:
+        print e.filename
+        print e.strerror
         print "Could not find target: %s/%s.%s " % (destdir, file, ext)
         sys.exit(1)
-
 
 [output_file(c["filename"], recurse_render(c)) for c in config]
 

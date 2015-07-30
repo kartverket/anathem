@@ -11,6 +11,16 @@ ticketServiceUrl: "/ws/esk.py?wms.ecc_enc"
 projection: 25833
 #projection: 32633
 
+#i18n:
+#  - include: languages/nb/base
+
+styles    :
+    - template: 3/styles/unlabeledMarker
+#    - template: 3/styles/labeledMarker
+#    - template: 3/styles/omriss
+#    - template: 3/styles/track
+    - template: 3/styles/wfs
+
 baselayers:
     - include: 3/layers/europa
     - include: 3/layers/land
@@ -31,7 +41,7 @@ baselayers:
     - include: 3/layers/dekning/sjo/overseilingskart
 
     # fakta layers
-#    - include: layers/geoJSON/kommunefjell
+    - include: 3/layers/geoJSON/kommunefjell
 
     # friluftsliv layers
 #    - include: layers/wms/fotruter
@@ -40,20 +50,14 @@ baselayers:
 #    - include: layers/wms/friluft-annen
 #    - include: layers/wms/friluft-tilrettelegging
 
-styles    :
-#    - template: 3/styles/unlabeledMarker
-#    - template: 3/styles/labeledMarker
-#    - template: 3/styles/omriss
-#    - template: 3/styles/track
-    - template: 3/styles/wfs
-
 center    : 
     template: 3/center/besseggen
 
 functions :
     - template: 3/functions/updateURL
     - template: 3/functions/readURL
-#    - template: 3/functions/vector
+    - template: 3/functions/vector
+#    - template: functions/popup
 
 controls  :
     - template: 3/controls/default

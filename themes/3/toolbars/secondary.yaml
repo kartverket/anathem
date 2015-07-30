@@ -38,20 +38,12 @@ controls:
 #    - include: languages/nb/heightprofile
 #  - template: controls/transformations
 #    url: /ws/trans.py
-#- template: 3/controls/container
-#  name: Tjenester
-#  id: services-panel
-#  controls:
-#  - template: controls/overlaygrouppanel
-#    group: tjenester.fakta
-#    title: Fakta
-#    buttonText: Fakta
-    #groupheaders:
-    #- template: controls/overlaygroupheader
-    #  group: fakta
-    #  heading: Over&shy;skrift
-  #- template: controls/overlaygrouppanel
-  #  group: testlag.utvikling
-  #  title: Test under utvikling
-  #  buttonText: Test 
+- template: 3/controls/container
+  name: Tjenester
+  id: services-panel
+  controls:
+  - template: 3/controls/overlaygrouppanel
+    group: tjenester.fakta
+    title: Fakta
+    buttonText: Fakta
 

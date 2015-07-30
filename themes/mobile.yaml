@@ -1,25 +1,26 @@
 template : base
-filename : statisk.html
+filename : mobile.html
 title    : Norgeskart
-mapClass: embedded-map
-mapscript: clients/norgeskart-statisk.min.js
+mapscript: clients/mobile.min.js
+mobile: true
 ---
 template : mapscript
-filename : clients/norgeskart-statisk.min.js
+filename : clients/mobile.min.js
 language  : nb
 tokenServiceUrl: /ws/gkt.py
 ticketServiceUrl: /ws/esk.py?wms.ecc_enc
 projection: 32633
+mobile: true
 
 styles    :
     - template: styles/unlabeledMarker
     - template: styles/labeledMarker
     - template: styles/omriss
     - template: styles/track
-  
-baselayers:   
+
+baselayers:
     - template: layers/europa
-overlays  : 
+overlays  :
     - include: layers/topo2
     - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
@@ -37,14 +38,14 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
-
-functions :
-    template: functions/readURL
-controls:
-    - template: controls/status
-    - template: controls/scaleline
-    - template: controls/popout
 center:
     template: center/besseggen
+functions :
+    template: functions/readURL
+controls  :
+    - template: controls/status
+    - template: controls/navigation
+    - template: controls/scaleline
+    - include: toolbars/mobile-toolbar
+    - include: toolbars/top-basic
+

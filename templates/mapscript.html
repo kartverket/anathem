@@ -241,6 +241,14 @@ var closePopupCallBack = function () {
   this.hide();
 };
 
+NK.functions.imgError = function(image, alt) {
+  image.style.visibility='hidden';
+  image.style.width="10px";
+  image.style.height="1px";
+  image.alt = alt;
+  alt.style.visibility='visible';
+};
+
 % if functions :
   ${functions}
 % endif
@@ -323,6 +331,8 @@ NK.init = function () {
   if (!!params.proj) {
     mapProj = proj[params.proj]; 
   }
+var options = {
+};
 
   NK.mapOptions = {
     projection: mapProj,
@@ -332,7 +342,11 @@ NK.init = function () {
     maxResolution: 21664.0,
   //      minResolution: 0.165283203125,
     numZoomLevels: NK.zoomLevels,
-    theme: 'theme/norgeskart/style.css'
+% if mobile:
+  theme: 'theme/norgeskart/mobile.css'
+% else:
+  theme: 'theme/norgeskart/style.css'
+% endif
   };
 
   map = new OpenLayers.Map( 
@@ -452,7 +466,7 @@ NK.init = function () {
     }());
 
   }
-
+  map.addControl(new OpenLayers.Control.Attribution());
 };
 // end init()
 

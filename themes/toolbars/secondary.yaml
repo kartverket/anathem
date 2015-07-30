@@ -41,17 +41,11 @@ controls:
   name: Tjenester
   id: services-panel
   controls:
-  - template: controls/overlaygrouppanel
-    group: tjenester.friluft
-    title: Friluft
-    buttonText: Friluft
+#  - template: controls/overlaygrouppanel
+#    group: tjenester.friluft
+#    title: Friluft
+#    buttonText: Friluft
   - template: controls/overlaygrouppanel
     group: tjenester.fakta
     title: Fakta
     buttonText: Fakta
-
-- template: controls/gamlenkcontainer
-  name: "Gamle Norges- kart"
-  tooltip: "g&aring; til gamle Norgeskart"
-  id: gamlenk-panel
-
