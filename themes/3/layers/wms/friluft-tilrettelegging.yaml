@@ -1,0 +1,8 @@
+template: 3/layers/wms
+url: http://wms.geonorge.no/skwms1/wms.friluftsruter 
+name: "Tilrette- legging"
+layers: Friluftslivtilrettelegging
+layerGroup: tjenester.friluft
+id: FriluftTilrettelegging
+hidefromlayerswitcher: true
+singleTile: true

@@ -1,0 +1,8 @@
+template: 3/layers/wms
+url: http://wms.geonorge.no/skwms1/wms.friluftsruter 
+name: Skil&oslash;yper 
+layers: Skiloype
+layerGroup: tjenester.friluft
+id: Skiloype
+hidefromlayerswitcher: true
+singleTile: true

@@ -132,10 +132,10 @@ NK.controls.OverlayGroupPanel.prototype.buildLayerGroupStructure = function (eve
 		layer = layers[i];
 
 		if (!layer.isBaseLayer) {
-			if (layer.layerGroup && layer.layerGroup.indexOf(this.group) !== -1) {
+			if (layer['values_'].layerGroup && layer['values_'].layerGroup.indexOf(this.group) !== -1) {
 
 				// add this layer to the group/layer hierarchy
-				subGroup = layer.layerGroup.replace(this.group, '');
+				subGroup = layer['values_'].layerGroup.replace(this.group, '');
 				if (subGroup.indexOf('.') === 0) {
 					subGroup = subGroup.substring(1);
 				}

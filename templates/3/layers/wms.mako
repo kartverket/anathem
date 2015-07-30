@@ -23,11 +23,10 @@
     layerGroup: "${layerGroup}",
 % endif
 % if hidefromlayerswitcher:
-    displayInLayerSwitcher: false;
+    displayInLayerSwitcher: false,
 % endif
     visible: ${visible}
   });
-
 // TODO: minZoom - create a trigger that zooms in when layer becomes visible (manually)
 
   map.addLayer(wms);

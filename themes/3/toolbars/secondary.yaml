@@ -43,6 +43,10 @@ controls:
   id: services-panel
   controls:
   - template: 3/controls/overlaygrouppanel
+    group: tjenester.friluft
+    title: Friluft
+    buttonText: Friluft
+  - template: 3/controls/overlaygrouppanel
     group: tjenester.fakta
     title: Fakta
     buttonText: Fakta
