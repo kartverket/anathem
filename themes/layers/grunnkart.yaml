@@ -14,4 +14,5 @@ dataFormats: "image/png,image/png; mode=24bit,image/jpeg"
 dataLayers:  "topo2_WMS"
 attribution: Kartverket
 abstract   : "Norges grunnkart"
-databbox: "-115000,6400000,1140000,7967861"
+#databbox: "-115000,6400000,1140000,7967861"
+databbox: "-2500000.0,3500000.0,3045984.0,9045984.0"
