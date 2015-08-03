@@ -1,6 +1,6 @@
 template: layers/wmts
 usetoken: true
-name: Gr&aring;tonar
+name: Gr&aring;toner
 layer: topo2graatone
 layerGroup: modus
 id: graa 

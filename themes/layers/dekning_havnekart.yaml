@@ -1,5 +1,5 @@
 template: layers/dekning/sjo/havnekart
-name: Hamne&shy;kart
+name: Havne&shy;kart
 id: dekning.sjo.hv
 url: /json/dekning/sjo/havnekart_ny.json
 mapTypeId: havnekart

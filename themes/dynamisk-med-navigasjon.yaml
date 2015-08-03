@@ -17,9 +17,9 @@ styles    :
     - template: styles/omriss
     - template: styles/track
 
-baselayers:   
+baselayers:
     - template: layers/europa
-overlays  : 
+overlays  :
     - include: layers/topo2
     - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
@@ -58,4 +58,4 @@ controls  :
     - template: controls/scaleline
     - include: toolbars/embed-basic-toolbar
     - template: controls/popout
-      
+

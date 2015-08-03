@@ -477,8 +477,8 @@ var options = {
 %if not statisk:
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup();
   var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
-    url: "http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?",
-    proxyUrl: "/ws/featureinfo.py?http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?",
+    url: "http://wms.geonorge.no/skwms1/wms.fastmerker?",
+    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.fastmerker?",
     queryVisible: true,
     infoFormat: 'text/plain',
     eventListeners: {
@@ -495,9 +495,7 @@ var options = {
             {x: 10, y: -65},
             'selected-feature-popup, user-marker'
           ), true);
-        } catch(e) {
-          console.log(e);
-          }
+        } catch(e) {}
       }
     }
   });

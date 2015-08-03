@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.friluftsruter 
-name: Annen 
-layers: AnnenRute
-layerGroup: tjenester.friluft
-id: FriluftAnnen
-hidefromlayerswitcher: true
-singleTile: true

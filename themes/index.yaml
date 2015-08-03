@@ -2,7 +2,7 @@ template : base
 filename : index.html
 title    : Norgeskart
 mapscript: clients/norgeskart.min.js
---- 
+---
 template : mapscript
 filename : clients/norgeskart.min.js
 language  : nb
@@ -56,7 +56,7 @@ overlays  :
     - include: layers/wms/PGS_stasjoner
     - include: layers/wms/Svenske_finske_stasjoner
 
-center    : 
+center    :
     template: center/besseggen
 
 functions :

@@ -1,6 +1,6 @@
 template: layers/wmts
 usetoken: true
-name: Hovudkart 
+name: Hovedkart
 layer: sjokartraster 
 layerGroup: sjo 
 id: sjo

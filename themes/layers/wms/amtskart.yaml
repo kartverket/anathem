@@ -1,8 +1,0 @@
-template: layers/wms
-usetoken: true
-url: http://wms.geonorge.no/skwms1/wms.historiskekart
-name: Amts&shy;kart
-layers: amt1
-layerGroup: historik
-id: amtskart
-singleTile: true

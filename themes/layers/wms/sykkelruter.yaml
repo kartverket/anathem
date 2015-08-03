@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.friluftsruter 
-name: Sykkelruter
-layers: Sykkelrute
-layerGroup: tjenester.friluft
-id: Sykkelrute
-hidefromlayerswitcher: true
-singleTile: true
