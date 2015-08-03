@@ -1,8 +1,0 @@
-template: layers/wms
-usetoken: true
-url: http://wms.geonorge.no/skwms1/wms.historiskekart
-name: Historiske
-layers: historiskekart
-layerGroup: historik
-id: historiske
-singleTile: true

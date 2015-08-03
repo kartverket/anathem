@@ -1,9 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.fastmerker?
-name: Trekantpunkter
-layers: Trekantpunkt
-layerGroup: tjenester.Fastmerker
-id: Trekantpunkt
-usetoken: true
-singleTile: true
-minZoom: 8

@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.friluftsruter 
-name: Fotruter
-layers: Fotrute
-layerGroup: tjenester.friluft
-id: Fotrute
-hidefromlayerswitcher: "true"
-singleTile: true

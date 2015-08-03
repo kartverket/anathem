@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.fastmerker?
-name: Vis alt
-layers: fastmerke
-layerGroup: tjenester.Fastmerker
-id: fastmerke
-usetoken: true
-singleTile: true

@@ -1,0 +1,86 @@
+@font-face {
+  font-family: 'MetaBook';
+  src: url("/fonts/MetaWeb-Book.eot");
+  src: local("?"), url("/fonts/MetaWeb-Book.woff") format("woff"), url("/fonts/MetaComp-Book.ttf") format("truetype");
+}
+
+$font-family-main: MetaBook, Arial, sans-serif;
+$font-family-output: monospace;
+$base-color: #606060;
+$dark-color: #000;
+$button-light-blue: #408ccd;
+$button-dark-blue: #0058a3;
+$bootstrap-blue: #337ab7;
+$grey: rgba(lighten($base-color, 11), 1);
+$lightest-color: #fff;
+$toolbar-width: 68px;
+$panel-color: rgba(80, 80, 80, .9);
+$panel-color-hex: #606161;
+$share-toolbar-panel-width: 60px;
+$share-toolbar-panel-height: 39px;
+$link-background-color: #3A80BB;
+
+
+body {
+  font-family: $font-family-main;
+}
+h1, .h1, h2, .h2, h3, .h3 .h{
+ margin-top: 0;
+}
+input, textarea, select  {
+  color: $dark-color;
+}
+ul,ol{
+  margin-bottom: 0;
+}
+
+.input-group {
+  margin: 10px 0 0 0;
+}
+
+/******************************************
+=== Nav panel ===
+******************************************/
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+  background-color: rgba(80, 80, 80, 0.9);
+}
+.navbar-inverse .navbar-nav>li>a {
+  color: inherit;
+  line-height: 34px;
+}
+.navbar-inverse .navbar-brand {
+  color: $lightest-color;
+}
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+  text-decoration: underline;
+  background-color: $link-background-color;
+}
+.navbar-brand {
+  padding: 0 10px 0 0;
+  color: $lightest-color;
+  text-transform: uppercase;
+  font-size: medium;
+  :hover {
+    background-color: $link-background-color;
+  }
+}
+.dropdown-menu li a {
+  color: inherit;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: inherit;
+  text-decoration: underline;
+  background-color: $link-background-color;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+  color: inherit;
+}
+.dropdown, .dropdown-toggle, .dropdown-menu {
+  color: $lightest-color;
+  background-color: rgba(80, 80, 80, 0.9);
+  line-height: 26px;
+}
+.btn:hover {
+  text-decoration: underline;
+}
