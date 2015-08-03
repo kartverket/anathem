@@ -37,9 +37,6 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
-
 functions :
     template: functions/readURL
 controls:

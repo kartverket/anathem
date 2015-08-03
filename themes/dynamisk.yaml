@@ -38,36 +38,43 @@ mapscript:
         - include: layers/dekning_kystkart
         - include: layers/dekning_overseilingskart
 
-        # tilgjengelighet WMS
-        - include: layers/wms/tilgjengelighet_kulturminner_flate
-        - include: layers/wms/tilgjengelighet_kulturminner_punkt
+        # SSR - stedsnavn
+        - include: layers/wms/ssrSpraak
+        - include: layers/wms/ssrSpraakNorsk
+        - include: layers/wms/ssrSpraakNordsamisk
+        - include: layers/wms/ssrSpraakLulesamisk
+        - include: layers/wms/ssrSpraakSorsamisk
+        - include: layers/wms/ssrSpraakKvensk
 
-        - include: layers/wms/tilgjengelighet_friluft
-        - include: layers/wms/tilgjengelighet_friluftsomrade
-        - include: layers/wms/tilgjengelighet_statlig_sikra_polygon
-        - include: layers/wms/tilgjengelighet_turvei
-        - include: layers/wms/tilgjengelighet_parkeringsomrader_friluft
-        - include: layers/wms/tilgjengelighet_hc_parkering_friluft
-        - include: layers/wms/tilgjengelighet_baderampe
-        - include: layers/wms/tilgjengelighet_fiskeplass
-        - include: layers/wms/tilgjengelighet_gapahukhytte
-        - include: layers/wms/tilgjengelighet_grillbalplass
-        - include: layers/wms/tilgjengelighet_serveringskiosk
-        - include: layers/wms/tilgjengelighet_sittegruppe
-        - include: layers/wms/tilgjengelighet_toalett
-        - include: layers/wms/tilgjengelighet_turisthytte
+        - include: layers/wms/ssrNavnetype
+        - include: layers/wms/ssrNavnetypeAdministrative_omraader
+        - include: layers/wms/ssrNavnetypeBygninger_eiendom
+        - include: layers/wms/ssrNavnetypeSamferdsel
+        - include: layers/wms/ssrNavnetypeTerrengformer
+        - include: layers/wms/ssrNavnetypeVannkontur
+        - include: layers/wms/ssrNavnetypeKystdata
+        - include: layers/wms/ssrNavnetypeMarkslag
+        - include: layers/wms/ssrNavnetypeAndre_navnetyper
 
-        - include: layers/wms/tilgjengelighet_tettsted
-        - include: layers/wms/tilgjengelighet_vei
-        - include: layers/wms/tilgjengelighet_parkeringsomrader_tettsted
-        - include: layers/wms/tilgjengelighet_HC-parkeringsplasser
-        - include: layers/wms/tilgjengelighet_inngang_bygg
+        #- include: layers/wms/ssrVedtaksstatus_dato
+        - include: layers/wms/ssrVedtatt_siste_24md
+        - include: layers/wms/ssrVedtatt_siste_12md
+        - include: layers/wms/ssrVedtatt_siste_6md
+        - include: layers/wms/ssrVedtatt_siste_3md
+        - include: layers/wms/ssrVedtatt_siste_md
 
-        - include: layers/wms/tilgjengelighet_pilotfylker
-        - include: layers/wms/tilgjengelighet_ressurskommuner
+        - include: layers/wms/ssrVedtatt_og_godkjent
+        - include: layers/wms/ssrVedtatt
+        - include: layers/wms/ssrGodkjent
+        - include: layers/wms/ssrSamlevedtak
+        - include: layers/wms/ssrVedtak_paaklaget
+        - include: layers/wms/ssrPrivat
+        - include: layers/wms/ssrInternasjonalt
 
-        # tilgjengelighet WFS
-        #- include: layers/wfs/uu_test
+        - include: layers/wms/ssrAvslaatt
+        - include: layers/wms/ssrUvurdert
+        - include: layers/wms/ssrForeslaatt
+        - include: layers/wms/ssrHistorisk
 
     center    :
     template: center/besseggen

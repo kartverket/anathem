@@ -42,8 +42,3 @@ controls:
     group: tjenester.alle
     title: Alle
     buttonText: Alle
-  - template: controls/overlaygrouppanel
-    group: tjenester.friluft
-    title: Friluft
-    buttonText: Friluft
-

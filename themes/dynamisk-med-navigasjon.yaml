@@ -37,8 +37,43 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
+    # SSR - stedsnavn
+    - include: layers/wms/ssrSpraak
+    - include: layers/wms/ssrSpraakNorsk
+    - include: layers/wms/ssrSpraakNordsamisk
+    - include: layers/wms/ssrSpraakLulesamisk
+    - include: layers/wms/ssrSpraakSorsamisk
+    - include: layers/wms/ssrSpraakKvensk
+
+    - include: layers/wms/ssrNavnetype
+    - include: layers/wms/ssrNavnetypeAdministrative_omraader
+    - include: layers/wms/ssrNavnetypeBygninger_eiendom
+    - include: layers/wms/ssrNavnetypeSamferdsel
+    - include: layers/wms/ssrNavnetypeTerrengformer
+    - include: layers/wms/ssrNavnetypeVannkontur
+    - include: layers/wms/ssrNavnetypeKystdata
+    - include: layers/wms/ssrNavnetypeMarkslag
+    - include: layers/wms/ssrNavnetypeAndre_navnetyper
+
+    #- include: layers/wms/ssrVedtaksstatus_dato
+    - include: layers/wms/ssrVedtatt_siste_24md
+    - include: layers/wms/ssrVedtatt_siste_12md
+    - include: layers/wms/ssrVedtatt_siste_6md
+    - include: layers/wms/ssrVedtatt_siste_3md
+    - include: layers/wms/ssrVedtatt_siste_md
+
+    - include: layers/wms/ssrVedtatt_og_godkjent
+    - include: layers/wms/ssrVedtatt
+    - include: layers/wms/ssrGodkjent
+    - include: layers/wms/ssrSamlevedtak
+    - include: layers/wms/ssrVedtak_paaklaget
+    - include: layers/wms/ssrPrivat
+    - include: layers/wms/ssrInternasjonalt
+
+    - include: layers/wms/ssrAvslaatt
+    - include: layers/wms/ssrUvurdert
+    - include: layers/wms/ssrForeslaatt
+    - include: layers/wms/ssrHistorisk
 
 center:
     template: center/besseggen

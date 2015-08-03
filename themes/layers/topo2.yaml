@@ -4,5 +4,4 @@ name: Land
 layer: topo2_dybde
 layerGroup: land
 id: land
-visible: true
 attribution: true

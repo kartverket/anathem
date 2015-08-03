@@ -39,7 +39,12 @@ overlays  :
     - include: layers/svalbard
     - include: layers/janmayen
 
+    # HISTORIKK
+    - include: layers/wms/n5raster
+    - include: layers/wms/amtskart
+
     # KARTINNDELING
+    - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_n50_plast
     - include: layers/dekning_havnekart
@@ -86,13 +91,6 @@ overlays  :
     - include: layers/wms/ssrUvurdert
     - include: layers/wms/ssrForeslaatt
     - include: layers/wms/ssrHistorisk
-
-    # friluftsliv layers
-    - include: layers/wms/fotruter
-    - include: layers/wms/sykkelruter
-    - include: layers/wms/skiloyper
-    - include: layers/wms/friluft-annen
-    - include: layers/wms/friluft-tilrettelegging 
 
 center    :
     template: center/besseggen

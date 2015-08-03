@@ -241,14 +241,6 @@ var closePopupCallBack = function () {
   this.hide();
 };
 
-var closePopupCallBack = function () {
-  var itemIndex;
-  for (itemIndex = 0; itemIndex < map.popups.length; itemIndex++) {
-    map.popups[itemIndex].hide();
-  }
-  this.hide();
-};
-
 NK.functions.imgError = function(image, alt) {
   image.style.visibility='hidden';
   image.style.width="10px";

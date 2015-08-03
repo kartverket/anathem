@@ -40,10 +40,7 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
-
-center    : 
+center    :
     template: center/besseggen
 
 functions :
