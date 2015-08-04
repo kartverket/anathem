@@ -12,12 +12,6 @@ controls:
     - include: languages/nb/draw
     storageUrl: /ws/upload-json.py
     styleName: track
-  - template: controls/emergencyposter
-    serviceURL: http://openwps.statkart.no/skwms1/wps.elevation
-    ssrwsURL: https://ws.geonorge.no/SKWS3Index/ssr/sok?
-    pdfServiceUrl: http://ws.geonorge.no/ngnk2/ngnk?
-    i18n:
-    - include: languages/nb/emergencyposter
   - template: controls/heightprofile
     heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
     gpxStorageUrl: /ws/upload-gpx.py
@@ -45,31 +39,31 @@ controls:
     group: tjenester.Tettsted_Rullestol
     title: Tettsted_Rullestol
     buttonText: Tettsted Rullestol
-    buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
+    #buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
   - template: controls/overlaygrouppanel
     group: tjenester.Tettsted_Elektrisk_rullestol
     title: Tettsted_Elektrisk_rullestol
     buttonText: Tettsted Elektrisk rullestol
-    buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
+    #buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
   - template: controls/overlaygrouppanel
     group: tjenester.Tettsted_Syn
     title: Tettsted_Syn
     buttonText: Tettsted Syn
-    buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
+    #buttonIcon: /tilgjengelighet/theme/norgeskart/img/by.png
 
   - template: controls/overlaygrouppanel
     group: tjenester.friluft_rullestol
     title: Friluft_rullestol
     buttonText: Friluft Rullestol
-    buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
+    #buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
   - template: controls/overlaygrouppanel
     group: tjenester.friluft_elektrisk_rullestol
     title: friluft_elektrisk_rullestol
     buttonText: Friluft Elektrisk Rullestol
-    buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
+    #buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
   - template: controls/overlaygrouppanel
     group: tjenester.friluftsyn
     title: friluftsyn
     buttonText: Friluft Syn
-    buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
+    #buttonIcon: /tilgjengelighet/theme/norgeskart/img/friluftsliv.png
 

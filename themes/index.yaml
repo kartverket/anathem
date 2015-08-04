@@ -46,9 +46,6 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # Linked from others
-    - include: layers/fjellskygge
-
     # tilgjengelighet WMS
     - include: layers/wms/tilgjengelighet2_t_rullestol
     - include: layers/wms/tilgjengelighet2_t_el_rullestol
