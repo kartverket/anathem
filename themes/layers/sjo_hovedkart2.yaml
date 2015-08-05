@@ -4,3 +4,4 @@ name: Hovedkart
 layer: sjokartraster 
 layerGroup: sjo 
 id: sjo
+attribution: true
