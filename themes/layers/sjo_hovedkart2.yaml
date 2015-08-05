@@ -4,3 +4,4 @@ name: Hovudkart
 layer: sjokartraster 
 layerGroup: sjo 
 id: sjo
+attribution: true
