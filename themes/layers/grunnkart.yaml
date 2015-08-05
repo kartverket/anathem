@@ -5,3 +5,4 @@ layer: norges_grunnkart
 layerGroup: land
 id: enkel 
 attribution: true
+visible: true
