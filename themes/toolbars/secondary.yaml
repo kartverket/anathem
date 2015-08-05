@@ -8,8 +8,6 @@ controls:
   id: tools-panel
   controls:
   - template: controls/draw
-    i18n:
-    - include: languages/nb/draw
     storageUrl: /ws/upload-json.py
     styleName: track
   - template: controls/transformations

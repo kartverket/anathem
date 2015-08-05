@@ -38,8 +38,6 @@ controls:
     className: topnavpanel
     controls:
     - template: controls/embed
-      i18n:
-      - include: languages/nb/embed
   - template: controls/container
     id: info-panel
     top: true
@@ -47,5 +45,3 @@ controls:
     controls:
     - template: controls/info
       faqUrl: /js/faq.html
-      i18n:
-      - include: languages/nb/help
