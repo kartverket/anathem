@@ -409,24 +409,23 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     test = a.split("\n");
     if (test.length > 5) {
       markup += '<article style="overflow-y: auto; height:380px" >';
-      a= feature.replace(/Layer/g,",,Layer");
+      a = feature.replace(/Layer/g, ",,Layer");
       a = a.split(",,");
       for (i = 0; i < a.length; ++i) {
-        if (a[i].substring(0,5) == "Layer") {
+        if (a[i].substring(0, 5) == "Layer") {
           //Layer
           tmpMarkup = '';
           var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
           var nrlDictTmp = nrlDict[tmp[1].trim()];
           var tmpResp = [];
           var nrlDictResponse = [];
-          markup += '<h1 class="h">' + nrlDictTmp['info']['extra'] + '</h1>';
+          markup += '<h4 style="margin-bottom:5px">' + nrlDictTmp['info']['extra'] + '</h4>';
           a[i] = a[i].replace(/Feature/g,",,Feature");
           var f = a[i].split(",,");
           for (l = 0; l < f.length; ++l) {
             //feature
             if (f[l].substring(0, 7) == "Feature") {
-              tmpMarkup += '<div class="featureInfo" style="display: table">';
-              test = f[l].split("\n");
+              tmpMarkup += '<div class="featureInfo" style="display: table; border-top: 1px solid;">';
               try {
                 for (j = 0, k = test.length - 1; j < k; j += 1) {
                   tmp = test[j].split(" = ");
@@ -443,10 +442,9 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                   tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell">' + prop + '</span><span class="value" style="display: table-cell">';
                   if (!!tmpResp[nrlDictTmp['content'][prop]]) {
                     if (!!nrlDictTmp['content'][prop]) {
-                      tmpMarkup += tmpResp[nrlDictTmp['content'][prop]] + '</span></p>';
-                    } else {
-                      tmpMarkup += '</span></p>';
+                      tmpMarkup += tmpResp[nrlDictTmp['content'][prop]];
                     }
+                    tmpMarkup += '</span></p>';
                   } else {
                     if (typeof nrlDictTmp['content'][prop] === 'object') {
                       for (var internprop in nrlDictTmp['content'][prop]) {
@@ -468,12 +466,12 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         }
       }
     } else {
-      markup += '<article>';
-      markup += "Vi har ingen data for dette punktet";
+      markup += '<article><p>Vi har ingen data for dette punktet</p>';
     }
     markup += '<div class="externalToolbarLink"><a href="http://www.statkart.no/Kart/Nasjonalt-register-over-luftfartshindre/" target="_blank"><br>Les mer om Nasjonalt register over luftfartshindre</a></div>';
     markup += '</article>';
-    return markup;  };
+    return markup;
+  };
 };
 
 NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, popupCloseFunction, options) {
@@ -552,7 +550,6 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
     feature.popup = popup;
     popup.feature = feature;
     M.addPopup(popup);
-  
   };
 };
 
