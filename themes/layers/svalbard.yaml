@@ -1,6 +1,6 @@
 template: layers/wmts
 usetoken: false 
-name: svalbard 
+name: Svalbard
 url: http://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?
 layer: Basisdata_NP_Basiskart_Svalbard_WMTS_25833
 epsg: "EPSG:25833"
