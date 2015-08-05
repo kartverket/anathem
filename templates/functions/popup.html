@@ -1,4 +1,4 @@
-﻿% if not 'popupFunctions' in vars:
+﻿%if not 'popupFunctions' in vars:
 
 NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
@@ -134,10 +134,9 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         }
       }
     };
-
     test = a.split("\n");
     if (test.length > 5) {
-      markup += '<article style="overflow-y: auto; height:300px" >';
+      markup += '<article style="overflow-y: auto; height:380px" >';
       a = feature.replace(/Layer/g, ",,Layer");
       a = a.split(",,");
       for (i = 0; i < a.length; ++i) {
@@ -147,10 +146,10 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
           var dictTmp = dict[tmp[1].trim()];
           var tmpResp = [];
-          markup += '<h1 class="h">' + dictTmp['info']['name'] + '</h1>';
-          markup += '<span>' + dictTmp['info']['extra'] + '<span>';
+          markup += '<h4 style="margin-bottom:5px">' + dictTmp['info']['name'] + '</h4>';
+          markup += '<p  style="margin-bottom:5px">' + dictTmp['info']['extra'] + '<p>';
           markup += '<div class="externalToolbarLink">' + dictTmp['info']['link'] + '</div>';
-          markup += '<h1 class="h">Lag : ' + tmp[1].trim() + '</h1>';
+          markup += '<h4 class="h">Lag : ' + tmp[1].trim() + '</h4>';
           var f = a[i].replace(/Feature/g, ",,Feature");
           f = f.split(",,");
           for (l = 0; l < f.length; l++) {
@@ -195,7 +194,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         }
       }
     } else {
-      markup += '<article>Vi har ingen data for dette punktet';
+      markup += '<article><p>Vi har ingen data for dette punktet</p>';
     }
     markup += '<div class="externalToolbarLink">Kilde: <a href="http://www.kartverket.no" target="_blank">Kartverket</a></div></article>';
     return markup;
