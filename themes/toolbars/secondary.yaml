@@ -15,7 +15,7 @@ controls:
   - template: controls/transformations
     url: /ws/trans.py
 - template: controls/container
-  name: Tjenester
+  name: Fagdata
   id: services-panel
   controls:
   - template: controls/overlaygrouppanel
