@@ -42,7 +42,7 @@ ul,ol{
 === Nav panel ===
 ******************************************/
 .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
-  background-color: rgba(80, 80, 80, 0.9);
+  background-color: $panel-color;
 }
 .navbar-inverse .navbar-nav>li>a {
   color: inherit;
@@ -78,7 +78,7 @@ ul,ol{
 }
 .dropdown, .dropdown-toggle, .dropdown-menu {
   color: $lightest-color;
-  background-color: rgba(80, 80, 80, 0.9);
+  background-color: $panel-color;
   line-height: 26px;
 }
 .btn:hover {
