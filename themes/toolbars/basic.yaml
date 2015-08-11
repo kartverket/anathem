@@ -22,7 +22,7 @@ controls:
     title: "Sj&oslash;"
     group: sjo
   - template: controls/rasterlayerselector-popup
-    title: "Flere"
+    title: "Fleire"
     group: flere
   - template: controls/vectorlayerselector
     group: dekning

@@ -466,7 +466,7 @@ translations:
 
   - template: i18n/translation
     source: Keyboard shortcuts
-    translation: Tastatursnarveier
+    translation: Hurtigtastar
   - template: i18n/translation
     source: You can navigate using the following keyboard shortcuts
     translation: F&oslash;lgende taster kan brukes til navigasjon

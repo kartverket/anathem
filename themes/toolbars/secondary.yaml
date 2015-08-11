@@ -18,24 +18,24 @@ controls:
   controls:
   - template: controls/overlaygrouppanel
     group: tjenester.Spraak
-    title: Stedsnavn etter spr&aring;k
-    buttonText: Stedsnavn etter spr&aring;k
+    title: Stadnamn etter spr&aring;k
+    buttonText: Stadnamn etter spr&aring;k
   - template: controls/overlaygrouppanel
     group: tjenester.Navnetype
-    title: Stedsnavn etter navnetype
-    buttonText: Stedsnavn etter navnetype
+    title: Stadnamn etter namnetype
+    buttonText: Stadnamn etter namnetype
   - template: controls/overlaygrouppanel
     group: tjenester.Vedtaksstatus-dato
-    title: Nye navnevedtak
-    buttonText: Nye navnevedtak
+    title: Nye namnevedtak
+    buttonText: Nye namnevedtak
   - template: controls/overlaygrouppanel
     group: tjenester.autoriserte_skrivemaate
-    title: Autoriserte skrivem&aring;ter
-    buttonText: Autoriserte skrivem&aring;ter
+    title: Autoriserte skrivem&aring;tar
+    buttonText: Autoriserte skrivem&aring;tar
   - template: controls/overlaygrouppanel
     group: tjenester.ikke_autoriserte_skrivemaate
-    title: Ikke autoriserte skrivem&aring;ter
-    buttonText: Ikke autoriserte skrivem&aring;ter
+    title: Ikke autoriserte skrivem&aring;tar
+    buttonText: Ikke autoriserte skrivem&aring;tar
   - template: controls/overlaygrouppanel
     group: tjenester.alle
     title: Alle
