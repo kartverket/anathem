@@ -44,4 +44,4 @@ controls:
     className: topnavpanel
     controls:
     - template: controls/info
-      faqUrl: /js/faq.html
+      faqUrl: js/faq_ssr_nn.html
