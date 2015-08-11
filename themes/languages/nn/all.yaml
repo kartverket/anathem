@@ -423,10 +423,10 @@ translations:
 
   - template: i18n/translation
     source: Fullscreen
-    translation: Fullskjermsvisning
+    translation: Fullskjermvising
   - template: i18n/translation
     source: Exit fullscreen
-    translation: Avslutt fullskjermsvisning
+    translation: Avslutt Fullskjermvising
 
   - template: i18n/translation
     source: Pan north

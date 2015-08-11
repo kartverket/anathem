@@ -34,8 +34,8 @@ controls:
     buttonText: Autoriserte skrivem&aring;tar
   - template: controls/overlaygrouppanel
     group: tjenester.ikke_autoriserte_skrivemaate
-    title: Ikke autoriserte skrivem&aring;tar
-    buttonText: Ikke autoriserte skrivem&aring;tar
+    title: Ikkje-autoriserte skrivem&aring;tar
+    buttonText: Ikkje-autoriserte skrivem&aring;tar
   - template: controls/overlaygrouppanel
     group: tjenester.alle
     title: Alle
