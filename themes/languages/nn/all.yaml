@@ -462,7 +462,7 @@ translations:
     translation: Zoom ut
   - template: i18n/translation
     source: Zoom to selection
-    translation: Zoom til valt område
+    translation: Zoom til valt omr&aring;de
 
   - template: i18n/translation
     source: Keyboard shortcuts
