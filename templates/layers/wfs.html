@@ -30,7 +30,8 @@ NK.addLayerType.WFS = (function (M, MP) {
 			featurePrefix: featurePrefix,
 			featureType: featureType,
 			outputFormat: options.outputFormat || 'text/xml; subtype=gml/3.2.1',
-			readFormat: new OpenLayers.Format.GML.v3()
+      srsName: options.srsName || 'EPSG:32633',
+			readFormat: new OpenLayers.Format.GML.v3({featureType: featureType})
 		};
 
 		protocol = new OpenLayers.Protocol.WFS(protocolParameters);
@@ -84,7 +85,7 @@ NK.addLayerType.WFS = (function (M, MP) {
 	    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
 	        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
 	    }
-	    NK.functions.vector.addVectorHoverControls(M, layer, false);
+	    //NK.functions.vector.addVectorHoverControls(M, layer, false);
 
 	};
 
@@ -137,5 +138,9 @@ NK.addLayerType.WFS = (function (M, MP) {
   options.visibility = true;
 % endif
 
-  NK.addLayerType.WFS("${name}", "${id}", "${url}", "${namespace}", "${namespacePrefix}", "${featuretype}", options);	
+% if outputFormat:
+  options.outputFormat = '${outputFormat}';
+% endif
+
+  NK.addLayerType.WFS("${name}", "${id}", "${url}", "${namespace}", "${namespacePrefix}", "${featuretype}", options);
 }());

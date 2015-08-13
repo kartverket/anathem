@@ -40,7 +40,7 @@ overlays  :
     # fakta layers
     - include: layers/geoJSON/kommunefjell
 
-functions:
+functions :
     template: functions/readURL
 controls:
     - template: controls/status

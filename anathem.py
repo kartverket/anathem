@@ -6,10 +6,10 @@ Use YAML configuration files to combine mako templates.
 
 from mako.template import *
 from mako.lookup import TemplateLookup
-import yaml
 import sys
 import re
 import closure
+import yaml
 from subprocess import call
 
 # matches mako parameters in a template: ${...}, but not containing brackets
@@ -124,7 +124,7 @@ def output_file(name, payload):
   elif ext == "js":
     if compress:
       fd = open("tmp/tmp.js", "w")
-      fd.write(payload);
+      fd.write(payload)
       fd.close()
       if call(["java", "-jar", closure.get_jar_filename(), "--js", "tmp/tmp.js", "--js_output_file", "tmp/"+name]):
         print "Error compressing javascript."
@@ -132,15 +132,17 @@ def output_file(name, payload):
       os.unlink("tmp/tmp.js")
     else:
       fd = open("tmp/"+name, "w")
-      fd.write(payload);
+      fd.write(payload)
   else:
     fd = open("tmp/"+name, "w")
-    fd.write(payload);
+    fd.write(payload)
     fd.close()
   print "%s/%s.%s" % (destdir, file, ext)
   try:
     os.rename("tmp/%s.%s" % (file, ext), "%s/%s.%s" % (destdir, file, ext)) # move to output directory
-  except OSError,er:
+  except OSError as e:
+    print e.filename
+    print e.strerror
     print "Could not find target: %s/%s.%s " % (destdir, file, ext)
     sys.exit(1)
 

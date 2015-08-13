@@ -1,15 +1,16 @@
 template : base
-filename : dynamisk-med-navigasjon.html
+filename : mobile.html
 title    : Norgeskart
-mapClass: embedded-map
-mapscript: clients/norgeskart-dynamisk-med-navigasjon.min.js
+mapscript: clients/mobile.min.js
+mobile: true
 ---
 template : mapscript
-filename : clients/norgeskart-dynamisk-med-navigasjon.min.js
+filename : clients/mobile.min.js
 language  : nb
 tokenServiceUrl: /ws/gkt.py
 ticketServiceUrl: /ws/esk.py?wms.ecc_enc
 projection: 32633
+mobile: true
 
 styles    :
     - template: styles/unlabeledMarker
@@ -37,9 +38,6 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
-
 center:
     template: center/besseggen
 functions :
@@ -48,6 +46,6 @@ controls  :
     - template: controls/status
     - template: controls/navigation
     - template: controls/scaleline
-    - include: toolbars/embed-basic-toolbar
-    - template: controls/popout
+    - include: toolbars/mobile-toolbar
+    - include: toolbars/top-basic
 
