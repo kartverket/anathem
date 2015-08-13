@@ -1,6 +1,7 @@
 template: layers/wmts
 usetoken: true
-name: terreng 
+name: Terreng
 layer: terreng_norgeskart 
-layerGroup: modus2
+layerGroup: land
 id: terreng
+attribution: true

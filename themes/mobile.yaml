@@ -1,20 +1,16 @@
 template : base
-filename : kiosk.html
+filename : mobile.html
 title    : Norgeskart
-mapscript: clients/kiosk.min.js
+mapscript: clients/mobile.min.js
+mobile: true
 ---
 template : mapscript
-filename : clients/kiosk.min.js
+filename : clients/mobile.min.js
 language  : nb
 tokenServiceUrl: /ws/gkt.py
 ticketServiceUrl: /ws/esk.py?wms.ecc_enc
 projection: 32633
-
-i18n:
-  - include: languages/nb/base
-
-baselayers:   
-    - template: layers/europa
+mobile: true
 
 styles    :
     - template: styles/unlabeledMarker
@@ -22,7 +18,9 @@ styles    :
     - template: styles/omriss
     - template: styles/track
 
-overlays  : 
+baselayers:
+    - template: layers/europa
+overlays  :
     - include: layers/topo2
     - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
@@ -40,33 +38,14 @@ overlays  :
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
-
-center    : 
+center:
     template: center/besseggen
-
 functions :
-    - template: functions/updateURL
-    - template: functions/readURL
-    - template: functions/vector
-
+    template: functions/readURL
 controls  :
     - template: controls/status
-    - template: controls/geolocation
     - template: controls/navigation
     - template: controls/scaleline
-    - template: controls/hashstate
-    - include: toolbars/basic
-    - include: toolbars/top-kiosk
-    - include: toolbars/secondary-kiosk
-    - template: controls/container
-      id: overview-container-panel
-      controls:
-      - template: controls/overview
-        name: omriss
-        id: omriss.norge.500m
-        url: /json/norge/500m.geojson
-        detailedLayer: enkel
-        maximized: "true"
+    - include: toolbars/mobile-toolbar
+    - include: toolbars/top-basic
 

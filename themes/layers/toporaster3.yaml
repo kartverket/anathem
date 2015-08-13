@@ -1,0 +1,8 @@
+template: layers/wmts
+usetoken: true
+name: Rasterkart 
+layer: toporaster3
+layerGroup: land
+id: toporaster
+linkedTo: fjellskygge
+attribution: true

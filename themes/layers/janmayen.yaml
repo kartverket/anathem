@@ -1,6 +1,6 @@
 template: layers/wmts
 usetoken: false 
-name: janmayen 
+name: Jan Mayen
 url: http://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?
 layer: Basisdata_NP_Basiskart_JanMayen_WMTS_25833
 epsg: "EPSG:25833"

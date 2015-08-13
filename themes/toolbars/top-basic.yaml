@@ -1,0 +1,9 @@
+template: controls/container
+id: top-toolbar-m
+controls:
+- template: controls/search
+  coordinates: http://norgeskart.no/ws/trans.py
+  searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
+  streetAddressesSearchUrl: http://norgeskart.no/ws/veg.py
+  addressSearchUrl: http://norgeskart.no/ws/adr.py
+  propertySearchUrl: http://norgeskart.no/ws/eie.py

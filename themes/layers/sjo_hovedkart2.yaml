@@ -1,6 +1,7 @@
 template: layers/wmts
 usetoken: true
 name: Hovedkart 
-layer: sjo_hovedkart2
+layer: sjokartraster 
 layerGroup: sjo 
 id: sjo
+attribution: true

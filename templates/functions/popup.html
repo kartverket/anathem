@@ -11,7 +11,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         markup = '<article>';
 
     if (conf.heading && a[conf.heading]) {
-      markup += '<h1 class="h">' + a[conf.heading] + '</h1>';
+      markup += '<h4>' + a[conf.heading] + '</h4>';
     }
     if (conf.data) {
       for (i = 0, l = conf.data.length; i < l; i += 1) {
@@ -1044,11 +1044,9 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
     }
 
     if (feature.fid && feature.layer) {
-
       sameFidFeatures = feature.layer.getFeaturesByFid(feature.fid);
       for (i = 0, j = sameFidFeatures.length; i < j; i += 1) {
         feature.layer.selectedFeatures.push(sameFidFeatures[i]);
-
         this.highlight.apply(this, [sameFidFeatures[i]]);
       }
     }
@@ -1097,7 +1095,6 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
 };
 
 NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
-
   var generatePopupMarkup,
       onFeatureSelect,
       onFeatureUnselect,
@@ -1105,7 +1102,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
       selectControl;
 
   generatePopupMarkup = NK.functions.popup.generatePopupMarkup(popupConfig);
-
   onPopupClose = function (evt) {
     if (this.feature) {
       selectControl.unselect(this.feature);
@@ -1113,7 +1109,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   };
 
   onFeatureSelect = NK.functions.popup.getFeatureSelector(M, generatePopupMarkup, onPopupClose, popupConfig);
-
   onFeatureUnselect = function (feature) {
       if (feature.popup) {
         feature.popup.feature = null;
@@ -1131,7 +1126,6 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl);
 
   M.addControl(selectControl);
-
 };
 
 <% vars['popupFunctions']=True %>
