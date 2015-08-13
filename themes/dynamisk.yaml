@@ -63,7 +63,7 @@ overlays  :
     - include: layers/wms/punkthindre_under_40m 
     - include: layers/wms/punkthindre_uten_hoyde 
 
-center:
+center    :
     template: center/besseggen
 functions :
     - template: functions/readURL

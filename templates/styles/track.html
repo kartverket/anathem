@@ -31,7 +31,25 @@ NK.styles.track = NK.styles.track = new OpenLayers.StyleMap({
 				return (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Point') ? 'lm' : 'cm';
 			}
 
-		}
+		},
+                rules: [
+                  new OpenLayers.Rule({
+                    filter: new OpenLayers.Filter.Comparison({
+                      type: OpenLayers.Filter.Comparison.NOT_EQUAL_TO,
+                      property: 'color',
+                      value: null
+                    }),
+                    symbolizer: { 
+                      strokeColor: "${"${color}"}"
+                    }
+                  }),
+                  new OpenLayers.Rule({
+                    elseFilter: true,
+                    symbolizer: {
+	              strokeColor  : "#0058a3"
+                    }
+                  })
+                ]
 	}),
 	'temporary': new OpenLayers.Style({
 	  strokeWidth: 5,
