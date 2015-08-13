@@ -1,0 +1,12 @@
+template: layers/geoJSONFileMC
+url: /json/dekning/sjo/celler/dtm50_50.geojson
+name: DTM50 Dekning sj&oslash; 50m
+id: dtm-sjo-50
+epsgCode: 32633 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "n"
+
+
