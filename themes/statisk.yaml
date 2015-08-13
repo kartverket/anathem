@@ -46,9 +46,6 @@ overlays  :
     - include: layers/wms/Svenske_finske_stasjoner
     - include: layers/wms/PGS_stasjoner_planlagt
 
-    # fakta layers
-    - include: layers/geoJSON/kommunefjell
-
 functions :
     template: functions/readURL
 controls:
