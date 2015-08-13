@@ -433,7 +433,7 @@ translations:
     translation: nordover
   - template: i18n/translation
     source: Pan south
-    translation: sørover
+    translation: s&oslash;rover
   - template: i18n/translation
     source: Pan east
     translation: austover
