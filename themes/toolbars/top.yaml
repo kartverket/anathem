@@ -46,6 +46,6 @@ controls:
     className: topnavpanel
     controls:
     - template: controls/info
-      faqUrl: /js/faq.html
+      faqUrl: js/faq.html
       i18n:
       - include: languages/nb/help
