@@ -364,7 +364,7 @@ translations:
     translation: Transformasjonar
   - template: i18n/translation
     source: Transform coordinates 
-    translation: Transformer koordinatar
+    translation: Transform&eacute;r koordinatar
   - template: i18n/translation
     source: Select input coordinate system
     translation: Fr&aring; koordinatsystem
@@ -373,7 +373,7 @@ translations:
     translation: Til koordinatsystem
   - template: i18n/translation
     source: Fill out the coordinate fields or click in the map 
-    translation: Skliv inn koordinatar eller klikk i kartet
+    translation: Skriv inn koordinatar eller klikk i kartet
   - template: i18n/translation
     source: Help
     translation: Hjelp
@@ -469,10 +469,10 @@ translations:
     translation: Hurtigtastar
   - template: i18n/translation
     source: You can navigate using the following keyboard shortcuts
-    translation: F&oslash;lgende taster kan brukes til navigasjon
+    translation: Fylgjande tastar kan brukast til navigering
   - template: i18n/translation
     source: Press TAB to change selected control. Press ENTER to activate the selected control.
-    translation: Flytt deg rundt i kartets navigasjon ved &aring; bruke TAB-tasten. Velg enkeltfunksjon ved hjelp av ENTER-tasten.
+    translation: Trykk TAB for &aring; byta mellom ulike navigeringsknappar. Trykk ENTER for &aring; aktivera den valde knappen.
   - template: i18n/translation
     source: Keyboard shortcut
     translation: Tastekombinasjon
@@ -484,7 +484,7 @@ translations:
     translation: Ofte stilte sp\u00f8rsm\u00e5l om norgeskart.no
   - template: i18n/translation
     source: Legend
-    translation: Tegnforklaring
+    translation: Teiknforklaring
 
 
 
