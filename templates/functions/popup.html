@@ -6,9 +6,9 @@ NK.functions.popup = NK.functions.popup || {};
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
     var a = feature.attributes,
-        i,
-        l,
-        markup = '<article>';
+      i,
+      l,
+      markup = '<article>';
 
     if (conf.heading && a[conf.heading]) {
       markup += '<h4>' + a[conf.heading] + '</h4>';
@@ -16,7 +16,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     if (conf.data) {
       for (i = 0, l = conf.data.length; i < l; i += 1) {
         if (conf.data[i].attribute && a[conf.data[i].attribute]) {
-          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' '+ conf.data[i].unit +'</p>';
+          markup += '<p>' + OpenLayers.Lang.translate(conf.data[i].label) + ': ' + a[conf.data[i].attribute] + ' ' + conf.data[i].unit + '</p>';
         }
       }
     }
@@ -29,650 +29,642 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
     var a = feature, f, i, j, k, l, markup = '', tmpMarkup = '', tmp, tmpBildeMarkup, uuDictResponse = [], tmpResp = [],
       uuDictTmp, dictBilde, test;
     var uuDict = {
-      'friluftsomrade_01'            : {
+      'friluftsomrade_01'           : {
         'info'   : {
           'name' : 'FRILUFT - Friluftsomr&aring;de:',
           'extra': 'Friluftsomr&aring;der hvor det er registrert tilgjengelighet.'
         },
         'content': {
-          'Kommentar:'                        : 'kommentar',
-          'Forbedringsforslag:'               : 'forbed_forslag',
-          'Badeplass:'                        : '',
-          'Badeplass tilgjengelig rullestol:' : 't_bad_rulle',
-          'Badeplass tilgjengelig svaksynt:'  : 't_bad_syn',
-          'Fiskeplass:'                       : '',
-          'Fiskeplass tilgjengelig rullestol:': 't_fisk_rulle',
-          'Fiskeplass tilgjengelig svaksynt:' : 't_fisk_syn',
-          'Registrert:'                       : 'registrert',
-          'Oppdatert:'                        : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Navn:'              : 'navn',
+          'Naturbasenummer:'   : 'naturbase_nr',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'friluftsomrade_02'            : {
+      'friluftsomrade_02'           : {
         'info'   : {
           'name' : 'FRILUFT - Friluftsomr&aring;de:',
           'extra': 'Friluftsomr&aring;der hvor det er registrert tilgjengelighet.'
         },
         'content': {
-          'Kommentar:'                        : 'kommentar',
-          'Forbedringsforslag:'               : 'forbed_forslag',
-          'Badeplass:'                        : '',
-          'Badeplass tilgjengelig rullestol:' : 't_bad_rulle',
-          'Badeplass tilgjengelig svaksynt:'  : 't_bad_syn',
-          'Fiskeplass:'                       : '',
-          'Fiskeplass tilgjengelig rullestol:': 't_fisk_rulle',
-          'Fiskeplass tilgjengelig svaksynt:' : 't_fisk_syn',
-          'Registrert:'                       : 'registrert',
-          'Oppdatert:'                        : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Navn:'              : 'navn',
+          'Naturbasenummer:'   : 'naturbase_nr',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'friluftsomrade_03'            : {
+      'friluftsomrade_03'           : {
         'info'   : {
           'name' : 'FRILUFT - Friluftsomr&aring;de:',
           'extra': 'Friluftsomr&aring;der hvor det er registrert tilgjengelighet.'
         },
         'content': {
-          'Kommentar:'                        : 'kommentar',
-          'Forbedringsforslag:'               : 'forbed_forslag',
-          'Badeplass:'                        : '',
-          'Badeplass tilgjengelig rullestol:' : 't_bad_rulle',
-          'Badeplass tilgjengelig svaksynt:'  : 't_bad_syn',
-          'Fiskeplass:'                       : '',
-          'Fiskeplass tilgjengelig rullestol:': 't_fisk_rulle',
-          'Fiskeplass tilgjengelig svaksynt:' : 't_fisk_syn',
-          'Registrert:'                       : 'registrert',
-          'Oppdatert:'                        : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Navn:'              : 'navn',
+          'Naturbasenummer:'   : 'naturbase_nr',
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'baderampe_01'                 : {
+      'baderampe_01'                : {
         'info'   : {
           'name' : 'FRILUFT - Baderampe',
           'extra': 'Baderamper innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Rampe:'                             : 'rampe',
-          'Rampe tverrfall:'                   : {'rampe': '&deg;'},
-          'Rampestigning:'                     : {'rampe': '&deg;'},
-          'Rampe bredde:'                      : {'rampe_bredde': 'cm'},
-          'H&aring;ndlist:'                    : 'handlist',
-          'H&aring;ndlist h&oslash;yde 1:'     : {'hand_hoy_1': 'cm'},
-          'H&aring;ndlist h&oslash;yde 2:'     : {'hand_hoy_2': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'baderampe_02'                 : {
+      'baderampe_02'                : {
         'info'   : {
           'name' : 'FRILUFT - Baderampe',
           'extra': 'Baderamper innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Rampe:'                             : 'rampe',
-          'Rampe tverrfall:'                   : {'rampe': '&deg;'},
-          'Rampestigning:'                     : {'rampe': '&deg;'},
-          'Rampe bredde:'                      : {'rampe_bredde': 'cm'},
-          'H&aring;ndlist:'                    : 'handlist',
-          'H&aring;ndlist h&oslash;yde 1:'     : {'hand_hoy_1': 'cm'},
-          'H&aring;ndlist h&oslash;yde 2:'     : {'hand_hoy_2': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'fiskeplass_01'                : {
+      'fiskeplass_01'               : {
         'info'   : {
           'name' : 'FRILUFT - Fiskeplass:',
           'extra': 'Fiskeplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Flytebrygge:'                       : 'flytebrygge',
-          'Stigning:'                          : {'landga_stig': '&deg;'},
-          'Diameter:'                          : {'diameter': 'cm'},
-          'Dekke:'                             : 'dekke',
-          'Plankeavstand:'                     : {'plankeavstand': 'cm'},
-          'Rekkverk:'                          : 'rekkverk',
-          'Stoppkant:'                         : 'stoppkant',
-          'Stoppkant h&oslash;yde:'            : {'kommentar': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Flytebrygge:'                  : 'flytebrygge',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Dekke:'                        : 'dekke',
+          'Plankeavstand:'                : {'plankeavstand': 'cm'},
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Rekkverk:'                     : 'rekkverk',
+          'Stoppkant:'                    : 'stoppkant',
+          'Stoppkant h&oslash;yde:'       : {'stoppka_hoyde': 'cm'},
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'fiskeplass_02'                : {
+      'fiskeplass_02'               : {
         'info'   : {
           'name' : 'FRILUFT - Fiskeplass:',
           'extra': 'Fiskeplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Flytebrygge:'                       : 'flytebrygge',
-          'Stigning:'                          : {'landga_stig': '&deg;'},
-          'Diameter:'                          : {'diameter': 'cm'},
-          'Dekke:'                             : 'dekke',
-          'Plankeavstand:'                     : {'plankeavstand': 'cm'},
-          'Rekkverk:'                          : 'rekkverk',
-          'Stoppkant:'                         : 'stoppkant',
-          'Stoppkant h&oslash;yde:'            : {'kommentar': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Flytebrygge:'                  : 'flytebrygge',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Dekke:'                        : 'dekke',
+          'Plankeavstand:'                : {'plankeavstand': 'cm'},
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Rekkverk:'                     : 'rekkverk',
+          'Stoppkant:'                    : 'stoppkant',
+          'Stoppkant h&oslash;yde:'       : {'stoppka_hoyde': 'cm'},
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'fiskeplass_03'                : {
+      'fiskeplass_03'               : {
         'info'   : {
           'name' : 'FRILUFT - Fiskeplass:',
           'extra': 'Fiskeplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Flytebrygge:'                       : 'flytebrygge',
-          'Stigning:'                          : {'landga_stig': '&deg;'},
-          'Diameter:'                          : {'diameter': 'cm'},
-          'Dekke:'                             : 'dekke',
-          'Plankeavstand:'                     : {'plankeavstand': 'cm'},
-          'Rekkverk:'                          : 'rekkverk',
-          'Stoppkant:'                         : 'stoppkant',
-          'Stoppkant h&oslash;yde:'            : {'kommentar': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Flytebrygge:'                  : 'flytebrygge',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Dekke:'                        : 'dekke',
+          'Plankeavstand:'                : {'plankeavstand': 'cm'},
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Rekkverk:'                     : 'rekkverk',
+          'Stoppkant:'                    : 'stoppkant',
+          'Stoppkant h&oslash;yde:'       : {'stoppka_hoyde': 'cm'},
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'gapahukhytte_01'              : {
+      'gapahukhytte_01'             : {
         'info'   : {
           'name' : 'FRILUFT - Gapahuk:',
           'extra': 'Gapahuker og hytter innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'St&oslash;rrelse:'                  : {'storrelse': 'm2'},
-          'H&oslash;yde inngang:'              : {'hoyde_inngang': 'cm'},
-          'Kontrast inngang:'                  : 'kontrast_inngang',
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Bredde inngang:'               : {'bredde_inngang': 'cm'},
+          'H&oslash;yde inngang:'         : {'hoyde_inngang': 'cm'},
+          'Terskel h&oslash;yde:'         : {'terskelhoyde': 'cm'},
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'gapahukhytte_02'              : {
+      'gapahukhytte_02'             : {
         'info'   : {
           'name' : 'FRILUFT - Gapahuk:',
           'extra': 'Gapahuker og hytter innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'St&oslash;rrelse:'                  : {'storrelse': 'm2'},
-          'H&oslash;yde inngang:'              : {'hoyde_inngang': 'cm'},
-          'Kontrast inngang:'                  : 'kontrast_inngang',
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Bredde inngang:'               : {'bredde_inngang': 'cm'},
+          'H&oslash;yde inngang:'         : {'hoyde_inngang': 'cm'},
+          'Terskel h&oslash;yde:'         : {'terskelhoyde': 'cm'},
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'gapahukhytte_03'              : {
+      'gapahukhytte_03'             : {
         'info'   : {
           'name' : 'FRILUFT - Gapahuk:',
           'extra': 'Gapahuker og hytter innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'St&oslash;rrelse:'                  : {'storrelse': 'm2'},
-          'H&oslash;yde inngang:'              : {'hoyde_inngang': 'cm'},
-          'Kontrast inngang:'                  : 'kontrast_inngang',
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampestigning:'                : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Bredde inngang:'               : {'bredde_inngang': 'cm'},
+          'H&oslash;yde inngang:'         : {'hoyde_inngang': 'cm'},
+          'Terskel h&oslash;yde:'         : {'terskelhoyde': 'cm'},
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
+
         }
       },
-      'grillbalplass_01'             : {
+      'grillbalplass_01'            : {
         'info'   : {
           'name' : 'FRILUFT - Grillplass, b&aring;lplass:',
           'extra': 'Grillplasser, b&aring;lplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Dekke:'                             : 'dekke',
-          'Helning:'                           : {'helning': '&deg;'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Type:'              : 'type',
+          'Dekke:'             : 'dekke',
+          'Helning:'           : {'helning': '&deg;'},
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'grillbalplass_02'             : {
+      'grillbalplass_02'            : {
         'info'   : {
           'name' : 'FRILUFT - Grillplass, b&aring;lplass:',
           'extra': 'Grillplasser, b&aring;lplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Dekke:'                             : 'dekke',
-          'Helning:'                           : {'helning': '&deg;'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Type:'              : 'type',
+          'Dekke:'             : 'dekke',
+          'Helning:'           : {'helning': '&deg;'},
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'grillbalplass_03'             : {
+      'grillbalplass_03'            : {
         'info'   : {
           'name' : 'FRILUFT - Grillplass, b&aring;lplass:',
           'extra': 'Grillplasser, b&aring;lplasser innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Dekke:'                             : 'dekke',
-          'Helning:'                           : {'helning': '&deg;'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Type:'              : 'type',
+          'Dekke:'             : 'dekke',
+          'Helning:'           : {'helning': '&deg;'},
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'hc_parkering_friluft_01'       : {
+      'hc_parkering_friluft_01'     : {
         'info'   : {
           'name' : 'FRILUFT - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser i n&aelig;rheten av et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
+          'Registrert:'          : 'registrert',
+          'Oppdatert:'           : 'oppdat_app',
           'Skiltet:'             : 'skiltet',
           'Merket:'              : 'merket',
           'Bredde:'              : {'bredde': 'cm'},
           'Lengde:'              : {'lengde': 'cm'},
+          'Avstand fasilitet:'   : 'avstand_serv_bygg',
           'Avgift:'              : 'avgift',
-          'Tilgjengelig automat:': 'tilgj_aut',
           'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
-          'Kommentar:'           : 'kommentar',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Tilgjengelig automat:': 'tilgj_aut',
+          'Forbedringsforslag:'  : 'forbed_forslag',
+          'Objekt ID:'           : 'ogc_fid'
         }
       },
-      'hc_parkering_friluft_02'       : {
+      'hc_parkering_friluft_02'     : {
         'info'   : {
           'name' : 'FRILUFT - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser i n&aelig;rheten av et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
+          'Registrert:'          : 'registrert',
+          'Oppdatert:'           : 'oppdat_app',
           'Skiltet:'             : 'skiltet',
           'Merket:'              : 'merket',
           'Bredde:'              : {'bredde': 'cm'},
           'Lengde:'              : {'lengde': 'cm'},
+          'Avstand fasilitet:'   : 'avstand_serv_bygg',
           'Avgift:'              : 'avgift',
-          'Tilgjengelig automat:': 'tilgj_aut',
           'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
-          'Kommentar:'           : 'kommentar',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Tilgjengelig automat:': 'tilgj_aut',
+          'Forbedringsforslag:'  : 'forbed_forslag',
+          'Objekt ID:'           : 'ogc_fid'
         }
       },
-      'hc_parkering_friluft_03'       : {
+      'hc_parkering_friluft_03'     : {
         'info'   : {
           'name' : 'FRILUFT - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser i n&aelig;rheten av et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
+          'Registrert:'          : 'registrert',
+          'Oppdatert:'           : 'oppdat_app',
           'Skiltet:'             : 'skiltet',
           'Merket:'              : 'merket',
           'Bredde:'              : {'bredde': 'cm'},
           'Lengde:'              : {'lengde': 'cm'},
+          'Avstand fasilitet:'   : 'avstand_serv_bygg',
           'Avgift:'              : 'avgift',
+          'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
           'Tilgjengelig automat:': 'tilgj_aut',
-          'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
-          'Kommentar:'           : 'kommentar',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Forbedringsforslag:'  : 'forbed_forslag',
+          'Objekt ID:'           : 'ogc_fid'
         }
       },
-      'parkeringsomrader_friluft_01' : {
+      'parkeringsomrader_friluft_01': {
         'info'   : {
           'name' : 'FRILUFT - Parkeringsomr&aring;de:',
           'extra': 'Parkeringsomr&aring;der i n&aelig;rheten av friluftsomr&aring;der med registrert tilgjengelighet.'
         },
         'content': {
-          'Kapasitet:'           : 'kap_personbiler',
-          'HC-parkeringsplasser:': 'kap_uu',
-          'Dekke:'               : 'dekke',
-          'Veidekketilstand:'    : 'dekke_tilstand',
-          'Kommentar:'           : 'kommentar',
-          'Forbedringsforslag:'  : 'forbed_forslag',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Registrert:'           : 'registrert',
+          'Oppdatert:'            : 'oppdat_app',
+          'Kapasitet personbiler:': 'kap_personbiler',
+          'Veidekketilstand:'     : 'dekke_tilstand',
+          'Kapasitet UU:'         : 'kap_uu',
+          'Dekke:'                : 'dekke',
+          'Forbedringsforslag:'   : 'forbed_forslag',
+          'Objekt ID:'            : 'ogc_fid'
         }
       },
-      'parkeringsomrader_friluft_02' : {
+      'parkeringsomrader_friluft_02': {
         'info'   : {
           'name' : 'FRILUFT - Parkeringsomr&aring;de:',
           'extra': 'Parkeringsomr&aring;der i n&aelig;rheten av friluftsomr&aring;der med registrert tilgjengelighet.'
         },
         'content': {
-          'Kapasitet:'           : 'kap_personbiler',
-          'HC-parkeringsplasser:': 'kap_uu',
-          'Dekke:'               : 'dekke',
-          'Veidekketilstand:'    : 'dekke_tilstand',
-          'Kommentar:'           : 'kommentar',
-          'Forbedringsforslag:'  : 'forbed_forslag',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Registrert:'           : 'registrert',
+          'Oppdatert:'            : 'oppdat_app',
+          'Kapasitet personbiler:': 'kap_personbiler',
+          'Veidekketilstand:'     : 'dekke_tilstand',
+          'Kapasitet UU:'         : 'kap_uu',
+          'Dekke:'                : 'dekke',
+          'Forbedringsforslag:'   : 'forbed_forslag',
+          'Objekt ID:'            : 'ogc_fid'
         }
       },
-      'parkeringsomrader_friluft_03' : {
+      'parkeringsomrader_friluft_03': {
         'info'   : {
           'name' : 'FRILUFT - Parkeringsomr&aring;de:',
           'extra': 'Parkeringsomr&aring;der i n&aelig;rheten av friluftsomr&aring;der med registrert tilgjengelighet.'
         },
         'content': {
-          'Kapasitet:'           : 'kap_personbiler',
-          'HC-parkeringsplasser:': 'kap_uu',
-          'Dekke:'               : 'dekke',
-          'Veidekketilstand:'    : 'dekke_tilstand',
-          'Kommentar:'           : 'kommentar',
+          'Registrert:'           : 'registrert',
+          'Oppdatert:'            : 'oppdat_app',
+          'Kapasitet personbiler:': 'kap_personbiler',
+          'Veidekketilstand:'     : 'dekke_tilstand',
+          'Kapasitet UU:'         : 'kap_uu',
+          'Dekke:'                : 'dekke',
+          'Forbedringsforslag:'   : 'forbed_forslag',
+          'Objekt ID:'            : 'ogc_fid'
+        }
+      },
+      't_parkeringsomrade'          : {
+        'info'   : {
+          'name' : 'TETTSTED - Parkeringsomr&aring;de:',
+          'extra': 'Parkeringsomr&aring;der innenfor tettsteder og i n&aelig;rheten av utvalgte offentlige bygninger. Det ble foretatt en vurdering med hensyn til tilgjengelighet for bevegelseshemmede.'
+        },
+        'content': {
+          'Registrert:'           : 'registrert',
+          'Oppdatert:'            : 'oppdat_app',
+          'Kapasitet personbiler:': 'kap_personbiler',
+          'Veidekketilstand:'     : 'dekke_tilstand',
+          'Kapasitet UU:'         : 'kap_uu',
+          'Dekke:'                : 'dekke',
+          'Forbedringsforslag:'   : 'forbed_forslag',
+          'Objekt ID:'            : 'ogc_fid'
+        }
+      },
+      't_parkeringsomrade_r'        : {
+        'info'   : {
+          'name' : 'TETTSTED - Parkeringsomr&aring;de:',
+          'extra': 'Parkeringsomr&aring;der innenfor tettsteder og i n&aelig;rheten av utvalgte offentlige bygninger. Det ble foretatt en vurdering med hensyn til tilgjengelighet for bevegelseshemmede.'
+        },
+        'content': {
+          'Registrert:'           : 'registrert',
+          'Oppdatert:'            : 'oppdat_app',
+          'Kapasitet personbiler:': 'kap_personbiler',
+          'Veidekketilstand:'     : 'dekke_tilstand',
+          'Kapasitet UU:'         : 'kap_uu',
+          'Dekke:'                : 'dekke',
+          'Forbedringsforslag:'   : 'forbed_forslag',
+          'Objekt ID:'            : 'ogc_fid'
+        }
+      },
+      't_parkeringsomrade_el'       : {
+        'info'   : {
+          'name' : 'TETTSTED - Parkeringsomr&aring;de:',
+          'extra': 'Parkeringsomr&aring;der innenfor tettsteder og i n&aelig;rheten av utvalgte offentlige bygninger. Det ble foretatt en vurdering med hensyn til tilgjengelighet for bevegelseshemmede.'
+        },
+        'content': {
+          'Registrert:'           : 'registrert',
+          'Oppdatert:'            : 'oppdat_app',
+          'Kapasitet personbiler:': 'kap_personbiler',
+          'Veidekketilstand:'     : 'dekke_tilstand',
+          'Kapasitet UU:'         : 'kap_uu',
+          'Dekke:'                : 'dekke',
+          'Forbedringsforslag:'   : 'forbed_forslag',
+          'Objekt ID:'            : 'ogc_fid'
+        }
+      },
+      't_hc_parkering'              : {
+        'info'   : {
+          'name' : 'TETTSTED - HC-parkeringsplass:',
+          'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
+        },
+        'content': {
+          'Registrert:'          : 'registrert',
+          'Oppdatert:'           : 'oppdat_app',
+          'Skiltet:'             : 'skiltet',
+          'Merket:'              : 'merket',
+          'Avstand servicebygg:' : {'avstand_servicebygg': 'm'},
+          'Bredde:'              : {'bredde': 'cm'},
+          'Lengde:'              : {'lengde': 'cm'},
+          'Avgift:'              : 'avgift',
+          'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
+          'Tilgjengelig automat:': 'tilgj_automat',
           'Forbedringsforslag:'  : 'forbed_forslag',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Objekt ID:'           : 'ogc_fid'
         }
       },
-      't_parkeringsomrade': {
-        'info'   : {
-          'name' : 'TETTSTED - Parkeringsomr&aring;de:',
-          'extra': 'Parkeringsomr&aring;der innenfor tettsteder og i n&aelig;rheten av utvalgte offentlige bygninger. Det ble foretatt en vurdering med hensyn til tilgjengelighet for bevegelseshemmede.'
-        },
-        'content': {
-          'Kapasitet:'           : 'kap_personbiler',
-          'HC-parkeringsplasser:': 'kap_uu',
-          'Dekke:'               : 'dekke',
-          'Veidekketilstand:'    : 'dekke_tilstand',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
-        }
-      },
-      't_parkeringsomrade_r': {
-        'info'   : {
-          'name' : 'TETTSTED - Parkeringsomr&aring;de:',
-          'extra': 'Parkeringsomr&aring;der innenfor tettsteder og i n&aelig;rheten av utvalgte offentlige bygninger. Det ble foretatt en vurdering med hensyn til tilgjengelighet for bevegelseshemmede.'
-        },
-        'content': {
-          'Kapasitet:'           : 'kap_personbiler',
-          'HC-parkeringsplasser:': 'kap_uu',
-          'Dekke:'               : 'dekke',
-          'Veidekketilstand:'    : 'dekke_tilstand',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
-        }
-      },
-      't_parkeringsomrade_el': {
-        'info'   : {
-          'name' : 'TETTSTED - Parkeringsomr&aring;de:',
-          'extra': 'Parkeringsomr&aring;der innenfor tettsteder og i n&aelig;rheten av utvalgte offentlige bygninger. Det ble foretatt en vurdering med hensyn til tilgjengelighet for bevegelseshemmede.'
-        },
-        'content': {
-          'Kapasitet:'           : 'kap_personbiler',
-          'HC-parkeringsplasser:': 'kap_uu',
-          'Dekke:'               : 'dekke',
-          'Veidekketilstand:'    : 'dekke_tilstand',
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
-        }
-      },
-      't_hc_parkering'      : {
+      't_hc_parkering_r'            : {
         'info'   : {
           'name' : 'TETTSTED - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
         },
         'content': {
-          'HC-skilt:'            : 'skiltet',
+          'Registrert:'          : 'registrert',
+          'Oppdatert:'           : 'oppdat_app',
+          'Skiltet:'             : 'skiltet',
           'Merket:'              : 'merket',
           'Avstand servicebygg:' : {'avstand_servicebygg': 'm'},
           'Bredde:'              : {'bredde': 'cm'},
           'Lengde:'              : {'lengde': 'cm'},
           'Avgift:'              : 'avgift',
-          'Tilgjengelig automat:': 'tilgj_automat',
           'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Tilgjengelig automat:': 'tilgj_automat',
+          'Forbedringsforslag:'  : 'forbed_forslag',
+          'Objekt ID:'           : 'ogc_fid'
         }
       },
-      't_hc_parkering_r'      : {
+      't_hc_parkering_el'           : {
         'info'   : {
           'name' : 'TETTSTED - HC-parkeringsplass:',
           'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
         },
         'content': {
-          'HC-skilt:'            : 'skiltet',
+          'Registrert:'          : 'registrert',
+          'Oppdatert:'           : 'oppdat_app',
+          'Skiltet:'             : 'skiltet',
           'Merket:'              : 'merket',
           'Avstand servicebygg:' : {'avstand_servicebygg': 'm'},
           'Bredde:'              : {'bredde': 'cm'},
           'Lengde:'              : {'lengde': 'cm'},
           'Avgift:'              : 'avgift',
-          'Tilgjengelig automat:': 'tilgj_automat',
           'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
-        }
-      },
-      't_hc_parkering_el'      : {
-        'info'   : {
-          'name' : 'TETTSTED - HC-parkeringsplass:',
-          'extra': 'Enkelte HC-parkeringsplasser innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede.'
-        },
-        'content': {
-          'HC-skilt:'            : 'skiltet',
-          'Merket:'              : 'merket',
-          'Avstand servicebygg:' : {'avstand_servicebygg': 'm'},
-          'Bredde:'              : {'bredde': 'cm'},
-          'Lengde:'              : {'lengde': 'cm'},
-          'Avgift:'              : 'avgift',
           'Tilgjengelig automat:': 'tilgj_automat',
-          'Automat h&oslash;yde:': {'aut_hoyde': 'cm'},
-          'Registrert:'          : 'registrert',
-          'Oppdatert:'           : 'oppdatert'
+          'Forbedringsforslag:'  : 'forbed_forslag',
+          'Objekt ID:'           : 'ogc_fid'
         }
       },
-      't_inngangbygg'              : {
+      't_inngangbygg'               : {
         'info'   : {
           'name' : 'TETTSTED - Inngang bygg:',
           'extra': 'Inngangspartier til utvalgte offentlige bygninger innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
         },
         'content': {
+          'Registrert:'                      : 'registrert',
+          'Oppdatert:'                       : 'oppdatert',
+          'Bygg funksjon:'                   : 'bygg_funksjon',
           'Avstand til HC-parkering:'        : {'avstand_hc_park': 'm'},
-          'D&oslash;rtype:'                  : 'dortype',
           'Rampe bredde:'                    : {'rampe_bredde': 'cm'},
+          'Rampe stigning:'                  : {'rampe_stigning': '&deg;'},
           'H&aring;ndlist:'                  : 'handlist',
-          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
+          'H&aring;ndlist h&oslash;yde 1:'   : {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                    : 'rampe_terskel',
+          'D&oslash;rtype:'                  : 'dortype',
           'D&oslash;r&aring;pner:'           : 'dorapner',
           'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
           'Inngang bredde:'                  : {'inngang_bredde': 'cm'},
+          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
           'Stigning ankomstvei:'             : {'adko_stig_grad': '&deg;'},
-          'Bygg funksjon:'                   : 'bygg_funksjon',
-          'Registrert:'                      : 'registrert',
-          'Oppdatert:'                       : 'oppdatert'
+          'Objekt ID:'                       : 'ogc_fid'
         }
       },
-      't_inngangbygg_r_01'              : {
+      't_inngangbygg_r_01'          : {
         'info'   : {
           'name' : 'TETTSTED - Inngang bygg:',
           'extra': 'Inngangspartier til utvalgte offentlige bygninger innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
         },
         'content': {
+          'Registrert:'                      : 'registrert',
+          'Oppdatert:'                       : 'oppdatert',
+          'Bygg funksjon:'                   : 'bygg_funksjon',
           'Avstand til HC-parkering:'        : {'avstand_hc_park': 'm'},
-          'D&oslash;rtype:'                  : 'dortype',
           'Rampe bredde:'                    : {'rampe_bredde': 'cm'},
+          'Rampe stigning:'                  : {'rampe_stigning': '&deg;'},
           'H&aring;ndlist:'                  : 'handlist',
-          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
+          'H&aring;ndlist h&oslash;yde 1:'   : {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                    : 'rampe_terskel',
+          'D&oslash;rtype:'                  : 'dortype',
           'D&oslash;r&aring;pner:'           : 'dorapner',
           'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
           'Inngang bredde:'                  : {'inngang_bredde': 'cm'},
+          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
           'Stigning ankomstvei:'             : {'adko_stig_grad': '&deg;'},
-          'Bygg funksjon:'                   : 'bygg_funksjon',
-          'Registrert:'                      : 'registrert',
-          'Oppdatert:'                       : 'oppdatert'
+          'Objekt ID:'                       : 'ogc_fid'
         }
       },
-      't_inngangbygg_r_02'              : {
+      't_inngangbygg_r_02'          : {
         'info'   : {
           'name' : 'TETTSTED - Inngang bygg:',
           'extra': 'Inngangspartier til utvalgte offentlige bygninger innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
         },
         'content': {
+          'Registrert:'                      : 'registrert',
+          'Oppdatert:'                       : 'oppdatert',
+          'Bygg funksjon:'                   : 'bygg_funksjon',
           'Avstand til HC-parkering:'        : {'avstand_hc_park': 'm'},
-          'D&oslash;rtype:'                  : 'dortype',
           'Rampe bredde:'                    : {'rampe_bredde': 'cm'},
+          'Rampe stigning:'                  : {'rampe_stigning': '&deg;'},
           'H&aring;ndlist:'                  : 'handlist',
-          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
+          'H&aring;ndlist h&oslash;yde 1:'   : {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                    : 'rampe_terskel',
+          'D&oslash;rtype:'                  : 'dortype',
           'D&oslash;r&aring;pner:'           : 'dorapner',
           'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
           'Inngang bredde:'                  : {'inngang_bredde': 'cm'},
+          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
           'Stigning ankomstvei:'             : {'adko_stig_grad': '&deg;'},
-          'Bygg funksjon:'                   : 'bygg_funksjon',
-          'Registrert:'                      : 'registrert',
-          'Oppdatert:'                       : 'oppdatert'
+          'Objekt ID:'                       : 'ogc_fid'
         }
       },
-      'sittegruppe_01'               : {
+      'sittegruppe_01'              : {
         'info'   : {
           'name' : 'FRILUFT - Sittegruppe, hvilebenker:',
           'extra': 'Sittegrupper og hvilebenker innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Dekke:'                             : 'dekke',
-          'Helning:'                           : {'helning': '&deg;'},
-          'H&oslash;yde bord:'                 : {'bord_hoyde': 'cm'},
-          'Utstikk bord:'                      : {'bord_utstikk': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Dekke:'             : 'dekke',
+          'Helning:'           : {'helning': '&deg;'},
+          'H&oslash;yde bord:' : {'bord_hoyde': 'cm'},
+          'Utstikk bord:'      : {'bord_utstikk': 'cm'},
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'sittegruppe_02'               : {
+      'sittegruppe_02'              : {
         'info'   : {
           'name' : 'FRILUFT - Sittegruppe, hvilebenker:',
           'extra': 'Sittegrupper og hvilebenker innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Dekke:'                             : 'dekke',
-          'Helning:'                           : {'helning': '&deg;'},
-          'H&oslash;yde bord:'                 : {'bord_hoyde': 'cm'},
-          'Utstikk bord:'                      : {'bord_utstikk': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Dekke:'             : 'dekke',
+          'Helning:'           : {'helning': '&deg;'},
+          'H&oslash;yde bord:' : {'bord_hoyde': 'cm'},
+          'Utstikk bord:'      : {'bord_utstikk': 'cm'},
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'sittegruppe_03'               : {
+      'sittegruppe_03'              : {
         'info'   : {
           'name' : 'FRILUFT - Sittegruppe, hvilebenker:',
           'extra': 'Sittegrupper og hvilebenker innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Atkomstvei rullestol: '             : 'adko_rull',
-          'Atkomstvei rullestol med ledsager: ': 'adko_ru_led',
-          'Atkomstvei el. rullestol:'          : 'adko_el_rulle',
-          'Atkomstvei synshemmede:'            : 'adko_syns',
-          'Dekke:'                             : 'dekke',
-          'Helning:'                           : {'helning': '&deg;'},
-          'H&oslash;yde bord:'                 : {'bord_hoyde': 'cm'},
-          'Utstikk bord:'                      : {'bord_utstikk': 'cm'},
-          'Kommentar:'                         : 'kommentar',
-          'Forbedringsforslag:'                : 'forbed_forslag',
-          'Registrert:'                        : 'registrert',
-          'Oppdatert:'                         : 'oppdatert'
+          'Registrert:'        : 'registrert',
+          'Oppdatert:'         : 'oppdat_app',
+          'Dekke:'             : 'dekke',
+          'Helning:'           : {'helning': '&deg;'},
+          'H&oslash;yde bord:' : {'bord_hoyde': 'cm'},
+          'Utstikk bord:'      : {'bord_utstikk': 'cm'},
+          'Forbedringsforslag:': 'forbed_forslag',
+          'Objekt ID:'         : 'ogc_fid'
         }
       },
-      'statlig_sikra_polygon_01'     : {
+      'statlig_sikra_polygon_01'    : {
         'info'   : {
           'name' : 'FRILUFT - Statlig sikra friluftsomr&aring;de:',
           'extra': 'Statlig sikra friluftsomr&aring;der vurdert med hensyn til tilgjengelighet for rullestolbrukere og synshemmede.'
         },
         'content': {
           'Navn:'           : 'navn',
-          'Turomr&aring;de:': '',
-          'Fiskeplass:'     : '',
-          'Badeplass:'      : '',
-          'Kommentar:'      : 'kommentar',
+          'Turomr&aring;de:': 'turomraade_tilrettelagt_for',
+          'Fiskeplass:'     : 'fiskeplass_tilrettelagt_for',
+          'Badeplass:'      : 'badeplass_tilrettelagt_for',
           'Registrert:'     : 'registrert',
-          'Oppdatert:'      : 'oppdatert'
+          'Oppdatert:'      : 'oppdat_app',
+          'Objekt ID:'      : 'ogc_fid'
         }
       },
-      'statlig_sikra_polygon_02'     : {
+      'statlig_sikra_polygon_02'    : {
         'info'   : {
           'name' : 'FRILUFT - Statlig sikra friluftsomr&aring;de:',
           'extra': 'Statlig sikra friluftsomr&aring;der vurdert med hensyn til tilgjengelighet for rullestolbrukere og synshemmede.'
         },
         'content': {
           'Navn:'           : 'navn',
-          'Turomr&aring;de:': '',
-          'Fiskeplass:'     : '',
-          'Badeplass:'      : '',
-          'Kommentar:'      : 'kommentar',
+          'Turomr&aring;de:': 'turomraade_tilrettelagt_for',
+          'Fiskeplass:'     : 'fiskeplass_tilrettelagt_for',
+          'Badeplass:'      : 'badeplass_tilrettelagt_for',
           'Registrert:'     : 'registrert',
-          'Oppdatert:'      : 'oppdatert'
+          'Oppdatert:'      : 'oppdat_app',
+          'Objekt ID:'      : 'ogc_fid'
         }
       },
-      'statlig_sikra_polygon_03'     : {
+      'statlig_sikra_polygon_03'    : {
         'info'   : {
           'name' : 'FRILUFT - Statlig sikra friluftsomr&aring;de:',
           'extra': 'Statlig sikra friluftsomr&aring;der vurdert med hensyn til tilgjengelighet for rullestolbrukere og synshemmede.'
         },
         'content': {
           'Navn:'           : 'navn',
-          'Turomr&aring;de:': '',
-          'Fiskeplass:'     : '',
-          'Badeplass:'      : '',
-          'Kommentar:'      : 'kommentar',
+          'Turomr&aring;de:': 'turomraade_tilrettelagt_for',
+          'Fiskeplass:'     : 'fiskeplass_tilrettelagt_for',
+          'Badeplass:'      : 'badeplass_tilrettelagt_for',
           'Registrert:'     : 'registrert',
-          'Oppdatert:'      : 'oppdatert'
+          'Oppdatert:'      : 'oppdat_app',
+          'Objekt ID:'      : 'ogc_fid'
         }
       },
       't_vei'                       : {
@@ -681,6 +673,8 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'extra': 'Veier innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
         },
         'content': {
+          'Registrert:'         : 'registrert',
+          'Oppdatert:'          : 'oppdat_app',
           'Gatetype:'           : 'gate_type',
           'Dekke:'              : 'dekke',
           'Veidekketilstand:'   : 'dekke_tilstand',
@@ -690,16 +684,17 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Stigning ankomstvei:': {'stig_grad': '&deg;'},
           'Tverrfall:'          : {'tverrfall_grad': '&deg;'},
           'Ledelinje:'          : 'ledelinje',
-          'Registrert:'         : 'registrert',
-          'Oppdatert:'          : 'oppdatert'
+          'Objekt ID:'          : 'ogc_fid'
         }
       },
-      't_vei_r'                       : {
+      't_vei_r'                     : {
         'info'   : {
           'name' : 'TETTSTED - Veisystem:',
           'extra': 'Veier innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
         },
         'content': {
+          'Registrert:'         : 'registrert',
+          'Oppdatert:'          : 'oppdat_app',
           'Gatetype:'           : 'gate_type',
           'Dekke:'              : 'dekke',
           'Veidekketilstand:'   : 'dekke_tilstand',
@@ -709,16 +704,17 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Stigning ankomstvei:': {'stig_grad': '&deg;'},
           'Tverrfall:'          : {'tverrfall_grad': '&deg;'},
           'Ledelinje:'          : 'ledelinje',
-          'Registrert:'         : 'registrert',
-          'Oppdatert:'          : 'oppdatert'
+          'Objekt ID:'          : 'ogc_fid'
         }
       },
-      't_vei_el'                       : {
+      't_vei_el'                    : {
         'info'   : {
           'name' : 'TETTSTED - Veisystem:',
           'extra': 'Veier innenfor tettsteder vurdert med hensyn til tilgjengelighet for bevegelseshemmede og synshemmede.'
         },
         'content': {
+          'Registrert:'         : 'registrert',
+          'Oppdatert:'          : 'oppdat_app',
           'Gatetype:'           : 'gate_type',
           'Dekke:'              : 'dekke',
           'Veidekketilstand:'   : 'dekke_tilstand',
@@ -728,86 +724,91 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Stigning ankomstvei:': {'stig_grad': '&deg;'},
           'Tverrfall:'          : {'tverrfall_grad': '&deg;'},
           'Ledelinje:'          : 'ledelinje',
-          'Registrert:'         : 'registrert',
-          'Oppdatert:'          : 'oppdatert'
+          'Objekt ID:'          : 'ogc_fid'
         }
       },
-      'toalett_01'                   : {
+      'toalett_01'                  : {
         'info'   : {
           'name' : 'FRILUFT - Toalett, omkledningsrom:',
           'extra': 'Toaletter, omkledningsrom eller kombinasjoner av dem innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Stigning ankomstvei:'             : {'atko_stigning': '&deg;'},
-          'Stigningsforhold ankomstvei:'     : {'adko_stig_forhold': '&deg;'},
-          'Avstand HC-parkering:'            : {'avstand_hc_park': 'm'},
-          'D&oslash;rtype:'                  : 'inngang_type',
-          'Bredde inngang:'                  : 'inngang_bredde',
-          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
-          'D&oslash;r&aring;pner:'           : 'dorapner',
-          'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
-          'Rampe:'                           : 'rampe',
-          'Rampe bredde:'                    : {'rampe_bredde': 'cm'},
-          'H&aring;ndlist:'                  : 'handlist',
-          'H&aring;ndlist h&oslash;yde 1:'   : {'hand_hoy_1': 'cm'},
-          'H&aring;ndlist h&oslash;yde 2:'   : {'hand_hoy_2': 'cm'},
-          'Kommentar:'                       : 'kommentar',
-          'Forbedringsforslag:'              : 'forbed_forslag',
-          'Registrert:'                      : 'registrert',
-          'Oppdatert:'                       : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampe stigning:'               : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'D&oslash;rtype:'               : 'inngang_type',
+          'D&oslash;r&aring;pner:'        : 'dorapner',
+          'Inngang bredde:'               : {'inngang_bredde': 'cm'},
+          'Kontrast inngang:'             : 'kontrast_inngang',
+          'Terskel h&oslash;yde:'         : {'terskel_hoyde': 'cm'},
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Belysning:'                    : 'belysning',
+          'Omkledning:'                   : 'omkledning_tilgj',
+          'Servant:'                      : 'servant_tilgj',
+          'WC:'                           : 'WC_tilgj',
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'toalett_02'                   : {
+      'toalett_02'                  : {
         'info'   : {
           'name' : 'FRILUFT - Toalett, omkledningsrom:',
           'extra': 'Toaletter, omkledningsrom eller kombinasjoner av dem innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Stigning ankomstvei:'             : {'atko_stigning': '&deg;'},
-          'Stigningsforhold ankomstvei:'     : {'adko_stig_forhold': '&deg;'},
-          'Avstand HC-parkering:'            : {'avstand_hc_park': 'm'},
-          'D&oslash;rtype:'                  : 'inngang_type',
-          'Bredde inngang:'                  : 'inngang_bredde',
-          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
-          'D&oslash;r&aring;pner:'           : 'dorapner',
-          'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
-          'Rampe:'                           : 'rampe',
-          'Rampe bredde:'                    : {'rampe_bredde': 'cm'},
-          'H&aring;ndlist:'                  : 'handlist',
-          'H&aring;ndlist h&oslash;yde 1:'   : {'hand_hoy_1': 'cm'},
-          'H&aring;ndlist h&oslash;yde 2:'   : {'hand_hoy_2': 'cm'},
-          'Kommentar:'                       : 'kommentar',
-          'Forbedringsforslag:'              : 'forbed_forslag',
-          'Registrert:'                      : 'registrert',
-          'Oppdatert:'                       : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampe stigning:'               : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'D&oslash;rtype:'               : 'inngang_type',
+          'D&oslash;r&aring;pner:'        : 'dorapner',
+          'Inngang bredde:'               : {'inngang_bredde': 'cm'},
+          'Kontrast inngang:'             : 'kontrast_inngang',
+          'Terskel h&oslash;yde:'         : {'terskel_hoyde': 'cm'},
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Belysning:'                    : 'belysning',
+          'Omkledning:'                   : 'omkledning_tilgj',
+          'Servant:'                      : 'servant_tilgj',
+          'WC:'                           : 'WC_tilgj',
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'toalett_03'                   : {
+      'toalett_03'                  : {
         'info'   : {
           'name' : 'FRILUFT - Toalett, omkledningsrom:',
           'extra': 'Toaletter, omkledningsrom eller kombinasjoner av dem innenfor et friluftsomr&aring;de med registrert tilgjengelighet.'
         },
         'content': {
-          'Stigning ankomstvei:'             : {'atko_stigning': '&deg;'},
-          'Stigningsforhold ankomstvei:'     : {'adko_stig_forhold': '&deg;'},
-          'Avstand HC-parkering:'            : {'avstand_hc_park': 'm'},
-          'D&oslash;rtype:'                  : 'inngang_type',
-          'Bredde inngang:'                  : 'inngang_bredde',
-          'Terskel h&oslash;yde:'            : 'terskel_hoyde',
-          'D&oslash;r&aring;pner:'           : 'dorapner',
-          'Man&oslash;verknapp h&oslash;yde:': {'man_knap_hoyde': 'cm'},
-          'Rampe:'                           : 'rampe',
-          'Rampe bredde:'                    : {'rampe_bredde': 'cm'},
-          'H&aring;ndlist:'                  : 'handlist',
-          'H&aring;ndlist h&oslash;yde 1:'   : {'hand_hoy_1': 'cm'},
-          'H&aring;ndlist h&oslash;yde 2:'   : {'hand_hoy_2': 'cm'},
-          'Kommentar:'                       : 'kommentar',
-          'Forbedringsforslag:'              : 'forbed_forslag',
-          'Registrert:'                      : 'registrert',
-          'Oppdatert:'                       : 'oppdatert'
+          'Registrert:'                   : 'registrert',
+          'Oppdatert:'                    : 'oppdat_app',
+          'Rampe bredde:'                 : {'rampe_bredde': 'cm'},
+          'Rampe stigning:'               : {'rampe_stigning': '&deg;'},
+          'H&aring;ndlist:'               : 'handlist',
+          'H&aring;ndlist h&oslash;yde 1:': {'hand_hoy_1': 'cm'},
+          'Rampeterskel:'                 : 'rampe_terskel',
+          'D&oslash;rtype:'               : 'inngang_type',
+          'D&oslash;r&aring;pner:'        : 'dorapner',
+          'Inngang bredde:'               : {'inngang_bredde': 'cm'},
+          'Kontrast inngang:'             : 'kontrast_inngang',
+          'Terskel h&oslash;yde:'         : {'terskel_hoyde': 'cm'},
+          'Diameter:'                     : {'diameter': 'cm'},
+          'Belysning:'                    : 'belysning',
+          'Omkledning:'                   : 'omkledning_tilgj',
+          'Servant:'                      : 'servant_tilgj',
+          'WC:'                           : 'WC_tilgj',
+          'Forbedringsforslag:'           : 'forbed_forslag',
+          'Objekt ID:'                    : 'ogc_fid'
         }
       },
-      'turisthytte_01'               : {
+      'turisthytte_01'              : {
         'info'   : {
           'name' : 'FRILUFT - Turisthytte:',
           'extra': 'Turisthytter som er tilrettelagt for bevegelseshemmede'
@@ -817,10 +818,10 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Eier:'      : 'eier_tekst',
           'Kommentar:' : 'kommentar',
           'Registrert:': 'registrert',
-          'Oppdatert:' : 'oppdatert'
+          'Oppdatert:' : 'oppdat_app'
         }
       },
-      'turisthytte_02'               : {
+      'turisthytte_02'              : {
         'info'   : {
           'name' : 'FRILUFT - Turisthytte:',
           'extra': 'Turisthytter som er tilrettelagt for bevegelseshemmede'
@@ -830,10 +831,10 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Eier:'      : 'eier_tekst',
           'Kommentar:' : 'kommentar',
           'Registrert:': 'registrert',
-          'Oppdatert:' : 'oppdatert'
+          'Oppdatert:' : 'oppdat_app'
         }
       },
-      'turisthytte_03'               : {
+      'turisthytte_03'              : {
         'info'   : {
           'name' : 'FRILUFT - Turisthytte:',
           'extra': 'Turisthytter som er tilrettelagt for bevegelseshemmede'
@@ -843,79 +844,69 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Eier:'      : 'eier_tekst',
           'Kommentar:' : 'kommentar',
           'Registrert:': 'registrert',
-          'Oppdatert:' : 'oppdatert'
+          'Oppdatert:' : 'oppdat_app'
         }
       },
-      'turvei_01'                    : {
+      'turvei_01'                   : {
         'info'   : {
           'name' : 'FRILUFT - Turvei:',
           'extra': 'Turveier vurdert med hensyn til tilgjengelighet.'
         },
         'content': {
-          'Veitype:'            : 'veitype',
+          'Registrert:'         : 'registrert',
+          'Oppdatert:'          : 'oppdat_app',
           'Spesial fottyperute:': 'spesialfottyperute',
           'Dekke:'              : 'dekke',
-          'Veidekketilstand:'   : 'dekke_tilstand',
           'Belysning'           : 'belysning',
           'Bredde:'             : {'bredde': 'cm'},
           'Stigning:'           : {'stigning': '&deg;'},
           'Tverrfall:'          : {'tverrfall': '&deg;'},
-          'Ledelinje:'          : 'ledelinje',
           'Fri h&oslash;yde:'   : 'frihoyde',
-          'Ledelinje kontrast:' : 'led_lin_kontrast',
-          'Kommentar:'          : 'kommentar',
+          'Ledelinje :'         : 'ledelinje',
           'Forbedringsforslag:' : 'forbed_forslag',
-          'Registrert:'         : 'registrert',
-          'Oppdatert:'          : 'oppdatert'
+          'Objekt ID:'          : 'ogc_fid'
         }
       },
-      'turvei_02'                    : {
+      'turvei_02'                   : {
         'info'   : {
           'name' : 'FRILUFT - Turvei:',
           'extra': 'Turveier vurdert med hensyn til tilgjengelighet.'
         },
         'content': {
-          'Veitype:'            : 'veitype',
+          'Registrert:'         : 'registrert',
+          'Oppdatert:'          : 'oppdat_app',
           'Spesial fottyperute:': 'spesialfottyperute',
           'Dekke:'              : 'dekke',
-          'Veidekketilstand:'   : 'dekke_tilstand',
           'Belysning'           : 'belysning',
           'Bredde:'             : {'bredde': 'cm'},
           'Stigning:'           : {'stigning': '&deg;'},
           'Tverrfall:'          : {'tverrfall': '&deg;'},
-          'Ledelinje:'          : 'ledelinje',
           'Fri h&oslash;yde:'   : 'frihoyde',
-          'Ledelinje kontrast:' : 'led_lin_kontrast',
-          'Kommentar:'          : 'kommentar',
+          'Ledelinje :'         : 'ledelinje',
           'Forbedringsforslag:' : 'forbed_forslag',
-          'Registrert:'         : 'registrert',
-          'Oppdatert:'          : 'oppdatert'
+          'Objekt ID:'          : 'ogc_fid'
         }
       },
-      'turvei_03'                    : {
+      'turvei_03'                   : {
         'info'   : {
           'name' : 'FRILUFT - Turvei:',
           'extra': 'Turveier vurdert med hensyn til tilgjengelighet.'
         },
         'content': {
-          'Veitype:'            : 'veitype',
+          'Registrert:'         : 'registrert',
+          'Oppdatert:'          : 'oppdat_app',
           'Spesial fottyperute:': 'spesialfottyperute',
           'Dekke:'              : 'dekke',
-          'Veidekketilstand:'   : 'dekke_tilstand',
           'Belysning'           : 'belysning',
           'Bredde:'             : {'bredde': 'cm'},
           'Stigning:'           : {'stigning': '&deg;'},
           'Tverrfall:'          : {'tverrfall': '&deg;'},
-          'Ledelinje:'          : 'ledelinje',
           'Fri h&oslash;yde:'   : 'frihoyde',
-          'Ledelinje kontrast:' : 'led_lin_kontrast',
-          'Kommentar:'          : 'kommentar',
+          'Ledelinje :'         : 'ledelinje',
           'Forbedringsforslag:' : 'forbed_forslag',
-          'Registrert:'         : 'registrert',
-          'Oppdatert:'          : 'oppdatert'
+          'Objekt ID:'          : 'ogc_fid'
         }
       }
-
 
     };
     test = a.split("\n");
@@ -1018,15 +1009,15 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
   var featureSelector = options.selectControl;
   return function (feature) {
     var popup,
-        message,
-        mousePosition,
-        featurePosition,
-        popupPosition,
-        offset = {},
-        sameFidFeatures,
-        xOffset,
-        yOffset,
-        i, j;
+      message,
+      mousePosition,
+      featurePosition,
+      popupPosition,
+      offset = {},
+      sameFidFeatures,
+      xOffset,
+      yOffset,
+      i, j;
 
     if (feature.cluster) {
       return false;
@@ -1035,10 +1026,10 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
     if (NK.easyXDM && NK.easyXDM.socket) {
       // there is an active easyXDM socket - send feature data
       message = {
-        cmd: 'featureSelected',
-        feature: feature.fid,
+        cmd       : 'featureSelected',
+        feature   : feature.fid,
         attributes: feature.attributes,
-        layer: feature.layer.shortid
+        layer     : feature.layer.shortid
       };
       NK.easyXDM.socket.postMessage(JSON.stringify(message));
     }
@@ -1096,10 +1087,10 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
 
 NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
   var generatePopupMarkup,
-      onFeatureSelect,
-      onFeatureUnselect,
-      onPopupClose,
-      selectControl;
+    onFeatureSelect,
+    onFeatureUnselect,
+    onPopupClose,
+    selectControl;
 
   generatePopupMarkup = NK.functions.popup.generatePopupMarkup(popupConfig);
   onPopupClose = function (evt) {
@@ -1110,18 +1101,18 @@ NK.functions.popup.addConfiguredPopup = function (M, layer, popupConfig) {
 
   onFeatureSelect = NK.functions.popup.getFeatureSelector(M, generatePopupMarkup, onPopupClose, popupConfig);
   onFeatureUnselect = function (feature) {
-      if (feature.popup) {
-        feature.popup.feature = null;
-        M.removePopup(feature.popup);
-        feature.popup.destroy();
-        feature.popup = null;
-      }
+    if (feature.popup) {
+      feature.popup.feature = null;
+      M.removePopup(feature.popup);
+      feature.popup.destroy();
+      feature.popup = null;
+    }
   };
 
   selectControl = new OpenLayers.Control.SelectFeature(layer, {
-      onUnselect: onFeatureUnselect,
-      highlightOnly: true,
-      autoActivate: true
+    onUnselect   : onFeatureUnselect,
+    highlightOnly: true,
+    autoActivate : true
   });
   selectControl.onSelect = OpenLayers.Function.bind(onFeatureSelect, selectControl);
 
