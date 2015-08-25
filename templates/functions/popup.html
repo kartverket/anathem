@@ -50,7 +50,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                       if (dict['content'][prop] === 'enh_ssr_id') {
                         tmpMarkup += '<div class="externalToolbarLink"><a href="http://faktaark.statkart.no/SSRFakta/faktaarkfraobjektid?enhet=' + tmpResp[dict['content'][prop]] + '" target="_blank">';
                       } else if(dict['content'][prop] === 'enh_snavn') {
-                        tmpMarkup += 'Mer info om : ' + tmpResp[dict['content'][prop]] + '</a></div></span></p>';
+                        tmpMarkup += 'Meir info om : ' + tmpResp[dict['content'][prop]] + '</a></div></span></p>';
                       } else {
                         tmpMarkup += tmpResp[dict['content'][prop]] + '</span></p>';
                       }
