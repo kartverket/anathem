@@ -27,7 +27,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
 NK.functions.popup.generatePopupMarkup2 = function (conf) {
   return function (feature) {
     var a = feature, f, i, j, k, l, markup = '', tmpMarkup = '', tmp, tmpBildeMarkup, uuDictResponse = [], tmpResp = [],
-      uuDictTmp, dictBilde, test;
+      uuDictTmp, dictBilde, dictBildeFormat, test;
     var uuDict = {
       'friluftsomrade_01'           : {
         'info'   : {
@@ -985,9 +985,16 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
               }
               tmpBildeMarkup += '</tr></table>';
               if (!!uuDictResponse['bilde']) {
-                dictBilde = uuDictResponse['bilde'].split('.')[0];
-                tmpBildeMarkup += '<a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '"><img height=180 width=246 alt="" SRC="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" alt="\'' + dictBilde + '\'" onerror="NK.functions.imgError(this, \'' + dictBilde + '\');"></a>';
-                tmpBildeMarkup += '<span id="' + dictBilde + '" style="visibility:hidden"><a href="http://data.kartverket.no/tilgjengelighet/' + uuDictResponse['bilde'] + '" style="color:#fff"><i>Feil ved lasting av bilde</i></a></span>';
+                if(uuDictTmp['info']['name'].substring(0,'FRILUFT'.length) === 'FRILUFT') {
+                  dictBildeFormat = 'friluft/' + uuDictResponse['bilde'];
+                } else if (uuDictTmp['info']['name'].substring(0,'TETTSTED'.length) === 'TETTSTED') {
+                  dictBildeFormat = 'tettsted/' + uuDictResponse['bilde'];
+                } else {
+                  dictBildeFormat = uuDictResponse['bilde'];
+                }
+                dictBilde = dictBildeFormat.split('.')[0];
+                tmpBildeMarkup += '<a href="http://data.kartverket.no/tilgjengelighet/' + dictBildeFormat + '"><img height=180 width=246 alt="" SRC="http://data.kartverket.no/tilgjengelighet/' + dictBildeFormat + '" alt="\'' + dictBilde + '\'" onerror="NK.functions.imgError(this, \'' + dictBilde + '\');"></a>';
+                tmpBildeMarkup += '<span id="' + dictBilde + '" style="visibility:hidden"><a href="http://data.kartverket.no/tilgjengelighet/' + dictBildeFormat + '" style="color:#fff"><i>Feil ved lasting av bilde</i></a></span>';
               }
               tmpMarkup += '</ul>';
             }
