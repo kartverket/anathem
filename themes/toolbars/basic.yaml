@@ -2,23 +2,10 @@ template: controls/container
 id: basic-toolbar
 controls:
 - template: controls/container
-  id: fullscreen-panel
-  controls:
-  - template: controls/fullscreen
-- template: controls/container
   id: zoom-panel
   controls:
   - template: controls/zoom
   - template: controls/zoomtoselection
-- template: controls/container
-  id: point-panel
-  controls:
-    - template: controls/pointmenu
-      url: http://norgeskart.no/ws/trans.py
-      infoUrl: http://openwps.statkart.no/skwms1/wps.elevation
-      forecastUrl: http://norgeskart.no/ws/forecast.py
-      sunriseUrl: http://norgeskart.no/ws/sun.py
-      propertyUrl: http://norgeskart.no/ws/wfs.teig.py
 - template: controls/container
   id: layerselector-panel
   layerselector: true
@@ -30,9 +17,6 @@ controls:
   - template: controls/rasterlayerselector-popup
     title: "Sj&oslash;"
     group: sjo
-  - template: controls/rasterlayerselector-popup
-    title: "Flere"
-    group: flere
-  - template: controls/vectorlayerselector
-    group: dekning
-    name: "Kart- inndeling"
+#  - template: controls/vectorlayerselector
+#    group: dekning
+#    name: "Kart- inndeling"

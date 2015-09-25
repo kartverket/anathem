@@ -6,3 +6,4 @@ layerGroup: land
 id: toporaster
 linkedTo: fjellskygge
 attribution: true
+visible: true
