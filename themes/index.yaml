@@ -61,6 +61,8 @@ overlays  :
     # Linked from others
     #- include: layers/fjellskygge
 
+    - include: layers/wms/UTMrutenett
+
 center    :
     template: center/besseggen
 
