@@ -165,12 +165,12 @@ NK.addLayerType.WMTS = (function (M, MP) {
   % if attribution:
     if ("${attribution}" !== "True") {
       options.attribution = {
-        title: "${attribution}",
+        title: "${attribution}"
   % if attribution_link:
-        href: "${attribution_link}",
+        ,href: "${attribution_link}"
   % endif
   % if attribution_logo:
-        logo: "${attribution_logo}"
+        ,logo: "${attribution_logo}"
   % endif
       }
     } else {
