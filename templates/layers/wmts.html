@@ -163,9 +163,22 @@ NK.addLayerType.WMTS = (function (M, MP) {
   % endif
 
   % if attribution:
-    options.attribution = {
-      title: "Kartverket",
-      href: "http://www.kartverket.no/"
+    if ("${attribution}" !== "True") {
+      options.attribution = {
+        title: "${attribution}",
+  % if attribution_link:
+        href: "${attribution_link}",
+  % endif
+  % if attribution_logo:
+        logo: "${attribution_logo}"
+  % endif
+      }
+    } else {
+      options.attribution = {
+        title: "Kartverket",
+        href: "http://www.kartverket.no/",
+        logo: "background-image: url(http://skrivte57.statkart.no/miecar/theme/norgeskart/img/kartverket-attribution.svg)"
+      }
     }
   % endif
 

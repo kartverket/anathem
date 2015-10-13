@@ -10,4 +10,7 @@ tileorigin: "-5120900.0,9998100.0"
 shortMatrixIds: true
 layerGroup: flere 
 id: svalbard 
+attribution: "Norsk Polarinstitutt"
+attribution_link: "http://www.npolar.no/no/"
+attribution_logo: "background-image: url(http://www.npolar.no/system/modules/no.npolar.site.npweb/resources/style/np-logo.svg)"
 
