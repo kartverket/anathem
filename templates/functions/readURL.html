@@ -253,6 +253,7 @@ NK.functions.setMapState = function (params) {
     };
     
     hideLayerNamed = function (layerName) {
+      map.events.triggerEvent('rasterLayerDeactivateLayer', {'shortId': layerName});
       return setLayerVisibility(layerName, false);
     };
 
