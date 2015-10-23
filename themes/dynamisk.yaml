@@ -2,35 +2,41 @@ template : base
 filename : dynamisk.html
 title    : Norgeskart
 mapClass: embedded-map
+mapscript: clients/norgeskart-dynamisk.min.js
+---
+template : mapscript
+filename : clients/norgeskart-dynamisk.min.js
+language  : nb
+tokenServiceUrl: /ws/gkt.py
+ticketServiceUrl: /ws/esk.py?wms.ecc_enc
+projection: 32633
 
-mapscript:
-    template : mapscript
-    filename : clients/norgeskart-dynamisk.min.js
-    language  : nb
-    tokenServiceUrl: /ws/gkt.py
-    ticketServiceUrl: /ws/esk.py?wms.ecc_enc
-    projection: 32633
+styles    :
+    - template: styles/unlabeledMarker
+    - template: styles/labeledMarker
+    - template: styles/omriss
+    - template: styles/track
 
-    styles    :
-        - template: styles/unlabeledMarker
-        - template: styles/labeledMarker
-        - template: styles/omriss
-        - template: styles/track
+baselayers:
+    - template: layers/europa
 
-    baselayers:
-        - template: layers/europa
+overlays  :
+    - include: layers/topo2
+    - include: layers/grunnkart
+    - include: layers/sjo_hovedkart2
+    - include: layers/wms/sjo_enc
+    - include: layers/flybilder
+    - include: layers/terreng
+    - include: layers/toporaster3
+    #- include: layers/fjellskygge
+    - include: layers/janmayen
+    - include: layers/svalbard
 
-    overlays  :
-        - include: layers/topo2
-        - include: layers/grunnkart
-        - include: layers/sjo_hovedkart2
-        - include: layers/wms/sjo_enc
-        - include: layers/flybilder
-        - include: layers/terreng
-        - include: layers/toporaster3
-        - include: layers/fjellskygge
-        - include: layers/janmayen
-        - include: layers/svalbard
+    - include: layers/dekning_n50_plast
+    - include: layers/dekning_sjo_hovedkart
+    - include: layers/dekning_havnekart
+    - include: layers/dekning_kystkart
+    - include: layers/dekning_overseilingskart
 
         - include: layers/dekning_n50_plast
         - include: layers/dekning_sjo_hovedkart
@@ -78,12 +84,12 @@ mapscript:
 
     center    :
     template: center/besseggen
-
-    functions :
+functions :
+    - template: functions/updateURL
     - template: functions/readURL
     - template: functions/vector
-
-    controls  :
+    - template: functions/popup
+controls  :
     - template: controls/status
     - template: controls/navigation
     - template: controls/scaleline

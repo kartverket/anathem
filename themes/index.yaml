@@ -52,7 +52,7 @@ overlays  :
     - include: layers/dekning_overseilingskart
 
     # Linked from others
-    - include: layers/fjellskygge
+    #- include: layers/fjellskygge
 
     # SSR - stedsnavn
     - include: layers/wms/ssrSpraak
