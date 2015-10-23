@@ -59,7 +59,7 @@ overlays  :
     - include: layers/wms/friluft-tilrettelegging
 
     # Linked from others
-    - include: layers/fjellskygge
+    #- include: layers/fjellskygge
 
 center    :
     template: center/besseggen
