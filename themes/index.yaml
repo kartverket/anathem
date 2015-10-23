@@ -12,6 +12,7 @@ projection: 32633
 
 i18n:
   - include: languages/nb/base
+  - include: languages/nb/all
 
 baselayers:
     - template: layers/europa
@@ -82,4 +83,3 @@ controls  :
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
-
