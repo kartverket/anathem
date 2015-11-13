@@ -986,6 +986,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
             //feature
             tmpMarkup = '';
             tmpBildeMarkup = '';
+            uuDictResponse = [];
             if (f[l].substring(0, 7) == "Feature") {
               tmpMarkup += '<ul class="featureInfo">';
               test = f[l].split("\n");
@@ -1060,7 +1061,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
               }
               tmpMarkup += '</ul>';
             }
-            markup += '<div class="objectInfo">' + tmpBildeMarkup + tmpMarkup + '</div>';
+            markup += '<div class="objectInfo">' + tmpBildeMarkup + tmpMarkup + '</div></br>';
           }
           markup += '<hr style="margin-bottom: 5px">';
         }
