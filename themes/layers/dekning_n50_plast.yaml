@@ -2,5 +2,5 @@ template: layers/dekning/land/n50
 name: "Norge 1:50000"
 id: dekning.land 
 layerGroup: dekning
-url: /json/dekning/land/n50/plast.json
+url: /json/dekning/land/n50/pod-inndeling2015-flaterl.json
 preferredBackground: toporaster

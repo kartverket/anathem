@@ -15,7 +15,7 @@
   layer = new OpenLayers.Layer.Vector(
     "${name}",
     {
-      shortid: "${id}", 
+      shortid: "${id}",
       styleMap: NK.styles.dekning.land, 
       visibility: ${visible},
       layerGroup: "${layerGroup}",
@@ -65,6 +65,9 @@
       }
       if (a.nr) {
         markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.nr + '</p>';
+      }
+      if (a.POD_KARTNR) {
+        markup += '<p>' + OpenLayers.Lang.translate('Map number') + ': ' + a.POD_KARTNR + '</p>';
       }
       if (a.k) {
         markup += '<div class="municipalities">' + OpenLayers.Lang.translate('Municipalities') + ': <span>' + a.k.split(',').join(',</span><span>') + '</span></div>';
@@ -132,7 +135,7 @@
 
 % if not 'n50LangNB' in vars:  
 OpenLayers.Util.extend(OpenLayers.Lang.nb, {
-  'Map number': 'Kartblad',
+  'Map number': 'POD Kartnr.',
   'Latest print': 'Siste trykk',
   'Datum': 'Datum',
   'Municipalities': 'Kommuner',
