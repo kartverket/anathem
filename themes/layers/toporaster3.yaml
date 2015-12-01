@@ -1,9 +1,10 @@
-template: layers/wmts
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.toporaster3?
 usetoken: true
-name: Rasterkart 
-layer: toporaster3
+name: Rasterkart
+layers: toporaster
 layerGroup: land
 id: toporaster
 linkedTo: fjellskygge
 attribution: true
-visible: true
+visible: "true"
