@@ -8,7 +8,7 @@ NK.styles.dekning.land = new OpenLayers.StyleMap(
 	      strokeWidth: 2,
 	      strokeColor  : "#484",
 	      fillOpacity: 0.1, 
-	      label : "${"${nr}"}",
+	      label : "${"${POD_KARTNR}"}",
 	      fontColor: "#8a8",
 	      fontSize: "12px",
 	      fontFamily: "Courier New, monospace",
@@ -22,7 +22,7 @@ NK.styles.dekning.land = new OpenLayers.StyleMap(
 	        new OpenLayers.Rule({
 	          maxScaleDenominator: 5000000,
 	          symbolizer: {
-	            label: "${"${nr}"}"
+	            label: "${"${POD_KARTNR}"}"
 	          }
 	        }),
 	        new OpenLayers.Rule({
