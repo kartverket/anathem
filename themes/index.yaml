@@ -26,42 +26,7 @@ styles    :
 overlays  :
     # Menu on the left
     # LAND
-    #- include: layers/topo2  # Landkart
     - include: layers/toporaster3 # Rasterkart
-    #- include: layers/grunnkart # Enkel
-    #- include: layers/flybilder
-    #- include: layers/terreng
-
-    # SJO
-    - include: layers/sjo_hovedkart2
-    #- include: layers/wms/sjo_enc
-
-    # FLERE
-    #- include: layers/svalbard
-    #- include: layers/janmayen
-
-    # KARTINNDELING
-    #- include: layers/dekning_sjo_hovedkart
-    #- include: layers/dekning_n50_plast
-    #- include: layers/dekning_havnekart
-    #- include: layers/dekning_kystkart
-    #- include: layers/dekning_overseilingskart
-
-    # Menu on the right
-    # fakta layers
-    #- include: layers/geoJSON/kommunefjell
-
-    # friluftsliv layers
-    #- include: layers/wms/fotruter
-    #- include: layers/wms/sykkelruter
-    #- include: layers/wms/skiloyper
-    #- include: layers/wms/friluft-annen
-    #- include: layers/wms/friluft-tilrettelegging
-
-    # Linked from others
-    #- include: layers/fjellskygge
-
-    - include: layers/wms/UTMrutenett
 
 center    :
     template: center/besseggen
@@ -79,7 +44,6 @@ controls  :
     - template: controls/hashstate
     - include: toolbars/basic
     - include: toolbars/top
-    #- include: toolbars/secondary
     - template: controls/container
       id: overview-container-panel
       controls:
