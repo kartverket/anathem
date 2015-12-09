@@ -162,6 +162,15 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
     url = decodeURIComponent(url);
   }
 
+  if (url.slice(0, "//".length) == "//") {
+    url = url.replace("//", window.location.protocol + "//", "gi");
+  } else {
+    var protocol = url.split("/")[0];
+    if (window.location.protocol != protocol){
+      url = url.replace(protocol, window.location.protocol, "gi");
+    }
+  }
+
   switch (type) {
     case 'geojson':
       NK.functions.addGeoJsonLayer(url, "4326", null, true); //defaults to WGS84 as per standard definition
