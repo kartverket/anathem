@@ -1004,7 +1004,12 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                   tmpMarkup += '<li>' + prop + ' ';
                   if (!!tmpResp[uuDictTmp['content'][prop]]) {
                     if (!!uuDictTmp['content'][prop]) {
-                      tmpMarkup += tmpResp[uuDictTmp['content'][prop]] + '</li>';
+                      //tmpMarkup += tmpResp[uuDictTmp['content'][prop]] + '</li>';
+                      var key = uuDictTmp['content'][prop];
+                      if (key == 'registrert' || key == 'oppdatert' || key == 'oppdat_app') {
+                        tmpResp[key] = tmpResp[key].substr(8,2) + '.' + tmpResp[key].substr(5,2) + '.' + tmpResp[key].substr(0,4) + ' ' + tmpResp[key].substr(11,2) + ':' + tmpResp[key].substr(14,2);
+                      }
+                      tmpMarkup += tmpResp[key];
                     } else {
                       tmpMarkup += 'Ingen tilrettelegging </li>';
                     }
