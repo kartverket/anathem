@@ -417,8 +417,11 @@ NK.functions.addWMSLayer = function(wmsUrl) {
 
 NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   var outputFormat = 'text/xml; subtype=gml/3.2.1';
-  if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/3.1.1';
-  if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/2.1.2';
+  if (parms['formats'][0]) outputFormat = parms['formats'][0];
+  if (parms['formats'].length > 1){
+    if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/3.1.1';
+    if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/2.1.2';
+  }
   var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track", "outputFormat":outputFormat});
   $.extend(wfsLayer,{
     type           : 'wfs',
