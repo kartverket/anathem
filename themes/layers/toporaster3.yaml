@@ -8,3 +8,4 @@ id: toporaster
 linkedTo: fjellskygge
 attribution: true
 visible: "true"
+minZoom: 11

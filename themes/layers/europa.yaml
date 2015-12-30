@@ -1,0 +1,10 @@
+template: layers/wmts
+usetoken: true
+name: Europa
+layer: egk
+layerGroup: land
+id: egk
+attribution: true
+visible: true
+attribution: true
+minZoom: 11
