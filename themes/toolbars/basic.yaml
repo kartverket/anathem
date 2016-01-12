@@ -5,3 +5,7 @@ controls:
   id: zoom-panel
   controls:
   - template: controls/zoom
+- template: controls/container
+  id: print-panel
+  controls:
+  - template: controls/print

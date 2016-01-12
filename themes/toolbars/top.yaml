@@ -16,10 +16,3 @@ controls:
 - template: controls/container
   id: del-panel #norwegian, because AdBlock pro hides panels called share-panel
   top: true
-  controls:
-  - template: controls/container
-    id: print-panel
-    top: true
-    className: topnavpanel
-    controls:
-    - template: controls/print
