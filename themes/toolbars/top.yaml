@@ -14,5 +14,8 @@ controls:
     addressSearchUrl: http://norgeskart.no/ws/adr.py
     propertySearchUrl: http://norgeskart.no/ws/eie.py
 - template: controls/container
-  id: del-panel #norwegian, because AdBlock pro hides panels called share-panel
+  id: help-panel
   top: true
+  className: topnavpanel
+  controls:
+  - template: controls/help
