@@ -158,8 +158,10 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
               tmpMarkup += '<div class="featureInfo" style="display: table; border-top: 1px solid;">';
               try {
                 tmp = f[l].split(":");
+                if(tmp.length > 2) {
+                  tmp[1] = tmp[1].concat(tmp[2]);
+                }
                 tmp = tmp[1].split('\'\n');
-
                 for (j = 0; j < tmp.length; j++) {
                   var keyValuePair = tmp[j].trim();
                   keyValuePair = keyValuePair.replace(/'/g, "").split(' = ');

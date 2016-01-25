@@ -1,0 +1,227 @@
+ template: i18n/language
+ language: nb
+ translations:
+  - template: i18n/translation
+    source: Transformations
+    translation: Transformasjoner
+  - template: i18n/translation
+    source: Transform coordinates
+    translation: Transformer koordinater
+  - template: i18n/translation
+    source: Select input coordinate system
+    translation: Fra koordinatsystem
+  - template: i18n/translation
+    source: Select output coordinate system
+    translation: Til koordinatsystem
+  - template: i18n/translation
+    source: Fill out the coordinate fields or click in the map
+    translation: Skriv inn koordinater eller klikk i kartet
+  - template: i18n/translation
+    source: Help
+    translation: Hjelp
+  - template: i18n/translation
+    source: East coordinate
+    translation: "&Oslash;st-koordinat"
+  - template: i18n/translation
+    source: North coordinate
+    translation: Nord-koordinat
+  - template: i18n/translation
+    source: Longitude
+    translation: Lengdegrad
+  - template: i18n/translation
+    source: Latitude
+    translation: Breddegrad
+  - template: i18n/translation
+    source: Show coordinates
+    translation: Transformer koordinater
+  - template: i18n/translation
+    source: Transformed coordinates
+    translation: Transformerte koordinater
+  - template: i18n/translation
+    source: An error occured
+    translation: En feil oppstod
+  - template: i18n/translation
+    source: Go to coordinates
+    translation: G&aring; til koordinater
+
+  - template: i18n/translation
+    source: Share map
+    translation: Del kart
+  - template: i18n/translation
+    source: Get URL
+    translation: Vis URL
+  - template: i18n/translation
+    source: Share by
+    translation: Del p&aring;
+  - template: i18n/translation
+    source: e-mail
+    translation: e-post
+  - template: i18n/translation
+    source: Twitter
+    translation: Twitter
+  - template: i18n/translation
+    source: Facebook
+    translation: Facebook
+
+  - template: i18n/translation
+    source: Fullscreen
+    translation: Fullskjermsvisning
+  - template: i18n/translation
+    source: Exit fullscreen
+    translation: Avslutt fullskjermsvisning
+
+  - template: i18n/translation
+    source: Pan north
+    translation: nordover
+  - template: i18n/translation
+    source: Pan south
+    translation: s&oslash;rover
+  - template: i18n/translation
+    source: Pan east
+    translation: "&oslash;stover"
+  - template: i18n/translation
+    source: Pan west
+    translation: vestover
+
+  - template: i18n/translation
+    source: Print
+    translation: Skriv ut
+
+  - template: i18n/translation
+    source: No records found
+    translation: S&oslash;ket gav ingen treff
+  - template: i18n/translation
+    source: house number
+    translation: husnummer
+  - template: i18n/translation
+    source: "Total search results: ${count}"
+    translation: "${count} treff"
+  - template: i18n/translation
+    source: More results
+    translation: se flere >
+  - template: i18n/translation
+    source: Searching
+    translation: S&oslash;ker
+  - template: i18n/translation
+    source: Search
+    translation: S&oslash;k
+
+  - template: i18n/translation
+    source: Country
+    translation: Norge
+  - template: i18n/translation
+    source: Region
+    translation: Landsdel
+  - template: i18n/translation
+    source: County
+    translation: Fylke
+  - template: i18n/translation
+    source: Municipality
+    translation: Kommune
+  - template: i18n/translation
+    source: Street
+    translation: Gate
+  - template: i18n/translation
+    source: House
+    translation: Hus
+  - template: i18n/translation
+    source: Zoom in
+    translation: Zoom inn
+  - template: i18n/translation
+    source: Zoom out
+    translation: Zoom ut
+
+  - template: i18n/translation
+    source: Zoom to selection
+    translation: Zoom til valgt omr&aring;de
+
+  - template: i18n/translation
+    source: Point menu
+    translation: Punktmeny
+  - template: i18n/translation
+    source: m.a.s.l.
+    translation: moh.
+  - template: i18n/translation
+    source: Meters above sea level
+    translation: meter over havet
+  - template: i18n/translation
+    source: more information about this place
+    translation: faktaark
+  - template: i18n/translation
+    source: 'Coordinate system:'
+    translation: 'Koordinatsystem:'
+  - template: i18n/translation
+    source: 'Northing / latitude:'
+    translation: 'Nord / breddegrader:'
+  - template: i18n/translation
+    source: 'Easting / longitude:'
+    translation: '&Oslash;st / lengdegrader'
+
+  - template: i18n/translation
+    source: freeprint_create_map
+    translation: Lag kartet
+  - template: i18n/translation
+    source: freeprint_short_desc
+    translation: Flytt kartet slik at det gule feltet dekker omr&aring;det du &oslash;nsker &aring; skrive ut.
+  - template: i18n/translation
+    source: freeprint_scale
+    translation: M&aring;lestokk
+  - template: i18n/translation
+    source: freeprint_name_your_map
+    translation: Gi kartet ditt et navn
+  - template: i18n/translation
+    source: freeprint_name_too_long
+    translation: Dette navnet er for langt
+  - template: i18n/translation
+    source: freeprint_include_legends
+    translation: Ta med tegnforklaringer
+
+  - template: i18n/translation
+    source: freeprint_creating_map
+    translation: Vi lager kartet ditt!
+  - template: i18n/translation
+    source: freeprint_please_wait
+    translation: Vennligst vent...
+  - template: i18n/translation
+    source: freeprint_cancel
+    translation: Avbryt
+  - template: i18n/translation
+    source: freeprint_finished
+    translation: Kartet ditt er ferdig!
+  - template: i18n/translation
+    source: freeprint_download
+    translation: Last ned
+
+  - template: i18n/translation
+    source: freeprint_question_0
+    translation: Hvordan bruker jeg &laquo;Mitt turkart&raquo;?
+  - template: i18n/translation
+    source: freeprint_answer_0_0
+    translation: S&oslash;k etter, eller zoom inn p&aring; &oslash;nsket omr&aring;de.
+  - template: i18n/translation
+    source: freeprint_answer_0_1
+    translation: Velg m&aring;lestokk.
+  - template: i18n/translation
+    source: freeprint_answer_0_2
+    translation: Flytt kartet slik at det gule rutenettet dekker det omr&aring;det du &oslash;nsker kartet skal inneholde.
+  - template: i18n/translation
+    source: freeprint_answer_0_3
+    translation: Gi kartutsnittet ditt et navn. Dette navnet vil st&aring; p&aring; f&oslash;rste side av utskriften din.
+  - template: i18n/translation
+    source: freeprint_answer_0_4
+    translation: Huk av om du &oslash;nsker at siste side skal inneholde tegnforklaring.
+  - template: i18n/translation
+    source: freeprint_answer_0_5
+    translation: Klikk p&aring; &laquo;Lag kartet!&raquo;
+  - template: i18n/translation
+    source: freeprint_answer_0_6
+    translation: Vent til kartet er ferdig, klikk p&aring; last ned, og skriv ut pdf-en.
+  - template: i18n/translation
+    source: freeprint_question_1
+    translation: Hva betyr m&aring;lestokken?
+  - template: i18n/translation
+    source: freeprint_answer_1_0
+    translation: 1:25 000 betyr at 1 meter p&aring; kartet er 25 km i virkeligheten, dvs. 1 cm = 250 m
+  - template: i18n/translation
+    source: freeprint_answer_1_1
+    translation: 1:50 000 betyr at 1 meter p&aring; kartet er 50 km i virkeligheten, dvs. 1 cm = 500 m
