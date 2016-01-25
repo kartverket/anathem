@@ -156,3 +156,72 @@
   - template: i18n/translation
     source: 'Easting / longitude:'
     translation: '&Oslash;st / lengdegrader'
+
+  - template: i18n/translation
+    source: freeprint_create_map
+    translation: Lag kartet
+  - template: i18n/translation
+    source: freeprint_short_desc
+    translation: Flytt kartet slik at det gule feltet dekker omr&aring;det du &oslash;nsker &aring; skrive ut.
+  - template: i18n/translation
+    source: freeprint_scale
+    translation: M&aring;lestokk
+  - template: i18n/translation
+    source: freeprint_name_your_map
+    translation: Gi kartet ditt et navn
+  - template: i18n/translation
+    source: freeprint_name_too_long
+    translation: Dette navnet er for langt
+  - template: i18n/translation
+    source: freeprint_include_legends
+    translation: Ta med tegnforklaringer
+
+  - template: i18n/translation
+    source: freeprint_creating_map
+    translation: Vi lager kartet ditt!
+  - template: i18n/translation
+    source: freeprint_please_wait
+    translation: Vennligst vent...
+  - template: i18n/translation
+    source: freeprint_cancel
+    translation: Avbryt
+  - template: i18n/translation
+    source: freeprint_finished
+    translation: Kartet ditt er ferdig!
+  - template: i18n/translation
+    source: freeprint_download
+    translation: Last ned
+
+  - template: i18n/translation
+    source: freeprint_question_0
+    translation: Hvordan bruker jeg &laquo;Mitt turkart&raquo;?
+  - template: i18n/translation
+    source: freeprint_answer_0_0
+    translation: S&oslash;k etter, eller zoom inn p&aring; &oslash;nsket omr&aring;de.
+  - template: i18n/translation
+    source: freeprint_answer_0_1
+    translation: Velg m&aring;lestokk.
+  - template: i18n/translation
+    source: freeprint_answer_0_2
+    translation: Flytt kartet slik at det gule rutenettet dekker det omr&aring;det du &oslash;nsker kartet skal inneholde.
+  - template: i18n/translation
+    source: freeprint_answer_0_3
+    translation: Gi kartutsnittet ditt et navn. Dette navnet vil st&aring; p&aring; f&oslash;rste side av utskriften din.
+  - template: i18n/translation
+    source: freeprint_answer_0_4
+    translation: Huk av om du &oslash;nsker at siste side skal inneholde tegnforklaring.
+  - template: i18n/translation
+    source: freeprint_answer_0_5
+    translation: Klikk p&aring; &laquo;Lag kartet!&raquo;
+  - template: i18n/translation
+    source: freeprint_answer_0_6
+    translation: Vent til kartet er ferdig, klikk p&aring; last ned, og skriv ut pdf-en.
+  - template: i18n/translation
+    source: freeprint_question_1
+    translation: Hva betyr m&aring;lestokken?
+  - template: i18n/translation
+    source: freeprint_answer_1_0
+    translation: 1:25 000 betyr at 1 meter p&aring; kartet er 25 km i virkeligheten, dvs. 1 cm = 250 m
+  - template: i18n/translation
+    source: freeprint_answer_1_1
+    translation: 1:50 000 betyr at 1 meter p&aring; kartet er 50 km i virkeligheten, dvs. 1 cm = 500 m
