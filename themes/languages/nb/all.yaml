@@ -43,6 +43,9 @@
   - template: i18n/translation
     source: Go to coordinates
     translation: G&aring; til koordinater
+  - template: i18n/translation
+    source: Wrong coordinate input
+    translation: Feil i angitte koordinater
 
   - template: i18n/translation
     source: Share map
