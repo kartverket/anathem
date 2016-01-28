@@ -29,7 +29,7 @@ overlays  :
     - include: layers/toporaster3 # Rasterkart
 
 center    :
-    template: center/besseggen
+    template: center/jotunheimen
 
 functions :
     - template: functions/updateURL
