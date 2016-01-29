@@ -191,22 +191,25 @@
   - template: i18n/translation
     source: freeprint_download
     translation: Last ned
+  - template: i18n/translation
+    source: freeprint_more_at_kartverket
+    translation: Les mer om Kartverkets kart p&aring; kartverket.no
 
   - template: i18n/translation
     source: freeprint_question_0
-    translation: Hvordan bruker jeg &laquo;Mitt turkart&raquo;?
+    translation: Hvordan lager jeg &laquo;Mitt turkart&raquo;?
   - template: i18n/translation
     source: freeprint_answer_0_0
-    translation: S&oslash;k etter, eller zoom inn p&aring; &oslash;nsket omr&aring;de.
+    translation: S&oslash;k etter eller zoom inn p&aring; det omr&aring;det du vil lage kart over.
   - template: i18n/translation
     source: freeprint_answer_0_1
-    translation: Velg m&aring;lestokk.
+    translation: Velg eventuelt en annen m&aring;lestokk.
   - template: i18n/translation
     source: freeprint_answer_0_2
-    translation: Flytt kartet slik at det gule rutenettet dekker det omr&aring;det du &oslash;nsker kartet skal inneholde.
+    translation: Flytt kartet slik at det gule rutenettet dekker det omr&aring;det du &oslash;nsker kartet skal inneholde. Det gule rutenettet tilpasser seg lokal UTM-sone, og vil rotere slik at det hele tiden er orientert riktig mot nord.
   - template: i18n/translation
     source: freeprint_answer_0_3
-    translation: Gi kartutsnittet ditt et navn. Dette navnet vil st&aring; p&aring; f&oslash;rste side av utskriften din.
+    translation: Gi kartet ditt et navn. Dette navnet vil st&aring; p&aring; f&oslash;rste side av utskriften din.
   - template: i18n/translation
     source: freeprint_answer_0_4
     translation: Huk av om du &oslash;nsker at siste side skal inneholde tegnforklaring.
@@ -215,13 +218,21 @@
     translation: Klikk p&aring; &laquo;Lag kartet!&raquo;
   - template: i18n/translation
     source: freeprint_answer_0_6
-    translation: Vent til kartet er ferdig, klikk p&aring; last ned, og skriv ut pdf-en.
+    translation: N&aring;r kartet er ferdig, kan du laste ned.
+  - template: i18n/translation
+    source: freeprint_answer_0_7
+    translation: Vent til kartet er ferdig, klikk p&aring; last ned, og skriv ut pdf-en. For &aring; f&aring; korrekt m&aring;lestokk p&aring; utskriften, m&aring; du velge &laquo;Faktisk st&oslash;rrelse&raquo; i skriveroppsettet.
+
   - template: i18n/translation
     source: freeprint_question_1
     translation: Hva betyr m&aring;lestokken?
   - template: i18n/translation
     source: freeprint_answer_1_0
-    translation: 1:25 000 betyr at 1 meter p&aring; kartet er 25 km i virkeligheten, dvs. 1 cm = 250 m
+    translation: I m&aring;lestokk 1:25 000  vil 1 cm p&aring; kartet v&aelig;re 250 meter i terrenget. 1 km i terrenget vil v&aelig;re 4 cm p&aring; kartet.
   - template: i18n/translation
     source: freeprint_answer_1_1
-    translation: 1:50 000 betyr at 1 meter p&aring; kartet er 50 km i virkeligheten, dvs. 1 cm = 500 m
+    translation: I m&aring;lestokk 1:50 000  vil 1 cm p&aring; kartet v&aelig;re 500 meter i terrenget. 1 km i terrenget vil v&aelig;re 2 cm p&aring; kartet
+  - template: i18n/translation
+    source: freeprint_answer_1_2
+    translation: St&oslash;rrelsen p&aring; en rute i rutenettet tilsvarer alltid 1 kilometer i terrenget.
+
