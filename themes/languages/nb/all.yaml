@@ -194,6 +194,9 @@
   - template: i18n/translation
     source: freeprint_more_at_kartverket
     translation: Les mer om Kartverkets kart p&aring; kartverket.no
+  - template: i18n/translation
+    source: freeprint_generate_pdf_failed
+    translation: Det skjedde dessverre en feil da vi skulle lage kartet ditt. Vennligst pr&oslash;v igjen litt senere.
 
   - template: i18n/translation
     source: freeprint_question_0
