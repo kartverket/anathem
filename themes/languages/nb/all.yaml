@@ -196,7 +196,7 @@
     translation: Les mer om Kartverkets kart p&aring; kartverket.no
   - template: i18n/translation
     source: freeprint_generate_pdf_failed
-    translation: Det skjedde dessverre en feil da vi skulle lage kartet ditt. Vennligst pr&oslash;v igjen litt senere.
+    translation: Det er for tiden stor p&aring;gang og vi f&aring;r dessverre ikke laget kartet ditt n&aring;. Vi beklager dette. Vennligst pr&oslash;v igjen om en liten stund.
 
   - template: i18n/translation
     source: freeprint_question_0
