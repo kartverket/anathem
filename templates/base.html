@@ -15,13 +15,12 @@ params:
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en" style="height:100%"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js lt-ie10" lang="en" style="height:100%"> <![endif]-->
 % if manifestName:
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en" style="height:100%" manifest="${manifestName}.manifest"> <!--<![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en" manifest="${manifestName}.manifest"> <!--<![endif]-->
 % else:
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en" style="height:100%"> <!--<![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 % endif
 
   <head>
-    <!-- by kartverket / Thomas Hirsch 2012 - public domain -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>${title}</title>
@@ -41,17 +40,16 @@ params:
     <link rel="stylesheet" type="text/css" href="theme/norgeskart/ui.fancytree.css" />
     <link rel="stylesheet" href="theme/norgeskart/jquery-ui.css">
   </head>
-  <body style="height: 100%; overflow: hidden;">
+  <body>
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-    <header>
-    </header>
+    <header><--GEONORGE-HEADER--></header>
 % if mapClass:
-    <div id="map" role="main" class="${mapClass}" style="width:100%; height:100%"></div>
+    <div id="map" role="main" class="${mapClass}"></div>
 % else:
-    <div id="map" role="main" style="width:100%; height:100%"></div>
+    <div id="map" role="main"></div>
 % endif
-    <footer>
-    </footer>
+    <footer></footer>
+
     <script src="js/modernizr.min.js"></script>
     <script src="js/proj4js.min.js"></script>
     <script src="js/openlayers.min.js"></script>
