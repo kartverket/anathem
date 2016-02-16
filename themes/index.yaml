@@ -6,7 +6,7 @@ title    : "Kart | Geonorge"
 mapscript: 
   template  : mapscript
   language  : nb 
-  tokenServiceUrl: /ws/gkt.py
+  tokenServiceUrl: http://www.norgeskart.no/ws/gkt.py
   projection: 32633
   maxResolution: 21664.0
 
