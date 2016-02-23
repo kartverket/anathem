@@ -8,7 +8,6 @@ controls:
   name: Tools 
   id: tools-panel
   controls:
-  - template: controls/addlayer
   - template: controls/draw
     storageUrl: /ws/upload-json.py
     styleName: track

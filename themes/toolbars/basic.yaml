@@ -12,6 +12,9 @@ controls:
   id: zoom-panel
   controls:
   - template: controls/zoom
+- template: controls/container
+  id: selection-panel
+  controls:
   - template: controls/zoomtoselection
 - template: controls/container
   id: pan-panel
@@ -22,3 +25,6 @@ controls:
   controls:
   - template: controls/rasterlayerselector
     group: modus
+
+- template: controls/addlayer
+  id: addlayer-panel
