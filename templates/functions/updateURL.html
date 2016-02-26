@@ -76,7 +76,9 @@ NK.functions.updateHistory = function (evt) {
                 }
               } else {
                 if (layer.isDrawing) {
-                  uid += '/l/drawing/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
+                  var res = layer.url.match(/[0-9a-f]{40}/g);
+                  var str = res.length == 0 ? encodeURIComponent(layer.url) : res[0];
+                  uid += '/l/drawing/' + str + '/' + layer.epsgCode;
                 } else {
                   uid += '/l/geojson/' + encodeURIComponent(layer.url) + '/' + layer.epsgCode;
                 }
