@@ -159,3 +159,20 @@
   - template: i18n/translation
     source: 'Easting / longitude:'
     translation: '&Oslash;st / lengdegrader'
+    
+  - template: i18n/translation
+    source: vennligst_vent
+    translation: 'Vennligst vent...'
+
+  - template: i18n/translation
+    source: tegneogmale_lagrer_tegning
+    translation: 'Vi lagrer tegningen din.'
+  - template: i18n/translation
+    source: tegneogmale_lagret
+    translation: 'Tegningen din er lagret!'
+  - template: i18n/translation
+    source: tegneogmale_lagret_fil_info
+    translation: 'Vi beholder en kopi av tegningen i 30 dager. I dette tidsrommet kan du n&aring;r som helst hente fram tegningen din ved &aring; bruke linken under:'
+  - template: i18n/translation
+    source: tegneogmale_last_ned
+    translation: 'Last ned som fil'
