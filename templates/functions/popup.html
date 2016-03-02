@@ -738,8 +738,11 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Turomr&aring;de:': 'turomraade_tilrettelagt_for',
           'Fiskeplass:'     : 'fiskeplass_tilrettelagt_for',
           'Badeplass:'      : 'badeplass_tilrettelagt_for',
-          'Objekt ID:'      : 'ogc_fid'
-        }
+          'Objekt ID:'      : 'ogc_fid',
+          'Link til informasjonsark:'  :'link_skjema',
+          'Link til bildeark:' :'link_bilde'
+        },
+
       },
       'statlig_sikra_polygon_02'    : {
         'info'   : {
@@ -753,7 +756,9 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Turomr&aring;de:': 'turomraade_tilrettelagt_for',
           'Fiskeplass:'     : 'fiskeplass_tilrettelagt_for',
           'Badeplass:'      : 'badeplass_tilrettelagt_for',
-          'Objekt ID:'      : 'ogc_fid'
+          'Objekt ID:'      : 'ogc_fid',
+          'Link til informasjonsark:'  :'link_skjema',
+          'Link til bildeark:' :'link_bilde'
         }
       },
       'statlig_sikra_polygon_03'    : {
@@ -768,7 +773,9 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Turomr&aring;de:': 'turomraade_tilrettelagt_for',
           'Fiskeplass:'     : 'fiskeplass_tilrettelagt_for',
           'Badeplass:'      : 'badeplass_tilrettelagt_for',
-          'Objekt ID:'      : 'ogc_fid'
+          'Objekt ID:'      : 'ogc_fid',
+          'Link til informasjonsark:'  :'link_skjema',
+          'Link til bildeark:' :'link_bilde'
         }
       },
       't_vei'                       : {
@@ -1078,6 +1085,9 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                       var key = uuDictTmp['content'][prop];
                       if (key == 'registrert' || key == 'oppdatert' || key == 'oppdat_app') {
                         tmpResp[key] = tmpResp[key].substr(8, 2) + '.' + tmpResp[key].substr(5, 2) + '.' + tmpResp[key].substr(0, 4) + ' ' + tmpResp[key].substr(11, 2) + ':' + tmpResp[key].substr(14, 2);
+                      }
+                      if (key == 'link_skjema' || key == 'link_bilde') {
+                        tmpResp[key] = '<div class="externalToolbarLink"><a href="http://data.kartverket.no/tilgjengelighet/friluft-skjema-FRL-2012/' + tmpResp[key] + '">' + tmpResp[key] + '</a></div>'
                       }
                       tmpMarkup += tmpResp[key];
                     } else {
