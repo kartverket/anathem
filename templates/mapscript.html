@@ -384,9 +384,15 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
       if (name in NK.registeredLayerQueue) {delete NK.registeredLayerQueue[name];}
       layers.push(name);
-      var bbox = $(xml).find('BoundingBox');
+      var bbox = $(this).find('BoundingBox');
       if (!!bbox) {
-        var atts = bbox[0].attributes;
+        var atts;
+        if (!!bbox[0]) {
+          atts = bbox[0].attributes;
+        } else {
+          bbox = $(xml).find('BoundingBox');
+          atts = bbox[0].attributes;
+        }
         var srs = atts['CRS'] || atts['SRS'];
         if (srs && (srs.value == map.projection.projCode)) { //TODO: convert from atts["srs"].value to map.projection for anything else
           layerParms['layerBounds'] = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
