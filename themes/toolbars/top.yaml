@@ -33,21 +33,15 @@ controls:
     - template: controls/help
       i18n:
       - include: languages/nb/help
-  - template: controls/container
-    id: geoportal-panel
-    controls:
-    - template: controls/geoportal
-      i18n:
-      - include: languages/nb/geoportal
 - template: controls/container
   id: search-panel
   controls:
   - template: controls/search
-    coordinates: /ws/trans.py
+    coordinates: //www.norgeskart.no/ws/trans.py
     searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
     streetAddressesSearchUrl: /ws/veg.py
-    addressSearchUrl: /ws/adr.py
-    propertySearchUrl: /ws/eie.py
+    addressSearchUrl: //www.norgeskart.no/ws/adr.py
+    propertySearchUrl: //www.norgeskart.no/ws/eie.py
     i18n:
     - include: languages/nb/search
 - template: controls/container
