@@ -22,3 +22,23 @@ controls:
   controls:
   - template: controls/rasterlayerselector
     group: modus
+- template: controls/container
+  id: geoportal-panel
+  controls:
+  - template: controls/geoportal
+    i18n:
+    - include: languages/nb/geoportal
+- template: controls/container
+  name: Tools 
+  id: tools-panel
+  controls:
+  - template: controls/addlayer
+  - template: controls/draw
+    storageUrl: /ws/upload-json.py
+    styleName: track
+    i18n:
+    - include: languages/nb/draw
+  - template: controls/transformations
+    url: /ws/trans.py
+  - template: controls/lang
+
