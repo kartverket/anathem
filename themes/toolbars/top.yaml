@@ -33,12 +33,12 @@ controls:
     - template: controls/help
       i18n:
       - include: languages/nb/help
-#  - template: controls/container
-#    id: geoportal-panel
-#    controls:
-#    - template: controls/geoportal
-#      i18n:
-#      - include: languages/nb/geoportal
+  - template: controls/container
+    id: geoportal-panel
+    controls:
+    - template: controls/geoportal
+      i18n:
+      - include: languages/nb/geoportal
 - template: controls/container
   id: search-panel
   controls:
@@ -50,3 +50,7 @@ controls:
     propertySearchUrl: /ws/eie.py
     i18n:
     - include: languages/nb/search
+- template: controls/container
+  id: geonorge-logo-panel
+  controls:
+  - template: controls/logo
