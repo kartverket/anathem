@@ -50,15 +50,14 @@ NK.tokenUpdatePaused = false;
 % endif
 
 NK.tokenError = {
-  PAUSE_MINUTES: 2,
-  RELOAD_LIMIT_SECONDS: 15,
-  messagePopup: null,
+  PAUSE_MINUTES            : 2,
+  RELOAD_LIMIT_SECONDS     : 15,
+  messagePopup             : null,
   pauseTimeRemainingElement: null,
-  pauseTimeRemainingText: null,
-  pauseTimer: null,
-  pauseCountdownTimer: null
+  pauseTimeRemainingText   : null,
+  pauseTimer               : null,
+  pauseCountdownTimer      : null
 };
-
 
 NK.mapservers = {};
 NK.mapservers.wmts = [
@@ -117,8 +116,6 @@ NK.functions.updateToken = function (request) {
 };
 
 NK.functions.pauseTokenUpdate = function () {
-  var popup, innerWrapper, heading, message, timeRemaining, statusLink;
-
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
 
@@ -156,37 +153,37 @@ NK.functions.getNewToken = function () {
 };
 
 NK.functions.getWMSCapabilities = function (url) {
-  return NK.functions.corsRequest(url, {"service":"WMS", "request":"GetCapabilities"});
+  return NK.functions.corsRequest(url, {"service": "WMS", "request": "GetCapabilities"});
 };
 NK.functions.getWFSCapabilities = function (url) {
-  return NK.functions.corsRequest(url, {"service":"WFS", "request":"GetCapabilities"});
+  return NK.functions.corsRequest(url, {"service": "WFS", "request": "GetCapabilities"});
 };
 NK.functions.getWCSCapabilities = function (url) {
-  return NK.functions.corsRequest(url, {"service":"WCS", "request":"GetCapabilities"});
+  return NK.functions.corsRequest(url, {"service": "WCS", "request": "GetCapabilities"});
 };
 NK.functions.corsRequest = function (url, params) {
-  if(!!url) {
+  if (!!url) {
     if (url.slice(-1) != '?') {
       if (url.indexOf('?') == -1) {
-        url = url+'?';
+        url = url + '?';
       } else {
-        url = url+'&';
+        url = url + '&';
       }
     }
     for (var k in params) {
-      url += k+"="+params[k]+"&";
+      url += k + "=" + params[k] + "&";
     }
     return $.ajax({
-      url: '/ws/px.py',
-      type: 'GET',
-      data: url,
+      url     : '/ws/px.py',
+      type    : 'GET',
+      data    : url,
       dataType: 'xml'
     });
   }
-}
+};
 
 NK.functions.urlParam = function (name) {
-  var results = new RegExp('[#/\\&]'+name+'=(.*?)($|/\\+)').exec(window.location.href);
+  var results = new RegExp('[#/\\&]' + name + '=(.*?)($|/\\+)').exec(window.location.href);
   return results && results.length && results[1] || 0;
 };
 
@@ -194,12 +191,14 @@ NK.functions.addLayerSwitcher = function () {
   var loadingpanel = new OpenLayers.Control.LoadingPanel();
   map.addControl(loadingpanel);
   map.addControl(new OpenLayers.Control.Navigation());
-  map.addControl(new OpenLayers.Control.LayerSwitcher({'div': OpenLayers.Util.getElement('layerList'), 
-                                                       'filter': {'key':'isUrlDataLayer', 'value':true}}));
+  map.addControl(new OpenLayers.Control.LayerSwitcher({
+    'div'   : OpenLayers.Util.getElement('layerList'),
+    'filter': {'key': 'isUrlDataLayer', 'value': true}
+  }));
 };
-NK.functions.removeDynamicLayers = function() {
-  var dLayers = map.getLayersBy("dynamicLayer",true);
-  for (var i=0; i<dLayers.length; i++) {
+NK.functions.removeDynamicLayers = function () {
+  var dLayers = map.getLayersBy("dynamicLayer", true);
+  for (var i = 0; i < dLayers.length; i++) {
     map.removeLayer(dLayers[i]);
   }
 };
@@ -212,56 +211,68 @@ NK.functions.closePopupCallBack = function () {
   this.hide();
 };
 
-NK.functions.loadWCSLayer = function(wcsUrl, whenDone) {
+NK.functions.loadWCSLayer = function (wcsUrl, whenDone) {
   NK.dataLayers = NK.dataLayers || {};
-  if (!!NK.dataLayers[wcsUrl]) {return;}
+  if (!!NK.dataLayers[wcsUrl]) {
+    return;
+  }
 
-  var wcs = {}, formats = {}, layers = {}, title = "", constraints="", attribution="", description="";
+  var wcs = {}, formats = {}, layers = {}, title = "", constraints = "", attribution = "", description = "";
   var resultWCS = NK.functions.getWCSCapabilities(wcsUrl);
   resultWCS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWCS.done(function (xml) {
-    
-    $(xml).find('formatSupported').each(function() { 
+
+    $(xml).find('formatSupported').each(function () {
       formats[$(this).text()] = true;
     });
-    $(xml).find('CoverageId').each(function() {
+    $(xml).find('CoverageId').each(function () {
       layers[$(this).text()] = true;
     });
-    $(xml).find('Title').each(function() {
+    $(xml).find('Title').each(function () {
       title = $(this).text();
     });
-    $(xml).find('Abstract').each(function() {
+    $(xml).find('Abstract').each(function () {
       description = $(this).text();
     });
-    $(xml).find('AccessConstraints').each(function() {
+    $(xml).find('AccessConstraints').each(function () {
       constraints = $(this).text();
     });
-    $(xml).find('Attribution').each(function() {
+    $(xml).find('Attribution').each(function () {
       attribution = $(this).text();
     });
-    $(xml).find('ProviderName').each(function() {
+    $(xml).find('ProviderName').each(function () {
       attribution = attribution || $(this).text();
     });
     wcs.formats = Object.keys(formats);
-    wcs.layers  = Object.keys(layers);
-    wcs.title   = title;
+    wcs.layers = Object.keys(layers);
+    wcs.title = title;
     wcs.constraints = constraints;
     wcs.attribution = attribution;
     whenDone(wcs);
   });
-}
+};
 
-NK.functions.addWFSLayer = function(wfsUrl) {
+NK.functions.addWFSLayer = function (wfsUrl) {
   wfsUrl = wfsUrl.trim();
-  if (wfsUrl.slice(-1)=='?') wfsUrl=wfsUrl.slice(0,-1);
-  if (map.getLayersBy("url",wfsUrl).length) {return;}
-  var layers = [], formats={}, serviceParms={}, layerParms;
+  if (wfsUrl.slice(-1) == '?') wfsUrl = wfsUrl.slice(0, -1);
+  if (map.getLayersBy("url", wfsUrl).length) {
+    return;
+  }
+  var layers = [], formats = {}, serviceParms = {}, layerParms;
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
   resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWFS.done(function (xml) {
-    var version = $(xml).find('ServiceTypeVersion')
+    var version = $(xml).find('ServiceTypeVersion');
     if (!!version) {
-      version = version.last().text().trim(); // TODO: select 1.1.0 over 2.0.0
+      if (version.length > 1) {
+        if (parseFloat(version.last().text().substring(0, 3)) < parseFloat(version.first().text().substring(0, 3))) {
+          version = version.last().text().trim();
+        } else {
+          version = version.first().text().trim();
+        }
+      } else {
+        version = version.last().text().trim();
+      }
     }
     serviceParms['version'] = version;
     var exception = $(xml).find('ExceptionText').text();
@@ -277,7 +288,7 @@ NK.functions.addWFSLayer = function(wfsUrl) {
         serviceParms['description'] = $(this).children('Abstract').text();
       });
       $(xml).find('OutputFormats').each(function () {
-        $(this).children('Format').each(function () {;
+        $(this).children('Format').each(function () {
           formats[$(this).text()] = true;
         });
       });
@@ -289,46 +300,56 @@ NK.functions.addWFSLayer = function(wfsUrl) {
       $(xml).find('Attribution').each(function () {
         var href = $(this).children('OnlineResource')[0];
         var logo = $(this).children('LogoURL').children('OnlineResource')[0];
-        attribution = { 
+        attribution = {
           'title': $(this).children('Title').text(),
           'href' : href && href.getAttribute("xlink:href"),
           'logo' : logo && logo.getAttribute("xlink:href")
         }
       });
-      if (!attribution) { attribution={'title':OpenLayers.Lang.translate('no attribution'), 'href':'#'}; }
+      if (!attribution) {
+        attribution = {'title': OpenLayers.Lang.translate('no attribution'), 'href': '#'};
+      }
       serviceParms['attribution'] = attribution;
       $(xml).find('FeatureType').each(function () {
         layerParms = {};
         var name = $(this).children('Name').text();
-        if (!name) {return;}
+        if (!name) {
+          return;
+        }
         layers.push(name);
         layerParms['title'] = $(this).children('Title').text();
         layerParms['visible'] = (!!NK.visibleLayerQueue[name]) && NK.visibleLayerQueue[name];
-        if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
-        if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
+        if (name in NK.visibleLayerQueue) {
+          delete NK.visibleLayerQueue[name];
+        }
+        if (name in NK.opacityQueue) {
+          delete NK.opacityQueue[name];
+        }
         layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
         layerParms['type'] = name;
-        NK.functions.createDynamicWFSLayer(layerParms['title'], wfsUrl, $.extend({},serviceParms, layerParms));
+        NK.functions.createDynamicWFSLayer(layerParms['title'], wfsUrl, $.extend({}, serviceParms, layerParms));
         if (!!NK.xdm) {
-          NK.functions.postMessage({"type":"layerLoaded", "title":layerParms['title'], "url":wfsUrl}); 
+          NK.functions.postMessage({"type": "layerLoaded", "title": layerParms['title'], "url": wfsUrl});
         }
       });
       NK.functions.updateHistory();
     }
   });
 
-  var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+  var geoportal = map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
   if (!!geoportal) {
     geoportal.showControls(wfsUrl);
     geoportal.displayLayerList();
   }
 };
 
-NK.functions.addWMSLayer = function(wmsUrl) {
+NK.functions.addWMSLayer = function (wmsUrl) {
   wmsUrl = wmsUrl.trim();
-  if (wmsUrl.slice(-1)=='?') wmsUrl=wmsUrl.slice(0,-1);
-  if (map.getLayersBy("url",wmsUrl).length) {return;}
-  var layers = [], formats=[], fiFormats=[], serviceParms={}, layerParms;
+  if (wmsUrl.slice(-1) == '?') wmsUrl = wmsUrl.slice(0, -1);
+  if (map.getLayersBy("url", wmsUrl).length) {
+    return;
+  }
+  var layers = [], formats = [], fiFormats = [], serviceParms = {}, layerParms;
 
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
@@ -339,13 +360,14 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       serviceParms['description'] = $(this).children('Abstract').text();
     });
     $(xml).find('GetFeatureInfo').each(function () {
-      $(this).children('Format').each(function() {
+      $(this).children('Format').each(function () {
         fiFormats.push($(this).text());
       });
     });
     serviceParms['featureInfoFormats'] = fiFormats;
     $(xml).find('GetMap').each(function () {
-      $(this).children('Format').each(function () {;
+      $(this).children('Format').each(function () {
+        ;
         formats.push($(this).text());
       });
     });
@@ -354,24 +376,28 @@ NK.functions.addWMSLayer = function(wmsUrl) {
     $(xml).find('Attribution').each(function () {
       var href = $(this).children('OnlineResource')[0];
       var logo = $(this).children('LogoURL').children('OnlineResource')[0];
-      attribution = { 
-          'title': $(this).children('Title').text(),
-          'href' : href && href.getAttribute("xlink:href"),
-          'logo' : logo && logo.getAttribute("xlink:href")
+      attribution = {
+        'title': $(this).children('Title').text(),
+        'href' : href && href.getAttribute("xlink:href"),
+        'logo' : logo && logo.getAttribute("xlink:href")
       }
     });
-    if (!attribution) { attribution={'title':'missing', 'href':'#'}; }
+    if (!attribution) {
+      attribution = {'title': 'missing', 'href': '#'};
+    }
     serviceParms['attribution'] = attribution;
     $(xml).find('AccessConstraints').each(function () {
       serviceParms['constraints'] = $(this).text();
     });
     $(xml).find('Layer').each(function () {
-      layerParms={};
+      layerParms = {};
       var name = $(this).children('Name').text();
-      if (!name) {return;}
+      if (!name) {
+        return;
+      }
 
       /* if this layer is a child layer, identify parent */
-      if ($(this).parent()[0].nodeName=="Layer") {
+      if ($(this).parent()[0].nodeName == "Layer") {
         layerParms['parent'] = $(this).parent().children('Title').text() || $(this).parent().children('Name').text();
       }
 
@@ -380,9 +406,15 @@ NK.functions.addWMSLayer = function(wmsUrl) {
       layerParms['visible'] = (!!NK.visibleLayerQueue[name]) && NK.visibleLayerQueue[name]; //false or index value
       layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
       var register = (name in NK.visibleLayerQueue) || (name in NK.registeredLayerQueue);
-      if (name in NK.opacityQueue) {delete NK.opacityQueue[name];}
-      if (name in NK.visibleLayerQueue) {delete NK.visibleLayerQueue[name];}
-      if (name in NK.registeredLayerQueue) {delete NK.registeredLayerQueue[name];}
+      if (name in NK.opacityQueue) {
+        delete NK.opacityQueue[name];
+      }
+      if (name in NK.visibleLayerQueue) {
+        delete NK.visibleLayerQueue[name];
+      }
+      if (name in NK.registeredLayerQueue) {
+        delete NK.registeredLayerQueue[name];
+      }
       layers.push(name);
       var bbox = $(this).find('BoundingBox');
       if (!!bbox) {
@@ -396,33 +428,39 @@ NK.functions.addWMSLayer = function(wmsUrl) {
         var srs = atts['CRS'] || atts['SRS'];
         if (srs && (srs.value == map.projection.projCode)) {
           layerParms['layerBounds'] = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,
-                                                            atts["maxx"].value, atts["maxy"].value);
+            atts["maxx"].value, atts["maxy"].value);
         } else {
-          layerParms['layerBounds'] = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,atts["maxx"].value, atts["maxy"].value);
-          layerParms['layerBounds'].transform(new OpenLayers.Projection(srs.value), new OpenLayers.Projection(map.projection.projCode));        }
+          layerParms['layerBounds'] = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value, atts["maxx"].value, atts["maxy"].value);
+          layerParms['layerBounds'].transform(new OpenLayers.Projection(srs.value), new OpenLayers.Projection(map.projection.projCode));
+        }
       }
-      layerParms['layerText']=name;
+      layerParms['layerText'] = name;
       if (NK.compactMode && (!register)) {
         var title = layerParms['title'];
-        var parms = $.extend({},serviceParms,layerParms);
-        NK.registeredLayers[name] = function() { 
-          return NK.functions.createDynamicWMSLayer(title, wmsUrl, parms); 
+        var parms = $.extend({}, serviceParms, layerParms);
+        NK.registeredLayers[name] = function () {
+          return NK.functions.createDynamicWMSLayer(title, wmsUrl, parms);
         };
-      } else { 
-        var layer = NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({},serviceParms,layerParms));
+      } else {
+        var layer = NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({}, serviceParms, layerParms));
         if (register) {
           layer.isStarred = true;
-          map.events.triggerEvent("changelayer", {layer:layer, property:"starred"});
+          map.events.triggerEvent("changelayer", {layer: layer, property: "starred"});
         }
       }
       if (!!NK.xdm) {
-        NK.functions.postMessage({"type":"layerLoaded", "title":layerParms['title'], "parent":layerParms['parent'],"url":wmsUrl}); 
+        NK.functions.postMessage({
+          "type"  : "layerLoaded",
+          "title" : layerParms['title'],
+          "parent": layerParms['parent'],
+          "url"   : wmsUrl
+        });
       }
     });
     NK.functions.updateHistory();
   });
 
-  var geoportal =  map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
+  var geoportal = map.getControlsByClass('OpenLayers.Control.Geoportal')[0];
   if (!!geoportal) {
     geoportal.showControls(wmsUrl);
     geoportal.displayLayerList();
@@ -432,27 +470,34 @@ NK.functions.addWMSLayer = function(wmsUrl) {
 NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   var outputFormat = 'text/xml; subtype=gml/3.2.1';
   if (parms['formats'][0]) outputFormat = parms['formats'][0];
-  if (parms['formats'].length > 1){
-    if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/3.1.1';
-    if (parms['formats'].indexOf(outputFormat)==-1) outputFormat = 'text/xml; subtype=gml/2.1.2';
+  if (parms['formats'].length > 1) {
+    if (parms['formats'].indexOf(outputFormat) == -1) outputFormat = 'text/xml; subtype=gml/3.1.1';
+    if (parms['formats'].indexOf(outputFormat) == -1) outputFormat = 'text/xml; subtype=gml/2.1.2';
   }
-  var wfsLayer = NK.addLayerType.WFS(name, null, url, "", "", parms['type'], {"version":parms['version'], "method":"GET", "styleName":"track", "outputFormat":outputFormat});
-  $.extend(wfsLayer,{
-    type           : 'wfs',
-    isUrlDataLayer : true,
-    url            : url,
-    initialIndex   : parms['visible'],
-    description    : parms['description'],
-    serviceTitle   : parms['serviceTitle'],
-    dataFormats    : parms['formats'],
-    attribution    : parms['attribution'],
-    constraints    : parms['constraints']
+  var featureNS = '';
+  var featurePrefix = '';
+  var wfsLayer = NK.addLayerType.WFS(name, null, url, featureNS, featurePrefix, parms['type'], {
+    "version"     : parms['version'],
+    "method"      : "",
+    "styleName"   : "track",
+    "outputFormat": outputFormat
+  });
+  $.extend(wfsLayer, {
+    type          : 'wfs',
+    isUrlDataLayer: true,
+    url           : url,
+    initialIndex  : parms['visible'],
+    description   : parms['description'],
+    serviceTitle  : parms['serviceTitle'],
+    dataFormats   : parms['formats'],
+    attribution   : parms['attribution'],
+    constraints   : parms['constraints']
   });
   wfsLayer.setOpacity(parms['opacity']);
   wfsLayer.setVisibility(!!parms['visible']);
 
   if (!!parms['visible']) {
-    map.setLayerIndex(wfsLayer, parms['visible']-1);
+    map.setLayerIndex(wfsLayer, parms['visible'] - 1);
     var layers = map.layers.slice(0);
     for (var i in layers) {
       if (!!layers[i].initialIndex) {
@@ -464,12 +509,12 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
   var type = parms['type'];
   if (type in NK.highlightQueue) {
     var highlights = NK.highlightQueue[type];
-    for (var h in highlights) { 
+    for (var h in highlights) {
       NK.functions.highlightFeature(wfsLayer, highlights[h][1], highlights[h][2]);
     }
     delete NK.highlightQueue[type];
   }
-} 
+};
 
 NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   // TODO: merge with templates/layers/wms.html 
@@ -477,31 +522,31 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
     name,
     url,
     {
-      gkt: NK.gkToken,
-      layers: parms['layerText'],
+      gkt        : NK.gkToken,
+      layers     : parms['layerText'],
       transparent: true,
-      format: 'image/png'
+      format     : 'image/png'
     },
     {
-      title: parms['title'],
-      serviceTitle: parms['serviceTitle'],
-      description: parms['description'],
-      parent: parms['parent'] || null,
-      isBaseLayer: false,
-      buffer: 0,
-      ratio: 1.0,
-      visibility: !!parms['visible'],
-      isStarred: !!parms['visible'], 
-      initialIndex: parms['visible'],
-      opacity: parms['opacity'] || 1.0,
+      title           : parms['title'],
+      serviceTitle    : parms['serviceTitle'],
+      description     : parms['description'],
+      parent          : parms['parent'] || null,
+      isBaseLayer     : false,
+      buffer          : 0,
+      ratio           : 1.0,
+      visibility      : !!parms['visible'],
+      isStarred       : !!parms['visible'],
+      initialIndex    : parms['visible'],
+      opacity         : parms['opacity'] || 1.0,
       transitionEffect: 'resize',
-      singleTile: true,
-      isUrlDataLayer: true,
-      dataFormats: parms['formats'],
-      attribution: parms['attribution'],
-      constraints: parms['constraints'],
-      type: 'wms',
-      version: parms['version']
+      singleTile      : true,
+      isUrlDataLayer  : true,
+      dataFormats     : parms['formats'],
+      attribution     : parms['attribution'],
+      constraints     : parms['constraints'],
+      type            : 'wms',
+      version         : parms['version']
     }
   );
   if (!!parms['layerBounds']) {
@@ -515,27 +560,27 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   if (!!parms['featureInfoFormats']) {
     var formats = parms['featureInfoFormats'];
     var preferredFormats = ['application/vnd.ogc.wms_xml', 'text/xml', 'text/plain', 'text/html'];
-    var preferredFormat  = 'x';
+    var preferredFormat = 'x';
 
-    while (preferredFormat && formats.indexOf(preferredFormat)==-1) {
+    while (preferredFormat && formats.indexOf(preferredFormat) == -1) {
       preferredFormat = preferredFormats.shift();
     }
 
     if (!!preferredFormat) {
       var popupFn = NK.functions.popup.wmsFeatureInfoPopup;
       var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
-        url: url,
-        proxyUrl: "/ws/px.py?"+url,
-        title: parms['title'],
-        queryVisible: true,
-        infoFormat: preferredFormat,
+        url           : url,
+        proxyUrl      : "/ws/px.py?" + url,
+        title         : parms['title'],
+        queryVisible  : true,
+        infoFormat    : preferredFormat,
         eventListeners: {
-          "getfeatureinfo": function(event) {
+          "getfeatureinfo": function (event) {
             var popup = new OpenLayers.Popup.FramedSideAnchored(null, map.getLonLatFromPixel(event.xy), null, popupFn(event, wms, formats), null, true,
-                              NK.functions.closePopupCallBack, {x: 0, y: -15}, 'selected-feature-popup, user-marker')
+              NK.functions.closePopupCallBack, {x: 0, y: -15}, 'selected-feature-popup, user-marker')
             map.addPopup(popup, true);
             if (!event.features.length && (!event.text || !event.text.trim().length)) {
-              setTimeout(function() {
+              setTimeout(function () {
                 map.removePopup(popup);
               }, 3000);
             }
@@ -543,8 +588,8 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
         }
       });
       wms.featureInfoControl = featureInfo;
-      wms.events.register('visibilitychanged', wms, function() {
-        if(this.getVisibility()) {
+      wms.events.register('visibilitychanged', wms, function () {
+        if (this.getVisibility()) {
           featureInfo.activate();
           if (!!this.maxExtent) {
             var extent = this.maxExtent;
@@ -565,11 +610,11 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   map.addLayers([wms]);
 
   if (!!parms['visible']) {
-    map.setLayerIndex(wms, parms['visible']-1);
+    map.setLayerIndex(wms, parms['visible'] - 1);
     var layers = map.layers.slice(0);
     for (var i in layers) {
       if (!!layers[i].initialIndex) {
-        if (layers[i].initialIndex > wms.initialIndex) { 
+        if (layers[i].initialIndex > wms.initialIndex) {
           map.setLayerIndex(wms, map.getLayerIndex(layers[i])); //replace position
         }
       }
@@ -580,46 +625,45 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   return wms;
 };
 
-NK.functions.imgError = function(image, altText) {
-  image.style.visibility='hidden';
-  image.style.width="10px";
-  image.style.height="1px";
-  document.getElementById(altText).style.visibility='visible';
+NK.functions.imgError = function (image, altText) {
+  image.style.visibility = 'hidden';
+  image.style.width = "10px";
+  image.style.height = "1px";
+  document.getElementById(altText).style.visibility = 'visible';
 };
-NK.functions.imgType = function(image, altText) {
-  if ((image.mimeType == 'text/xml') || (image.mimeType == 'application/vnd.ogc.se_xml')) { 
+NK.functions.imgType = function (image, altText) {
+  if ((image.mimeType == 'text/xml') || (image.mimeType == 'application/vnd.ogc.se_xml')) {
     NK.functions.imgError(image, altText);
   }
 };
 
 NK.functions.createLegend = function () {
-  var legendDiv = OpenLayers.Util.getElement('legendBox');
-  if (!!legendDiv) {
-    legendDiv.innerHTML = "";
-    legendDiv.style.maxHeight = "75vh";
-    legendDiv.style.overflowY = "scroll";
-    // create getLegendGraphic request for all active layers
-    for (var i = 1; i < map.layers.length; i++) {
-      var layer = map.layers[i];
-      if (layer.visibility && (!!layer.params) && (!!layer.params.LAYERS)) {
-        var legendURL = map.layers[i].getFullRequestString({
-          REQUEST: "GetLegendGraphic",
-          //EXCEPTIONS: "application/vnd.ogc.se_inimage",
-          //EXCEPTIONS: "text/xml",
-          FORMAT: "image/png",
-          SERVICE: "WMS",
-          VERSION: "1.1.1",
-          LAYER: layer.params.LAYERS
-        });
-        var name = layer.title || layer.name;
-        var id   = "legend_" + layer.name;
-        legendDiv.innerHTML += name + "<br/><img src='" + legendURL + "' onerror='NK.functions.imgError(this, \""+id+"\");' onload='NK.functions.imgType(this, \""+id+"\");'>";
-        legendDiv.innerHTML += "<span id='"+id+"' style='visibility:hidden'><a href='"+ legendURL +"' style='color:#fff'><i>Feil ved lasting av tegnforklaringen</i></a><br/>";
-       
+    var legendDiv = OpenLayers.Util.getElement('legendBox');
+    if (!!legendDiv) {
+      legendDiv.innerHTML = "";
+      legendDiv.style.maxHeight = "75vh";
+      legendDiv.style.overflowY = "scroll";
+      // create getLegendGraphic request for all active layers
+      for (var i = 1; i < map.layers.length; i++) {
+        var layer = map.layers[i];
+        if (layer.visibility && (!!layer.params) && (!!layer.params.LAYERS)) {
+          var legendURL = map.layers[i].getFullRequestString({
+            REQUEST: "GetLegendGraphic",
+            //EXCEPTIONS: "application/vnd.ogc.se_inimage",
+            //EXCEPTIONS: "text/xml",
+            FORMAT : "image/png",
+            SERVICE: "WMS",
+            VERSION: "1.1.1",
+            LAYER  : layer.params.LAYERS
+          });
+          var name = layer.title || layer.name;
+          var id = "legend_" + layer.name;
+          legendDiv.innerHTML += name + "<br/><img src='" + legendURL + "' onerror='NK.functions.imgError(this, \"" + id + "\");' onload='NK.functions.imgType(this, \"" + id + "\");'>";
+          legendDiv.innerHTML += "<span id='" + id + "' style='visibility:hidden'><a href='" + legendURL + "' style='color:#fff'><i>Feil ved lasting av tegnforklaringen</i></a><br/>";
+        }
       }
     }
   }
-}
 
 % if functions :
   ${functions}
@@ -706,7 +750,7 @@ NK.init = function () {
     "32634" : NK.boundsFromScale(-3000000.0, 9045984.0, 7.737142857142858E7),
     "32635" : NK.boundsFromScale(-3500000.0, 9045984.0, 7.737142857142858E7),
     "32636" : NK.boundsFromScale(-4000000.0, 9045984.0, 7.737142857142858E7)
-  }
+  };
   
   mapProj   = proj[NK.baseProjection];
   mapBounds = bounds[NK.baseProjection];
