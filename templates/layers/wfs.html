@@ -32,14 +32,10 @@ params:
   <%include file="/strategies/cluster.html"/>
 % endif
 
-
 % if not 'layerTypeWFS' in vars:
 
 NK.addLayerType = NK.addLayerType || {};
 NK.addLayerType.WFS = (function (M, MP) {
-	var matrixIds,
-    	i;
-
 	return function (name, id, url, featureNS, featurePrefix, featureType, options) {
 
 		var protocolParameters,
@@ -47,47 +43,47 @@ NK.addLayerType.WFS = (function (M, MP) {
 			layer,
 			layerOptions;
 
-                if (!!options.method && options.method=="GET") {
-                  protocolParameters = {
-                        url: '/ws/px.py?'+url,
-                        origUrl: url,
-			featureType: featureType,
-                        params: {
-                          request: "GetFeature",
-                          service: "WFS",
-                          typename: featureType, 
-                          srsName: options.epsg || "EPSG:"+NK.baseProjection, 
-                          version: options.version || '1.1.0',
-			  outputFormat: options.outputFormat || 'text/xml; subtype=gml/3.2.1'
-                        },
-                        format: new OpenLayers.Format.GML.v3(),
-                        srsInBBOX: true
-                  };
-		  protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
-                } else {
-		  protocolParameters = {
-			version: options.version || '1.1.0',
-			url: '/ws/px.py?'+url,
-			proxyUrl: '/ws/px.py?'+url,
-			origUrl: url,
-			featureNS: featureNS,
-			featurePrefix: featurePrefix,
-			featureType: featureType,
-			outputFormat: options.outputFormat || 'text/xml; subtype=gml/3.2.1',
-			readFormat: new OpenLayers.Format.GML.v3()
-		  };
-  		  protocol = new OpenLayers.Protocol.WFS(protocolParameters);
-                }
+		if (!!options.method && options.method == "GET") {
+			protocolParameters = {
+				url        : '/ws/px.py?' + url,
+				origUrl    : url,
+				featureType: featureType,
+				params     : {
+					request     : "GetFeature",
+					service     : "WFS",
+					typename    : featureType,
+					srsName     : options.epsg || "EPSG:" + NK.baseProjection,
+					version     : options.version || '1.1.0',
+					outputFormat: options.outputFormat || 'text/xml; subtype=gml/3.2.1'
+				},
+				format     : new OpenLayers.Format.GML.v3(),
+				srsInBBOX  : true
+			};
+			protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
+		} else {
+			protocolParameters = {
+				version      : options.version || '1.1.0',
+				url          : '/ws/px.py?' + url,
+				proxyUrl     : '/ws/px.py?' + url,
+				srsName     : options.epsg || "EPSG:" + NK.baseProjection, // @TODO: get the srs from capabilities and check against default, if necessary transform or cast an error
+				origUrl      : url,
+				featureNS    : featureNS,
+				featurePrefix: featurePrefix,
+				featureType  : featureType,
+				outputFormat : options.outputFormat || 'text/xml; subtype=gml/3.2.1',
+				readFormat   : new OpenLayers.Format.GML.v3()
+			};
+			protocol = new OpenLayers.Protocol.WFS(protocolParameters);
+		}
 
-                layerOptions = {
-                        strategies: [new OpenLayers.Strategy.BBOX()],
-			shortid: id,
-			protocol: protocol,
-			projection: MP,
+		layerOptions = {
+			strategies            : [new OpenLayers.Strategy.BBOX()],
+			shortid               : id,
+			protocol              : protocol,
+			projection            : MP,
 			displayInLayerSwitcher: (options && options.hideFromLayerSwitcher) ? 0 : 1,
-			visibility: !!(options.visibility) ? 1 : 0
+			visibility            : !!(options.visibility) ? 1 : 0
 		};
-
 
 		if (options.styleName && NK.styles && NK.styles[options.styleName]) {
 			layerOptions.styleMap = NK.styles[options.styleName];
@@ -97,69 +93,68 @@ NK.addLayerType.WFS = (function (M, MP) {
 			layerOptions.styleMap = NK.styles.SLD[options.styleNameSLD];
 		}
 
-                if (options.cluster && NK.strategies.cluster) {
-	          layerOptions.strategies.push(NK.strategies.cluster);
-	        }
+		if (options.cluster && NK.strategies.cluster) {
+			layerOptions.strategies.push(NK.strategies.cluster);
+		}
 
 		layer = new OpenLayers.Layer.Vector(
 			name,
 			layerOptions
 		);
 
-                //monkey patch to send BBOX as WGS84
-                /* layer.strategies[0].calculateBounds = function(mapBounds) {
-                  if(!mapBounds) {
-                    mapBounds = this.getMapBounds();
-                  }
-                  var center = mapBounds.getCenterLonLat();
-                  var dataWidth = mapBounds.getWidth() * this.ratio;
-                  var dataHeight = mapBounds.getHeight() * this.ratio;
-                  this.bounds = new OpenLayers.Bounds(
-                    center.lon - (dataWidth / 2),
-                    center.lat - (dataHeight / 2),
-                    center.lon + (dataWidth / 2),
-                    center.lat + (dataHeight / 2)
-                  );
-                  this.bounds = this.bounds.clone().transform( map.projection , NK.projections[4326] );
-                  return this.bounds;
-                };
-                layer.strategies[0].activate();
-                */
+		//monkey patch to send BBOX as WGS84
+		/* layer.strategies[0].calculateBounds = function(mapBounds) {
+		 if(!mapBounds) {
+		 mapBounds = this.getMapBounds();
+		 }
+		 var center = mapBounds.getCenterLonLat();
+		 var dataWidth = mapBounds.getWidth() * this.ratio;
+		 var dataHeight = mapBounds.getHeight() * this.ratio;
+		 this.bounds = new OpenLayers.Bounds(
+		 center.lon - (dataWidth / 2),
+		 center.lat - (dataHeight / 2),
+		 center.lon + (dataWidth / 2),
+		 center.lat + (dataHeight / 2)
+		 );
+		 this.bounds = this.bounds.clone().transform( map.projection , NK.projections[4326] );
+		 return this.bounds;
+		 };
+		 layer.strategies[0].activate();
+		 */
 
-                layer.events.register("loadend", layer, function(evt) {
-                  if (evt.response && evt.response.priv) {
-                    var root = evt.response.priv.responseXML.firstChild;
-                    if (root.localName == "ExceptionReport") {
-                      NK.functions.log(root.textContent.trim());
-                    }
-                  }
-                });
+		layer.events.register("loadend", layer, function (evt) {
+			if (evt.response && evt.response.priv) {
+				var root = evt.response.priv.responseXML.firstChild;
+				if (root.localName == "ExceptionReport") {
+					NK.functions.log(root.textContent.trim());
+				}
+			}
+		});
 
-	    if (options.cluster) {
-	      	NK.styles.addClusteringRule(layer.styleMap);
-	    }
+		if (options.cluster) {
+			NK.styles.addClusteringRule(layer.styleMap);
+		}
 
-	    if (options && options.layerGroup) {
+		if (options && options.layerGroup) {
 			layer = OpenLayers.Util.extend(layer, {'layerGroup': options.layerGroup});
 		}
 
 		if (options && options.visibility) {
 			NK.defaultVisibleLayers = NK.defaultVisibleLayers || [];
 			NK.defaultVisibleLayers.push(id);
-	    }
+		}
 
-            M.addLayers([layer]);
+		M.addLayers([layer]);
 
-	    if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
-	        NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
-	    }
+		if (options.styleNameSLD && NK.styles && NK.styles.SLD && NK.styles.SLD[options.styleNameSLD]) {
+			NK.functions.setSLDStyleForLayer(options.styleNameSLD, layer);
+		}
 
-	    //NK.functions.vector.addVectorHoverControls(M, layer, false);
-            NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
+		//NK.functions.vector.addVectorHoverControls(M, layer, false);
+		NK.functions.popup.addConfiguredPopup(M, layer, options.popupConfig);
 
-            return layer;
+		return layer;
 	};
-
 }(map, mapProj));
 
 <% vars['layerTypeWFS']=True %>
@@ -212,7 +207,6 @@ NK.addLayerType.WFS = (function (M, MP) {
 % endif
 
   NK.addLayerType.WFS("${name}", "${id}", "${url}", "${namespace}", "${namespacePrefix}", "${featuretype}", options);	
-
 }());
 
 % endif
