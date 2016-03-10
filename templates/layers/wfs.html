@@ -61,6 +61,10 @@ NK.addLayerType.WFS = (function (M, MP) {
 			};
 			protocol = new OpenLayers.Protocol.HTTP(protocolParameters);
 		} else {
+			var readFormatOptions = {
+				featureNS    : "http://www.opengis.net/gml/3.2",
+				featurePrefix: 'gml',
+			};
 			protocolParameters = {
 				version      : options.version || '1.1.0',
 				url          : '/ws/px.py?' + url,
@@ -71,7 +75,7 @@ NK.addLayerType.WFS = (function (M, MP) {
 				featurePrefix: featurePrefix,
 				featureType  : featureType,
 				outputFormat : options.outputFormat || 'text/xml; subtype=gml/3.2.1',
-				readFormat   : new OpenLayers.Format.GML.v3()
+				readFormat   : new OpenLayers.Format.GML.v3(readFormatOptions)
 			};
 			protocol = new OpenLayers.Protocol.WFS(protocolParameters);
 		}
