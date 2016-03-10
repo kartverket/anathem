@@ -429,7 +429,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Registrert:'           : 'registrert',
           'Oppdatert:'            : 'oppdat_app',
           'Kapasitet personbiler:': 'kap_personbiler',
-          'Kapasitet UU:'         : 'kap_uu',
+          'Kapasitet HC:'         : 'kap_uu',
           'Dekke:'                : 'dekke',
           'Dekke tilstand:'       : 'dekke_tilstand',
           'Kommentar:'             : 'kommentar',
@@ -446,7 +446,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Registrert:'           : 'registrert',
           'Oppdatert:'            : 'oppdat_app',
           'Kapasitet personbiler:': 'kap_personbiler',
-          'Kapasitet UU:'         : 'kap_uu',
+          'Kapasitet HC:'         : 'kap_uu',
           'Dekke:'                : 'dekke',
           'Dekke tilstand:'       : 'dekke_tilstand',
           'Kommentar:'             : 'kommentar',
@@ -463,7 +463,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Registrert:'           : 'registrert',
           'Oppdatert:'            : 'oppdat_app',
           'Kapasitet personbiler:': 'kap_personbiler',
-          'Kapasitet UU:'         : 'kap_uu',
+          'Kapasitet HC:'         : 'kap_uu',
           'Dekke:'                : 'dekke',
           'Dekke tilstand:'       : 'dekke_tilstand',
           'Kommentar:'             : 'kommentar',
@@ -482,7 +482,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Kapasitet personbiler:': 'kap_personbiler',
           'Dekke:'                : 'dekke',
           'Dekke tilstand:'       : 'dekke_tilstand',
-          'Kapasitet UU:'         : 'kap_uu',
+          'Kapasitet HC:'         : 'kap_uu',
           'Kommentar:'             : 'kommentar',
           'Bildefil:'             : 'bilde',
           'Objekt ID:'            : 'ogc_fid'
@@ -499,7 +499,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Kapasitet personbiler:': 'kap_personbiler',
           'Dekke:'                : 'dekke',
           'Dekke tilstand:'       : 'dekke_tilstand',
-          'Kapasitet UU:'         : 'kap_uu',
+          'Kapasitet HC:'         : 'kap_uu',
           'Kommentar:'             : 'kommentar',
           'Bildefil:'             : 'bilde',
           'Objekt ID:'            : 'ogc_fid'
@@ -516,7 +516,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
           'Kapasitet personbiler:': 'kap_personbiler',
           'Dekke:'                : 'dekke',
           'Dekke tilstand:'       : 'dekke_tilstand',
-          'Kapasitet UU:'         : 'kap_uu',
+          'Kapasitet HC:'         : 'kap_uu',
           'Kommentar:'             : 'kommentar',
           'Bildefil:'             : 'bilde',
           'Objekt ID:'            : 'ogc_fid'
@@ -1086,7 +1086,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                         tmpResp[key] = tmpResp[key].substr(8, 2) + '.' + tmpResp[key].substr(5, 2) + '.' + tmpResp[key].substr(0, 4) + ' ' + tmpResp[key].substr(11, 2) + ':' + tmpResp[key].substr(14, 2);
                       }
                       if (key == 'link_skjema' || key == 'link_bilde') {
-                        tmpResp[key] = '<div class="externalToolbarLink"><a href="http://data.kartverket.no/tilgjengelighet/friluft-skjema-FRL-2012/' + tmpResp[key] + '">' + tmpResp[key] + '</a></div>'
+                        tmpResp[key] = '<div class="externalToolbarLink"><a target="_blank" href="http://data.kartverket.no/tilgjengelighet/friluft-skjema-FRL-2012/' + tmpResp[key] + '">' + tmpResp[key] + '</a></div>'
                       }
                       tmpMarkup += tmpResp[key];
                     } else {
@@ -1106,6 +1106,7 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
               } catch (e) {
                 //console.log(e);
               }
+              var layer = f[0].split(" ")[1].trim().replace(/'/g, "");
 
               tmpBildeMarkup = '<table style="width:80px"><tr>';
 
@@ -1116,7 +1117,9 @@ NK.functions.popup.generatePopupMarkup2 = function (conf) {
                 tmpBildeMarkup += '<td id="flat_td"><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_el/' + uuDictResponse['t_el_rulle_auto'] + '.png" height=20 width=20 /></td>';
               }
               if (!!uuDictResponse['t_syn']) {
-                tmpBildeMarkup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/syn/' + uuDictResponse['t_syn'] + '.png" height=20 width=20 /></td>';
+                if (layer.substring(0, 'sittegruppe'.length) !== 'sittegruppe') {
+                  tmpBildeMarkup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/syn/' + uuDictResponse['t_syn'] + '.png" height=20 width=20 /></td>';
+                }
               }
               if (!!uuDictResponse['t_rullled']) {
                 tmpBildeMarkup += '<td><img src="http://data.kartverket.no/tilgjengelighet/symboler/rullestol_led/' + uuDictResponse['t_rullled'] + '.png" height=20 width=20 /></td>';
