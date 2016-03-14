@@ -389,6 +389,7 @@ NK.functions.addWMSLayer = function (wmsUrl) {
     $(xml).find('AccessConstraints').each(function () {
       serviceParms['constraints'] = $(this).text();
     });
+    var layerCounter =  $(xml).find('Layer').length;
     $(xml).find('Layer').each(function () {
       layerParms = {};
       var name = $(this).children('Name').text();
@@ -403,7 +404,11 @@ NK.functions.addWMSLayer = function (wmsUrl) {
 
       layerParms['title'] = $(this).children('Title').text();
       layerParms['description'] = $(this).children('Abstract').text();
-      layerParms['visible'] = (!!NK.visibleLayerQueue[name]) && NK.visibleLayerQueue[name]; //false or index value
+      if(layerCounter < 21) {
+        layerParms['visible'] = true;
+      } else {
+        layerParms['visible'] = (!!NK.visibleLayerQueue[name]) && NK.visibleLayerQueue[name]; //false or index value
+      }
       layerParms['opacity'] = NK.opacityQueue[name] || 1.0;
       var register = (name in NK.visibleLayerQueue) || (name in NK.registeredLayerQueue);
       if (name in NK.opacityQueue) {
