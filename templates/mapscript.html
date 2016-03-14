@@ -390,10 +390,21 @@ NK.functions.addWMSLayer = function (wmsUrl) {
       serviceParms['constraints'] = $(this).text();
     });
     var layerCounter =  $(xml).find('Layer').length;
+    var zoomExtendForWMS;
     $(xml).find('Layer').each(function () {
       layerParms = {};
       var name = $(this).children('Name').text();
       if (!name) {
+        var bbox = $(this).find('BoundingBox');
+        var atts = bbox[0].attributes;
+        var srs = atts['CRS'] || atts['SRS'];
+        if (srs && (srs.value == map.projection.projCode)) {
+          zoomExtendForWMS = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value,atts["maxx"].value, atts["maxy"].value);
+        } else {
+          zoomExtendForWMS = new OpenLayers.Bounds(atts["minx"].value, atts["miny"].value, atts["maxx"].value, atts["maxy"].value);
+          if (srs.value === 'CRS:84') srs.value = 'EPSG:4326';
+          zoomExtendForWMS.transform(new OpenLayers.Projection(srs.value), new OpenLayers.Projection(map.projection.projCode));
+        }
         return;
       }
 
@@ -461,6 +472,7 @@ NK.functions.addWMSLayer = function (wmsUrl) {
           "url"   : wmsUrl
         });
       }
+      map.zoomToExtent(zoomExtendForWMS);
     });
     NK.functions.updateHistory();
   });
