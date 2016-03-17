@@ -51,11 +51,12 @@ overlays  :
 
     # Fastmerker
     - include: layers/wms/Niv_fastmerker
-    - include: layers/wms/Trekantpunkt
-    - include: layers/wms/Stamnettpunkt
     - include: layers/wms/Landsnettpunkt
-    - include: layers/wms/PGS_stasjoner
-    - include: layers/wms/Svenske_finske_stasjoner
+    - include: layers/wms/Stamnettpunkt
+    - include: layers/wms/Trekantpunkt
+    - include: layers/wms/Stasjoner
+    - include: layers/wms/Stasjoner_planlagt
+    - include: layers/wms/Stasjoner_temp_outoforder
 
 center    :
     template: center/besseggen

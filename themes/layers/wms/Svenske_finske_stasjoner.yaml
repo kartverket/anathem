@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.fastmerker?
-name: Svenske og finske stasjoner
-layers: Svenske_finske_stasjoner
-layerGroup: tjenester.CPOS-stasjoner
-id: Svenske_finske_stasjoner
-usetoken: true
-singleTile: true

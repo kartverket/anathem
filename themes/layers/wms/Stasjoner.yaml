@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://nnrite008/cgi-bin/fastmerker2
-name: Vis alt
-layers: fastmerke
-layerGroup: tjenester.Fastmerker
-id: fastmerke
+name: stasjoner
+layers: Stasjoner
+layerGroup: tjenester.stasjoner
+id: stasjoner
 usetoken: true
 singleTile: true

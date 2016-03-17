@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.fastmerker?
+url: http://nnrite008/cgi-bin/fastmerker2
 name: Trekantpunkter
 layers: Trekantpunkt
 layerGroup: tjenester.Fastmerker

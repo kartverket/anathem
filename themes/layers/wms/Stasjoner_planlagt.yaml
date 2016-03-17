@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/fastmerker2
+name: stasjoner planlagt
+layers: Stasjoner_planlagt
+layerGroup: tjenester.stasjoner
+id: stasjoner_planlagt
+usetoken: true
+singleTile: true

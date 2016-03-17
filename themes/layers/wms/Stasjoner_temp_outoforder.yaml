@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/fastmerker2
+name: stasjoner out of order
+layers: Stasjoner_temp_outoforder
+layerGroup: tjenester.stasjoner
+id: stasjoner_temp_outoforder
+usetoken: true
+singleTile: true
