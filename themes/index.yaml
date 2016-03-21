@@ -44,7 +44,6 @@ overlays  :
     - include: layers/wms/amtskart
 
     # KARTINNDELING
-    - include: layers/dekning_n50_plast
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_n50_plast
     - include: layers/dekning_havnekart
