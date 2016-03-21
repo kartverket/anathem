@@ -203,7 +203,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           for (l = 0; l < f.length; l++) {
             //feature
             if (f[l].substring(0, 7) == "Feature") {
-              tmpMarkup += '<div class="featureInfo" style="display: table; border-top: 1px solid;">';
+              tmpMarkup += '<div class="featureInfo" style="border-top: 1px solid;">';
               try {
                 tmp = f[l].split(":");
                 if (tmp.length > 2) {
@@ -219,7 +219,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                 }
 
                 for (var prop in dictTmp['content']) {
-                  tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell;padding-right: 20px;">' + prop + '</span><span class="value" style="display: table-cell">';
+                  tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell;">' + prop + '</span><span class="value" style="display: table-cell">';
                   if (!!tmpResp[dictTmp.content[prop]]) {
                     if (!!dictTmp.content[prop]) {
                       tmpMarkup += tmpResp[dictTmp.content[prop]];
@@ -237,7 +237,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                 }
 
                 if (!!pgsdata) {
-                  tmpMarkup += "<div style='font-weight:bold;'>&nbsp;Tidsserier</div><canvas id='pgsChart' style='margin:0 10px 0 10px' width='400' height='300'></canvas>";
+                  tmpMarkup += "<div style='font-weight:bold;'>&nbsp;Tidsserier</div><canvas id='pgsChart' width='350' height='300'></canvas>";
 
                   var data = {
                     labels  : [],
@@ -246,15 +246,13 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                         label           : "North",
                         data            : [],
                         fillColor       : "rgba(255,255,255,0)",
-    scaleFontColor: "#666",
-    pointColor      : "rgba(200,100,100,1)",
+                        pointColor      : "rgba(200,100,100,1)",
                         strokeColor     : "rgba(200,100,100,1)",
                         pointStrokeColor: "rgba(200,100,100,0)"
                       },
                       {
                         label           : "East", data: [],
-    scaleFontColor: "#666",
-    fillColor       : "rgba(255,255,255,0)",
+                        fillColor       : "rgba(255,255,255,0)",
                         pointColor      : "rgba(100,200,100,1)",
                         strokeColor     : "rgba(100,200,100,1)",
                         pointStrokeColor: "rgba(100,200,100,0)"
@@ -262,8 +260,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                       {
                         label           : "Height",
                         data            : [],
-    scaleFontColor: "#666",
-    fillColor       : "rgba(255,255,255,0)",
+                        fillColor       : "rgba(255,255,255,0)",
                         pointColor      : "rgba(100,100,200,1)",
                         strokeColor     : "rgba(100,100,200,1)",
                         pointStrokeColor: "rgba(100,100,200,0)"
@@ -294,7 +291,9 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     //console.log(data);
 
                   var options = {
-                    //  pointDot: false
+                    scaleFontColor: "#fff",
+                    scaleGridLineColor: "#999",
+                    pointDot: false
                   };
     NK.data.options = options;
                   Chart.types.Line.extend({
