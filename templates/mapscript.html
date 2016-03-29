@@ -495,9 +495,13 @@ var options = {
             {x: 10, y: -65},
             'selected-feature-popup, user-marker'
           ), true);
-          var ctx = document.getElementById("pgsChart").getContext("2d");
-          var lineChart = new Chart(ctx).AltLine(NK.data, NK.data.options);
-        } catch(e) {}
+          for (var entry in NK.data) {
+            var ctx = document.getElementById("pgsChart"+NK.data[entry][0]).getContext("2d");
+            var lineChart = new Chart(ctx).AltLine(NK.data[entry][1], NK.data[entry][2]);
+          }
+        } catch(e) {
+console.log(e);
+}
       }
     }
   });

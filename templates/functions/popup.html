@@ -2,12 +2,12 @@
 
 NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
-NK.data = NK.data || {};
-NK.data.options = NK.data.options || {};
+NK.data = NK.data || [];
 
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
     var a = feature, i, j, l, markup = '', tmpMarkup = '', test;
+    NK.data = [];
     var dict = {
       'stasjoner'                : {
         'info'   : {
@@ -17,7 +17,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         },
         'content': {
           'Stasjonsnavn:'   : 'sitename',
-          'StasjonsId:'     : 'id',
+          'StasjonsId:'     : 'fourcharid',
           'Status:'         : 'operstattypename',
           'X-koordinater:'  : 'x',
           'Y-koordinater:'  : 'y',
@@ -37,7 +37,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         },
         'content': {
           'Stasjonsnavn:'   : 'sitename',
-          'StasjonsId:'     : 'id',
+          'StasjonsId:'     : 'fourcharid',
           'Status:'         : 'operstattypename',
           'X-koordinater:'  : 'x',
           'Y-koordinater:'  : 'y',
@@ -57,7 +57,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         },
         'content': {
           'Stasjonsnavn:'   : 'sitename',
-          'StasjonsId:'     : 'id',
+          'StasjonsId:'     : 'fourcharid',
           'Status:'         : 'operstattypename',
           'X-koordinater:'  : 'x',
           'Y-koordinater:'  : 'y',
@@ -175,22 +175,6 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
         if (a[i].substring(0, 5) == "Layer") {
           //Layer
           tmpMarkup = '';
-          var pgsdata;
-          var avvik_data;
-          test.forEach(function (element, index, array) {
-            if (element.trim().startsWith('data_json_array')) {
-              pgsdata = element.replace(/'/g, "").split(' = ');
-              if (pgsdata[1] !== '[null]') {
-                pgsdata = JSON.parse(pgsdata[1]);
-              } else {
-                pgsdata = '';
-              }
-            }
-            if (element.trim().startsWith('avvik_json_array')) {
-              avvik_data = JSON.parse(element.replace(/'/g, "").split(' = ')[1]);
-            }
-          });
-
           var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
           var dictTmp = dict[tmp[1].trim()];
           var tmpResp = [];
@@ -203,6 +187,21 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           for (l = 0; l < f.length; l++) {
             //feature
             if (f[l].substring(0, 7) == "Feature") {
+              var pgsdata;
+              var avvik_data;
+              f[l].split("\n").forEach(function (element, index, array) {
+                if (element.trim().startsWith('data_json_array')) {
+                  pgsdata = element.replace(/'/g, "").split(' = ');
+                  if (pgsdata[1] !== '[null]') {
+                    pgsdata = JSON.parse(pgsdata[1]);
+                  } else {
+                    pgsdata = '';
+                  }
+                }
+                if (element.trim().startsWith('avvik_json_array')) {
+                  avvik_data = JSON.parse(element.replace(/'/g, "").split(' = ')[1]);
+                }
+              });
               tmpMarkup += '<div class="featureInfo" style="border-top: 1px solid;">';
               try {
                 tmp = f[l].split(":");
@@ -237,7 +236,8 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                 }
 
                 if (!!pgsdata) {
-                  tmpMarkup += "<div style='font-weight:bold;'>&nbsp;Tidsserier</div><canvas id='pgsChart' width='350' height='300'></canvas>";
+                  var stasjonsid = tmpResp[dictTmp.content['StasjonsId:']];
+                  tmpMarkup += "<div style='font-weight:bold;'>&nbsp;Tidsserier</div><canvas id='pgsChart" + stasjonsid + "' width='350' height='300'></canvas>";
 
                   var data = {
                     labels  : [],
@@ -286,19 +286,16 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                     data['datasets'][1]['data'].push(((pgsdata[entry]['e'] - refe) * 1000).toFixed(2));
                     data['datasets'][2]['data'].push(((pgsdata[entry]['h'] - refh) * 1000).toFixed(2));
                   }
-    NK.data = data;
-
-    //console.log(data);
 
                   var options = {
                     scaleFontColor: "#fff",
                     scaleGridLineColor: "#999",
                     pointDot: false
                   };
-    NK.data.options = options;
+                  NK.data.push([stasjonsid, data, options]);
+
                   Chart.types.Line.extend({
                     name: "AltLine",
-
                     initialize: function (data) {
                       Chart.types.Line.prototype.initialize.apply(this, arguments);
                       this.scale.draw = function () {
@@ -309,6 +306,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                       };
                     }
                   });
+
                 }
               } catch (e) {
               }
