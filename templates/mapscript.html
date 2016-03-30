@@ -472,7 +472,7 @@ NK.functions.addWMSLayer = function (wmsUrl) {
           "url"   : wmsUrl
         });
       }
-      map.zoomToExtent(zoomExtendForWMS);
+      if (!!zoomExtendForWMS) map.zoomToExtent(zoomExtendForWMS);
     });
     NK.functions.updateHistory();
   });
