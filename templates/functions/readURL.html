@@ -100,8 +100,20 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
       epsgCode;
 
   type = params[0];
-  url = decodeURIComponent(params[1]);
+  url  = params[1];
   epsgCode = params[2];
+  if (url.indexOf("%")>-1) { // you can URL-encode or escape or both
+    url = decodeURIComponent(url);
+  }
+
+  if (url.slice(0, "//".length) == "//") {
+    url = url.replace("//", window.location.protocol + "//", "gi");
+  } else {
+    var protocol = url.split("/")[0];
+    if (window.location.protocol != protocol){
+      url = url.replace(protocol, window.location.protocol, "gi");
+    }
+  }
 
   switch (type) {
     case 'geojson':
@@ -114,7 +126,7 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
 
 };
 
-NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
+NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties, clickable) {
   if (url.length == 40) {
     url = "http://www.norgeskart.no/user/json/" + url + ".json";
   }
@@ -125,6 +137,8 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
       layer,
       correctEpsgCode,
       layerExtensions;
+
+  clickable = clickable || false;
 
   formatOptions = {
     'internalProjection': map.getProjection(),
@@ -162,6 +176,7 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
 
   layerExtensions = {
     'isUrlDataLayer': true,
+    'type': 'geojson',
     'epsgCode': correctEpsgCode,
     'url': url
   };
@@ -173,6 +188,10 @@ NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties) {
   layer = OpenLayers.Util.extend(layer, layerExtensions);
 
   map.addLayers([layer]);
+
+  if (clickable) {
+    NK.functions.popup.addConfiguredPopup(map, layer);
+  }
 };
 
 NK.functions.urlDataLayerCounter = 0;
@@ -195,7 +214,9 @@ NK.functions.setMapState = function (params) {
       hash,
       labeledMarkerCount = 0,
       pWSG84,
-      pUTM;
+      pUTM33;
+
+  var SAFE_SEQUENCE = "\n\n"; // a separator that cannot occur in URL
 
   search = params.search;
   hash = params.hash;
@@ -217,7 +238,26 @@ NK.functions.setMapState = function (params) {
   }
 
   if (!!hash) {
-    parms = hash.split("/");
+    var tokens = [], match;
+    if (hash.indexOf("[") > -1) {
+      var tokenRE = /\[.*?\]/g ;
+      while(!!(match = tokenRE.exec(hash))) {
+        tokens.push(match[0].slice(1,-1));
+      }
+      hash = hash.replace(tokenRE, SAFE_SEQUENCE);
+    } else if (hash.indexOf("%5B") > -1) {
+      var tokenRE = /\%5B.*?\%5D/g ;
+      while(!!(match = tokenRE.exec(hash))) {
+        tokens.push(match[0].slice(3,-3));
+      }
+      hash = hash.replace(tokenRE, SAFE_SEQUENCE);
+    }
+    var parms = hash.split("/");
+    for (p in parms) {
+      if (parms[p] == SAFE_SEQUENCE) {
+        parms[p] = tokens.shift(); // pop first
+      }
+    }
     if (parms.length >= 3) {
       zoom = parms[0];
       mapx = parms[1];
