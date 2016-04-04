@@ -533,6 +533,7 @@ NK.functions.createDynamicWFSLayer = function (name, url, parms) {
     }
     delete NK.highlightQueue[type];
   }
+  map.getControlsByClass('OpenLayers.Control.LayerSwitcher')[0].redraw();
 };
 
 NK.functions.createDynamicWMSLayer = function (name, url, parms) {
