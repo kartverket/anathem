@@ -34,7 +34,7 @@ params:
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Raleway:300,500" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" type="text/css" href="theme/default/style.css" />
     <!--[if IE]>
@@ -47,7 +47,15 @@ params:
   <body style="height: 100%; overflow: hidden;">
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <header class="geonorge-simple">
-        Geonorge
+        <div class="wrapper logo">
+            <a href="#"><img alt="Geonorge" height="55" src="theme/norgeskart/img/geonorge-logo.svg" width="350"></a>
+        </div>
+        <div class="wrapper breadcrumbs">
+            <ul>
+                <li><a href="https://www.geonorge.no/">Geonorge</a></li>
+                <li class="arrowed"><a href="https://kartkatalog.geonorge.no/">Kartkatalogen</a></li>
+            </ul>
+        </div>
     </header>
 % if mapClass:
     <div id="map" role="main" class="${mapClass}" style="width: 100%; height: 100%;"></div>
