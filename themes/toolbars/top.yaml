@@ -33,7 +33,3 @@ controls:
     - template: controls/help
       i18n:
       - include: languages/nb/help
-- template: controls/container
-  id: geonorge-logo-panel
-  controls:
-  - template: controls/logo

@@ -1,0 +1,15 @@
+doc:
+  description: a simple toolbar to be displayed as controls in the dynamic map frames
+
+template: controls/container
+id: bottom-toolbar
+controls:
+- template: controls/container
+  id: pan-panel
+  controls:
+    - template: controls/pan
+- template: controls/container
+  id: layerselector-panel
+  controls:
+  - template: controls/rasterlayerselector
+    group: modus

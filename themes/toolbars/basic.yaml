@@ -14,15 +14,6 @@ controls:
   - template: controls/zoom
   - template: controls/zoomtoselection
 - template: controls/container
-  id: pan-panel
-  controls:
-    - template: controls/pan
-- template: controls/container
-  id: layerselector-panel
-  controls:
-  - template: controls/rasterlayerselector
-    group: modus
-- template: controls/container
   id: search-panel
   controls:
   - template: controls/search
@@ -51,5 +42,3 @@ controls:
     - include: languages/nb/draw
   - template: controls/transformations
     url: /ws/trans.py
-  - template: controls/lang
-
