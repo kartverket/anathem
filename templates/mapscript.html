@@ -190,12 +190,16 @@ NK.functions.urlParam = function (name) {
 NK.functions.addLayerSwitcher = function () {
   var loadingpanel = new OpenLayers.Control.LoadingPanel();
   map.addControl(loadingpanel);
+  if(NK.loadingWMS){
+    loadingpanel.increaseCounter();
+  }
   map.addControl(new OpenLayers.Control.Navigation());
   map.addControl(new OpenLayers.Control.LayerSwitcher({
     'div'   : OpenLayers.Util.getElement('layerList'),
     'filter': {'key': 'isUrlDataLayer', 'value': true}
   }));
 };
+
 NK.functions.removeDynamicLayers = function () {
   var dLayers = map.getLayersBy("dynamicLayer", true);
   for (var i = 0; i < dLayers.length; i++) {
@@ -352,8 +356,13 @@ NK.functions.addWMSLayer = function (wmsUrl) {
   var layers = [], formats = [], fiFormats = [], serviceParms = {}, layerParms;
 
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
+  NK.loadingWMS = 1;
   resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
+    if(!!map) {
+      var lp = map.getControlsByClass('OpenLayers.Control.LoadingPanel')[0];
+      lp.decreaseCounter();
+    }
     serviceParms['version'] = $(xml).children()[0].getAttribute("version");
     $(xml).find('Service').each(function () {
       serviceParms['serviceTitle'] = $(this).children('Title').text();
