@@ -639,7 +639,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
   map.addLayers([wms]);
 
   if (!!parms['visible']) {
-    map.setLayerIndex(wms, parms['visible'] - 1);
+    map.setLayerIndex(wms, map.layers.length - 1);
     var layers = map.layers.slice(0);
     for (var i in layers) {
       if (!!layers[i].initialIndex) {
