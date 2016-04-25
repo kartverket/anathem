@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://nnrite008/cgi-bin/fastmerker2
-name: Norske stasjoner
-layers: Stasjoner
+name: Svenske og finske stasjoner
+layers: Svenske_finske_stasjoner
 layerGroup: tjenester.stasjoner
-id: stasjoner
+id: Svenske_finske_stasjoner
 usetoken: true
 singleTile: true

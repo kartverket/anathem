@@ -69,6 +69,26 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           'avvik_json_array': 'avvik_json_array'
         }
       },
+      'svenske_finske_stasjoner': {
+        'info': {
+          'name': 'Fakta om CPOS stasjoner',
+          'extra': 'CPOS stasjonene samler GNSS-data som sendes til kartverkets kontrollsenter. GNSS-dataene brukes bl.a. til drift av kartverkets posisjonstjenester. ',
+          'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om CPOS stasjoner</a>'
+        },
+        'content': {
+          'Stasjonsnavn:': 'sitename',
+          'Stasjonsid:': 'fourcharid',
+          'Status:': 'operstattypename',
+          'X-koordinater:'  : 'x',
+          'Y-koordinater:'  : 'y',
+          'Z-koordinater:'  : 'z',
+          'Koordinatsystem:': 'coordsysname'
+        },
+        'data'   : {
+          'data_json_array' : 'data_json_array',
+          'avvik_json_array': 'avvik_json_array'
+        }
+      },
       'niv_fastmerker'           : {
         'info'   : {
           'name' : 'Fakta om Fastmerker',

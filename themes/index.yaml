@@ -55,8 +55,9 @@ overlays  :
     - include: layers/wms/Stamnettpunkt
     - include: layers/wms/Trekantpunkt
     - include: layers/wms/Stasjoner
-    - include: layers/wms/Stasjoner_planlagt
-    - include: layers/wms/Stasjoner_temp_outoforder
+    # - include: layers/wms/Stasjoner_planlagt
+    # - include: layers/wms/Stasjoner_temp_outoforder
+    - include: layers/wms/Svenske_finske_stasjoner
 
 center    :
     template: center/besseggen
