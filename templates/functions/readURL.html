@@ -127,8 +127,8 @@ NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
 };
 
 NK.functions.addGeoJsonLayer = function (url, epsgCode, extensionProperties, clickable) {
-  if (url.length == 40) {
-    url = "http://www.norgeskart.no/user/json/" + url + ".json";
+  if (url.length == 40 || url.length == 41) {
+    url = "//www.norgeskart.no/user/json/" + url + ".json";
   }
   var mapProjection,
       formatOptions,
