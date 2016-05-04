@@ -16,6 +16,9 @@ add an external data source, loading new layers according to the GetCapabilities
 
     {"cmd":"addDataSource","type":"wms","url":"http://openwms.statkart.no/skwms1/wms.abas"}
 
+add marker
+    
+    {"cmd":"addMarker","x":57114,"y":6450905}
 
 ## XDM messages sent by the client
 
