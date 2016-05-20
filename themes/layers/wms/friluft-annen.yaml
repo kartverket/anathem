@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.friluftsruter 
+url: //wms.geonorge.no/skwms1/wms.friluftsruter
 name: Annen 
 layers: AnnenRute
 layerGroup: tjenester.friluft

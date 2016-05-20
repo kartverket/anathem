@@ -1,6 +1,6 @@
 template: layers/wms
 usetoken: true
-url: http://wms.geonorge.no/skwms1/wms.dybdedata
+url: //wms.geonorge.no/skwms1/wms.dybdedata
 name: Dybde&shy;data
 layers: Dybdedata_MS_WMS
 layerGroup: tjenester.sjo.dybde

@@ -1,6 +1,6 @@
 template: layers/wms
 usetoken: true
-url: http://wms.geonorge.no/skwms1/wms.abas
+url: //wms.geonorge.no/skwms1/wms.abas
 name: ABAS 
 layers: Kommunegrenser
 layerGroup: tjenester.abas

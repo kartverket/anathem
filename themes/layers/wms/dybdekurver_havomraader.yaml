@@ -1,6 +1,6 @@
 template: layers/wms
 usetoken: true
-url: http://wms.geonorge.no/skwms1/wms.dybdekurver_havomraader
+url: //wms.geonorge.no/skwms1/wms.dybdekurver_havomraader
 name: Dybde&shy;kurve, hav
 layers: Dybdekurver_havomraader_WMS
 layerGroup: tjenester.sjo

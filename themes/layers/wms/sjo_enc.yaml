@@ -1,6 +1,6 @@
 template: layers/wms
 useticket: true
-url: http://wms.geonorge.no/skwms1/wms.ecc_enc
+url: //wms.geonorge.no/skwms1/wms.ecc_enc
 name: "Elektron. Sj&oslash;kart"
 layers: "cells"
 styles: "style-id-263"
