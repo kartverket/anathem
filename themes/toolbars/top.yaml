@@ -11,11 +11,11 @@ controls:
   top: true
   controls:
   - template: controls/search
-    coordinates: http://www.norgeskart.no/ws/trans.py
+    coordinates: https://www.norgeskart.no/ws/trans.py
     searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
-    streetAddressesSearchUrl: http://www.norgeskart.no/ws/veg.py
-    addressSearchUrl: http://www.norgeskart.no/ws/adr.py
-    propertySearchUrl: http://www.norgeskart.no/ws/eie.py
+    streetAddressesSearchUrl: https://www.norgeskart.no/ws/veg.py
+    addressSearchUrl: https://www.norgeskart.no/ws/adr.py
+    propertySearchUrl: https://www.norgeskart.no/ws/eie.py
 - template: controls/container
   id: del-panel #norwegian, because AdBlock pro hides panels called share-panel
   top: true
