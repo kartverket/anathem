@@ -13,13 +13,13 @@ controls:
     storageUrl: /ws/upload-json.py
     styleName: track
   - template: controls/emergencyposter
-    serviceURL: http://openwps.statkart.no/skwms1/wps.elevation
+    serviceURL: //openwps.statkart.no/skwms1/wps.elevation
     ssrwsURL: https://ws.geonorge.no/SKWS3Index/ssr/sok?
-    pdfServiceUrl: http://ws.geonorge.no/ngnk2/ngnk?
+    pdfServiceUrl: //ws.geonorge.no/ngnk2/ngnk?
     i18n:
     - include: languages/nb/emergencyposter
   - template: controls/heightprofile
-    heightProfileServiceUrl: http://openwps.statkart.no/skwms1/wps.elevation
+    heightProfileServiceUrl: //openwps.statkart.no/skwms1/wps.elevation
     gpxStorageUrl: /ws/upload-gpx.py
     trackStyleName: track
     predefinedGpxFiles:

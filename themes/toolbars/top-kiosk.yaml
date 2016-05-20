@@ -8,8 +8,8 @@ controls:
   top: true
   controls:
   - template: controls/search
-    coordinates: http://www.norgeskart.no/ws/trans.py
+    coordinates: //www.norgeskart.no/ws/trans.py
     searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
-    streetAddressesSearchUrl: http://www.norgeskart.no/ws/veg.py
-    addressSearchUrl: http://www.norgeskart.no/ws/adr.py
-    propertySearchUrl: http://www.norgeskart.no/ws/eie.py
+    streetAddressesSearchUrl: //www.norgeskart.no/ws/veg.py
+    addressSearchUrl: //www.norgeskart.no/ws/adr.py
+    propertySearchUrl: //www.norgeskart.no/ws/eie.py
