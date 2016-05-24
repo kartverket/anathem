@@ -112,6 +112,9 @@ translations:
   - template: i18n/translation
     source: 'Search for properties as follows:<br/>Municipality-Gardsnr/Bruksnr/Feste/Seksjon<br/>e.g.: <b>Ringerike-38/98</b></br/> or by entering an address.' 
     translation: 'S&oslash;k etter eiendommer som f&oslash;lgt:<br/>Kommune-G&aring;rdsnr/Bruksnr/Feste/Seksjon<br/>f.eks.: <b>Ringerike-38/98</b></br/>eller ved &aring; taste inn gateadressen.'
+  - template: i18n/translation
+    source: 'house number'
+    translation: 'Husnr.'
  
 
 
