@@ -58,7 +58,7 @@
         return features;
       };
 
-      if (origin !== this.remote) {
+      if (origin === this.remote) {
         json = easyXDM.getJSONObject().parse(data);
 
         if (json) {
