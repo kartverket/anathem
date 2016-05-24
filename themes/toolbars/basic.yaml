@@ -35,10 +35,10 @@ controls:
   id: tools-panel
   controls:
   - template: controls/addlayer
-  - template: controls/draw
-    storageUrl: /ws/upload-json.py
-    styleName: track
-    i18n:
-    - include: languages/nb/draw
+# - template: controls/draw
+#   storageUrl: /ws/upload-json.py
+#   styleName: track
+#   i18n:
+#   - include: languages/nb/draw
   - template: controls/transformations
     url: /ws/trans.py
