@@ -2,7 +2,7 @@ template: layers/wms
 usetoken: true
 url: http://wms.geonorge.no/skwms1/wms.n5raster2
 name: "&Oslash;k&ndash;1&sdot;utg&aring;ve"
-layers: n5raster_foerstegang
+layers: n5raster_foerstegang_metadata,n5raster_foerstegang
 layerGroup: historik
 id: 1gang
 singleTile: true
