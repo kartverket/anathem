@@ -1,8 +1,4 @@
 % if not 'easyXDM' in vars:
-<script type="text/javascript" src="js/easyXDM.js"></script>
-<script type="text/javascript">
-  easyXDM.DomHelper.requiresJSON("js/json2.js");
-</script>
 <% vars['easyXDM']=True %>
 % endif
 
@@ -13,14 +9,12 @@
 
   NK.functions = NK.functions || {};
   NK.functions.postMessage = function (msg) {
-    if (!!NK.easyXDM.socket) {
-      NK.easyXDM.socket.postMessage(JSON.stringify(msg));
-    }
+    //TODO: find a way to postMessage back to parent, the following are block by Chrome
+    //event.source.postMessage(JSON.stringify(msg), event.origin);
+    //window.parent.postMessage(JSON.stringify(msg), '*')
   };
-  NK.functions.listener = function (event){
-    if ( event.origin !== "http://skrivte57.statkart.no" )
-      return;
-
+  NK.functions.listener = function (event) {
+    if (event.origin === "http://skrivte57.statkart.no") {
       var json = JSON.parse(event.data);
 
       if (json) {
@@ -184,8 +178,8 @@
           markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(json.x, json.y), icon, json.title || ''));
         }
       }
+    }
   };
-
   if (window.addEventListener){
     addEventListener("message", NK.functions.listener, false)
   } else {
