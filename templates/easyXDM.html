@@ -9,222 +9,6 @@
 <script type="text/javascript">
   var NK = NK || {};
   NK.easyXDM = NK.easyXDM || {};
-  NK.easyXDM.socket = new easyXDM.Socket({
-    onMessage: function (data, origin) {
-      var json,
-          vectorLayers,
-          rasterLayers,
-          features,
-          feature,
-          layers,
-          layer,
-          controls,
-          selector,
-          raster,
-          i,
-          j,
-          k,
-          l;
-      var getVisibleFeaturesInLayer = function (layer) {
-        var features = [],
-            feature,
-            i,
-            j;
-
-        for (i = 0, j = layer.features.length; i < j; i += 1) {
-          if (layer.features[i].getVisibility() && layer.features[i].onScreen()) {
-            feature = {};
-            feature.fid = layer.features[i].fid;
-            feature['attributes'] = layer.features[i]['attributes'];
-
-            features.push(feature);
-          }
-        }
-        return features;
-      };
-      var getFeaturesInLayer = function (layer) {
-        var features = [],
-            feature,
-            i,
-            j;
-
-        for (i = 0, j = layer.features.length; i < j; i += 1) {
-          feature = {};
-          feature.fid = layer.features[i].fid;
-          feature['attributes'] = layer.features[i]['attributes'];
-
-          features.push(feature);
-        }
-        return features;
-      };
-
-      if (origin === this.remote) {
-        json = easyXDM.getJSONObject().parse(data);
-
-        if (json) {
-          if (json.cmd === 'setCenter') {
-            map.setCenter(new OpenLayers.LonLat(json.x, json.y), json.zoom);
-          } else if ((json.cmd === 'setVisible') || (json.cmd === 'setBasemap')) {
-            if (json.cmd === 'setBasemap') {
-              for (var m in map.layers) {
-                if (map.layers[m].isUrlDataLayer) continue;
-                if (map.layers[m].isBasemap) continue; // europe base map is actually always on
-                map.layers[m].setVisibility(false);
-              }
-            }
-            var candidates = map.getLayersByName(json.id);
-            if (candidates.length > 0) {
-              candidates[0].setVisibility(true);
-            } else {
-              candidates = map.getLayersBy("shortid", json.id);
-              if (candidates.length > 0) {
-                candidates[0].setVisibility(true);
-              }
-            }
-            NK.functions.postMessage({"type": "result", "cmd": json.cmd, "affected": candidates.length});
-          } else if (json.cmd === 'addDataSource') {
-            NK.functions.parseParamsAndAddDataLayerFromUrl([json.type, json.url]);
-          } else if (json.cmd === 'setVisibleVectorLayer') {
-            vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
-
-            for (i = 0, j = vectorLayers.length; i < j; i += 1) {
-              layer = vectorLayers[i];
-
-              if (layer.shortid === json.shortid) {
-                layer.setVisibility(true);
-
-                if (layer.preferredBackground) {
-                  rasterLayers = map.getLayersByClass("OpenLayers.Layer.WMTS");
-
-                  for (k = 0, l = rasterLayers.length; k < l; k += 1) {
-                    raster = rasterLayers[k];
-
-                    if (raster.shortid === layer.preferredBackground) {
-                      raster.setVisibility(true);
-                    } else if (!raster.isBaseLayer) {
-                      raster.setVisibility(false);
-                    }
-                  }
-                }
-              } else {
-                layer.setVisibility(false);
-              }
-            }
-          } else if (json.cmd === 'getFeatures') {
-            if (json.layer) {
-              layers = map.getLayersBy('shortid', json.layer);
-
-              if (layers.length > 0) {
-                layer = layers[0];
-                features = getFeaturesInLayer(layer);
-
-                NK.functions.postMessage({"type": "layerFeatures", "layer": layer.shortid, "features": features});
-              } else {
-                NK.functions.postMessage({"type": "error", "message": "no such layer"});
-              }
-            } else {
-              vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
-              layers = [];
-
-              for (i = 0, j = vectorLayers.length; i < j; i += 1) {
-                layer = vectorLayers[i];
-                layers.push({
-                  "layer"   : layer.shortid,
-                  "features": getFeaturesInLayer(layer)
-                });
-              }
-              NK.functions.postMessage({"type": "features", "layers": layers});
-            }
-          } else if (json.cmd === 'getVisibleFeatures') {
-            if (json.layer) {
-              layers = map.getLayersBy('shortid', json.layer);
-
-              if (layers.length > 0) {
-                layer = layers[0];
-                features = getVisibleFeaturesInLayer(layer);
-
-                NK.functions.postMessage({
-                  "type"    : "layerVisibleFeatures",
-                  "layer"   : layer.shortid,
-                  "features": features
-                });
-              } else {
-                NK.functions.postMessage({"type": "error", "message": "no such layer"});
-              }
-            } else {
-              vectorLayers = map.getLayersByClass("OpenLayers.Layer.Vector").slice();
-              layers = [];
-              console.log(vectorLayers.length);
-              for (i = 0, j = vectorLayers.length; i < j; i += 1) {
-                layer = vectorLayers[i];
-                layers.push({
-                  "layer"   : layer.shortid,
-                  "features": getVisibleFeaturesInLayer(layer)
-                });
-              }
-              NK.functions.postMessage({"type": "visibleFeatures", "layers": layers});
-            }
-          } else if (json.cmd === 'selectFeature') {
-            layers = map.getLayersBy('shortid', json.layer);
-            feature = null;
-            selector = null;
-
-            if (layers.length > 0) {
-              layer = layers[0];
-              feature = layer.getFeatureByFid(json.feature);
-
-              if (feature) {
-                controls = layer.map.getControlsByClass('OpenLayers.Control.SelectFeature');
-
-                for (i = 0, j = controls.length; i < j && selector === null; i += 1) {
-                  if (controls[i].layer.shortid === layer.shortid) {
-                    if (controls[i].click) {
-                      // ensure the correct control is used
-                      selector = controls[i];
-                    }
-                  }
-                }
-              }
-            }
-            if (feature !== null && selector !== null) {
-              if (json.panAndZoom && feature.geometry.bounds) {
-                feature.layer.map.zoomToExtent(feature.geometry.bounds);
-              }
-              selector.clickFeature.call(selector, feature);
-            } else {
-              NK.functions.postMessage({"type": "error", "message": "no such layer or feature"});
-            }
-          } else if (json.cmd === 'setBoundingBox') {
-            var draw = map.getControlsByClass('OpenLayers.Control.Draw')[0];
-            if (!!draw) {
-              var l = json.bounds[0],
-                  b = json.bounds[1],
-                  r = json.bounds[2],
-                  t = json.bounds[3];
-              var polygon = new OpenLayers.Geometry.Polygon([
-                new OpenLayers.Geometry.LinearRing([
-                  new OpenLayers.Geometry.Point(l, b),
-                  new OpenLayers.Geometry.Point(r, b),
-                  new OpenLayers.Geometry.Point(r, t),
-                  new OpenLayers.Geometry.Point(l, t),
-                  new OpenLayers.Geometry.Point(l, b)
-                ])
-              ]);
-              feature = new OpenLayers.Feature.Vector(polygon);
-              draw.displayBBoxFeature(feature);
-            }
-          } else if (json.cmd === 'addMarker') {
-            var markers = new OpenLayers.Layer.Markers("Markers");
-            map.addLayer(markers);
-            var size = new OpenLayers.Size(20, 25);
-            var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-            var icon = new OpenLayers.Icon('/theme/norgeskart/img/embed-marker.png', size, offset);
-            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(json.x, json.y), icon, json.title || ''));
-          }
-        }
-      }
-    }
-  });
   NK.xdm = true;
 
   NK.functions = NK.functions || {};
@@ -233,11 +17,10 @@
       NK.easyXDM.socket.postMessage(JSON.stringify(msg));
     }
   };
-  function listener(event){
+  NK.functions.listener = function (event){
     if ( event.origin !== "http://skrivte57.statkart.no/" ||  "http://geonorge.no/" )
       return;
 
-    document.getElementById("test").innerHTML = "received: "+event.data;
       var json = JSON.parse(event.data);
 
       if (json) {
@@ -401,12 +184,12 @@
           markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(json.x, json.y), icon, json.title || ''));
         }
       }
-  }
+  };
 
   if (window.addEventListener){
-    addEventListener("message", listener, false)
+    addEventListener("message", NK.functions.listener, false)
   } else {
-    attachEvent("onmessage", listener)
+    attachEvent("onmessage", NK.functions.listener)
   }
 </script>
 
