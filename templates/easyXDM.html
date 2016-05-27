@@ -18,7 +18,7 @@
     }
   };
   NK.functions.listener = function (event){
-    if ( event.origin !== "http://skrivte57.statkart.no/" ||  "http://geonorge.no/" )
+    if ( event.origin !== "http://skrivte57.statkart.no" || "http://geonorge.no" )
       return;
 
       var json = JSON.parse(event.data);
