@@ -670,8 +670,8 @@ NK.functions.createLegend = function () {
     var legendDiv = OpenLayers.Util.getElement('legendBox');
     if (!!legendDiv) {
       legendDiv.innerHTML = "";
-      legendDiv.style.maxHeight = "75vh";
-      legendDiv.style.overflowY = "scroll";
+      //legendDiv.style.maxHeight = "75vh";
+      //legendDiv.style.overflowY = "scroll";
       // create getLegendGraphic request for all active layers
       for (var i = 1; i < map.layers.length; i++) {
         var layer = map.layers[i];
