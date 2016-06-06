@@ -45,7 +45,8 @@ overlays  :
     - include: layers/geoJSON/raster-n250
     - include: layers/geoJSON/raster-n500
     - include: layers/geoJSON/raster-n1000
-    
+    - include: layers/geoJSON/dybdedata_50m
+
 center    : 
     template: center/besseggen
 
