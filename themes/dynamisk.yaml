@@ -3,6 +3,7 @@ filename : dynamisk.html
 title    : Norgeskart
 mapClass: embedded-map
 mapscript: clients/norgeskart-dynamisk.min.js
+includeXDM: "true"
 ---
 template : mapscript
 filename : clients/norgeskart-dynamisk.min.js
