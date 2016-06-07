@@ -14,7 +14,7 @@
     //window.parent.postMessage(JSON.stringify(msg), '*')
   };
   NK.functions.listener = function (event) {
-    if (event.origin === "http://skrivte57.statkart.no" || "http:://geonorge.no" || "http://labs.norgeskart.no") {
+    if (event.origin === "http://skrivte57.statkart.no" || "http:://geonorge.no" || "http://labs.norgeskart.no" || "https://register.geonorge.no/") {
       var json = JSON.parse(event.data);
 
       if (json) {
