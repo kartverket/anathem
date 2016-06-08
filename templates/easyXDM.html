@@ -42,7 +42,7 @@
   NK.functions.postMessage = function (msg) {
     //TODO: find a way to postMessage back to parent, the following are block by Chrome
     //event.source.postMessage(JSON.stringify(msg), event.origin);
-    //window.parent.postMessage(JSON.stringify(msg), '*')
+    window.parent.postMessage(JSON.stringify(msg), '*')
   };
   NK.functions.listener = function (event) {
     if (event.origin === "http://skrivte57.statkart.no" || "http:://geonorge.no" || "http://labs.norgeskart.no" || "https://register.geonorge.no/") {
