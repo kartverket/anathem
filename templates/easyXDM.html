@@ -6,7 +6,38 @@
   var NK = NK || {};
   NK.easyXDM = NK.easyXDM || {};
   NK.xdm = true;
+  var getVisibleFeaturesInLayer = function (layer) {
+    var features = [],
+        feature,
+        i,
+        j;
 
+    for (i = 0, j = layer.features.length; i < j; i += 1) {
+      if (layer.features[i].getVisibility() && layer.features[i].onScreen()) {
+        feature = {};
+        feature.fid = layer.features[i].fid;
+        feature['attributes'] = layer.features[i]['attributes'];
+
+        features.push(feature);
+      }
+    }
+    return features;
+  };
+  var getFeaturesInLayer = function (layer) {
+    var features = [],
+        feature,
+        i,
+        j;
+
+    for (i = 0, j = layer.features.length; i < j; i += 1) {
+      feature = {};
+      feature.fid = layer.features[i].fid;
+      feature['attributes'] = layer.features[i]['attributes'];
+
+      features.push(feature);
+    }
+    return features;
+  };
   NK.functions = NK.functions || {};
   NK.functions.postMessage = function (msg) {
     //TODO: find a way to postMessage back to parent, the following are block by Chrome
