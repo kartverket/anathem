@@ -43,7 +43,7 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
       return false;
     }
 
-    if (NK.easyXDM && NK.easyXDM.socket) {
+    if (NK.easyXDM) {
       // there is an active easyXDM socket - send feature data
       message = {
         cmd: 'featureSelected', 
@@ -51,7 +51,7 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
         attributes: feature.attributes,
         layer: feature.layer.shortid
       };
-      NK.easyXDM.socket.postMessage(JSON.stringify(message));
+      NK.functions.postMessage(JSON.stringify(message));
     }
 
     if (feature.fid && feature.layer) {

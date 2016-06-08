@@ -31,7 +31,7 @@ NK.functions.popup.getFeatureUnselector = function (M) {
       feature.popup = null;
     }
 
-    if (NK.easyXDM && NK.easyXDM.socket) {
+    if (NK.easyXDM && NK.functions.postMessage) {
       // there is an active easyXDM socket - send feature data
       var message = {
         cmd: 'featureUnselected', 
@@ -39,7 +39,7 @@ NK.functions.popup.getFeatureUnselector = function (M) {
         attributes: feature.attributes,
         layer: feature.layer.shortid
       };
-      NK.easyXDM.socket.postMessage(JSON.stringify(message));
+      NK.functions.postMessage(JSON.stringify(message));
     } 
   }
 }
@@ -58,7 +58,7 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
       return false;
     }
 
-    if (NK.easyXDM && NK.easyXDM.socket) {
+    if (NK.easyXDM && NK.functions.postMessage) {
       // there is an active easyXDM socket - send feature data
       var message = {
         cmd: 'featureSelected', 
@@ -66,7 +66,7 @@ NK.functions.popup.getFeatureSelector = function (M, markupGeneratorFunction, po
         attributes: feature.attributes,
         layer: feature.layer.shortid
       };
-      NK.easyXDM.socket.postMessage(JSON.stringify(message));
+      NK.functions.postMessage(JSON.stringify(message));
     } else {
       // find out where to position the popup
 
