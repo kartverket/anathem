@@ -18,10 +18,10 @@ controls:
   name: Fagdata
   id: services-panel
   controls:
-#  - template: controls/overlaygrouppanel
-#    group: tjenester.Fastmerker
-#    title: Fastmerker
-#    buttonText: Fastmerker
+  - template: controls/overlaygrouppanel
+    group: tjenester.Fastmerker
+    title: Fastmerker
+    buttonText: Fastmerker
   - template: controls/overlaygrouppanel
     group: tjenester.stasjoner
     title: Stasjoner
