@@ -55,9 +55,7 @@ mapscript:
     - template: functions/readURL
 
   controls  :
-    - template: controls/geolocation
     - template: controls/navigation
-    - template: controls/hashstate
     - template: controls/container
       id: overview-container-panel
       controls:
@@ -66,4 +64,6 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
+    - template: controls/status
+    - template: controls/scaleline
     - include: toolbars/embed-basic-toolbar
