@@ -2,6 +2,7 @@
 
 template : base
 title    : "Kart | Geonorge"
+includeXDM : true
 
 mapscript:
   template  : mapscript
@@ -9,7 +10,6 @@ mapscript:
   tokenServiceUrl: /ws/gkt.py
   projection: 32633
   maxResolution: 21664.0
-  includeXDM : true
 
   baselayers:
     - template: layers/europa
