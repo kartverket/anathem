@@ -9,7 +9,7 @@ controls:
   controls:
   - template: controls/search
     coordinates: //www.norgeskart.no/ws/trans.py
-    searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
+    searchUrl: https://ws.geonorge.no/SKWS3IndexTest/ssr/sok
     streetAddressesSearchUrl: //www.norgeskart.no/ws/veg.py
     addressSearchUrl: //www.norgeskart.no/ws/adr.py
     propertySearchUrl: //www.norgeskart.no/ws/eie.py
