@@ -223,7 +223,7 @@ NK.functions.loadWCSLayer = function (wcsUrl, whenDone) {
 
   var wcs = {}, formats = {}, layers = {}, title = "", constraints = "", attribution = "", description = "";
   var resultWCS = NK.functions.getWCSCapabilities(wcsUrl);
-  resultWCS.error(function (msg) { NK.functions.log(msg.responseText); });
+  resultWCS.fail(function (msg) { NK.functions.log(msg.responseText); });
   resultWCS.done(function (xml) {
 
     $(xml).find('formatSupported').each(function () {
@@ -264,7 +264,7 @@ NK.functions.addWFSLayer = function (wfsUrl) {
   }
   var layers = [], formats = {}, serviceParms = {}, layerParms;
   var resultWFS = NK.functions.getWFSCapabilities(wfsUrl);
-  resultWFS.error(function (msg) { NK.functions.log(msg.responseText); });
+  resultWFS.fail(function (msg) { NK.functions.log(msg.responseText); });
   resultWFS.done(function (xml) {
     var version = $(xml).find('ServiceTypeVersion');
     if (!!version) {
@@ -357,7 +357,7 @@ NK.functions.addWMSLayer = function (wmsUrl) {
 
   var resultWMS = NK.functions.getWMSCapabilities(wmsUrl);
   NK.loadingWMS = 1;
-  resultWMS.error(function (msg) { NK.functions.log(msg.responseText); });
+  resultWMS.fail(function (msg) { NK.functions.log(msg.responseText); });
   resultWMS.done(function (xml) {
     if(!!map) {
       var lp = map.getControlsByClass('OpenLayers.Control.LoadingPanel')[0];
