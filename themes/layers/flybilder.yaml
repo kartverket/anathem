@@ -1,9 +1,9 @@
 template: layers/wms
 usetoken: true
-url: //gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nibcache
+url: //gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33
 format: image/jpeg
-transparent: 0 
+transparent: "false"
 name: Fly&shy;bilder 
-layers: NiB
+layers: Nibcache_UTM33_EUREF89
 layerGroup: land
 id: flybilder
