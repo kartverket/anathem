@@ -1,8 +1,8 @@
 template: layers/geoJSONFileMC
-url: /json/dekning/raster/n500.geojson
+url: /json/dekning/raster/n500_ny.geojson
 name: Raster N500
 id: raster-n500
-epsgCode: 32633 
+epsgCode: 4326
 styleName: omrissFylker 
 layerGroup: nedlasting 
 popup:
