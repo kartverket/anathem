@@ -477,8 +477,8 @@ var options = {
 %if not statisk:
   var markupGeneratorFunction = NK.functions.popup.generatePopupMarkup();
   var featureInfo = new OpenLayers.Control.WMSGetFeatureInfo({
-    url: "http://wms.geonorge.no/skwms1/wms.fastmerker?",
-    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.fastmerker?",
+    url: "http://wms.geonorge.no/skwms1/wms.fastmerker2?",
+    proxyUrl: "/ws/featureinfo.py?http://wms.geonorge.no/skwms1/wms.fastmerker2?",
     queryVisible: true,
     infoFormat: 'text/plain',
     eventListeners: {
@@ -495,7 +495,13 @@ var options = {
             {x: 10, y: -65},
             'selected-feature-popup, user-marker'
           ), true);
-        } catch(e) {}
+          for (var entry in NK.data) {
+            var ctx = document.getElementById("pgsChart"+NK.data[entry][0]).getContext("2d");
+            var lineChart = new Chart(ctx).AltLine(NK.data[entry][1], NK.data[entry][2]);
+          }
+        } catch(e) {
+console.log(e);
+}
       }
     }
   });

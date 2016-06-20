@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://wms.geonorge.no/skwms1/wms.fastmerker?
+url: http://wms.geonorge.no/skwms1/wms.fastmerker2
 name: Vis alt
 layers: fastmerke
 layerGroup: tjenester.Fastmerker

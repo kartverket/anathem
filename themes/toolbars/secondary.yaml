@@ -23,9 +23,9 @@ controls:
     title: Fastmerker
     buttonText: Fastmerker
   - template: controls/overlaygrouppanel
-    group: tjenester.CPOS-stasjoner
-    title: Base-stasjoner
-    buttonText: Base-stasjoner
+    group: tjenester.stasjoner
+    title: Stasjoner
+    buttonText: Stasjoner
   - template: controls/overlaygrouppanel
     group: tjenester.UTM-rutenett
     title: UTM-rutenett

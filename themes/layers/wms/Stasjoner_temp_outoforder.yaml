@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.fastmerker2
-name: Svenske og finske stasjoner
-layers: Svenske_finske_stasjoner
+name: stasjoner out of order
+layers: Stasjoner_temp_outoforder
 layerGroup: tjenester.stasjoner
-id: Svenske_finske_stasjoner
+id: stasjoner_temp_outoforder
 usetoken: true
 singleTile: true

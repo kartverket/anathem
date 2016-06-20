@@ -2,23 +2,71 @@
 
 NK.functions = NK.functions || {};
 NK.functions.popup = NK.functions.popup || {};
+NK.data = NK.data || [];
 
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
     var a = feature, i, j, l, markup = '', tmpMarkup = '', test;
+    NK.data = [];
     var dict = {
-      'pgs_stasjoner': {
-        'info': {
-          'name': 'Fakta om CPOS stasjoner',
-          'extra': 'CPOS stasjonene samler GNSS-data som sendes til kartverkets kontrollsenter. GNSS-dataene brukes bl.a. til drift av kartverkets posisjonstjenester. ',
-          'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om CPOS stasjoner</a>'
+      'stasjoner'                : {
+        'info'   : {
+          'name' : 'Fakta om Basestasjoner',
+          'extra': 'Stasjonene samler GNSS-data som sendes til kartverkets kontrollsenter. GNSS-dataene brukes bl.a. til drift av kartverkets posisjonstjenester. ',
+          'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om stasjoner</a>'
         },
         'content': {
-          'Stasjonsnavn:': 'stasjonsnavn',
-          'Stasjonsid:': 'stasjonsid',
-          'Status:': 'status',
-          'Nordkoordinat:': 'nordkoordinat',
-          'Østkoordinat:': 'østkoordinat'
+          'Stasjonsnavn:'   : 'sitename',
+          'StasjonsId:'     : 'fourcharid',
+          'Status:'         : 'operstattypename',
+          'X-koordinater:'  : 'x',
+          'Y-koordinater:'  : 'y',
+          'Z-koordinater:'  : 'z',
+          'Koordinatsystem:': 'coordsysname'
+        },
+        'data'   : {
+          'data_json_array' : 'data_json_array',
+          'avvik_json_array': 'avvik_json_array'
+        }
+      },
+      'stasjoner_planlagt'       : {
+        'info'   : {
+          'name' : 'Fakta om Basestasjoner planlagt',
+          'extra': 'Stasjonene samler GNSS-data som sendes til kartverkets kontrollsenter. GNSS-dataene brukes bl.a. til drift av kartverkets posisjonstjenester. ',
+          'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om stasjoner</a>'
+        },
+        'content': {
+          'Stasjonsnavn:'   : 'sitename',
+          'StasjonsId:'     : 'fourcharid',
+          'Status:'         : 'operstattypename',
+          'X-koordinater:'  : 'x',
+          'Y-koordinater:'  : 'y',
+          'Z-koordinater:'  : 'z',
+          'Koordinatsystem:': 'coordsysname'
+        },
+        'data'   : {
+          'data_json_array' : 'data_json_array',
+          'avvik_json_array': 'avvik_json_array'
+        }
+      },
+      'stasjoner_temp_outoforder': {
+        'info'   : {
+          'name' : 'Fakta om Basestasjoner temp out of order',
+          'extra': 'Stasjonene samler GNSS-data som sendes til kartverkets kontrollsenter. GNSS-dataene brukes bl.a. til drift av kartverkets posisjonstjenester. ',
+          'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om stasjoner</a>'
+        },
+        'content': {
+          'Stasjonsnavn:'   : 'sitename',
+          'StasjonsId:'     : 'fourcharid',
+          'Status:'         : 'operstattypename',
+          'X-koordinater:'  : 'x',
+          'Y-koordinater:'  : 'y',
+          'Z-koordinater:'  : 'z',
+          'Koordinatsystem:': 'coordsysname'
+        },
+        'data'   : {
+          'data_json_array' : 'data_json_array',
+          'avvik_json_array': 'avvik_json_array'
         }
       },
       'svenske_finske_stasjoner': {
@@ -28,109 +76,113 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           'link' : '<a href="http://kartverket.no/Posisjonstjenester/" target="_blank">Les mer om CPOS stasjoner</a>'
         },
         'content': {
-          'Stasjonsnavn:': 'stasjonsnavn',
-          'Stasjonsid:': 'stasjonsid',
-          'Status:': 'status',
-          'Nordkoordinat:': 'nordkoordinat',
-          'Østkoordinat:': 'østkoordinat'
+          'Stasjonsnavn:': 'sitename',
+          'Stasjonsid:': 'fourcharid',
+          'Status:': 'operstattypename',
+          'X-koordinater:'  : 'x',
+          'Y-koordinater:'  : 'y',
+          'Z-koordinater:'  : 'z',
+          'Koordinatsystem:': 'coordsysname'
+        },
+        'data'   : {
+          'data_json_array' : 'data_json_array',
+          'avvik_json_array': 'avvik_json_array'
         }
       },
-      'niv_fastmerker': {
-        'info': {
-          'name': 'Fakta om Fastmerker',
+      'niv_fastmerker'           : {
+        'info'   : {
+          'name' : 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
+          'link' : '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
-          //'ogc_fid:': 'ogc_fid',
-          'Punktnummer:': 'punktnummer',
-          'Punktnavn:': 'punktnavn',
-          'Nord:': 'nord',
-          'Øst:': 'øst',
-          'Sone:': 'sone',
-          'Høyde_nn2000:': 'høyde_nn2000',
-          'Høyde_nn1954:': 'høyde_nn1954',
-          'Ellipsoidisk_høyde:': 'ellipsoidisk_høyde',
-          'Punkttype:': 'punkttype',
-          'Underlag:': 'underlag',
-          'Kvalitet_nn1954:': 'kvalitet_nn1954',
+          'Punktnummer:'       : 'punktnummer',
+          'Punktnavn:'         : 'punktnavn',
+          'Nord:'              : 'nord',
+          'Øst:'               : 'ost',
+          'Sone:'              : 'sone',
+          'Høyde_nn2000:'      : 'hoyde_nn2000',
+          'Høyde_nn1954:'      : 'hoyde_nn1954',
+          'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
+          'Punkttype:'         : 'punkttype',
+          'Underlag:'          : 'underlag',
+          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
           'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
-          'Status:': 'status',
-          'Status_år:': 'status_år',
-          'Beskrivelse:': 'beskrivelse'
-          //'Bilde:': 'bilde'
+          'Status:'            : 'status',
+          'Status_år:'         : 'status_ar',
+          'Beskrivelse:'       : 'beskrivelse'
         }
       },
-      'trekantpunkt': {
-        'info': {
-          'name': 'Fakta om Fastmerker',
+      'trekantpunkt'             : {
+        'info'   : {
+          'name' : 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
+          'link' : '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
-          'Punktnummer:': 'punktnummer',
-          'Punktnavn:': 'punktnavn',
-          'Nord:': 'nord',
-          'Øst:': 'øst',
-          'Sone:': 'sone',
-          'Høyde_nn2000:': 'høyde_nn2000',
-          'Høyde_nn1954:': 'høyde_nn1954',
-          'Ellipsoidisk_høyde:': 'ellipsoidisk_høyde',
-          'Punkttype:': 'punkttype',
-          'Underlag:': 'underlag',
-          'Kvalitet_nn1954:': 'kvalitet_nn1954',
+          'Punktnummer:'       : 'punktnummer',
+          'Punktnavn:'         : 'punktnavn',
+          'Nord:'              : 'nord',
+          'Øst:'               : 'ost',
+          'Sone:'              : 'sone',
+          'Høyde_nn2000:'      : 'hoyde_nn2000',
+          'Høyde_nn1954:'      : 'hoyde_nn1954',
+          'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
+          'Punkttype:'         : 'punkttype',
+          'Underlag:'          : 'underlag',
+          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
           'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
-          'Status:': 'status',
-          'Status_år:': 'status_år',
-          'Beskrivelse:': 'beskrivelse'
+          'Status:'            : 'status',
+          'Status_år:'         : 'status_ar',
+          'Beskrivelse:'       : 'beskrivelse'
         }
       },
-      'stamnettpunkt': {
-        'info': {
-          'name': 'Fakta om Fastmerker',
+      'stamnettpunkt'            : {
+        'info'   : {
+          'name' : 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
+          'link' : '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
-          'Punktnummer:': 'punktnummer',
-          'Punktnavn:': 'punktnavn',
-          'Nord:': 'nord',
-          'Øst:': 'øst',
-          'Sone:': 'sone',
-          'Høyde_nn2000:': 'høyde_nn2000',
-          'Høyde_nn1954:': 'høyde_nn1954',
-          'Ellipsoidisk_høyde:': 'ellipsoidisk_høyde',
-          'Punkttype:': 'punkttype',
-          'Underlag:': 'underlag',
-          'Kvalitet_nn1954:': 'kvalitet_nn1954',
+          'Punktnummer:'       : 'punktnummer',
+          'Punktnavn:'         : 'punktnavn',
+          'Nord:'              : 'nord',
+          'Øst:'               : 'ost',
+          'Sone:'              : 'sone',
+          'Høyde_nn2000:'      : 'hoyde_nn2000',
+          'Høyde_nn1954:'      : 'hoyde_nn1954',
+          'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
+          'Punkttype:'         : 'punkttype',
+          'Underlag:'          : 'underlag',
+          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
           'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
-          'Status:': 'status',
-          'Status_år:': 'status_år',
-          'Beskrivelse:': 'beskrivelse'
+          'Status:'            : 'status',
+          'Status_år:'         : 'status_ar',
+          'Beskrivelse:'       : 'beskrivelse'
         }
       },
-      'landsnettpunkt': {
-        'info': {
-          'name': 'Fakta om Fastmerker',
+      'landsnettpunkt'           : {
+        'info'   : {
+          'name' : 'Fakta om Fastmerker',
           'extra': 'Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.',
-          'link': '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
+          'link' : '<a href="http://www.kartverket.no/Kunnskap/Kart-og-kartlegging/Referanseramme/De-koordinatbestemte-fastmerkene" target="_blank">Les mer om Fastmerker</a>'
         },
         'content': {
-          'Punktnummer:': 'punktnummer',
-          'Punktnavn:': 'punktnavn',
-          'Nord:': 'nord',
-          'Øst:': 'øst',
-          'Sone:': 'sone',
-          'Høyde_nn2000:': 'høyde_nn2000',
-          'Høyde_nn1954:': 'høyde_nn1954',
-          'Ellipsoidisk_høyde:': 'ellipsoidisk_høyde',
-          'Punkttype:': 'punkttype',
-          'Underlag:': 'underlag',
-          'Kvalitet_nn1954:': 'kvalitet_nn1954',
+          'Punktnummer:'       : 'punktnummer',
+          'Punktnavn:'         : 'punktnavn',
+          'Nord:'              : 'nord',
+          'Øst:'               : 'ost',
+          'Sone:'              : 'sone',
+          'Høyde_nn2000:'      : 'hoyde_nn2000',
+          'Høyde_nn1954:'      : 'hoyde_nn1954',
+          'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
+          'Punkttype:'         : 'punkttype',
+          'Underlag:'          : 'underlag',
+          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
           'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
-          'Status:': 'status',
-          'Status_år:': 'status_år',
-          'Beskrivelse:': 'beskrivelse'
+          'Status:'            : 'status',
+          'Status_år:'         : 'status_ar',
+          'Beskrivelse:'       : 'beskrivelse'
         }
       }
     };
@@ -155,10 +207,25 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           for (l = 0; l < f.length; l++) {
             //feature
             if (f[l].substring(0, 7) == "Feature") {
-              tmpMarkup += '<div class="featureInfo" style="display: table; border-top: 1px solid;">';
+              var pgsdata;
+              var avvik_data;
+              f[l].split("\n").forEach(function (element, index, array) {
+                if (element.trim().startsWith('data_json_array')) {
+                  pgsdata = element.replace(/'/g, "").split(' = ');
+                  if (pgsdata[1] !== '[null]') {
+                    pgsdata = JSON.parse(pgsdata[1]);
+                  } else {
+                    pgsdata = '';
+                  }
+                }
+                if (element.trim().startsWith('avvik_json_array')) {
+                  avvik_data = JSON.parse(element.replace(/'/g, "").split(' = ')[1]);
+                }
+              });
+              tmpMarkup += '<div class="featureInfo" style="border-top: 1px solid;">';
               try {
                 tmp = f[l].split(":");
-                if(tmp.length > 2) {
+                if (tmp.length > 2) {
                   tmp[1] = tmp[1].concat(tmp[2]);
                 }
                 tmp = tmp[1].split('\'\n');
@@ -171,7 +238,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                 }
 
                 for (var prop in dictTmp['content']) {
-                  tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell;padding-right: 20px;">' + prop + '</span><span class="value" style="display: table-cell">';
+                  tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell;">' + prop + '</span><span class="value" style="display: table-cell">';
                   if (!!tmpResp[dictTmp.content[prop]]) {
                     if (!!dictTmp.content[prop]) {
                       tmpMarkup += tmpResp[dictTmp.content[prop]];
@@ -186,6 +253,80 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                       tmpMarkup += '</p>';
                     }
                   }
+                }
+
+                if (!!pgsdata) {
+                  var stasjonsid = tmpResp[dictTmp.content['StasjonsId:']];
+                  tmpMarkup += "<div style='font-weight:bold;'>&nbsp;Tidsserier</div><canvas id='pgsChart" + stasjonsid + "' width='350' height='300'></canvas>";
+
+                  var data = {
+                    labels  : [],
+                    datasets: [
+                      {
+                        label           : "North",
+                        data            : [],
+                        fillColor       : "rgba(255,255,255,0)",
+                        pointColor      : "rgba(200,100,100,1)",
+                        strokeColor     : "rgba(200,100,100,1)",
+                        pointStrokeColor: "rgba(200,100,100,0)"
+                      },
+                      {
+                        label           : "East", data: [],
+                        fillColor       : "rgba(255,255,255,0)",
+                        pointColor      : "rgba(100,200,100,1)",
+                        strokeColor     : "rgba(100,200,100,1)",
+                        pointStrokeColor: "rgba(100,200,100,0)"
+                      },
+                      {
+                        label           : "Height",
+                        data            : [],
+                        fillColor       : "rgba(255,255,255,0)",
+                        pointColor      : "rgba(100,100,200,1)",
+                        strokeColor     : "rgba(100,100,200,1)",
+                        pointStrokeColor: "rgba(100,100,200,0)"
+                      }
+                    ]
+                  };
+                  pgsdata.sort(function (a, b) {return a['tid'] - b['tid']});
+                  var refh = pgsdata.slice(-1)[0]['h'];
+                  var refn = pgsdata.slice(-1)[0]['n'];
+                  var refe = pgsdata.slice(-1)[0]['e'];
+
+                  for (var entry in pgsdata) {
+                    var dato = pgsdata[entry]['tid'];
+                    var aar = 2000 + Math.floor(dato);
+                    var maned = Math.floor((2000 + dato - aar) * 12) + 1;
+                    if (maned.toString().length == 1) {
+                      maned = "0" + maned;
+                    }
+
+                    //data['labels'].push(pgsdata[entry]['tid'].toString().substring(0,5));
+                    data['labels'].push(aar + "-" + maned);
+                    data['datasets'][0]['data'].push(((pgsdata[entry]['n'] - refn) * 1000).toFixed(2));
+                    data['datasets'][1]['data'].push(((pgsdata[entry]['e'] - refe) * 1000).toFixed(2));
+                    data['datasets'][2]['data'].push(((pgsdata[entry]['h'] - refh) * 1000).toFixed(2));
+                  }
+
+                  var options = {
+                    scaleFontColor: "#fff",
+                    scaleGridLineColor: "#999",
+                    pointDot: false
+                  };
+                  NK.data.push([stasjonsid, data, options]);
+
+                  Chart.types.Line.extend({
+                    name: "AltLine",
+                    initialize: function (data) {
+                      Chart.types.Line.prototype.initialize.apply(this, arguments);
+                      this.scale.draw = function () {
+                        if (this.display && (this.xLabelRotation > 90)) {
+                          this.endPoint = this.height - 5;
+                        }
+                        Chart.Scale.prototype.draw.apply(this, arguments);
+                      };
+                    }
+                  });
+
                 }
               } catch (e) {
               }

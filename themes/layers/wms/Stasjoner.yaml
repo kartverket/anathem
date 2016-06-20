@@ -1,9 +1,8 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.fastmerker2
-name: Trekantpunkter
-layers: Trekantpunkt
-layerGroup: tjenester.Fastmerker
-id: Trekantpunkt
+name: Norske stasjoner
+layers: Stasjoner
+layerGroup: tjenester.stasjoner
+id: stasjoner
 usetoken: true
 singleTile: true
-minZoom: 8
