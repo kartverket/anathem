@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/fastmerker2
+url: http://wms.geonorge.no/skwms1/wms.fastmerker2
 name: Stamnettpunkter
 layers: Stamnettpunkt
 layerGroup: tjenester.Fastmerker
