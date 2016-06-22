@@ -7,15 +7,15 @@ styleName: unlabeledMarker
 layerGroup: tjenester.fakta 
 popup:
   template: popup/popup
-  headingAttribute: "OFFISIELT NAVN"
+  headingAttribute: "offisielt_navn"
   data:
   - template: popup/data
-    attribute: "FYLKESNAVN"
+    attribute: "fylke"
     label: Fylke
   - template: popup/data
-    attribute: "KOMMUNENAVN"
+    attribute: "kommune"
     label: Kommune
   - template: popup/data
-    attribute: "HOYDE [m]"
+    attribute: "hoyde"
     label: H&oslash;yde
     unit: "m"

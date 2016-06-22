@@ -1,10 +1,12 @@
 template: layers/geoJSONFileMC
-url: /json/dekning/raster/n500_ny.geojson
-name: Raster N500
-id: raster-n500
-epsgCode: 4326
+url: /json/dekning/sjo/celler/dtm50.geojson
+name: DTM50 Dekning sj&oslash;
+id: dtm-sjo
+epsgCode: 32633 
 styleName: omrissFylker 
 layerGroup: nedlasting 
 popup:
   template: popup/popup
   headingAttribute: "n"
+
+

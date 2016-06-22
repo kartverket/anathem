@@ -91,14 +91,14 @@
   };
 
   onFeatureSelect = function (feature) {
-      if (NK.easyXDM && NK.easyXDM.socket) {
+      if (NK.easyXDM && NK.functions.postMessage) {
         // there is an active easyXDM socket - send feature data
         var message = {
           type: 'featureSelected', 
           feature: feature.attributes,
           layer: feature.layer.shortid
         };
-        NK.easyXDM.socket.postMessage(JSON.stringify(message));
+        NK.functions.postMessage(JSON.stringify(message));
       } else {
         NK = NK || {};
         if (NK.selectedCoverageMap ) {

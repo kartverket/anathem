@@ -1,0 +1,10 @@
+template: layers/geoJSONFileMC
+url: /json/norge/dybdedata_50m.geojson
+name: Dybdedata 50m
+id: dybdedata_50m
+epsgCode: 32633
+styleName: omrissFylker
+layerGroup: nedlasting
+popup:
+  template: popup/popup
+  headingAttribute: "n"

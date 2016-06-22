@@ -361,7 +361,9 @@ NK.functions.addWMSLayer = function (wmsUrl) {
   resultWMS.done(function (xml) {
     if(!!map) {
       var lp = map.getControlsByClass('OpenLayers.Control.LoadingPanel')[0];
-      lp.decreaseCounter();
+      if(!!lp){
+        lp.decreaseCounter();
+      }
     }
     serviceParms['version'] = $(xml).children()[0].getAttribute("version");
     $(xml).find('Service').each(function () {
