@@ -218,12 +218,15 @@
     translation: Huk av om du &oslash;nsker at siste side skal inneholde tegnforklaring.
   - template: i18n/translation
     source: freeprint_answer_0_5
-    translation: Klikk p&aring; &laquo;Lag kartet!&raquo;
+    translation: Huk av om du &oslash;nsker at merkede stier skal fremheves.
   - template: i18n/translation
     source: freeprint_answer_0_6
-    translation: N&aring;r kartet er ferdig, kan du laste ned.
+    translation: Klikk p&aring; &laquo;Lag kartet!&raquo;
   - template: i18n/translation
     source: freeprint_answer_0_7
+    translation: N&aring;r kartet er ferdig, kan du laste ned.
+  - template: i18n/translation
+    source: freeprint_answer_0_8
     translation: Vent til kartet er ferdig, klikk p&aring; last ned, og skriv ut pdf-en. For &aring; f&aring; korrekt m&aring;lestokk p&aring; utskriften, m&aring; du velge &laquo;Faktisk st&oslash;rrelse&raquo; i skriveroppsettet.
 
   - template: i18n/translation
@@ -238,4 +241,6 @@
   - template: i18n/translation
     source: freeprint_answer_1_2
     translation: St&oslash;rrelsen p&aring; en rute i rutenettet tilsvarer alltid 1 kilometer i terrenget.
-
+  - template: i18n/translation
+    source: freeprint_include_trips
+    translation: Framhev merkede stier
