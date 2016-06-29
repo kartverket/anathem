@@ -227,7 +227,7 @@
     translation: N&aring;r kartet er ferdig, kan du laste ned.
   - template: i18n/translation
     source: freeprint_answer_0_8
-    translation: Vent til kartet er ferdig, klikk p&aring; last ned, og skriv ut pdf-en. For &aring; f&aring; korrekt m&aring;lestokk p&aring; utskriften, m&aring; du velge &laquo;Faktisk st&oslash;rrelse&raquo; i skriveroppsettet.
+    translation: Vent til kartet er ferdig, klikk p&aring; last ned, og skriv ut pdf-en.
 
   - template: i18n/translation
     source: freeprint_question_1
