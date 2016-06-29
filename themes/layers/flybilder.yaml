@@ -7,3 +7,4 @@ name: Fly&shy;bilder
 layers: ortofoto
 layerGroup: land
 id: flybilder
+singleTile: true
