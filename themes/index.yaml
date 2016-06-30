@@ -7,7 +7,8 @@ template : mapscript
 filename : clients/norgeskart.min.js
 language  : nb
 tokenServiceUrl: /ws/gkt.py
-ticketServiceUrl: "/ws/esk.py?wms.ecc_enc"
+ticketServiceUrl: /ws/esk.py?wms.ecc_enc
+ticketNib: /ws/esk.py?wms.nib
 projection: 32633
 
 i18n:
