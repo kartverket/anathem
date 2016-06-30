@@ -6,27 +6,35 @@
     {
       % if usetoken:
       gkt: NK.gkToken,
-      % endif    
-      layers: "${layers}", 
-      transparent: ${transparent},
-      format: "${format}", 
-      noMagic: true
+      % endif
+      % if useticket:
+      ticket: NK.encTicket,
+      % endif
+% if usenibticket:
+ticket: NK.nibTicket,
+% endif
+      layers: "${layers}",
+      transparent: ${transparent}, 
+  % if styles:
+      styles: "${styles}",
+  % endif
+      format: '${format}'
     },
     {
       shortid: "${id}", 
       isBaseLayer: false,
-      buffer: 4,
+      buffer: 0,
+      ratio: 1, 
       visibility: ${visible}, 
-      transitionEffect: 'resize',
   % if singleTile:
       singleTile: true,
   % else:
       singleTile: false,
   % endif
-      attribution: {
-       'title':"${attribution}"
-      },
-      description: "${abstract}"
+  % if minZoom:
+      minZoom: ${minZoom},
+  % endif
+      transitionEffect: 'resize'
     }
   );
 
@@ -34,10 +42,35 @@
     wms = OpenLayers.Util.extend(wms, { layerGroup: '${layerGroup}' });
   % endif
 
+  % if hidefromlayerswitcher:
+    wms["displayInLayerSwitcher"] = false;
+  % endif
+
+
   if (wms.params.GKT) {
     wms.params.gkt = wms.params.GKT;
     delete wms.params.GKT; 
   }
+
+  % if useticket:
+  if (wms.params.TICKET) {
+    wms.params.ticket = wms.params.TICKET;
+    delete wms.params.TICKET;
+  }
+  % endif
+% if usenibticket:
+if (wms.params.TICKET) {
+wms.params.ticket = wms.params.TICKET;
+delete wms.params.TICKET;
+}
+% endif
+
+  % if linkedTo:
+  wms.events.register("visibilitychanged", wms, function(arg) {
+    map.getLayersBy("shortid","${linkedTo}")[0].setVisibility(wms.getVisibility());
+  });
+  %endif
+  
 
   map.addLayers([wms]);
 }());

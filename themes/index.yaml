@@ -1,12 +1,14 @@
-# Grunnkonfigurasjon til kartutsnittene paa kartverket.no 
+# Grunnkonfigurasjon til kartutsnittene paa kartverket.no
 
 template : base
 title    : "Kart | Geonorge"
 
-mapscript: 
+mapscript:
   template  : mapscript
-  language  : nb 
+  language  : nb
   tokenServiceUrl: /ws/gkt.py
+  ticketServiceUrl: /ws/esk.py?wms.ecc_enc
+  ticketNib: /ws/esk.py?wms.nib
   projection: 32633
   maxResolution: 21664.0
 
@@ -14,10 +16,10 @@ mapscript:
   - include: languages/nb/base
   - include: languages/nb/layers
 
-  baselayers:   
+  baselayers:
     - template: layers/europa
-    - template: layers/wfs ## include just wfs functions, not any layer 
-    - template: layers/SOSIFile ## include just wfs functions, not any layer 
+    - template: layers/wfs ## include just wfs functions, not any layer
+    - template: layers/SOSIFile ## include just wfs functions, not any layer
 
   styles    :
     - template: styles/unlabeledMarker
@@ -25,14 +27,14 @@ mapscript:
     - template: styles/omriss
     - template: styles/track
 
-  overlays  : 
+  overlays  :
     - include: layers/grunnkart
     - include: layers/sjo_hovedkart2
     - include: layers/flybilder
     - include: layers/svalbard
     - include: layers/janmayen
 
-  center    : 
+  center    :
     template: center/besseggen
 
   functions :
@@ -57,6 +59,3 @@ mapscript:
         id: omriss.norge.500m
         url: /json/norge/500m.geojson
         detailedLayer: enkel
-
-#splashscreen:
-#  - template: splashscreen/betainfo
