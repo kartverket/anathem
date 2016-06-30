@@ -1,13 +1,13 @@
 template: layers/wms
-usetoken: true
-url: http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nibcache
-name: Aerial 
+usenibticket: "true"
+url: //wms.geonorge.no/skwms1/wms.nib
+name: Aerial
 format: image/jpeg
-transparent: 0
-layers: NiB
+transparent: "false"
+layers: ortofoto
 layerGroup: modus
 id: flybilder
+singleTile: true
 attribution: Kartverket
 abstract: "Norge i bilder"
 databbox: "-115000,6400000,1140000,7967861"
-
