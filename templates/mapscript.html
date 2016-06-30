@@ -18,6 +18,7 @@ gkopen_wmts = "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts";
 
 NK.gkToken = "unInitialized";
 NK.encTicket = "unInitialized";
+NK.ticketNib = "unInitialized";
 
 % if tokenServiceUrl:
 NK.tokenService = "${tokenServiceUrl}";
@@ -27,6 +28,10 @@ NK.tokenService = "${tokenServiceUrl}";
 NK.ticketService = "${ticketServiceUrl}";
 % endif
 
+% if ticketNib:
+NK.nibService = "${ticketNib}";
+% endif
+
 NK.baseProjection = "32633";
 % if projection:
 NK.baseProjection = "${projection}";
@@ -34,8 +39,10 @@ NK.baseProjection = "${projection}";
 
 NK.tokenLastUpdated = new Date(0);
 NK.ticketLastUpdated = new Date(0);
+NK.nibticketLastUpdated = new Date(0);
 NK.tokenUpdatePaused = false;
 NK.ticketUpdatePaused = false;
+NK.nibticketUpdatePaused = false;
 
 % if i18n:
   ${i18n}
@@ -59,7 +66,6 @@ NK.ticketError = {
   pauseTimer: null,
   pauseCountdownTimer: null
 };
-
 
 
 NK.mapservers = {};
@@ -161,6 +167,31 @@ NK.functions.updateTicket = function (request) {
   }
 };
 
+NK.functions.updatenibTicket = function (request) {
+var i,
+j,
+reloadLimit;
+
+reloadLimit = new Date(Date.now() - NK.ticketError.RELOAD_LIMIT_SECONDS * 1000);
+
+NK.nibTicket = request.responseText.replace(/[\"\r\n]/g, '');
+
+if (NK.tokenLastUpdated < reloadLimit) { // was token updated less than RELOAD_LIMIT_SECONDS ago?
+if (!NK.ticketUpdatePaused) {
+NK.functions.resetTicketError();
+NK.ticketLastUpdated = new Date();
+
+for (i = 0, j = map.layers.length; i < j; i += 1) {
+if (map.layers[i].params && map.layers[i].params.ticket) {
+map.layers[i].params.ticket = NK.nibTicket;
+map.layers[i].redraw();
+}
+}
+}
+} else {
+NK.functions.pauseTicketUpdate();
+}
+};
 NK.functions.pauseTokenUpdate = function () {
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
@@ -231,6 +262,12 @@ NK.functions.getNewTicket = function () {
     NK.encTicket = null;
     OpenLayers.Request.GET({url: NK.ticketService, success: NK.functions.updateTicket});
   }
+};
+NK.functions.getNewTicket = function () {
+if (NK.nibTicket !== null) {
+NK.nibTicket = null;
+OpenLayers.Request.GET({url: NK.nibService, success: NK.functions.updatenibTicket});
+}
 };
 
 var closePopupCallBack = function () {
@@ -514,8 +551,17 @@ var startTicket = function(response, status, request) {
   NK.encTicket = request.responseText.replace(/[\"\r\n]/g, '');
   NK.init();
 };
+var nt = function(response, status, request) {
+  NK.nibTicket = request.responseText.replace(/[\"\r\n]/g, '');
+};
+
 
 var initializeToken = function () {
+$.ajax({
+url: NK.nibService,
+success: nt,
+type: 'GET'
+});
   $.ajax({
     url: NK.ticketService,
     success: startTicket,

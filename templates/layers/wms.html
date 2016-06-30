@@ -10,6 +10,9 @@
       % if useticket:
       ticket: NK.encTicket,
       % endif
+% if usenibticket:
+ticket: NK.nibTicket,
+% endif
       layers: "${layers}",
       transparent: ${transparent}, 
   % if styles:
@@ -55,6 +58,12 @@
     delete wms.params.TICKET;
   }
   % endif
+% if usenibticket:
+if (wms.params.TICKET) {
+wms.params.ticket = wms.params.TICKET;
+delete wms.params.TICKET;
+}
+% endif
 
   % if linkedTo:
   wms.events.register("visibilitychanged", wms, function(arg) {

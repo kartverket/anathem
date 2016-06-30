@@ -1,10 +1,10 @@
 template: layers/wms
-usetoken: true
-url: http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nibcache
+usenibticket: "true"
+url: //wms.geonorge.no/skwms1/wms.nib
 format: image/jpeg
-transparent: 0
+transparent: "false"
 name: Fly&shy;bilete
-layers: NiB
+layers: ortofoto
 layerGroup: land
 id: flybilder
 singleTile: true
