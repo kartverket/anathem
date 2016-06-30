@@ -1,5 +1,5 @@
 template: layers/wms
-usetoken: true
+usenibticket: "true"
 url: //wms.geonorge.no/skwms1/wms.nib
 format: image/jpeg
 transparent: "false"
