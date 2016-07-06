@@ -24,18 +24,20 @@ controls:
     group: tjenester.Navnetype
     title: Stadnamn etter namnetype
     buttonText: Stadnamn etter namnetype
+
   - template: controls/overlaygrouppanel
-    group: tjenester.Vedtaksstatus-dato
-    title: Nye namnevedtak
-    buttonText: Nye namnevedtak
+    group: tjenester.vedtak
+    title: Vedtak siste periode
+    buttonText: Vedtak siste periode
   - template: controls/overlaygrouppanel
-    group: tjenester.autoriserte_skrivemaate
-    title: Autoriserte skrivem&aring;tar
-    buttonText: Autoriserte skrivem&aring;tar
+    group: tjenester.skrivemaatestatus
+    title: Skrive m&aring;te status
+    buttonText: Skrive m&aring;te status
   - template: controls/overlaygrouppanel
-    group: tjenester.ikke_autoriserte_skrivemaate
-    title: Ikkje-autoriserte skrivem&aring;tar
-    buttonText: Ikkje-autoriserte skrivem&aring;tar
+    group: tjenester.navnesakstatus
+    title: Namn sak status
+    buttonText: Namnn sak status
+
   - template: controls/overlaygrouppanel
     group: tjenester.alle
     title: Alle
