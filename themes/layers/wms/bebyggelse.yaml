@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/ssr2?
+name: Busetnad/ eigedom
+layers: bebyggelse
+layerGroup: tjenester.Navnetype
+id: Bygninger_eiendom
+usetoken: true
+singleTile: true

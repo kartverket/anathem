@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/ssr2?
+name: Klagevedtakutsatt
+layers: klagevedtakutsatt
+layerGroup: tjenester.navnesakstatus
+id: klagevedtakutsatt
+usetoken: true
+singleTile: true

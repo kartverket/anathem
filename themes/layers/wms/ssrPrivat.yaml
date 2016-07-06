@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Privat
-layers: Privat
-layerGroup: tjenester.autoriserte_skrivemaate
-id: Privat
-usetoken: true
-singleTile: true

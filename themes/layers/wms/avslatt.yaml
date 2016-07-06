@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://nnrite008/cgi-bin/ssr2?
-name: Historisk
-layers: historisk
+name: Avsl&aring;tt
+layers: avslatt
 layerGroup: tjenester.skrivemaatestatus
-id: Historisk
+id: avslatt
 usetoken: true
 singleTile: true

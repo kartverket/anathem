@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Spr&aring;k
-layers: Spraak
-layerGroup: tjenester.alle
-id: Spraak
-usetoken: true
-singleTile: true

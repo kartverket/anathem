@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://nnrite008/cgi-bin/ssr2?
-name: Historisk
-layers: historisk
-layerGroup: tjenester.skrivemaatestatus
-id: Historisk
+name: Vedteke siste 24md
+layers: vedtak_24
+layerGroup: tjenester.vedtak
+id: vedtak_24
 usetoken: true
 singleTile: true

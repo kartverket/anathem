@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: S&oslash;rsamisk
-layers: Sorsamisk
-layerGroup: tjenester.Spraak
-id: Sorsamisk
-usetoken: true
-singleTile: true

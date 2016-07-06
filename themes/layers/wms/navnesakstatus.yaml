@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/ssr2?
+name: Navnesakstatus
+layers: navnesakstatus
+layerGroup: tjenester.navnesakstatus
+id: navnesakstatus
+usetoken: true
+singleTile: true

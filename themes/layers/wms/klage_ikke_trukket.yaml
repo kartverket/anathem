@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/ssr2?
+name: Klage ikke trukket
+layers: klage_ikke_trukket
+layerGroup: tjenester.navnesakstatus
+id: klage_ikke_trukket
+usetoken: true
+singleTile: true

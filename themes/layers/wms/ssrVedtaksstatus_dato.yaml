@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Vedtaks status
-layers: Vedtaksstatus-dato
-layerGroup: tjenester.Vedtaksstatus-dato
-id: Vedtaksstatus-dato
-usetoken: true
-singleTile: true

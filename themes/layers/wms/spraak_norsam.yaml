@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://nnrite008/cgi-bin/ssr2?
-name: Historisk
-layers: historisk
-layerGroup: tjenester.skrivemaatestatus
-id: Historisk
+name: Nordsamisk
+layers: spraak_norsam
+layerGroup: tjenester.Spraak
+id: spraak_norsam
 usetoken: true
 singleTile: true

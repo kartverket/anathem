@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/ssr2?
+name: Navnesak vedtak
+layers: navnesak_vedtak
+layerGroup: tjenester.navnesakstatus
+id: navnesak_vedtak
+usetoken: true
+singleTile: true

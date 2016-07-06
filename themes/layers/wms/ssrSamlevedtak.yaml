@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Samlevedtak
-layers: Samlevedtak
-layerGroup: tjenester.autoriserte_skrivemaate
-id: Samlevedtak
-usetoken: true
-singleTile: true

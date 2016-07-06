@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/ssr2?
+name: Samlevedtak siste md
+layers: samlevedtak1
+layerGroup: tjenester.vedtak
+id: samlevedtak1
+usetoken: true
+singleTile: true
