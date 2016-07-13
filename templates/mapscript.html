@@ -496,8 +496,8 @@ var options = {
             'selected-feature-popup, user-marker'
           ), true);
           for (var entry in NK.data) {
-            var ctx = document.getElementById("pgsChart"+NK.data[entry][0]).getContext("2d");
-            var lineChart = new Chart(ctx).AltLine(NK.data[entry][1], NK.data[entry][2]);
+            var ctx = document.getElementById("pgsChart"+NK.data[entry][0]);
+            var lineChart = Chart.Line(ctx, {data: NK.data[entry][1], options: NK.data[entry][2]});
           }
         } catch(e) {
 console.log(e);

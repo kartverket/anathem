@@ -265,26 +265,29 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                       {
                         label           : "North",
                         data            : [],
-                        fillColor       : "rgba(255,255,255,0)",
-                        pointColor      : "rgba(200,100,100,1)",
-                        strokeColor     : "rgba(200,100,100,1)",
-                        pointStrokeColor: "rgba(200,100,100,0)"
+                        borderColor     : "rgba(200,100,100,1)",
+                        pointStrokeColor: "rgba(200,100,100,0)",
+                        pointRadius: 0,
+    pointHitRadius: 5,
+    fill: false
                       },
                       {
                         label           : "East", data: [],
-                        fillColor       : "rgba(255,255,255,0)",
-                        pointColor      : "rgba(100,200,100,1)",
-                        strokeColor     : "rgba(100,200,100,1)",
-                        pointStrokeColor: "rgba(100,200,100,0)"
-                      },
+                        borderColor     : "rgba(100,200,100,1)",
+                        pointStrokeColor: "rgba(100,200,100,0)",
+    pointRadius: 0,
+    pointHitRadius: 5,
+    fill: false
+    },
                       {
                         label           : "Height",
                         data            : [],
-                        fillColor       : "rgba(255,255,255,0)",
-                        pointColor      : "rgba(100,100,200,1)",
-                        strokeColor     : "rgba(100,100,200,1)",
-                        pointStrokeColor: "rgba(100,100,200,0)"
-                      }
+                        borderColor     : "rgba(100,100,200,1)",
+                        pointStrokeColor: "rgba(100,100,200,0)",
+    pointRadius: 0,
+    pointHitRadius: 5,
+    fill: false
+    }
                     ]
                   };
                   pgsdata.sort(function (a, b) {return a['tid'] - b['tid']});
@@ -308,9 +311,16 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                   }
 
                   var options = {
-                    scaleFontColor: "#fff",
-                    scaleGridLineColor: "#999",
-                    pointDot: false
+                    scales     : {
+                      xAxes: [{
+                        gridLines : {color: "rgba(255,255,255,0.6)"},
+                        scaleLabel: {display: true, fontColor: "rgba(255,255,255,1)"}
+                      }],
+                      yAxes: [{
+                        gridLines : {color: "rgba(255,255,255,0.6)"},
+                        scaleLabel: {display: true, fontColor: "rgba(255,255,255,1)"}
+                      }]
+                    }
                   };
                   NK.data.push([stasjonsid, data, options]);
 
