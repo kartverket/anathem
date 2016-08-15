@@ -239,6 +239,14 @@ NK.functions.setMapState = function (params) {
 
   if (!!hash) {
     var tokens = [], match;
+    
+    // Compensate for urls missing square brackets
+    var pattern = /\/(https?\:.*?\.json)\//;
+    var arr = pattern.exec(hash);
+    if (arr) {
+        hash = hash.replace(arr[1], '['+arr[1]+']');
+    }
+    
     if (hash.indexOf("[") > -1) {
       var tokenRE = /\[.*?\]/g ;
       while(!!(match = tokenRE.exec(hash))) {
