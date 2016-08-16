@@ -27,6 +27,7 @@ overlays  :
     # Menu on the left
     # LAND
     - include: layers/toporaster3 # Rasterkart
+    - include: layers/wms/fargelegg 
 
 center    :
     template: center/jotunheimen

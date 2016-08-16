@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://nnrite008/cgi-bin/fargeleggingskart?
+name: fargeleggingskart
+layers: fargeleggingskart
+id: fargeleggingskart
+usetoken: true
+singleTile: true
+visible: "true"
