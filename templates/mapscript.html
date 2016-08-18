@@ -1,5 +1,13 @@
 "use strict";
 
+// Polyfill for jQuery on IE11 - missing js method startsWith
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.indexOf(searchString, position) === position;
+  };
+}
+
 var NK = NK || {};
 NK.mapEventListeners = {};
 
