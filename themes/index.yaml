@@ -30,7 +30,7 @@ overlays  :
     - include: layers/wms/fargelegg 
 
 center    :
-    template: center/jotunheimen
+    template: center/oslo
 
 functions :
     - template: functions/updateURL
