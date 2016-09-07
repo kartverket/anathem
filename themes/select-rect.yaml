@@ -2,7 +2,7 @@
 
 template : base
 title    : "Geonorge | Norgeskart"
-mapClass: embedded-map
+mapClass: "embedded-map draw-hide-fix"
 includeXDM: "true"
 
 mapscript:

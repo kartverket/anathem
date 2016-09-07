@@ -37,3 +37,6 @@ translations:
   - template: i18n/translation
     source: about 
     translation: info 
+  - template: i18n/translation
+    source: Done
+    translation: Lukk

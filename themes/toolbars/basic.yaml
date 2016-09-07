@@ -14,11 +14,31 @@ controls:
   - template: controls/zoom
   - template: controls/zoomtoselection
 - template: controls/container
-  id: pan-panel
+  id: search-panel
   controls:
-    - template: controls/pan
+  - template: controls/search
+    coordinates: //www.norgeskart.no/ws/trans.py
+    searchUrl: https://ws.geonorge.no/SKWS3Index/ssr/sok
+    streetAddressesSearchUrl: /ws/veg.py
+    addressSearchUrl: //www.norgeskart.no/ws/adr.py
+    propertySearchUrl: //www.norgeskart.no/ws/eie.py
+    i18n:
+    - include: languages/nb/search
 - template: controls/container
-  id: layerselector-panel
+  id: geoportal-panel
   controls:
-  - template: controls/rasterlayerselector
-    group: modus
+  - template: controls/geoportal
+    i18n:
+    - include: languages/nb/geoportal
+- template: controls/container
+  name: Tools 
+  id: tools-panel
+  controls:
+  - template: controls/addlayer
+# - template: controls/draw
+#   storageUrl: /ws/upload-json.py
+#   styleName: track
+#   i18n:
+#   - include: languages/nb/draw
+  - template: controls/transformations
+    url: /ws/trans.py
