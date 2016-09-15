@@ -11,7 +11,7 @@ if (!String.prototype.startsWith) {
 var NK = NK || {};
 NK.mapEventListeners = {};
 
-var gkopen, 
+var gkopen,
     gkopen_wmts,
     proj,
     mapProj,
@@ -204,7 +204,7 @@ NK.functions.pauseTokenUpdate = function () {
   if (!NK.tokenUpdatePaused) {
     NK.tokenUpdatePaused = true;
 
-    NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
+    //NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
 
     NK.tokenError.pauseTimer = setTimeout(function () {
       NK.tokenUpdatePaused = false;
@@ -233,7 +233,7 @@ NK.functions.pauseTicketUpdate = function () {
   if (!NK.ticketUpdatePaused) {
     NK.ticketUpdatePaused = true;
 
-    NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
+    //NK.functions.log(OpenLayers.Lang.translate('Server error') +" - "+ OpenLayers.Lang.translate('An error has occured.'));
 
     NK.ticketError.pauseTimer = setTimeout(function () {
       NK.ticketUpdatePaused = false;
