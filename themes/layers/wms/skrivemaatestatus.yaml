@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/ssr2?
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
 name: Skrivem&aring;testatus
 layers: skrivemaatestatus
 layerGroup: tjenester.alle

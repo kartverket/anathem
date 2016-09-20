@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/ssr2?
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
 name: Vedteke siste 24md
 layers: vedtak_24
 layerGroup: tjenester.vedtak
