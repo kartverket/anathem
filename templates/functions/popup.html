@@ -101,13 +101,13 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           'Nord:'              : 'nord',
           'Øst:'               : 'ost',
           'Sone:'              : 'sone',
-          'Høyde_nn2000:'      : 'hoyde_nn2000',
-          'Høyde_nn1954:'      : 'hoyde_nn1954',
+          'Høyde_nn2000:'      : {'hoyde_nn2000':' m'},
+          'Høyde_nn1954:'      : {'hoyde_nn1954':' m'},
           'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
           'Punkttype:'         : 'punkttype',
           'Underlag:'          : 'underlag',
-          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
-          'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
+          'Kvalitet_nn1954:'   : {'kvalitet_nn1954':' mm'},
+          'Kvalitet_grunnriss:': {'kvalitet_grunnriss':' mm'},
           'Status:'            : 'status',
           'Status_år:'         : 'status_ar',
           'Beskrivelse:'       : 'beskrivelse'
@@ -125,13 +125,13 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           'Nord:'              : 'nord',
           'Øst:'               : 'ost',
           'Sone:'              : 'sone',
-          'Høyde_nn2000:'      : 'hoyde_nn2000',
-          'Høyde_nn1954:'      : 'hoyde_nn1954',
+'Høyde_nn2000:'      : {'hoyde_nn2000':' m'},
+'Høyde_nn1954:'      : {'hoyde_nn1954':' m'},
           'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
           'Punkttype:'         : 'punkttype',
           'Underlag:'          : 'underlag',
-          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
-          'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
+'Kvalitet_nn1954:'   : {'kvalitet_nn1954':' mm'},
+'Kvalitet_grunnriss:': {'kvalitet_grunnriss':' mm'},
           'Status:'            : 'status',
           'Status_år:'         : 'status_ar',
           'Beskrivelse:'       : 'beskrivelse'
@@ -149,13 +149,13 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           'Nord:'              : 'nord',
           'Øst:'               : 'ost',
           'Sone:'              : 'sone',
-          'Høyde_nn2000:'      : 'hoyde_nn2000',
-          'Høyde_nn1954:'      : 'hoyde_nn1954',
+'Høyde_nn2000:'      : {'hoyde_nn2000':' m'},
+'Høyde_nn1954:'      : {'hoyde_nn1954': ' m'},
           'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
           'Punkttype:'         : 'punkttype',
           'Underlag:'          : 'underlag',
-          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
-          'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
+'Kvalitet_nn1954:'   : {'kvalitet_nn1954':' mm'},
+'Kvalitet_grunnriss:': {'kvalitet_grunnriss':' mm'},
           'Status:'            : 'status',
           'Status_år:'         : 'status_ar',
           'Beskrivelse:'       : 'beskrivelse'
@@ -173,19 +173,26 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           'Nord:'              : 'nord',
           'Øst:'               : 'ost',
           'Sone:'              : 'sone',
-          'Høyde_nn2000:'      : 'hoyde_nn2000',
-          'Høyde_nn1954:'      : 'hoyde_nn1954',
+'Høyde_nn2000:'      : {'hoyde_nn2000':' m'},
+'Høyde_nn1954:'      : {'hoyde_nn1954':' m'},
           'Ellipsoidisk_høyde:': 'ellipsoidisk_hoyde',
           'Punkttype:'         : 'punkttype',
           'Underlag:'          : 'underlag',
-          'Kvalitet_nn1954:'   : 'kvalitet_nn1954',
-          'Kvalitet_grunnriss:': 'kvalitet_grunnriss',
+'Kvalitet_nn1954:'   : {'kvalitet_nn1954':' mm'},
+'Kvalitet_grunnriss:': {'kvalitet_grunnriss':' mm'},
           'Status:'            : 'status',
           'Status_år:'         : 'status_ar',
           'Beskrivelse:'       : 'beskrivelse'
         }
       }
     };
+var statusDict = {
+'T':'Trekantpunkt',
+'L':'Landsnett',
+'S':'Stamnett',
+'N':'Høydefastmerke'
+}
+
     test = a.split("\n");
     if (test.length > 5) {
       markup += '<article style="overflow-y: auto; height:380px" >';
@@ -236,6 +243,9 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                     tmpResp[keyValuePair[0]] = keyValuePair[1];
                   }
                 }
+    if (!!tmpResp["punkttype"]) {
+      tmpResp["punkttype"] = statusDict[tmpResp["punkttype"]];
+    }
 
                 for (var prop in dictTmp['content']) {
                   tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell;">' + prop + '</span><span class="value" style="display: table-cell">';
