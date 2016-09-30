@@ -14,7 +14,7 @@ controls:
     styleName: track
   - template: controls/emergencyposter
     serviceURL: //openwps.statkart.no/skwms1/wps.elevation
-    ssrwsURL: https://ws.geonorge.no/SKWS3Index/ssr/sok?
+    ssrwsURL: https://ws.geonorge.no/SKWS3Index/v2/ssr/sok?
     pdfServiceUrl: //ws.geonorge.no/ngnk2/ngnk?
     i18n:
     - include: languages/nb/emergencyposter
