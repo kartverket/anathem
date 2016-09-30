@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Markslag
-layers: Markslag
-layerGroup: tjenester.Navnetype
-id: Markslag
-usetoken: true
-singleTile: true

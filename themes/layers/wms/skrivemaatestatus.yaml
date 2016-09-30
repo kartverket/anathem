@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
+name: Skrivem&aring;testatus
+layers: skrivemaatestatus
+layerGroup: tjenester.alle
+id: skrivemaatestatus
+usetoken: true
+singleTile: true

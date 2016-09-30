@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
+name: Forenkletvedtak
+layers: forenkletvedtak
+layerGroup: tjenester.navnesakstatus
+id: forenkletvedtak
+usetoken: true
+singleTile: true

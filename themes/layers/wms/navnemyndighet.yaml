@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
+name: Navne bestemt av navnemyndighet
+layers: navnemyndighet
+layerGroup: tjenester.navnesakstatus
+id: navnemyndighet
+usetoken: true
+singleTile: true

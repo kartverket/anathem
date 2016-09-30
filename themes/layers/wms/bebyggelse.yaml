@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Historisk
-layers: historisk
-layerGroup: tjenester.skrivemaatestatus
-id: Historisk
+name: Busetnad/ eigedom
+layers: bebyggelse
+layerGroup: tjenester.Navnetype
+id: Bygninger_eiendom
 usetoken: true
 singleTile: true

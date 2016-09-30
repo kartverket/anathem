@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
+name: Administrative omr&aring;de
+layers: offentlig_administrasjon
+layerGroup: tjenester.Navnetype
+id: Administrative_omraader
+usetoken: true
+singleTile: true

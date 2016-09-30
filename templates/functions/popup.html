@@ -9,8 +9,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     var test;
     var dict = {
       'content': {
-        'enh_ssr_id:': 'enh_ssr_id',
-        'enh_snavn:': 'enh_snavn'
+        'stedsnummer:': 'stedsnummer'
       }
     };
     test = a.split("\n");
@@ -23,8 +22,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           //Layer
           tmpMarkup = '';
           var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
-          var tmpResp = [];
-          var nrlDictResponse = [];
+          var tmpResp = {};
           markup += '<h4 class="h">Lag : ' + tmp[1].trim() + '</h4>';
           a[i] = a[i].replace(/Feature/g, ",,Feature");
           var f = a[i].split(",,");
@@ -40,16 +38,15 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                     tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
                   }
                   if (!!tmp[1]) {
-                    nrlDictResponse[tmp[0].trim()] = tmp[1].replace(/'/g, "");
+                    tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
                   }
                 }
                 for (var prop in dict['content']) {
                   tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell"></span><span class="value" style="display: table-cell">';
                   if (!!tmpResp[dict['content'][prop]]) {
                     if (!!dict['content'][prop]) {
-                      if (dict['content'][prop] === 'enh_ssr_id') {
-                        tmpMarkup += '<div class="externalToolbarLink"><a href="http://faktaark.statkart.no/SSRFakta/faktaarkfraobjektid?enhet=' + tmpResp[dict['content'][prop]] + '" target="_blank">';
-                      } else if(dict['content'][prop] === 'enh_snavn') {
+                      if (dict['content'][prop] === 'stedsnummer') {
+                        tmpMarkup += '<div class="externalToolbarLink"><a href="//faktaark.statkart.no/index.py?stedsnummer=' + tmpResp[dict['content'][prop]] + '" target="_blank">';
                         tmpMarkup += 'Meir info om : ' + tmpResp[dict['content'][prop]] + '</a></div></span></p>';
                       } else {
                         tmpMarkup += tmpResp[dict['content'][prop]] + '</span></p>';

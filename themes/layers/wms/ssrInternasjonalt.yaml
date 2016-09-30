@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Internasjonalt
-layers: Internasjonalt
-layerGroup: tjenester.autoriserte_skrivemaate
-id: Internasjonalt
-usetoken: true
-singleTile: true

@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
+name: Samlevedtak trukket tilbake
+layers: samlevedtak_tilbake
+layerGroup: tjenester.navnesakstatus
+id: samlevedtak_tilbake
+usetoken: true
+singleTile: true

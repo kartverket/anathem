@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Historisk
-layers: historisk
-layerGroup: tjenester.skrivemaatestatus
-id: Historisk
+name: S&oslash;rsamisk
+layers: spraak_sorsam
+layerGroup: tjenester.Spraak
+id: Sorsamisk
 usetoken: true
 singleTile: true

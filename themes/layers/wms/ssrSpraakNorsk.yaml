@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Norsk
-layers: Norsk
-layerGroup: tjenester.Spraak
-id: Norsk
-usetoken: true
-singleTile: true

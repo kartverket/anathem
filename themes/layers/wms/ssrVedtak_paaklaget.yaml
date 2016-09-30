@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: Vedtak p&aring;klaga
-layers: Vedtak_paaklaget
-layerGroup: tjenester.autoriserte_skrivemaate
-id: Vedtak_paaklaget
-usetoken: true
-singleTile: true

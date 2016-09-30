@@ -1,0 +1,8 @@
+template: layers/wms
+url: http://wms.geonorge.no/skwms1/wms.ssr2?
+name: Navnesakstatus ubehandlet
+layers: navnesakstatus_ubehandlet
+layerGroup: tjenester.navnesakstatus
+id: navnesakstatus_ubehandlet
+usetoken: true
+singleTile: true

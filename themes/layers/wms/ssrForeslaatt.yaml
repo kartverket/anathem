@@ -1,8 +1,0 @@
-template: layers/wms
-url: http://openwms.statkart.no/skwms1/wms.stedsnavn_fag?
-name: F&oslash;reslege
-layers: Foreslaatt
-layerGroup: tjenester.ikke_autoriserte_skrivemaate
-id: Foreslaatt
-usetoken: true
-singleTile: true

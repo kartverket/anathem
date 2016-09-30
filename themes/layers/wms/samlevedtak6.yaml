@@ -1,8 +1,8 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Historisk
-layers: historisk
-layerGroup: tjenester.skrivemaatestatus
-id: Historisk
+name: Samlevedtak siste 6md
+layers: samlevedtak6
+layerGroup: tjenester.vedtak
+id: samlevedtak6
 usetoken: true
 singleTile: true
