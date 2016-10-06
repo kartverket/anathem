@@ -550,7 +550,11 @@ NK.functions.setMapState = function (params) {
           if (lid.length) {
             makeLayerAvailable(lid);
           } else {
-            NK.compactMode = true;
+            /**
+             * Hack to fix new layer list!
+             */
+            //NK.compactMode = true;
+            NK.compactMode = false;
           }
           break;
         case '!':
