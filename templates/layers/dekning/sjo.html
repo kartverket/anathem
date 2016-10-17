@@ -137,10 +137,7 @@
         }
       }
       if (a.f) {
-        markup += '<p>' + OpenLayers.Lang.translate('Current edition') + ': ' + a.f + '</p>';
-      }
-      if (a.g) {
-        markup += '<p>' + OpenLayers.Lang.translate('Latest print') + ': ' + a.g + '</p>';
+        markup += '<p>' + OpenLayers.Lang.translate('New edition') + ': ' + a.u + '</p>';
       }
       if (a.s) {
         markup += '<p>' + OpenLayers.Lang.translate('Scale') + ' ' + a.s + '</p>';
@@ -241,8 +238,7 @@
   M.addControl(selectControl);
 
 OpenLayers.Util.extend(OpenLayers.Lang.nb, {
-  'Current edition': 'Gyldig utgave',
-  'Latest print': 'Siste trykk md/&aring;r',
+  'New edition': 'Ny utgave',
   'Datum': 'Datum',
   'Projection': 'Projeksjon',
   'Scale': 'M&aring;lestokk',
