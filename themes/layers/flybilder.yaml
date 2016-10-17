@@ -7,3 +7,5 @@ name: Fly&shy;bilete
 layers: NiB
 layerGroup: land
 id: flybilder
+singleTile: true
+
