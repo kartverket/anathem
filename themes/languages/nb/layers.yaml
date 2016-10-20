@@ -13,6 +13,9 @@ translations:
   - template: i18n/translation
     source: Aerial 
     translation: Fly&shy;bilder
+  - template: i18n/translation
+    source: Grayscale
+    translation: Gr&aring;toner
  
 
 
