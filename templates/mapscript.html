@@ -847,6 +847,7 @@ NK.init = function () {
   }
 
   Proj4js.defs["EPSG:4326"] ="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+  Proj4js.defs["EPSG:4258"] ="+proj=longlat +ellps=GRS80 +no_defs";
   Proj4js.defs["EPSG:32629"]="+proj=utm +zone=29 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
   Proj4js.defs["EPSG:32630"]="+proj=utm +zone=30 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
   Proj4js.defs["EPSG:32631"]="+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
@@ -881,6 +882,7 @@ NK.init = function () {
     "25835": new OpenLayers.Projection('EPSG:25835'),
     "25836": new OpenLayers.Projection('EPSG:25836'),
     "4326" : new OpenLayers.Projection('EPSG:4326'),
+    "4258" : new OpenLayers.Projection('EPSG:4258'),                                            
     "3034" : new OpenLayers.Projection('EPSG:3034'),
     "3575" : new OpenLayers.Projection('EPSG:3575')
   };
