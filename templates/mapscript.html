@@ -299,7 +299,7 @@ NK.functions.corsRequest = function (url, params) {
       url     : '/ws/px.py',
       type    : 'GET',
       data    : url,
-      dataType: 'xml'
+      dataType: 'text'
     });
   }
 };
@@ -753,7 +753,17 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
           if (!!this.maxExtent) {
             var extent = this.maxExtent;
             if (!extent.containsLonLat(map.getCenter())) {
-              map.zoomToExtent(extent);
+              var _counter = 0;
+              for(var i=0;i<map.layers.length;i++){
+                if (map.layers[i].layerGroup !== 'modus') {
+                  if (map.layers[i].visibility) {
+                    _counter++;
+                  }
+                }
+              }
+              if (_counter <= 2){
+                map.zoomToExtent(extent);
+              }
             }
           }
         } else {
