@@ -1,5 +1,5 @@
 template: layers/wms
-url: http://nnrite008/cgi-bin/fargeleggingskart?
+url: http://wms.geonorge.no/skwms1/wms.fargelegg?
 name: fargeleggingskart
 layers: fargeleggingskart
 id: fargeleggingskart
