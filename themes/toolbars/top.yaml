@@ -11,22 +11,22 @@ controls:
     id: print-panel
     controls:
     - template: controls/print
-  - template: controls/container
-    id: getURL-panel
-    controls:
-    - template: controls/getURL
-  - template: controls/container
-    id: embed-panel
-    controls:
-    - template: controls/embed
-      i18n:
-      - include: languages/nb/embed
-  - template: controls/container
-    id: export-panel
-    controls:
-    - template: controls/export
-      i18n:
-      - include: languages/nb/export
+#  - template: controls/container
+#    id: getURL-panel
+#    controls:
+#    - template: controls/getURL
+#  - template: controls/container
+#    id: embed-panel
+#    controls:
+#    - template: controls/embed
+#      i18n:
+#      - include: languages/nb/embed
+#  - template: controls/container
+#    id: export-panel
+#    controls:
+#    - template: controls/export
+#      i18n:
+#      - include: languages/nb/export
   - template: controls/container
     id: help-panel  
     controls:
