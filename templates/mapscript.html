@@ -747,6 +747,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
         }
       });
       wms.featureInfoControl = featureInfo;
+      /*
       wms.events.register('visibilitychanged', wms, function () {
         if (this.getVisibility()) {
           featureInfo.activate();
@@ -770,6 +771,7 @@ NK.functions.createDynamicWMSLayer = function (name, url, parms) {
           featureInfo.deactivate();
         }
       });
+      */
       map.addControl(featureInfo);
       if (!!parms['visible']) {
         featureInfo.activate();
