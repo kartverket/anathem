@@ -31,12 +31,12 @@ controls:
     buttonText: Vedtak siste periode
   - template: controls/overlaygrouppanel
     group: tjenester.skrivemaatestatus
-    title: Skrive m&aring;te status
-    buttonText: Skrive m&aring;te status
+    title: Skrivem&aring;testatus
+    buttonText: Skrivem&aring;te- status
   - template: controls/overlaygrouppanel
     group: tjenester.navnesakstatus
-    title: Namn sak status
-    buttonText: Namnn sak status
+    title: Namnesakstatus
+    buttonText: Namnesak- status
 
   - template: controls/overlaygrouppanel
     group: tjenester.alle
