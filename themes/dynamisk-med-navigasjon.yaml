@@ -20,60 +20,93 @@ styles    :
 baselayers:
     - template: layers/europa
 overlays  :
-    - include: layers/topo2
-    - include: layers/grunnkart
-    - include: layers/sjo_hovedkart2
-    - include: layers/wms/sjo_enc
+    # Menu on the left
+    # LAND
+    - include: layers/topo2  # Landkart
+    - include: layers/toporaster3 # Rasterkart
+    - include: layers/grunnkart # Enkel
     - include: layers/flybilder
     - include: layers/terreng
-    - include: layers/toporaster3
-    #- include: layers/fjellskygge
-    - include: layers/janmayen
-    - include: layers/svalbard
 
-    - include: layers/dekning_n50_plast
+    # SJO
+    - include: layers/sjo_hovedkart2
+    - include: layers/wms/sjo_enc
+
+    # FLERE
+    - include: layers/svalbard
+    - include: layers/janmayen
+
+    # HISTORIKK
+    - include: layers/wms/n5raster
+    - include: layers/wms/amtskart
+
+    # KARTINNDELING
     - include: layers/dekning_sjo_hovedkart
+    - include: layers/dekning_n50_plast
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
     - include: layers/dekning_overseilingskart
 
-    # SSR - stedsnavn
-    - include: layers/wms/ssrSpraak
-    - include: layers/wms/ssrSpraakNorsk
-    - include: layers/wms/ssrSpraakNordsamisk
-    - include: layers/wms/ssrSpraakLulesamisk
-    - include: layers/wms/ssrSpraakSorsamisk
-    - include: layers/wms/ssrSpraakKvensk
+    # SSR - spraak
+    - include: layers/wms/spraak
+    - include: layers/wms/spraak_nor
+    - include: layers/wms/spraak_lulesam
+    - include: layers/wms/spraak_norsam
+    - include: layers/wms/spraak_sorsam
+    - include: layers/wms/spraak_kven
+    - include: layers/wms/spraak_andre
 
-    - include: layers/wms/ssrNavnetype
-    - include: layers/wms/ssrNavnetypeAdministrative_omraader
-    - include: layers/wms/ssrNavnetypeBygninger_eiendom
-    - include: layers/wms/ssrNavnetypeSamferdsel
-    - include: layers/wms/ssrNavnetypeTerrengformer
-    - include: layers/wms/ssrNavnetypeVannkontur
-    - include: layers/wms/ssrNavnetypeKystdata
-    - include: layers/wms/ssrNavnetypeMarkslag
-    - include: layers/wms/ssrNavnetypeAndre_navnetyper
+    # SSR - navntype
+    - include: layers/wms/navntype
+    - include: layers/wms/offentlig_administrasjon
+    - include: layers/wms/bebyggelse
+    - include: layers/wms/infrastruktur
+    - include: layers/wms/sjo
+    - include: layers/wms/markslag
+    - include: layers/wms/ferskvann
+    - include: layers/wms/terreng
+    - include: layers/wms/kultur
 
-    #- include: layers/wms/ssrVedtaksstatus_dato
-    - include: layers/wms/ssrVedtatt_siste_24md
-    - include: layers/wms/ssrVedtatt_siste_12md
-    - include: layers/wms/ssrVedtatt_siste_6md
-    - include: layers/wms/ssrVedtatt_siste_3md
-    - include: layers/wms/ssrVedtatt_siste_md
-
-    - include: layers/wms/ssrVedtatt_og_godkjent
-    - include: layers/wms/ssrVedtatt
-    - include: layers/wms/ssrGodkjent
-    - include: layers/wms/ssrSamlevedtak
-    - include: layers/wms/ssrVedtak_paaklaget
-    - include: layers/wms/ssrPrivat
-    - include: layers/wms/ssrInternasjonalt
-
-    - include: layers/wms/ssrAvslaatt
-    - include: layers/wms/ssrUvurdert
-    - include: layers/wms/ssrForeslaatt
+    # SSR - skrivemaatestatus
+    - include: layers/wms/skrivemaatestatus
+    - include: layers/wms/avslatt
+    - include: layers/wms/avslatt_navneledd
+    - include: layers/wms/foreslatt
+    - include: layers/wms/godkjent
     - include: layers/wms/ssrHistorisk
+    - include: layers/wms/internasjonalt
+    - include: layers/wms/privat
+    - include: layers/wms/ubehandlet
+    - include: layers/wms/vedtatt
+    - include: layers/wms/vedtatt_navneledd
+
+    # SSR - navnesakstatus
+    - include: layers/wms/navnesakstatus
+    - include: layers/wms/navnesakstatus_ubehandlet
+    - include: layers/wms/skalikkebehandles
+    - include: layers/wms/navnemyndighet
+    - include: layers/wms/samlevedtak
+    - include: layers/wms/samlevedtak_tilbake
+    - include: layers/wms/reist
+    - include: layers/wms/navnesak_vedtak
+    - include: layers/wms/vedtakutsatt
+    - include: layers/wms/klage_ikke_trukket
+    - include: layers/wms/klage_trukket
+    - include: layers/wms/klagevedtakutsatt
+    - include: layers/wms/forenkletvedtak
+
+    # SSR - vedtak
+    - include: layers/wms/vedtak
+    - include: layers/wms/vedtak_24
+    - include: layers/wms/vedtak_12
+    - include: layers/wms/vedtak_6
+    - include: layers/wms/vedtak_3
+    - include: layers/wms/vedtak_1
+    - include: layers/wms/samlevedtak24
+    - include: layers/wms/samlevedtak12
+    - include: layers/wms/samlevedtak6
+    - include: layers/wms/samlevedtak3
+    - include: layers/wms/samlevedtak1
 
 center:
     template: center/besseggen
