@@ -1,7 +1,7 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
 name: Nordsamisk
-layers: spraak_norsam
+layers: nordsamisk
 layerGroup: tjenester.Spraak
 id: spraak_norsam
 usetoken: true

@@ -1,7 +1,7 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
 name: S&oslash;rsamisk
-layers: spraak_sorsam
+layers: sorsamisk
 layerGroup: tjenester.Spraak
 id: Sorsamisk
 usetoken: true

@@ -1,7 +1,7 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
 name: Lulesamisk
-layers: spraak_lulesam
+layers: lulesamisk
 layerGroup: tjenester.Spraak
 id: spraak_lulesam
 usetoken: true

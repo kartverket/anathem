@@ -1,7 +1,7 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
 name: Kvensk
-layers: spraak_kven
+layers: kvensk
 layerGroup: tjenester.Spraak
 id: Kvensk
 usetoken: true
