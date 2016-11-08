@@ -14,11 +14,11 @@ controls:
   id: point-panel
   controls:
     - template: controls/pointmenu
-      url: //www.norgeskart.no/ws/trans.py
-      infoUrl: //openwps.statkart.no/skwms1/wps.elevation
-      forecastUrl: //www.norgeskart.no/ws/forecast.py
-      sunriseUrl: //www.norgeskart.no/ws/sun.py
-      propertyUrl: //www.norgeskart.no/ws/wfs.teig.py
+      url: http://www.norgeskart.no/ws/trans.py
+      infoUrl: http://skrivap95/cgi-bin/wps
+      forecastUrl: http://www.norgeskart.no/ws/forecast.py
+      sunriseUrl: http://www.norgeskart.no/ws/sun.py
+      propertyUrl: http://www.norgeskart.no/ws/wfs.teig.py
 - template: controls/container
   id: layerselector-panel
   layerselector: true
