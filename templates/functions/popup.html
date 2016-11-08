@@ -1,3 +1,4 @@
+## -*- coding: utf-8 -*-
 % if not 'popupFunctions' in vars:
 
 NK.functions = NK.functions || {};
@@ -9,9 +10,14 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
     var test;
     var dict = {
       'content': {
-        'stedsnummer:': 'stedsnummer'
+        'stedsnavn:': 'stedsnavn ',
+        'stedsnummer:': 'stedsnummer'        
       }
     };
+    var order = ['vedtatt', 'vedtattNavneledd', 'godkjent', 'prioritert', 'internasjonal', 'privat', 'historisk'];
+    var sortCompare = function(a,b){
+      return order.indexOf(a.skrivemåtestatus) - order.indexOf(b.skrivemåtestatus)
+    }
     test = a.split("\n");
     if (test.length > 5) {
       markup += '<article style="overflow-y: auto; height:300px" >';
@@ -22,54 +28,57 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           //Layer
           tmpMarkup = '';
           var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
-          var tmpResp = {};
-          markup += '<h4 class="h">Lag : ' + tmp[1].trim() + '</h4>';
-          a[i] = a[i].replace(/Feature/g, ",,Feature");
+          markup += '<h4 class="h">Lag : ' + tmp[0].trim() + '</h4>';
+          a[i] = a[i].replace(/Feature/g, ",,Feature").replace(/'/g, "").replace(/=/g, ":");
           var f = a[i].split(",,");
+          f.shift();
+          _.each(f, function(value, key, list){
+            //transform each feature to an object
+            value = value.split("\n");
+            value.shift();
+            var obj = {};
+            value.forEach(function(property) {
+                property = property.replace(/\s/g, '');
+                var tup = property.split(':');
+                obj[tup[0]] = tup[1];
+            });
+            list[key] = obj;
+          });
+          f.sort(sortCompare);
           for (l = 0; l < f.length; ++l) {
             //feature
-            if (f[l].substring(0, 7) == "Feature") {
-              tmpMarkup += '<div class="featureInfo" style="display: table">';
-              test = f[l].split("\n");
-              try {
-                for (j = 0, k = test.length - 1; j < k; j += 1) {
-                  tmp = test[j].split(" = ");
-                  if (tmp[1]) {
-                    tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
-                  }
-                  if (!!tmp[1]) {
-                    tmpResp[tmp[0].trim()] = tmp[1].replace(/'/g, "");
-                  }
-                }
-                for (var prop in dict['content']) {
-                  tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell"></span><span class="value" style="display: table-cell">';
-                  if (!!tmpResp[dict['content'][prop]]) {
-                    if (!!dict['content'][prop]) {
-                      if (dict['content'][prop] === 'stedsnummer') {
-                        tmpMarkup += '<div class="externalToolbarLink"><a href="http://faktaark.statkart.no/?stedsnummer=' + tmpResp[dict['content'][prop]] + '" target="_blank">';
-                        tmpMarkup += 'Meir info om : ' + tmpResp[dict['content'][prop]] + '</a></div></span></p>';
-                      } else {
-                        tmpMarkup += tmpResp[dict['content'][prop]] + '</span></p>';
-                      }
+            var tmpResp = f[l];
+            tmpMarkup += '<div class="featureInfo" style="display: table">';
+            test = f[l].split("\n");
+            try {
+              for (var prop in dict['content']) {
+                tmpMarkup += '<p style="display: table-row;"><span class="prop" style="display: table-cell"></span><span class="value" style="display: table-cell">';
+                if (!!tmpResp[dict['content'][prop]]) {
+                  if (!!dict['content'][prop]) {
+                    if (dict['content'][prop] === 'stedsnummer') {
+                      tmpMarkup += '<div class="externalToolbarLink"><a href="http://faktaark.statkart.no/?stedsnummer=' + tmpResp[dict['content'][prop]] + '" target="_blank">';
+                      tmpMarkup += 'Meir info om : ' + tmpResp['stedsnavn'] + '</a></div></span></p>';
                     } else {
-                      tmpMarkup += '</span></p>';
+                      tmpMarkup += tmpResp[dict['content'][prop]] + '</span></p>';
                     }
                   } else {
-                    if (typeof dict['content'][prop] === 'object') {
-                      for (var internprop in dict['content'][prop]) {
-                        tmpMarkup += tmpResp[internprop];
-                        tmpMarkup += dict['content'][prop][internprop];
-                      }
-                    } else {
-                      tmpMarkup += '</p>';
+                    tmpMarkup += '</span></p>';
+                  }
+                } else {
+                  if (typeof dict['content'][prop] === 'object') {
+                    for (var internprop in dict['content'][prop]) {
+                      tmpMarkup += tmpResp[internprop];
+                      tmpMarkup += dict['content'][prop][internprop];
                     }
+                  } else {
+                    tmpMarkup += '</p>';
                   }
                 }
-              } catch (e) {
-                //console.log(e);
               }
-              tmpMarkup += '</div>';
+            } catch (e) {
+              //console.log(e);
             }
+            tmpMarkup += '</div>';
           }
           markup += tmpMarkup;
         }
