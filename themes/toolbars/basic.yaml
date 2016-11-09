@@ -15,7 +15,7 @@ controls:
   controls:
     - template: controls/pointmenu
       url: http://www.norgeskart.no/ws/trans.py
-      infoUrl: http://skrivap95/cgi-bin/wps
+      infoUrl: http://openwps.statkart.no/skwms1/wps.elevation
       forecastUrl: http://www.norgeskart.no/ws/forecast.py
       sunriseUrl: http://www.norgeskart.no/ws/sun.py
       propertyUrl: http://www.norgeskart.no/ws/wfs.teig.py
