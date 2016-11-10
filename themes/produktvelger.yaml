@@ -30,7 +30,7 @@ overlays  :
       name: Landkart 1:50000
       id: dekning.plast
       layerGroup: dekning
-      url: /json/dekning/land/n50/plast.json
+      url: /json/dekning/land/n50/pod-inndeling2015-flaterl.json
       preferredBackground: toporaster
       visible: 1
 
