@@ -16,15 +16,12 @@ baselayers:
 overlays  :
     - template: layers/wmts
       usetoken: true
-      name: Terreng&shy;modell
-      layer: toporaster2
+      name: Enkel
+      layer: norges_grunnkart
       layerGroup: modus
-      id: toporaster
+      id: enkelt
       visible: true
       hidefromlayerswitcher: true
-
-    - include: layers/sjo_hovedkart2
-
 
     - template: layers/dekning/land/n50
       name: Landkart 1:50000
@@ -34,6 +31,7 @@ overlays  :
       preferredBackground: toporaster
       visible: 1
 
+    - include: layers/sjo_hovedkart2
     - include: layers/dekning_sjo_hovedkart
     - include: layers/dekning_havnekart
     - include: layers/dekning_kystkart
