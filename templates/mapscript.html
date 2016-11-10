@@ -550,8 +550,8 @@ NK.functions.addWMSLayer = function (wmsUrl) {
       }
 
       /* if this layer is a child layer, identify parent */
-      if ($(this).parent()[0].nodeName == "Layer") {
-        layerParms['parent'] = $(this).parent().children('Title').text() || $(this).parent().children('Name').text();
+      if ($(this).parent()[0].nodeName.toLowerCase() == "layer") {
+        layerParms['parent'] = $(this).parent().children('Name').text();
       }
 
       layerParms['title'] = $(this).children('Title').text();
@@ -599,7 +599,7 @@ NK.functions.addWMSLayer = function (wmsUrl) {
           return NK.functions.createDynamicWMSLayer(title, wmsUrl, parms);
         };
       } else {
-        var layer = NK.functions.createDynamicWMSLayer(layerParms['title'], wmsUrl, $.extend({}, serviceParms, layerParms));
+        var layer = NK.functions.createDynamicWMSLayer(layerParms['layerText'], wmsUrl, $.extend({}, serviceParms, layerParms));
         if (register) {
           layer.isStarred = true;
           map.events.triggerEvent("changelayer", {layer: layer, property: "starred"});
