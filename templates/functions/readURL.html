@@ -155,7 +155,6 @@ NK.functions.setDataLayer = function(params) {
 
 NK.functions.parseParamsAndAddDataLayerFromUrl = function (params) {
   var type, url;
-
   type = params[0];
   url  = params[1];
   if (url.indexOf("%")>-1) { // you can URL-encode or escape or both
@@ -533,12 +532,13 @@ NK.functions.setMapState = function (params) {
       }
     }
 
-
+    NK.hasHashLayers = false;
     var layerIndex = map.layers.length;
     for (index = 3; index < parms.length; index += 1) {
       extra = parms[index];
       switch (extra.charAt(0)) {
         case '+':
+          NK.hasHashLayers = true;
           showLayerNamed(extra.slice(1), layerIndex);
           layerIndex += 1;
           break;
