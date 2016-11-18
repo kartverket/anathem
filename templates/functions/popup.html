@@ -6,7 +6,7 @@ NK.functions.popup = NK.functions.popup || {};
 
 NK.functions.popup.generatePopupMarkup = function (conf) {
   return function (feature) {
-    var a = feature, i, j, k, l, markup = '', tmpMarkup = '';
+    var a = feature, i, j, k, l, markup = '', tmpMarkup = '', tmpLayer = '';
     var test;
     var dict = {
       'content': {
@@ -28,7 +28,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
           //Layer
           tmpMarkup = '';
           var tmp = a[i].replace(/'/g, "").toLowerCase().split(" ");
-          markup += '<h4 class="h">Lag : ' + tmp[0].trim() + '</h4>';
+          
           a[i] = a[i].replace(/Feature/g, ",,Feature").replace(/'/g, "").replace(/=/g, ":");
           var f = a[i].split(",,");
           f.shift();
@@ -38,13 +38,19 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
             value.shift();
             var obj = {};
             value.forEach(function(property) {
-                property = property.replace(/\s/g, '');
-                var tup = property.split(':');
-                obj[tup[0]] = tup[1];
+                if (property.length > 0){
+	                var tup = property.split(':');
+	                tup[0] = tup[0].replace(/\s/g, '');
+	                if(tup.length > 1) obj[tup[0]] = tup[1].trim();
+                }
             });
             list[key] = obj;
           });
           f.sort(sortCompare);
+          if(f[0].wmslag !== tmpLayer) {
+            tmpLayer = f[0].wmslag;
+            markup += '<h4 class="h">Lag : ' + tmpLayer + '</h4>';
+          }          
           for (l = 0; l < f.length; ++l) {
             //feature
             var tmpResp = f[l];
