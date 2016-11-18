@@ -50,7 +50,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
   };
 };
 NK.functions.popup.wmsFeatureInfoPopup = function (event, service, formats) {
-  var html = "<div style='margin-bottom: 8px'>Tjeneste: <b>" + (service.title || service.name) + "</b>";
+  var html = "<div style='margin-bottom: 8px'>Tjeneste: <b>" + (service.title || service.name).replace(/<\!-*\[CDATA\[/i, "").replace(/\]*-*>/i, "") + "</b>";
   if (!event.text || !event.text.trim().length) {
     return html + "Ingen informasjon.</div>";
   }
@@ -82,7 +82,7 @@ NK.functions.popup.wmsFeatureInfoPopup = function (event, service, formats) {
       }
       content += '</li>';
     }
-    html += '<div style="width:100%; max-height:300px; overflow-y:scroll margin-left:10px; background:white">'+content+'</div>';
+    html += '<div style="width:100%; max-height:300px; overflow-y:scroll; margin-left:10px; background:white">'+content+'</div>';
   }
   else if (event.object.infoFormat == "text/html") {
     html += '<div style="width:100%; max-height:300px; overflow:scroll; background:white">'+event.text+'</div>';
