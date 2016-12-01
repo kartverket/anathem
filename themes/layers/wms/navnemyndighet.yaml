@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Navne bestemt av navnemyndighet
+name: Namneval vedteke/gjort av namnemyndet
 layers: navnemyndighet
 layerGroup: tjenester.navnesakstatus
 id: navnemyndighet

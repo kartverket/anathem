@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Vedtakutsatt
+name: Vedtak utsett
 layers: vedtakutsatt
 layerGroup: tjenester.navnesakstatus
 id: vedtakutsatt

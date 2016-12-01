@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Navnesak vedtak
+name: Namnesak vedteke
 layers: navnesak_vedtak
 layerGroup: tjenester.navnesakstatus
 id: navnesak_vedtak

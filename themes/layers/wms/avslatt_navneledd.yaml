@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Avsl&aring;tt navneledd
+name: Avslege namneledd
 layers: avslatt_navneledd
 layerGroup: tjenester.skrivemaatestatus
 id: avslatt_navneledd

@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Samlevedtak trukket tilbake
+name: Samlevedtak trekt tilbake
 layers: samlevedtak_tilbake
 layerGroup: tjenester.navnesakstatus
 id: samlevedtak_tilbake

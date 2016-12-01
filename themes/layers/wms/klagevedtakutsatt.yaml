@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Klagevedtakutsatt
+name: Klage, vedtak utsett
 layers: klagevedtakutsatt
 layerGroup: tjenester.navnesakstatus
 id: klagevedtakutsatt

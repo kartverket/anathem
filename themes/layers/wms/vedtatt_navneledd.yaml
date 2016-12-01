@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Vedtatt navneledd
+name: Vedteke namneledd
 layers: vedtatt_navneledd
 layerGroup: tjenester.skrivemaatestatus
 id: vedtatt_navneledd

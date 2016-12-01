@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Navnesakstatus ubehandlet
+name: Namnesaksstatus uhandsama
 layers: navnesakstatus_ubehandlet
 layerGroup: tjenester.navnesakstatus
 id: navnesakstatus_ubehandlet

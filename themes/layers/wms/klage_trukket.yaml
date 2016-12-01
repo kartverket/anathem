@@ -1,6 +1,6 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
-name: Klage trukket
+name: Klage, vedtak trekt tilbake
 layers: klage_trukket
 layerGroup: tjenester.navnesakstatus
 id: klage_trukket
