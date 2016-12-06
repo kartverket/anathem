@@ -201,12 +201,22 @@
             draw.displayBBoxFeature(feature);
           }
         } else if (json.cmd === 'addMarker') {
-          var markers = new OpenLayers.Layer.Markers("Markers");
+          var markers = new OpenLayers.Layer.Markers(json.x + ',' + json.y);
           map.addLayer(markers);
           var size = new OpenLayers.Size(20, 25);
           var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
           var icon = new OpenLayers.Icon('/theme/norgeskart/img/embed-marker.png', size, offset);
           markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(json.x, json.y), icon, json.title || ''));
+        } else if (json.cmd === 'clearMarkers') {
+          var markerLayers = map.getLayersByClass("OpenLayers.Layer.Markers").slice();
+          for (i = 0, j = markerLayers.length; i < j; i += 1) {
+            markerLayers[i].destroy();
+          }
+        } else if (json.cmd === 'removeMarker') {
+          var markerLayers = map.getLayersByClass("OpenLayers.Layer.Markers").slice();
+          for (i = 0, j = markerLayers.length; i < j; i += 1) {
+            markerLayers[i].removeMarker(json.x + ',' + json.y);
+          }
         }
       }
     }
