@@ -606,12 +606,7 @@ NK.functions.addWMSLayer = function (wmsUrl) {
         }
       }
       if (!!NK.xdm) {
-        NK.functions.postMessage({
-          "type"  : "layerLoaded",
-          "title" : layerParms['title'],
-          "parent": layerParms['parent'],
-          "url"   : wmsUrl
-        });
+        //NK.functions.postMessage({"type": "layerLoaded","title": layerParms['title'],"parent": layerParms['parent'],"url": wmsUrl});
       }
       if (!!zoomExtendForWMS) map.zoomToExtent(zoomExtendForWMS);
     });
