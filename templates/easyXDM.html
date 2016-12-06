@@ -45,9 +45,8 @@
     window.parent.postMessage(JSON.stringify(msg), '*')
   };
   NK.functions.listener = function (event) {
-    if (event.origin === "http://skrivte57.statkart.no" || "http:://geonorge.no" || "http://labs.norgeskart.no" || "https://register.geonorge.no/" || "http://www.kartverket.no/") {
+    if (event.origin === "http://skrivte57.statkart.no" || "http:://geonorge.no" || "http://labs.norgeskart.no" || "https://register.geonorge.no/" || "http://www.kartverket.no/" || "https://www.norgeskart.no/") {
       var json = JSON.parse(event.data);
-
       if (json) {
         if (json.cmd === 'setCenter') {
           map.setCenter(new OpenLayers.LonLat(json.x, json.y), json.zoom);
