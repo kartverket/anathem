@@ -1,6 +1,8 @@
 template : base
 title    : "Kart | Geonorge"
 mapClass: embedded-map
+includeXDM: "true"
+
 mapscript:
   template  : mapscript
   tokenServiceUrl: /ws/gkt.py
