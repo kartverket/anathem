@@ -200,7 +200,7 @@
 
   - template: i18n/translation
     source: freeprint_question_0
-    translation: Lag ditt eget fargekart (Tilpasset for by og tettsteder)
+    translation: Lag ditt eget fargeleggingskart
   - template: i18n/translation
     source: freeprint_answer_0_0
     translation: Velg deg et sted i feltet oppe til venstre
