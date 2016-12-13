@@ -1,9 +1,11 @@
-template: layers/wms
+template: layers/wmts
 usetoken: true
-url: http://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nibcache
+url: //gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2
 format: image/jpeg
-transparent: 0 
+transparent: "false"
 name: Fly&shy;bilder
-layers: NiB
+layer: Nibcache_UTM33_EUREF89
 layerGroup: land
 id: flybilder
+epsg: "default028mm"
+shortMatrixIds: true
