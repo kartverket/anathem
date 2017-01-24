@@ -85,7 +85,6 @@ overlays  :
     - include: layers/wms/vedtatt_navneledd
 
     # SSR - navnesakstatus
-    - include: layers/wms/navnesakstatus
     - include: layers/wms/navnesakstatus_ubehandlet
     - include: layers/wms/skalikkebehandles
     - include: layers/wms/navnemyndighet
@@ -98,6 +97,7 @@ overlays  :
     - include: layers/wms/klage_trukket
     - include: layers/wms/klagevedtakutsatt
     - include: layers/wms/forenkletvedtak
+    - include: layers/wms/navnesakstatus # alle
 
     # SSR - vedtak
     - include: layers/wms/vedtak

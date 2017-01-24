@@ -2,7 +2,7 @@ template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.ssr2?
 name: Namnesakstatus
 layers: navnesakstatus
-layerGroup: tjenester.navnesakstatus
+layerGroup: tjenester.alle
 id: navnesakstatus
 usetoken: true
 singleTile: true
