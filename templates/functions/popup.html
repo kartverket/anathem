@@ -62,7 +62,7 @@ NK.functions.popup.generatePopupMarkup = function (conf) {
                   if (!!dict['content'][prop]) {
                     if (dict['content'][prop] === 'stedsnummer') {
                       tmpMarkup += '<div class="externalToolbarLink"><a href="http://faktaark.statkart.no/?stedsnummer=' + tmpResp[dict['content'][prop]] + '" target="_blank">';
-                      tmpMarkup += 'Meir info om : ' + tmpResp['stedsnavn'] + '</a></div></span></p>';
+                      tmpMarkup += 'Meir info om : ' + (tmpResp['stedsnavn'] || tmpResp['langnavn']) + '</a></div></span></p>';
                     } else {
                       tmpMarkup += tmpResp[dict['content'][prop]] + '</span></p>';
                     }
