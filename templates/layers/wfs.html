@@ -128,9 +128,11 @@ NK.addLayerType.WFS = (function (M, MP) {
 
 		layer.events.register("loadend", layer, function (evt) {
 			if (evt.response && evt.response.priv) {
-				var root = evt.response.priv.responseXML.firstChild;
-				if (root.localName == "ExceptionReport") {
-					NK.functions.log(root.textContent.trim());
+				if (!!evt.response.priv.responseXML){
+					var root = evt.response.priv.responseXML.firstChild;
+					if (root.localName == "ExceptionReport") {
+						NK.functions.log(root.textContent.trim());
+					}
 				}
 			}
 		});
