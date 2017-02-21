@@ -1,9 +1,9 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?
-name: Turishytte
-layers: turishytte_02
+name: Turisthytte
+layers: turisthytte_02
 layerGroup: tjenester.friluft_elektrisk_rullestol
-id: turishytte_02
+id: turisthytte_02
 usetoken: true
 singleTile: true
 getfeature: true
