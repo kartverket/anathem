@@ -1,9 +1,9 @@
 template: layers/wms
 url: http://wms.geonorge.no/skwms1/wms.tilgjengelighet2?
-name: Turishytte
-layers: turishytte_03
+name: Turisthytte
+layers: turisthytte_03
 layerGroup: tjenester.friluftsyn
-id: turishytte_03
+id: turisthytte_03
 usetoken: true
 singleTile: true
 getfeature: true
