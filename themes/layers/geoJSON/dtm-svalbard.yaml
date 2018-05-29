@@ -1,0 +1,11 @@
+template: layers/geoJSONFileMC
+url: /json/dekning/svalbard/terrengmodellgr_Svalbard.json
+name: DTM Svalbard
+id: dtm-svalbard
+epsgCode: 25833 
+styleName: omrissFylker 
+layerGroup: nedlasting 
+popup:
+  template: popup/popup
+  headingAttribute: "FOTOOPPG"
+

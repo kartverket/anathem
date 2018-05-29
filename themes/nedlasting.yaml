@@ -35,6 +35,7 @@ mapscript:
     - include: layers/geoJSON/dtm-utm33
     - include: layers/geoJSON/dtm-utm33-100km
     - include: layers/geoJSON/dtm-utm35
+    - include: layers/geoJSON/dtm-svalbard
     - include: layers/geoJSON/sjo-celler
     - include: layers/geoJSON/sjo-celler-5
     - include: layers/geoJSON/sjo-celler-25
