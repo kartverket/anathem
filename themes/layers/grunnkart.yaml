@@ -9,9 +9,9 @@ layerGroup: modus
 id: enkel 
 visible: true
 dataType:    "wms"
-dataURL :    "http://wms.geonorge.no/skwms1/wms.topo2"
+dataURL :    "http://wms.geonorge.no/skwms1/wms.norges_grunnkart"
 dataFormats: "image/png,image/png; mode=24bit,image/jpeg"
-dataLayers:  "topo2_WMS"
+dataLayers:  "norges_grunnkart"
 attribution: Kartverket
 abstract   : "Norges grunnkart"
 #databbox: "-115000,6400000,1140000,7967861"

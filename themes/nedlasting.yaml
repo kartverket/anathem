@@ -20,7 +20,7 @@ mapscript:
     - template: styles/omrissFylker
 
   overlays  :
-    - include: layers/topo2
+    - include: layers/norges_grunnkart
     - include: layers/sjo_hovedkart2
 
     - include: layers/geoJSON/fylker
